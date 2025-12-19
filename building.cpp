@@ -15,11 +15,12 @@ using namespace std;
 int Building::next_id=1;
 
 void Building:: prnt()const{
+    cout<<"<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>"<<endl;
+    cout<<" - - - - - - - - - - - Informacje o budynku - - - - - - - - - "<<endl;
     cout<<"Type: "<<static_cast<int>(type)<<endl;
     cout<<"Nazwa: "<<name<<endl;
     cout<<"ID: "<<id<<endl;
     cout<<"Koszt energii: "<<kosztEnergii<<endl;
-    cout<<endl;
 
 }
 

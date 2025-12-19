@@ -16,11 +16,12 @@ using namespace std;
 #define energy_h
 
 class Energy: public Building{
-    float enGen;
+    double enGen;
+    TypEnergy pType;
 
     public:
     Energy();
-    Energy(string n,double k, double e);
+    Energy(string n,double k, double e,TypEnergy t);
     void prnt() const override;
     
 };

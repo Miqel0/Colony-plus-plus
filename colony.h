@@ -13,6 +13,7 @@ using namespace std;
 #include "building.h"
 #include "enums.h"
 #include "energy.h"
+#include "farm.h"
 
 #ifndef colony_h
 #define colony_h
@@ -32,7 +33,9 @@ class Colony{
     void nextRound();
     void update();
     void prntBuilding(int nr);
+    void zbudujBudynek(TypEnergy typ);
     void zbudujBudynek(TypBudynku typ);
+    void zbudujBudynek(TypFarm typ);
     void prntBuildings();
     void zburzBudynek(int nr);
     int getIloscBudynkow();
