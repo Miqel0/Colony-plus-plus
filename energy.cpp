@@ -12,8 +12,8 @@
 using namespace std;
 #include "energy.h"
 
-Energy:: Energy():Building("XXX",TypBudynku::ENERGY,0),enGen(0),pType(TypEnergy::NIEZNANY){}
-Energy::Energy(string n,double k, double e,TypEnergy t):Building(n,TypBudynku::ENERGY,k),enGen(e),pType(t){}
+Energy:: Energy():Building("XXX",TypBudynku::ENERGY,0,0),enGen(0),pType(TypEnergy::NIEZNANY){}
+Energy::Energy(string n,double k, double e,TypEnergy t,int w):Building(n,TypBudynku::ENERGY,k,w),enGen(e),pType(t){}
 
 void Energy::prnt()const{
     Building::prnt();
@@ -23,4 +23,9 @@ void Energy::prnt()const{
     
 
 
+}
+
+void Energy::save(ofstream& plik)const{
+    Building::save(plik);
+    plik<<" "<<static_cast<int>(pType)<<" "<<enGen<<" "<<endl;
 }

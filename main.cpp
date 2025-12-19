@@ -23,9 +23,9 @@ int main() {
   
 
     kolonia.zbudujBudynek(TypEnergy::PANELE);
-    kolonia.prntBuilding(0);
-    kolonia.zbudujBudynek(TypBudynku::NIEZNANY);
-    kolonia.prntBuilding(1);
+    //kolonia.prntBuilding(0);
+    //kolonia.zbudujBudynek(TypBudynku::NIEZNANY);
+    //kolonia.prntBuilding(1);
     kolonia.zbudujBudynek(TypEnergy::WIATRAK);
     kolonia.zbudujBudynek(TypEnergy::NIEZNANY);
     kolonia.zbudujBudynek(TypBudynku::ENERGY);
@@ -35,6 +35,7 @@ int main() {
 
     kolonia.prntBuildings();
     cout<<kolonia.getIloscBudynkow()<<endl;
+    kolonia.saveBuildings("save.txt");
 
     return 0;
 }

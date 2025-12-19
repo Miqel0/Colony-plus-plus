@@ -55,10 +55,10 @@ void Colony::zbudujBudynek(TypEnergy typ){
         nowyBudynek=make_unique<Energy>();
         break;
     case TypEnergy::PANELE:
-        nowyBudynek=make_unique<Energy>("Panele sloneczne", 0, 50.0,TypEnergy::PANELE);
+        nowyBudynek=make_unique<Energy>("Panele sloneczne", 0, 50.0,TypEnergy::PANELE,1);
         break;
     case TypEnergy::WIATRAK:
-        nowyBudynek=make_unique<Energy>("Wiatrak", 0, 20,TypEnergy::WIATRAK);
+        nowyBudynek=make_unique<Energy>("Wiatrak", 0, 20,TypEnergy::WIATRAK,1);
         break;
     }
     addBuilding(move(nowyBudynek));
@@ -72,10 +72,10 @@ void Colony::zbudujBudynek(TypFarm typ){
         nowyBudynek=make_unique<Farm>();
         break;
     case TypFarm::POLE:
-        nowyBudynek=make_unique<Farm>("Pole", 3, 4,TypFarm::POLE);
+        nowyBudynek=make_unique<Farm>("Pole", 3, 4,TypFarm::POLE,1);
         break;
     case TypFarm::SZKLARNIA:
-        nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA);
+        nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA,1);
         break;
     }
     addBuilding(move(nowyBudynek));
@@ -105,7 +105,7 @@ void Colony::zburzBudynek(int nr){
             cout<<"Bdynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<endl;
             buildings.erase(buildings.begin()+nr);
         }else{
-            cout<<"Anulowano wybrzurzanie budynku."<<endl;
+            cout<<"Anulowano wyburzanie budynku."<<endl;
     }
     }else{
         cout<<"Blad: Nie ma budynku o takim ID: "<<nr<<endl;
@@ -124,4 +124,15 @@ void Colony::nextRound(){
 }
 void Colony::update(){
 
+}
+
+void Colony::saveBuildings(string nazwa_plik){
+    ofstream plik(nazwa_plik);
+    if(plik.is_open()){
+         for(const auto& b : buildings){
+            b->save(plik);
+        }
+        plik.close();
+    }
+   cout<<"Gra została zapisana do pliku '"<<nazwa_plik<<"'.";
 }
