@@ -17,10 +17,11 @@ using namespace std;
 
 class Energy: public Building{
     float enGen;
+    TypEnergy pType;
 
     public:
     Energy();
-    Energy(string n,double k, double e);
+    Energy(string n,double k, double e,TypEnergy t);
     void prnt() const override;
     
 };

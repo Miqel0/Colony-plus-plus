@@ -7,6 +7,12 @@ enum class TypBudynku{
 };
 
 
+enum class TypEnergy{
+    NIEZNANY=0,
+    WIATRAK = 1,
+    PANELE = 2,
+};
+
 
 
 #endif

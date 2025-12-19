@@ -55,7 +55,7 @@ void Colony::zbudujBudynek(TypBudynku typ){
             nowyBudynek=make_unique<Building>();
             break;
         case TypBudynku::ENERGY:
-            nowyBudynek=make_unique<Energy>("Wiatrak", 0, 50.0);
+            nowyBudynek=make_unique<Energy>("Wiatrak", 0, 50.0,TypEnergy::WIATRAK);
     }
     addBuilding(move(nowyBudynek));
 }
