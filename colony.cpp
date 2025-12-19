@@ -47,15 +47,50 @@ void Colony::addBuilding(unique_ptr<Building> b){
 }
 
 
+void Colony::zbudujBudynek(TypEnergy typ){
+    unique_ptr<Building> nowyBudynek;
+        
+    switch (typ){
+    case TypEnergy::NIEZNANY:
+        nowyBudynek=make_unique<Energy>();
+        break;
+    case TypEnergy::PANELE:
+        nowyBudynek=make_unique<Energy>("Panele sloneczne", 0, 50.0,TypEnergy::PANELE);
+        break;
+    case TypEnergy::WIATRAK:
+        nowyBudynek=make_unique<Energy>("Wiatrak", 0, 20,TypEnergy::WIATRAK);
+        break;
+    }
+    addBuilding(move(nowyBudynek));
+}
+
+void Colony::zbudujBudynek(TypFarm typ){
+    unique_ptr<Building> nowyBudynek;
+        
+    switch (typ){
+    case TypFarm::NIEZNANY:
+        nowyBudynek=make_unique<Farm>();
+        break;
+    case TypFarm::POLE:
+        nowyBudynek=make_unique<Farm>("Pole", 3, 4,TypFarm::POLE);
+        break;
+    case TypFarm::SZKLARNIA:
+        nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA);
+        break;
+    }
+    addBuilding(move(nowyBudynek));
+}
+
 void Colony::zbudujBudynek(TypBudynku typ){
     unique_ptr<Building> nowyBudynek;
-
-    switch(typ){
-        case TypBudynku::NIEZNANY:
-            nowyBudynek=make_unique<Building>();
-            break;
-        case TypBudynku::ENERGY:
-            nowyBudynek=make_unique<Energy>("Wiatrak", 0, 50.0,TypEnergy::WIATRAK);
+        
+    switch (typ){
+    case TypBudynku::NIEZNANY:
+        nowyBudynek=make_unique<Building>();
+        break;
+    case TypBudynku::ENERGY:
+        nowyBudynek=make_unique<Energy>();
+        break;
     }
     addBuilding(move(nowyBudynek));
 }

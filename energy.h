@@ -16,7 +16,7 @@ using namespace std;
 #define energy_h
 
 class Energy: public Building{
-    float enGen;
+    double enGen;
     TypEnergy pType;
 
     public:
