@@ -22,8 +22,10 @@ class Energy: public Building{
     public:
     Energy();
     Energy(string n,double k, double e,TypEnergy t,int w);
+    //Energy(string n,int i,double k, int w,int pt,double e);
     void prnt() const override;
     void save(ofstream& plik) const override;
+    void setPType();
 };
 
 #endif

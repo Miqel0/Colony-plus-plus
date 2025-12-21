@@ -30,6 +30,8 @@ class Building{
     Building();
     Building(string n,TypBudynku t, double k,int w);
     virtual void tick();
+    void setId(int i);
+    static void updateLicznik(int wczytaneMaxId); //tymczasoe, zaktalizowac ze by bylo serio wczytywane z pliku id next
     string getName() const;
 };
 

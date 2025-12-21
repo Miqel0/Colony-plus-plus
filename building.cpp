@@ -38,3 +38,11 @@ string Building:: getName()const {return name;}
 void Building:: tick(){
 
 }
+
+void Building:: setId(int i){id=i;}
+
+void Building::updateLicznik(int wczytaneMaxId){
+    if(wczytaneMaxId>=next_id){
+    next_id=wczytaneMaxId+1;
+    }
+}

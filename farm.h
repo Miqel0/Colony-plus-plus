@@ -22,7 +22,7 @@ class Farm: public Building{
 
     public:
     Farm();
-    Farm(string n,double k, double e,TypFarm t,int w);
+    Farm(string n,double k, double f,TypFarm t,int w,int tim);
     void prnt() const override;
     void save(ofstream& plik) const override;
     
