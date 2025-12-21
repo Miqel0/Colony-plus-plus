@@ -39,6 +39,8 @@ class Colony{
     void prntBuildings();
     void zburzBudynek(int nr);
     int getIloscBudynkow();
+    void saveBuildings(string nazwa_plik);
+    void loadBuildings(string nazwa_plik);
     
 };
 

@@ -21,18 +21,28 @@ void Building:: prnt()const{
     cout<<"Nazwa: "<<name<<endl;
     cout<<"ID: "<<id<<endl;
     cout<<"Koszt energii: "<<kosztEnergii<<endl;
+    cout<<"Pracownicy: "<<workers<<endl;
 
 }
 
-Building:: Building():kosztEnergii(0),type(TypBudynku::NIEZNANY),name("Budynek"),id(next_id++){
-
+void Building::save(ofstream& plik)const{
+   plik<<static_cast<int>(type)<<" "<<name<<" "<<id<<" "<<kosztEnergii<<" "<<workers;
 }
 
-Building:: Building(string n,TypBudynku t, double k):kosztEnergii(k),type(t),name(n),id(next_id++){
-}
+Building:: Building():kosztEnergii(0),type(TypBudynku::NIEZNANY),name("Budynek"),id(next_id++),workers(0){}
+
+Building:: Building(string n,TypBudynku t, double k,int w):kosztEnergii(k),type(t),name(n),id(next_id++),workers(w){}
 
 string Building:: getName()const {return name;}
 
 void Building:: tick(){
 
+}
+
+void Building:: setId(int i){id=i;}
+
+void Building::updateLicznik(int wczytaneMaxId){
+    if(wczytaneMaxId>=next_id){
+    next_id=wczytaneMaxId+1;
+    }
 }
