@@ -29,3 +29,5 @@ void Energy::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<static_cast<int>(pType)<<" "<<enGen<<" "<<endl;
 }
+
+double Energy::getEnergy() const{return enGen;}

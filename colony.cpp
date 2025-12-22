@@ -11,16 +11,15 @@
 
 using namespace std;
 #include "colony.h"
-//moze zmienc ze w basicowym na tart dostaje budynek a nie ze dostaje tak o rzeczy
-//moze dodac ratusz? czy cos, co dodaje te parametry?
-Colony::Colony():tura(0),reqEnergy(0),genEnergy(0),reqFood(0),all_workers(5),demand_workers(0){}
+
+
+Colony::Colony():tura(0),all_workers(5),demand_workers(0){}
 
 void Colony::prnt(){
+    cout<<" - - - - - - - - - - - Informacje COLONY - - - - - - - - - "<<endl;
     cout<<"Nr tury: "<<tura<<endl;
-    cout<<"Wymagana energia: "<<reqEnergy<<endl;
-    cout<<"Produkowana energia: "<<reqEnergy<<endl;
-    cout<<"Wymagane jedzenie: "<<reqFood<<endl;
     cout<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<endl;
+    f_logisyka.prnt();
 }
 
 void Colony::prntBuilding(int nr){
@@ -55,15 +54,23 @@ void Colony::zbudujBudynek(TypEnergy typ){
         nowyBudynek=make_unique<Energy>();
         break;
     case TypEnergy::PANELE:
-        nowyBudynek=make_unique<Energy>("Panele_sloneczne", 0, 50.0,TypEnergy::PANELE,1);
+        nowyBudynek=make_unique<Energy>("Panele_sloneczne", 0, 50.0,TypEnergy::PANELE,3);
         
         break;
     case TypEnergy::WIATRAK:
-        nowyBudynek=make_unique<Energy>("Wiatrak", 0, 20,TypEnergy::WIATRAK,1);
+        nowyBudynek=make_unique<Energy>("Wiatrak", 0, 20,TypEnergy::WIATRAK,5);
         break;
     }
-    demand_workers+=nowyBudynek->getDemandWorkers();
-    addBuilding(move(nowyBudynek));
+    if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
+        cout<<endl;
+        cout<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<endl;
+        cout<<endl;
+        
+    }else{
+        f_logisyka.updateBudynek(nowyBudynek.get());
+        demand_workers+=nowyBudynek->getDemandWorkers();
+        addBuilding(move(nowyBudynek));
+    }
 }
 
 void Colony::zbudujBudynek(TypFarm typ){
@@ -80,8 +87,14 @@ void Colony::zbudujBudynek(TypFarm typ){
         nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA,1,2);
         break;
     }
-    demand_workers+=nowyBudynek->getDemandWorkers();
-    addBuilding(move(nowyBudynek));
+    if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
+        cout<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<endl;
+        
+    }else{
+        f_logisyka.updateBudynek(nowyBudynek.get());
+        demand_workers+=nowyBudynek->getDemandWorkers();
+        addBuilding(move(nowyBudynek));
+    }
 }
 
 
@@ -99,6 +112,8 @@ void Colony::zbudujBudynek(TypDomy typ){
         nowyBudynek=make_unique<Housing>("Rezydencja", 0, 8,TypDomy::REZYDENCJA,0);
         break;
     }
+    
+    f_logisyka.updateBudynek(nowyBudynek.get());
     all_workers+=nowyBudynek->getResidents();
     addBuilding(move(nowyBudynek));
 }
@@ -136,6 +151,7 @@ void Colony::zburzBudynek(int nr){
             if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
                 all_workers-=buildings[nr]->getResidents();
             }
+            f_logisyka.updateZburzBudynek(buildings[nr].get());
             buildings.erase(buildings.begin()+nr);
         }else{
             cout<<"Anulowano wyburzanie budynku."<<endl;
@@ -155,9 +171,8 @@ int Colony::getIloscBudynkow(){
 void Colony::nextRound(){
 
 }
-void Colony::update(){
 
-}
+void Colony::update(){}
 
 void Colony::saveBuildings(string nazwa_plik){
     ofstream plik(nazwa_plik);

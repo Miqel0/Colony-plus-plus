@@ -50,3 +50,4 @@ void Building::updateLicznik(int wczytaneMaxId){
 int Building::getDemandWorkers()const {return workers;}
 TypBudynku Building::getTyp() const {return type;}
 int Building::getResidents() const{return residents;}
+double Building::getReqEnergy() const{return kosztEnergii;}

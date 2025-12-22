@@ -21,33 +21,42 @@ using namespace std;
 int main() {
 
     Colony kolonia;
-  
+    kolonia.prnt();
 
-    //kolonia.zbudujBudynek(TypEnergy::PANELE);
+    kolonia.zbudujBudynek(TypEnergy::PANELE);
     //kolonia.prntBuilding(0);
     //kolonia.zbudujBudynek(TypBudynku::NIEZNANY);
     //kolonia.prntBuilding(1);
     //kolonia.zbudujBudynek(TypEnergy::WIATRAK);
     //kolonia.zbudujBudynek(TypEnergy::NIEZNANY);
     //kolonia.zbudujBudynek(TypBudynku::ENERGY);
-    //kolonia.zbudujBudynek(TypFarm::POLE);
+    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    kolonia.zbudujBudynek(TypFarm::POLE);
     //kolonia.zbudujBudynek(TypFarm::NIEZNANY);
-    //kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
+    kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
     //kolonia.zbudujBudynek(TypDomy::NIEZNANY);
-    //kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    
     //kolonia.zbudujBudynek(TypDomy::BARAK);
     //kolonia.prntBuildings();
     //cout<<kolonia.getIloscBudynkow()<<endl;
     //kolonia.saveBuildings("save.txt");
 
 
-    kolonia.loadBuildings("save.txt");
-    kolonia.prntBuildings();
-    kolonia.saveBuildings("save1.txt");
-    kolonia.prntBuildings();
-    cout<<kolonia.getIloscBudynkow()<<endl;
+    //kolonia.loadBuildings("save.txt");
+    //kolonia.prntBuildings();
+    //kolonia.saveBuildings("save1.txt");
+    //kolonia.prntBuildings();
+    //cout<<kolonia.getIloscBudynkow()<<endl;
+    //kolonia.zbudujBudynek(TypEnergy::WIATRAK);
+    //kolonia.prntBuilding(7);
+
+    //kolonia.zbudujBudynek()
     kolonia.zbudujBudynek(TypEnergy::WIATRAK);
-    kolonia.prntBuilding(7);
+    
+    kolonia.zbudujBudynek(TypFarm::POLE);
+    
+    kolonia.prnt();
+    kolonia.zburzBudynek(5);
     kolonia.prnt();
     return 0;
 }
