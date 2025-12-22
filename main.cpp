@@ -16,6 +16,7 @@ using namespace std;
 #include "colony.h"
 #include "enums.h"
 #include "farm.h"
+#include "housing.h"
 
 int main() {
 
@@ -32,15 +33,21 @@ int main() {
     //kolonia.zbudujBudynek(TypFarm::POLE);
     //kolonia.zbudujBudynek(TypFarm::NIEZNANY);
     //kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
-
+    //kolonia.zbudujBudynek(TypDomy::NIEZNANY);
+    //kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    //kolonia.zbudujBudynek(TypDomy::BARAK);
     //kolonia.prntBuildings();
     //cout<<kolonia.getIloscBudynkow()<<endl;
     //kolonia.saveBuildings("save.txt");
+
 
     kolonia.loadBuildings("save.txt");
     kolonia.prntBuildings();
     kolonia.saveBuildings("save1.txt");
     kolonia.prntBuildings();
     cout<<kolonia.getIloscBudynkow()<<endl;
+    kolonia.zbudujBudynek(TypEnergy::WIATRAK);
+    kolonia.prntBuilding(7);
+    kolonia.prnt();
     return 0;
 }

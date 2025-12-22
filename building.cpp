@@ -29,7 +29,7 @@ void Building::save(ofstream& plik)const{
    plik<<static_cast<int>(type)<<" "<<name<<" "<<id<<" "<<kosztEnergii<<" "<<workers;
 }
 
-Building:: Building():kosztEnergii(0),type(TypBudynku::NIEZNANY),name("Budynek"),id(next_id++),workers(0){}
+Building:: Building():kosztEnergii(0),type(TypBudynku::NIEZNANY),name("Budynek"),id(next_id++),workers(0),residents(0){}
 
 Building:: Building(string n,TypBudynku t, double k,int w):kosztEnergii(k),type(t),name(n),id(next_id++),workers(w){}
 
@@ -46,3 +46,7 @@ void Building::updateLicznik(int wczytaneMaxId){
     next_id=wczytaneMaxId+1;
     }
 }
+
+int Building::getDemandWorkers()const {return workers;}
+TypBudynku Building::getTyp() const {return type;}
+int Building::getResidents() const{return residents;}

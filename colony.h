@@ -14,6 +14,7 @@ using namespace std;
 #include "enums.h"
 #include "energy.h"
 #include "farm.h"
+#include "housing.h"
 
 #ifndef colony_h
 #define colony_h
@@ -24,7 +25,8 @@ class Colony{
     double reqEnergy;
     double genEnergy;
     double reqFood;
-    int workers;
+    int all_workers;
+    int demand_workers;
 
     public:
     Colony();
@@ -36,11 +38,14 @@ class Colony{
     void zbudujBudynek(TypEnergy typ);
     void zbudujBudynek(TypBudynku typ);
     void zbudujBudynek(TypFarm typ);
+    void zbudujBudynek(TypDomy typ);
     void prntBuildings();
     void zburzBudynek(int nr);
     int getIloscBudynkow();
     void saveBuildings(string nazwa_plik);
     void loadBuildings(string nazwa_plik);
+    int getAllWorkers();
+    int getDemandWorkers();
     
 };
 

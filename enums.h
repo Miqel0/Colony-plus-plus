@@ -5,7 +5,7 @@ enum class TypBudynku{
     NIEZNANY = 0,
     ENERGY = 1,
     FARM=2,
-    HOUSE=3,
+    HOUSING=3,
 };
 
 
@@ -21,6 +21,10 @@ enum class TypFarm{
     POLE = 2,
 };
 
-
+enum class TypDomy{
+    NIEZNANY=0,
+    BARAK=1,
+    REZYDENCJA=2,
+};
 
 #endif

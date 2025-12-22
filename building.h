@@ -23,6 +23,7 @@ class Building{
         int id;
         static int next_id;//dodac do save
         int workers;
+        int residents;
         
     public:
     virtual void prnt() const;
@@ -31,8 +32,11 @@ class Building{
     Building(string n,TypBudynku t, double k,int w);
     virtual void tick();
     void setId(int i);
-    static void updateLicznik(int wczytaneMaxId); //tymczasoe, zaktalizowac ze by bylo serio wczytywane z pliku id next
+    static void updateLicznik(int wczytaneMaxId); //tymczasoe, zaktalizowac ze by bylo serio wczytywane z pliku id next, ale chyba niema znaczenia
     string getName() const;
+    int getDemandWorkers() const;
+    TypBudynku getTyp() const;
+    int getResidents() const;
 };
 
 #endif
