@@ -19,10 +19,14 @@ class Building{
     protected:
         TypBudynku type;
         string name;
-        double kosztEnergii;
+
         int id;
-        static int next_id;//dodac do save
+        static int next_id;
+
+        double kosztEnergii;
+        
         int workers;
+        int residents;
         
     public:
     virtual void prnt() const;
@@ -31,8 +35,13 @@ class Building{
     Building(string n,TypBudynku t, double k,int w);
     virtual void tick();
     void setId(int i);
-    static void updateLicznik(int wczytaneMaxId); //tymczasoe, zaktalizowac ze by bylo serio wczytywane z pliku id next
+    static void updateLicznik(int wczytaneMaxId); 
+
     string getName() const;
+    int getDemandWorkers() const;
+    TypBudynku getTyp() const;
+    int getResidents() const;
+    double getReqEnergy() const;
 };
 
 #endif

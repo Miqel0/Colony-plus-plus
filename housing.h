@@ -12,21 +12,21 @@
 using namespace std;
 #include "building.h"
 
-#ifndef energy_h
-#define energy_h
+#ifndef housing_h
+#define housing_h
 
-class Energy: public Building{
-    double enGen;
-    TypEnergy pType;
+class Housing: public Building{
+
+    TypDomy pType;
 
     public:
-    Energy();
-    Energy(string n,double k, double e,TypEnergy t,int w);
-
+    Housing();
+    Housing(string n,double k, int r,TypDomy t,int w);
+    
     void prnt() const override;
     void save(ofstream& plik) const override;
 
-    double getEnergy() const;
+
 };
 
 #endif

@@ -17,7 +17,7 @@ Farm::Farm(string n,double k, double f,TypFarm t,int w,int tim):Building(n,TypBu
 
 void Farm::prnt()const{
     Building::prnt();
-    cout<<" - - - - - - - - - -  - Informacje FARM - - - - - - - - - "<<endl;
+    cout<<YELLOW<<" - - - - - - - - - -  - Informacje FARM - - - - - - - - - "<<RESET<<endl;
     cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
     cout<<"Generowane jedzenie: "<<foodGen<<endl;
     cout<<"Czas potrzebny do urośnięcia: "<<time<<endl;
