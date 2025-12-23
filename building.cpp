@@ -15,8 +15,8 @@ using namespace std;
 int Building::next_id=1;
 
 void Building:: prnt()const{
-    cout<<"<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>"<<endl;
-    cout<<" - - - - - - - - - - - Informacje o budynku - - - - - - - - - "<<endl;
+    cout<<YELLOW<<"<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>"<<RESET<<endl;
+    cout<<YELLOW<<" - - - - - - - - - - - Informacje o budynku - - - - - - - - - "<<RESET<<endl;
     cout<<"Type: "<<static_cast<int>(type)<<endl;
     cout<<"Nazwa: "<<name<<endl;
     cout<<"ID: "<<id<<endl;

@@ -16,9 +16,14 @@ using namespace std;
 Colony::Colony():tura(0),all_workers(5),demand_workers(0){}
 
 void Colony::prnt(){
-    cout<<" - - - - - - - - - - - Informacje COLONY - - - - - - - - - "<<endl;
+    cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Informacje COLONY - - - - - - - - - "<<RESET<<endl;
     cout<<"Nr tury: "<<tura<<endl;
-    cout<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<endl;
+    if(demand_workers=all_workers){
+        cout<<RED<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
+    }else{
+        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
+    }
+    
     f_logisyka.prnt();
 }
 
@@ -39,9 +44,17 @@ void Colony::prntBuildings(){
 }
 
 
+void Colony::prntBuildingsShort(){
+    cout<<YELLOW<<" - - - - - - - - - Obecnie zbudowane budynki: - - - - - - - - -"<<RESET<<endl;
+    for(int i=0;i<buildings.size();i++){
+        cout<<i<<". "<<buildings[i]->getName()<<endl;
+    }
+}
+
+
 void Colony::addBuilding(unique_ptr<Building> b){
     buildings.push_back(move(b));
-    cout<<"Dodano nowy budynek!!"<<endl;
+    //cout<<"Dodano nowy budynek!!"<<endl;
     cout<<endl;
 }
 
@@ -146,13 +159,21 @@ void Colony::zburzBudynek(int nr){
         cout<<"Potwierdz wpisujac TAK, albo anuluj NIE."<<endl;
         cin>>dec;
         if(dec=="TAK"){
-            cout<<"Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<endl;
-            demand_workers-=buildings[nr]->getDemandWorkers();
-            if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
-                all_workers-=buildings[nr]->getResidents();
+            if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
+                if(all_workers-buildings[nr]->getResidents()<demand_workers){
+                    cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(demand_workers-all_workers+buildings[nr]->getResidents())<<" pracownikow."<<endl;
+                    return;
+                }
+
+            }else{
+                cout<<"Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<endl;
+                demand_workers-=buildings[nr]->getDemandWorkers();
+                if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
+                    all_workers-=buildings[nr]->getResidents();
+                }
+                f_logisyka.updateZburzBudynek(buildings[nr].get());
+                buildings.erase(buildings.begin()+nr);
             }
-            f_logisyka.updateZburzBudynek(buildings[nr].get());
-            buildings.erase(buildings.begin()+nr);
         }else{
             cout<<"Anulowano wyburzanie budynku."<<endl;
     }

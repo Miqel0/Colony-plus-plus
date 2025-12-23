@@ -31,26 +31,34 @@ class Colony{
 
     public:
     Colony();
+
     void prnt();
-    void addBuilding(unique_ptr<Building> b);
+    void prntBuilding(int nr);
+    void prntBuildings();
+    void prntBuildingsShort();
 
     void nextRound();
     void update();
 
-    void prntBuilding(int nr);
+
+    void addBuilding(unique_ptr<Building> b);
+
     void zbudujBudynek(TypEnergy typ);
     void zbudujBudynek(TypBudynku typ);
     void zbudujBudynek(TypFarm typ);
     void zbudujBudynek(TypDomy typ);
-    void prntBuildings();
-    void zburzBudynek(int nr); //dodac warunek ze nie mozna usunac miesdzkalnego, zeby zabrakło mieszkancow
-    int getIloscBudynkow();
+    
+    void zburzBudynek(int nr); 
+    
     void saveBuildings(string nazwa_plik);
     void loadBuildings(string nazwa_plik);
+
+
+    int getIloscBudynkow();
     int getAllWorkers();
     int getDemandWorkers();
-
-    //Dodać prntBuildingsShort() - same nazwy i ID
+    
+    
     
 };
 

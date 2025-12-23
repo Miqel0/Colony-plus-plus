@@ -17,7 +17,7 @@ Energy::Energy(string n,double k, double e,TypEnergy t,int w):Building(n,TypBudy
 
 void Energy::prnt()const{
     Building::prnt();
-    cout<<" - - - - - - - - - -  - Informacje ENERGY - - - - - - - - - "<<endl;
+    cout<<YELLOW<<" - - - - - - - - - -  - Informacje ENERGY - - - - - - - - - "<<RESET<<endl;
     cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
     cout<<"Generowana energia: "<<enGen<<endl;
     

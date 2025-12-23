@@ -22,7 +22,7 @@ int main() {
 
     Colony kolonia;
     kolonia.prnt();
-
+    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
     kolonia.zbudujBudynek(TypEnergy::PANELE);
     //kolonia.prntBuilding(0);
     //kolonia.zbudujBudynek(TypBudynku::NIEZNANY);
@@ -54,9 +54,11 @@ int main() {
     kolonia.zbudujBudynek(TypEnergy::WIATRAK);
     
     kolonia.zbudujBudynek(TypFarm::POLE);
+    kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
     
+    kolonia.prntBuildingsShort();
     kolonia.prnt();
-    kolonia.zburzBudynek(5);
-    kolonia.prnt();
+    //kolonia.zburzBudynek(1);
+    //kolonia.prnt();
     return 0;
 }
