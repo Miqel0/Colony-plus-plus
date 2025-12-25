@@ -13,11 +13,11 @@ using namespace std;
 #include "colony.h"
 
 
-Colony::Colony():tura(0),all_workers(5),demand_workers(0){}
+Colony::Colony():tura(1),all_workers(5),demand_workers(0){}
 
 void Colony::prnt(){
     cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Informacje COLONY - - - - - - - - - "<<RESET<<endl;
-    cout<<"Nr tury: "<<tura<<endl;
+    cout<<MAGENTA<<"Nr tury: "<<tura<<RESET<<endl;
     if(demand_workers=all_workers){
         cout<<RED<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
     }else{
@@ -31,7 +31,7 @@ void Colony::prntBuilding(int nr){
     if(nr>=0 && nr <= buildings.size()){
         buildings[nr]->prnt();
     }else{
-        cout<<"Blad: Nie ma budynku o takim ID: "<<nr<<endl;
+        cout<<RED<<"Blad: Nie ma budynku o takim ID: "<<RESET<<nr<<endl;
         cout<<endl;
     }
     
@@ -94,7 +94,7 @@ void Colony::zbudujBudynek(TypFarm typ){
         nowyBudynek=make_unique<Farm>();
         break;
     case TypFarm::POLE:
-        nowyBudynek=make_unique<Farm>("Pole", 3, 4,TypFarm::POLE,1,3);
+        nowyBudynek=make_unique<Farm>("Pole", 3, 4,TypFarm::POLE,1,1);
         break;
     case TypFarm::SZKLARNIA:
         nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA,1,2);
@@ -155,8 +155,8 @@ void Colony::zbudujBudynek(TypBudynku typ){
 void Colony::zburzBudynek(int nr){
     if(nr>=0 && nr < buildings.size()){
         string dec;
-        cout<<"Czy na pewno chcesz wyburzyc budynek: "<<buildings[nr]->getName()<<endl;
-        cout<<"Potwierdz wpisujac TAK, albo anuluj NIE."<<endl;
+        cout<<YELLOW<<"Czy na pewno chcesz wyburzyc budynek: "<<buildings[nr]->getName()<<RESET<<endl;
+        cout<<YELLOW<<">>Potwierdz wpisujac TAK, albo anuluj NIE."<<RESET<<endl;
         cin>>dec;
         if(dec=="TAK"){
             if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
@@ -166,7 +166,7 @@ void Colony::zburzBudynek(int nr){
                 }
 
             }else{
-                cout<<"Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<endl;
+                cout<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<endl;
                 demand_workers-=buildings[nr]->getDemandWorkers();
                 if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
                     all_workers-=buildings[nr]->getResidents();
@@ -178,7 +178,7 @@ void Colony::zburzBudynek(int nr){
             cout<<"Anulowano wyburzanie budynku."<<endl;
     }
     }else{
-        cout<<"Blad: Nie ma budynku o takim ID: "<<nr<<endl;
+        cout<<RED<<"Blad: Nie ma budynku o takim ID: "<<nr<<RESET<<endl;
         cout<<endl;
     }
     
@@ -190,7 +190,23 @@ int Colony::getIloscBudynkow(){
 }
 
 void Colony::nextRound(){
-
+    string decyzja;
+    cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (TAK / NIE)"<<RESET<<endl;
+    cin>>decyzja;
+    if(decyzja=="TAK"){
+        cout<<YELLOW<<">>Rozpoczynanie procedury przejscia do kolejnej rundy..."<<RESET<<endl;
+        cout<<endl;
+        if(f_logisyka.nextRound(buildings)){
+            cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RESET<<endl;
+            tura++;
+            cout<<endl;
+        }else{
+            cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
+            cout<<">>>>>>> PRZEGRANA!! <<<<<<<"<<RESET<<endl;
+        }
+    }else{
+        cout<<YELLOW<<"Anulowano przejscie do kolejnej rundy."<<RESET<<endl;
+    }
 }
 
 void Colony::update(){}

@@ -58,6 +58,13 @@ int main() {
     
     kolonia.prntBuildingsShort();
     kolonia.prnt();
+
+    kolonia.nextRound();
+    kolonia.prnt();
+    kolonia.nextRound();
+    kolonia.prnt();
+    kolonia.nextRound();
+    kolonia.prnt();
     //kolonia.zburzBudynek(1);
     //kolonia.prnt();
     return 0;
