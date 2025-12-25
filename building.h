@@ -29,12 +29,15 @@ class Building{
         int residents;
         
     public:
-    virtual void prnt() const;
-    virtual void save(ofstream& plik) const;
+
     Building();
     Building(string n,TypBudynku t, double k,int w);
-    virtual void tick();
+
+    virtual void prnt() const;
+    virtual void save(ofstream& plik) const;
+    virtual double work();
     void setId(int i);
+
     static void updateLicznik(int wczytaneMaxId); 
 
     string getName() const;

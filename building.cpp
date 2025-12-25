@@ -35,8 +35,8 @@ Building:: Building(string n,TypBudynku t, double k,int w):kosztEnergii(k),type(
 
 string Building:: getName()const {return name;}
 
-void Building:: tick(){
-
+double Building:: work(){
+    return 0;
 }
 
 void Building:: setId(int i){id=i;}

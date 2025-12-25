@@ -21,7 +21,7 @@ using namespace std;
 
 class Logistics{
     
-    int tura;
+
     double reqEnergy;
     double genEnergy;
     int reqFood;
@@ -31,7 +31,9 @@ class Logistics{
     public:
     Logistics();
     void prnt();
-    void nextRound();
+
+    bool nextRound(const vector<unique_ptr<Building>>& budynki);
+    
     void updateBudynek(Building* budynek);
     void updateZburzBudynek(Building* budynek);
 
