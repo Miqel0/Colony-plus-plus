@@ -18,22 +18,23 @@ using namespace std;
 #include "farm.h"
 #include "housing.h"
 #include "producer.h"
+#include "game.h"
 
 int main() {
 
-    Colony kolonia;
-    kolonia.prnt();
-    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
-    kolonia.zbudujBudynek(TypEnergy::PANELE);
+    //Colony kolonia;
+    //kolonia.prnt();
+    //kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    //kolonia.zbudujBudynek(TypEnergy::PANELE);
     //kolonia.prntBuilding(0);
     //kolonia.zbudujBudynek(TypBudynku::NIEZNANY);
     //kolonia.prntBuilding(1);
     //kolonia.zbudujBudynek(TypEnergy::WIATRAK);
     //kolonia.zbudujBudynek(TypEnergy::NIEZNANY);
     //kolonia.zbudujBudynek(TypBudynku::ENERGY);
-    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
-    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
-    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    //kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    //kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    //kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
     //kolonia.zbudujBudynek(TypFarm::POLE);
     //kolonia.zbudujBudynek(TypFarm::NIEZNANY);
     //kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
@@ -54,28 +55,31 @@ int main() {
     //kolonia.prntBuilding(7);
 
     //kolonia.zbudujBudynek()
-    kolonia.zbudujBudynek(TypEnergy::WIATRAK);
-    kolonia.zbudujBudynek(TypEnergy::WIATRAK);
-    kolonia.zbudujBudynek(TypFarm::POLE);
-    kolonia.zbudujBudynek(TypProducer::KOPALNIA_KAMIENIA);
-    kolonia.zbudujBudynek(TypProducer::KOPALNIA_TYTANU);
-    kolonia.zbudujBudynek(TypProducer::ZAAWANSOWANA_KOPALNIA);
+    //kolonia.zbudujBudynek(TypEnergy::WIATRAK);
+    //kolonia.zbudujBudynek(TypEnergy::WIATRAK);
+    //kolonia.zbudujBudynek(TypFarm::POLE);
+    //kolonia.zbudujBudynek(TypProducer::KOPALNIA_KAMIENIA);
+    //kolonia.zbudujBudynek(TypProducer::KOPALNIA_TYTANU);
+    //kolonia.zbudujBudynek(TypProducer::ZAAWANSOWANA_KOPALNIA);
 
-    kolonia.prntBuilding(8);
-    kolonia.prntBuilding(9);
-    kolonia.prntBuilding(10);
+    //kolonia.prntBuilding(8);
+    //kolonia.prntBuilding(9);
+    //kolonia.prntBuilding(10);
     //kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
     
-    kolonia.prntBuildingsShort();
-    kolonia.prnt();
+    //kolonia.prntBuildingsShort();
+    //kolonia.prnt();
 
-    kolonia.nextRound();
-    kolonia.prnt();
-    kolonia.nextRound();
-    kolonia.prnt();
-    kolonia.nextRound();
-    kolonia.prnt();
+    //kolonia.nextRound();
+    //kolonia.prnt();
+    //kolonia.nextRound();
+    //kolonia.prnt();
+    //kolonia.nextRound();
+    //kolonia.prnt();
     //kolonia.zburzBudynek(1);
     //kolonia.prnt();
+
+    Game game;
+    game.run();
     return 0;
 }

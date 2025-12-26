@@ -13,7 +13,7 @@ using namespace std;
 #include "colony.h"
 
 
-Colony::Colony():tura(1),all_workers(5),demand_workers(0){}
+Colony::Colony():tura(1),all_workers(10),demand_workers(0){}
 
 void Colony::prnt(){
     cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Informacje COLONY - - - - - - - - - "<<RESET<<endl;
@@ -55,7 +55,7 @@ void Colony::prntBuildingsShort(){
 void Colony::addBuilding(unique_ptr<Building> b){
     buildings.push_back(move(b));
     //cout<<"Dodano nowy budynek!!"<<endl;
-    cout<<endl;
+    //cout<<endl;
 }
 
 
@@ -190,7 +190,7 @@ void Colony::zburzBudynek(int nr){
         cout<<YELLOW<<"Czy na pewno chcesz wyburzyc budynek: "<<buildings[nr]->getName()<<RESET<<endl;
         cout<<YELLOW<<">>Potwierdz wpisujac TAK, albo anuluj NIE."<<RESET<<endl;
         cin>>dec;
-        if(dec=="TAK"){
+        if(dec=="TAK"||dec=="tak"||dec=="Tak"){
             if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
                 if(all_workers-buildings[nr]->getResidents()<demand_workers){
                     cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(demand_workers-all_workers+buildings[nr]->getResidents())<<" pracownikow."<<endl;
@@ -225,7 +225,7 @@ void Colony::nextRound(){
     string decyzja;
     cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (TAK / NIE)"<<RESET<<endl;
     cin>>decyzja;
-    if(decyzja=="TAK"){
+    if(decyzja=="TAK"||decyzja=="tak"||decyzja=="Tak"){
         cout<<YELLOW<<">>Rozpoczynanie procedury przejscia do kolejnej rundy..."<<RESET<<endl;
         cout<<endl;
         if(f_logisyka.nextRound(buildings)){

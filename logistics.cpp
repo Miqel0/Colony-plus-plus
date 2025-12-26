@@ -13,7 +13,7 @@ using namespace std;
 #include "logistics.h"
 //moze zmienc ze w basicowym na start dostaje budynek a nie ze dostaje tak o rzeczy
 //moze dodac ratusz? czy cos, co dodaje te parametry?
-Logistics::Logistics():reqEnergy(0),genEnergy(0),reqFood(10),food(1000),titan(0),stone(0){}
+Logistics::Logistics():reqEnergy(0),genEnergy(0),reqFood(20),food(1000),titan(0),stone(0){}
 
 void Logistics::prnt(){
     cout<<YELLOW<<" - - - - - - - - - - - Informacje LOGISTICS - - - - - - - - - "<<RESET<<endl;
