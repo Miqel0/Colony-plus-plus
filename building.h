@@ -43,8 +43,10 @@ class Building{
     string getName() const;
     int getDemandWorkers() const;
     TypBudynku getTyp() const;
+
     int getResidents() const;
     double getReqEnergy() const;
+    virtual int getPType() const;
 };
 
 #endif

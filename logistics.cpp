@@ -13,7 +13,7 @@ using namespace std;
 #include "logistics.h"
 //moze zmienc ze w basicowym na start dostaje budynek a nie ze dostaje tak o rzeczy
 //moze dodac ratusz? czy cos, co dodaje te parametry?
-Logistics::Logistics():reqEnergy(0),genEnergy(0),reqFood(10),food(90){}
+Logistics::Logistics():reqEnergy(0),genEnergy(0),reqFood(10),food(1000),titan(0),stone(0){}
 
 void Logistics::prnt(){
     cout<<YELLOW<<" - - - - - - - - - - - Informacje LOGISTICS - - - - - - - - - "<<RESET<<endl;
@@ -29,6 +29,8 @@ void Logistics::prnt(){
     }else{if(food<reqFood){
     cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
     }}}
+    cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<RESET<<endl;
+    cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<RESET<<endl;
     cout<<endl;
 }
 
@@ -46,6 +48,8 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                 cout<<endl;
 
                 double c_food=0;
+                double c_stone=0;
+                double c_titan=0;
 
                 //dodac pozostale surowce
                 for(const auto& b: budynki){
@@ -55,6 +59,17 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                         case TypBudynku::FARM:
                             c_food+=c;
                             break;
+                        case TypBudynku::PRODUCER:{
+                           int  a = b->getPType();
+                           cout<<a<<endl;
+                            if(a==1 || a==3){
+                                c_stone+=c;
+                            }
+                            if(a==2||a==3){
+                                c_titan+=c;
+                            }
+                            break;
+                        }
                         default:
                             break;
                     }
@@ -62,9 +77,21 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
 
                 cout<<endl;
                 cout<<YELLOW<<BOLD<<"- - - - - - Lacznie wyprodukowano - - - - - - "<<RESET<<endl;
-                cout<<YELLOW<<"Jedzenie: "<<c_food<<RESET<<endl;
+                if(c_food!=0){
+                    cout<<YELLOW<<"Jedzenie: "<<c_food<<RESET<<endl;
+
+                }
+                if(c_stone!=0){
+                    cout<<YELLOW<<"Kamien: "<<c_stone<<RESET<<endl;
+                }
+                if(c_titan!=0){
+                    cout<<YELLOW<<"Tytan: "<<c_titan<<RESET<<endl;
+                }
                 //dodac pozostale
                 food+=c_food;
+                stone+=c_stone;
+                titan+=c_titan;
+
 
                 cout<<endl;
                 return true;
@@ -84,6 +111,7 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
 
 
 }
+
 void Logistics::updateBudynek(Building* budynek){
 
     switch (budynek->getTyp())

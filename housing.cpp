@@ -30,3 +30,4 @@ void Housing::save(ofstream& plik)const{
     plik<<" "<<static_cast<int>(pType)<<" "<<residents<<" "<<endl;
 }
 
+int Housing::getPType() const{return static_cast<int>(pType);}

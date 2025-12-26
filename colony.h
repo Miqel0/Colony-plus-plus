@@ -16,6 +16,7 @@ using namespace std;
 #include "farm.h"
 #include "housing.h"
 #include "logistics.h"
+#include "producer.h"
 
 #ifndef colony_h
 #define colony_h
@@ -47,6 +48,7 @@ class Colony{
     void zbudujBudynek(TypBudynku typ);
     void zbudujBudynek(TypFarm typ);
     void zbudujBudynek(TypDomy typ);
+    void zbudujBudynek(TypProducer typ);
     
     void zburzBudynek(int nr); 
     
