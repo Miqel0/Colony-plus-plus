@@ -12,24 +12,23 @@
 using namespace std;
 #include "building.h"
 
-#ifndef farm_h
-#define farm_h
+#ifndef producer_h
+#define producer_h
 
-class Farm: public Building{
-    double foodGen;
-    TypFarm pType;
-    int time;
-    int curr_time;
+class Producer: public Building{
+    double stoneGen;
+    double titanGen;
+    TypProducer pType;
+
 
     public:
-    Farm();
-    Farm(string n,double k, double f,TypFarm t,int w,int tim);
+    Producer();
+    Producer(string n,double k, double s,TypProducer t,int w,double ti);
 
     double work() override;
     void prnt() const override;
     void save(ofstream& plik) const override;
     int getPType() const override;
-
     
 };
 

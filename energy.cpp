@@ -31,3 +31,4 @@ void Energy::save(ofstream& plik)const{
 }
 
 double Energy::getEnergy() const{return enGen;}
+int Energy::getPType() const{return static_cast<int>(pType);}

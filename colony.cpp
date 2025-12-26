@@ -18,8 +18,8 @@ Colony::Colony():tura(1),all_workers(5),demand_workers(0){}
 void Colony::prnt(){
     cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Informacje COLONY - - - - - - - - - "<<RESET<<endl;
     cout<<MAGENTA<<"Nr tury: "<<tura<<RESET<<endl;
-    if(demand_workers=all_workers){
-        cout<<RED<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
+    if(demand_workers==all_workers){
+        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
     }else{
         cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
     }
@@ -131,6 +131,35 @@ void Colony::zbudujBudynek(TypDomy typ){
     addBuilding(move(nowyBudynek));
 }
 
+
+
+void Colony::zbudujBudynek(TypProducer typ){
+    unique_ptr<Building> nowyBudynek;
+        
+    switch (typ){
+    case TypProducer::NIEZNANY:
+        nowyBudynek=make_unique<Producer>();
+        break;
+    case TypProducer::KOPALNIA_KAMIENIA:
+        nowyBudynek=make_unique<Producer>("Kopalnia_kamienia", 3, 5,TypProducer::KOPALNIA_KAMIENIA,4,0);
+        break;
+    case TypProducer::KOPALNIA_TYTANU:
+        nowyBudynek=make_unique<Producer>("Kopalnia_tytanu", 4, 0,TypProducer::KOPALNIA_TYTANU,4,5);
+        break;
+    case TypProducer::ZAAWANSOWANA_KOPALNIA:
+        nowyBudynek=make_unique<Producer>("Zaawansowana_kopalnia", 4, 5,TypProducer::ZAAWANSOWANA_KOPALNIA,6,5);
+        break;
+    }
+    if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
+        
+    }else{
+        f_logisyka.updateBudynek(nowyBudynek.get());
+        demand_workers+=nowyBudynek->getDemandWorkers();
+        addBuilding(move(nowyBudynek));
+    }
+}
+
 void Colony::zbudujBudynek(TypBudynku typ){
     unique_ptr<Building> nowyBudynek;
         
@@ -146,6 +175,9 @@ void Colony::zbudujBudynek(TypBudynku typ){
         break;
     case TypBudynku::HOUSING:
         nowyBudynek=make_unique<Housing>();
+        break;
+    case TypBudynku::PRODUCER:
+        nowyBudynek=make_unique<Producer>();
         break;
     }
     demand_workers+=nowyBudynek->getDemandWorkers();
@@ -297,6 +329,21 @@ void Colony::loadBuildings(string nazwa_plik) {
 
                     break;
                 
+                }
+                case TypBudynku::PRODUCER: {
+                    double s;
+                    double ti;
+                    plik >> w_ptype  >> s>>ti;
+                
+                    auto producer = make_unique<Producer>(w_n, k, s, static_cast<TypProducer>(w_ptype), w,ti);
+
+                    producer->setId(w_id); 
+                    
+                    nowyBudynek = move(producer);
+                    demand_workers+=nowyBudynek->getDemandWorkers();
+                    nowyBudynek->prnt();
+
+                    break;
                 }
             } 
 

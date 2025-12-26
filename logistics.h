@@ -26,6 +26,8 @@ class Logistics{
     double genEnergy;
     int reqFood;
     int food;
+    int stone;
+    int titan;
 
 
     public:

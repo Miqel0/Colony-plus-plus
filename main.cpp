@@ -17,6 +17,7 @@ using namespace std;
 #include "enums.h"
 #include "farm.h"
 #include "housing.h"
+#include "producer.h"
 
 int main() {
 
@@ -31,9 +32,11 @@ int main() {
     //kolonia.zbudujBudynek(TypEnergy::NIEZNANY);
     //kolonia.zbudujBudynek(TypBudynku::ENERGY);
     kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
-    kolonia.zbudujBudynek(TypFarm::POLE);
+    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    kolonia.zbudujBudynek(TypDomy::REZYDENCJA);
+    //kolonia.zbudujBudynek(TypFarm::POLE);
     //kolonia.zbudujBudynek(TypFarm::NIEZNANY);
-    kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
+    //kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
     //kolonia.zbudujBudynek(TypDomy::NIEZNANY);
     
     //kolonia.zbudujBudynek(TypDomy::BARAK);
@@ -52,9 +55,16 @@ int main() {
 
     //kolonia.zbudujBudynek()
     kolonia.zbudujBudynek(TypEnergy::WIATRAK);
-    
+    kolonia.zbudujBudynek(TypEnergy::WIATRAK);
     kolonia.zbudujBudynek(TypFarm::POLE);
-    kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
+    kolonia.zbudujBudynek(TypProducer::KOPALNIA_KAMIENIA);
+    kolonia.zbudujBudynek(TypProducer::KOPALNIA_TYTANU);
+    kolonia.zbudujBudynek(TypProducer::ZAAWANSOWANA_KOPALNIA);
+
+    kolonia.prntBuilding(8);
+    kolonia.prntBuilding(9);
+    kolonia.prntBuilding(10);
+    //kolonia.zbudujBudynek(TypFarm::SZKLARNIA);
     
     kolonia.prntBuildingsShort();
     kolonia.prnt();

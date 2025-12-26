@@ -25,6 +25,7 @@ class Housing: public Building{
     
     void prnt() const override;
     void save(ofstream& plik) const override;
+    int getPType() const override;
 
 
 };

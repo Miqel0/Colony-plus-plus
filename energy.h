@@ -26,6 +26,7 @@ class Energy: public Building{
     void prnt() const override;
     void save(ofstream& plik) const override;
 
+    int getPType() const override;
     double getEnergy() const;
 };
 

@@ -27,7 +27,7 @@ void Farm::prnt()const{
 
 void Farm::save(ofstream& plik)const{
     Building::save(plik);
-    plik<<" "<<static_cast<int>(pType)<<" "<<foodGen<<" "<<time<<endl;
+    plik<<" "<<static_cast<int>(pType)<<" "<<foodGen<<" "<<time<<endl; //codac curr time
 }
 
 
@@ -48,3 +48,5 @@ double Farm::work(){
     
 
 }
+
+int Farm::getPType() const{return static_cast<int>(pType);}
