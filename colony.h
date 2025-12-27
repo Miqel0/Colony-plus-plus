@@ -8,6 +8,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 #include "building.h"
@@ -23,6 +24,7 @@ using namespace std;
 
 class Colony{
     vector<unique_ptr<Building>> buildings;
+    string nazwa_kolonii;
     int tura;
 
     int all_workers;
@@ -54,8 +56,11 @@ class Colony{
     
     void saveBuildings(string nazwa_plik);
     void loadBuildings(string nazwa_plik);
+    void saveColony(string nazwa_plik);
 
+    void save();
 
+    void setNazwa();
     int getIloscBudynkow();
     int getAllWorkers();
     int getDemandWorkers();

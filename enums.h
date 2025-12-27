@@ -19,6 +19,8 @@ inline const std::string CYAN        = "\033[36m"; // Błękitny / Morski
 inline const std::string WHITE       = "\033[37m"; // Szary / Ciemnobiały
 
 
+inline const std::string CLEAR_SCREEN = "\033[2J\033[1;1H"; //czyszczenei ekranu 
+
 
 
 enum class TypBudynku{
@@ -48,7 +50,7 @@ enum class TypDomy{
     REZYDENCJA=2,
 };
 
-enum class TypProducer{
+enum class TypProducer{//moze zrobic przechowywanie danych jako tablica??
     NIEZNANY=0,
     KOPALNIA_KAMIENIA=1,
     KOPALNIA_TYTANU=2,

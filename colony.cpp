@@ -9,15 +9,43 @@
 #include <iomanip>
 #include <vector>
 
+
 using namespace std;
 #include "colony.h"
 
 
-Colony::Colony():tura(1),all_workers(10),demand_workers(0){}
+Colony::Colony():tura(1),all_workers(10),demand_workers(0),nazwa_kolonii("XX"){}
 
+void Colony::setNazwa(){
+    string nazwa;
+    if(nazwa_kolonii=="XX"){
+        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<">>"<<RESET;
+    }else{
+        cout<<YELLOW<<"Na co chcesz zmienic nazwe swojej kolonii? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<">>"<<RESET;
+    }
+    cin>>nazwa;
+      if(!nazwa.empty()){
+        nazwa_kolonii=nazwa;
+        cout<<YELLOW<<"Ustawiono nazwe kolonii na "<<BOLD<<nazwa<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
+      }else{
+        cout<<RED<<"Niestety nie mozesz tak nazwac swojej kolonii! \n"<<RESET<<endl;
+
+        if(nazwa_kolonii=="XX"){
+            cout<<YELLOW<<"Ustawiono nazwe kolonii na "<<BOLD<<"Kolonia"<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
+            nazwa_kolonii="Kolonia";
+        }else{
+            cout<<YELLOW<<"Zostawiono poprzednia nazwe kolonii:"<<BOLD<<nazwa_kolonii<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
+            
+        }
+      }
+    }
 void Colony::prnt(){
-    cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Informacje COLONY - - - - - - - - - "<<RESET<<endl;
-    cout<<MAGENTA<<"Nr tury: "<<tura<<RESET<<endl;
+    if(nazwa_kolonii=="XX"){
+        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Kolonia - - - - - - - - - "<<RESET<<endl;
+    }else{
+        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - "<<nazwa_kolonii<<" - - - - - - - - - "<<RESET<<endl;
+    }
+        cout<<MAGENTA<<"Nr tury: "<<tura<<RESET<<endl;
     if(demand_workers==all_workers){
         cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
     }else{
@@ -53,9 +81,9 @@ void Colony::prntBuildingsShort(){
 
 
 void Colony::addBuilding(unique_ptr<Building> b){
+    cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<b->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
     buildings.push_back(move(b));
-    //cout<<"Dodano nowy budynek!!"<<endl;
-    //cout<<endl;
+    cout<<endl;
 }
 
 
@@ -76,7 +104,7 @@ void Colony::zbudujBudynek(TypEnergy typ){
     }
     if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
         cout<<endl;
-        cout<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<endl;
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
         cout<<endl;
         
     }else{
@@ -101,7 +129,7 @@ void Colony::zbudujBudynek(TypFarm typ){
         break;
     }
     if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
-        cout<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<endl;
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
         
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
@@ -151,7 +179,7 @@ void Colony::zbudujBudynek(TypProducer typ){
         break;
     }
     if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
-        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
         
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
@@ -198,7 +226,7 @@ void Colony::zburzBudynek(int nr){
                 }
 
             }else{
-                cout<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<endl;
+                cout<<YELLOW<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<RESET<<endl;
                 demand_workers-=buildings[nr]->getDemandWorkers();
                 if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
                     all_workers-=buildings[nr]->getResidents();
@@ -207,7 +235,7 @@ void Colony::zburzBudynek(int nr){
                 buildings.erase(buildings.begin()+nr);
             }
         }else{
-            cout<<"Anulowano wyburzanie budynku."<<endl;
+            cout<<YELLOW<<"Anulowano wyburzanie budynku."<<RESET<<endl;
     }
     }else{
         cout<<RED<<"Blad: Nie ma budynku o takim ID: "<<nr<<RESET<<endl;
@@ -235,6 +263,7 @@ void Colony::nextRound(){
         }else{
             cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
             cout<<">>>>>>> PRZEGRANA!! <<<<<<<"<<RESET<<endl;
+            
         }
     }else{
         cout<<YELLOW<<"Anulowano przejscie do kolejnej rundy."<<RESET<<endl;
@@ -242,6 +271,22 @@ void Colony::nextRound(){
 }
 
 void Colony::update(){}
+
+void Colony::save(){
+    saveBuildings("save_buildings.txt");
+    saveColony("save_Colony.txt");
+    cout<<YELLOW<<"Gra została zapisana do pliku ."<<RESET<<endl;
+}
+
+void Colony::saveColony(string nazwa_plik){
+    ofstream plik(nazwa_plik);
+    if(plik.is_open()){
+        plik<<nazwa_kolonii<<tura<<all_workers<<demand_workers;
+        //dodac zapisywanie Logistics
+        }
+        plik.close();
+}
+
 
 void Colony::saveBuildings(string nazwa_plik){
     ofstream plik(nazwa_plik);
@@ -251,7 +296,7 @@ void Colony::saveBuildings(string nazwa_plik){
         }
         plik.close();
     }
-   cout<<"Gra została zapisana do pliku '"<<nazwa_plik<<"'.";
+
 }
 
 

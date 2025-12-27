@@ -38,7 +38,7 @@ class Logistics{
     
     void updateBudynek(Building* budynek);
     void updateZburzBudynek(Building* budynek);
-
+    //dodac gettery!!! 
 };
 
 #endif
