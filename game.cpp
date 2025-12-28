@@ -65,34 +65,30 @@ void Game::commands(){
     if(command=="show"){//Pokazywanie konkretych elementów:
         string arg1;
         ss>>arg1;
-        if(arg1=="kolonia"){//Danych o koloniii
-        kolonia.prnt();
-        }
-        else if(arg1=="budynki"){//Wszystkich budynków
-            string arg2;
-            ss>>arg2;
-            if(arg2=="full"){//Wszystkie budynki szczegółowo
-                kolonia.prntBuildings();
-            }
-            else{//Wszystkie budynki ale same nazwy
-            kolonia.prntBuildingsShort();
-            }
+        if(arg1=="full"){//Wszystkich budynków szczegolowo
+            kolonia.prntBuildings();
         }
         else if(isdigit(arg1[0])){//Sam jeden budynek szczegółowo
-            
-            
             kolonia.prntBuilding(stoi(arg1));
   
         }
         else if(arg1.empty()){
             kolonia.prntBuildingsShort();
         }
+        else{
+            cout<<RED<<"Nie ma takiej komendy!"<<RESET<<endl;
+        }
     }
     else if(command=="colony"){
         kolonia.prnt();//prostsza wersja kolonii
     }
     else if(command=="next"){//Kolejna runda
-        kolonia.nextRound();
+        if(!kolonia.nextRound()){
+            cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
+            cout<<">>>>>>> PRZEGRANA!! <<<<<<<"<<RESET<<endl;
+            running=false;
+        }
+
     }
     else if(command=="exit"){//Wyjscie z gry
 
@@ -153,7 +149,7 @@ void Game::commands(){
     else if(command=="destroy"){//Niszczenie konkretnego budynku.
         int arg1;
         if(ss>>arg1){
-            kolonia.zburzBudynek(arg1);
+            kolonia.zburzBudynek(arg1);//dac jak arg1 jest strigniem
         }
     }
     else if(command=="rename"){

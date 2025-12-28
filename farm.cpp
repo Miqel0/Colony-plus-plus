@@ -6,21 +6,21 @@ using namespace std;
 #include "farm.h"
 
 Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0),foodGen(0),time(0),curr_time(0),pType(TypFarm::NIEZNANY){}
-Farm::Farm(string n,double k, double f,TypFarm t,int w,int tim):Building(n,TypBudynku::FARM,k,w),foodGen(f),time(tim),curr_time(0),pType(t){}
+Farm::Farm(string n,double k, double f,TypFarm t,int w,int tim,int ct):Building(n,TypBudynku::FARM,k,w),foodGen(f),time(tim),curr_time(ct),pType(t){}
 
 void Farm::prnt()const{
     Building::prnt();
     cout<<YELLOW<<" - - - - - - - - - -  - Informacje FARM - - - - - - - - - "<<RESET<<endl;
     cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
     cout<<"Generowane jedzenie: "<<foodGen<<endl;
-    cout<<"Czas potrzebny do urośnięcia: "<<time<<endl;
+    cout<<"Czas potrzebny do urosniecia: "<<time<<" ("<<curr_time<<")"<<endl;
 
 }
 
 
 void Farm::save(ofstream& plik)const{
     Building::save(plik);
-    plik<<" "<<static_cast<int>(pType)<<" "<<foodGen<<" "<<time<<endl; //codac curr time
+    plik<<" "<<static_cast<int>(pType)<<" "<<foodGen<<" "<<time<<" "<<curr_time<<endl; 
 }
 
 

@@ -11,8 +11,10 @@ using namespace std;
 #include "farm.h"
 #include "housing.h"
 #include "producer.h"
+
 //moze zmienc ze w basicowym na start dostaje budynek a nie ze dostaje tak o rzeczy
 //moze dodac ratusz? czy cos, co dodaje te parametry?
+
 Logistics::Logistics():reqEnergy(0),genEnergy(0),reqFood(20),food(1000),titan(0),stone(0){}
 
 void Logistics::prnt(){
@@ -25,7 +27,7 @@ void Logistics::prnt(){
     if(food>2*reqFood){
         cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<")"<<RESET<<endl;
     }else{if(food>=reqFood & food<2*reqFood){
-        cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<")"<<RESET<<endl;
+        cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<") "<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
     }else{if(food<reqFood){
     cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
     }}}
@@ -42,12 +44,14 @@ void Logistics::prnt(){
 
 bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
 
-        if(genEnergy>=reqEnergy){
-            cout<<GREEN<<"Ilosc energii:"<<BOLD<< "ZGODNA"<<RESET<<endl;
-            if((food-reqFood)>=0){
-                cout<<GREEN<<"Ilosc jedzenia:"<<BOLD<< "ZGODNA"<<RESET<<endl;
-                cout<<endl;
-                food-=reqFood;
+        if((food-reqFood)>=0){
+            cout<<GREEN<<"Ilosc jedzenia:"<<BOLD<< "ZGODNA"<<RESET<<endl;
+            cout<<endl;
+            food-=reqFood;
+            
+            if(genEnergy>=reqEnergy){
+                cout<<GREEN<<"Ilosc energii:"<<BOLD<< "ZGODNA"<<RESET<<endl;
+
                 cout<<YELLOW<<">>Sprawdzanie produkcji budynkow:..."<<RESET<<endl;
                 cout<<endl;
 
@@ -106,19 +110,23 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                 return true;
 
             }else{
-                cout<<RED<<"Ilosc jedzenia:"<<BOLD<< "BRAK"<<RESET<<endl;
-                cout<<RED<<BOLD<<"Brak jedzenia!!"<<RESET<<endl;
-                cout<<endl;
+
+                cout<<RED<<"Ilosc energii:"<<BOLD<< "BRAK"<<RESET<<endl;
+                cout<<RED<<BOLD<<"Niewystarczajaca ilosc energi!!"<<RESET<<endl;
+
+                if((food-reqFood)>=0){
+                    cout<<GREEN<<"Ilosc jedzenia:"<<BOLD<< "ZGODNA"<<RESET<<endl;
+                    cout<<endl;
+                }
                 return false;
             }
         }else{
-            cout<<RED<<"Ilosc energii:"<<BOLD<< "BRAK"<<RESET<<endl;
-            cout<<RED<<BOLD<<"Brak energi!!"<<RESET<<endl;
+            cout<<RED<<"Ilosc jedzenia:"<<BOLD<< "BRAK"<<RESET<<endl;
+            cout<<RED<<BOLD<<"Brak jedzenia!!"<<RESET<<endl;
+            food=0;
             cout<<endl;
             return false;
         }
-
-
 }
 
 void Logistics::updateBudynek(Building* budynek){

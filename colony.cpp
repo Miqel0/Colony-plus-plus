@@ -18,15 +18,19 @@ Colony::Colony():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii
 void Colony::setNazwa(){
     string nazwa;
     if(nazwa_kolonii=="XX"){
-        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<">>"<<RESET;
+        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\nJezeli chcesz pominac ta czynnosc to napisz 'skip'\n"<<">>"<<RESET;
     }else{
         cout<<YELLOW<<"Na co chcesz zmienic nazwe swojej kolonii? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<">>"<<RESET;
     }
     cin>>nazwa;
-      if(!nazwa.empty()){
+    if(nazwa=="skip" & nazwa_kolonii=="XX"){
+        cout<<YELLOW<<"Pomijanie wyboru nazwy..."<<RESET<<endl;
+        
+    }
+    else if(!nazwa.empty()){
         nazwa_kolonii=nazwa;
         cout<<YELLOW<<"Ustawiono nazwe kolonii na "<<BOLD<<nazwa<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
-      }else{
+    }else{
         cout<<RED<<"Niestety nie mozesz tak nazwac swojej kolonii! \n"<<RESET<<endl;
 
         if(nazwa_kolonii=="XX"){
@@ -122,10 +126,10 @@ void Colony::zbudujBudynek(TypFarm typ){
         nowyBudynek=make_unique<Farm>();
         break;
     case TypFarm::POLE:
-        nowyBudynek=make_unique<Farm>("Pole", 3, 4,TypFarm::POLE,1,1);
+        nowyBudynek=make_unique<Farm>("Pole", 3, 4,TypFarm::POLE,1,1,0);
         break;
     case TypFarm::SZKLARNIA:
-        nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA,1,2);
+        nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA,1,2,0);
         break;
     }
     if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
@@ -254,7 +258,7 @@ int Colony::getIloscBudynkow(){
     return buildings.size();
 }
 
-void Colony::nextRound(){
+bool Colony::nextRound(){
     string decyzja;
     cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (TAK / NIE)"<<RESET<<endl;
     cin>>decyzja;
@@ -266,27 +270,38 @@ void Colony::nextRound(){
             tura++;
             ruch=0;
             cout<<endl;
-        }else{
-            cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
-            cout<<">>>>>>> PRZEGRANA!! <<<<<<<"<<RESET<<endl;
-            
+            return true;
+        }else if(f_logisyka.getFood()==0){
+            cout<<RED<<"KOLONIA UMARLA, Z POWODU BRAKU JEDZENIA!!"<<RESET<<endl;
+
+            return false;
+        } else if(f_logisyka.getGenEnergy()<f_logisyka.getReqEnergy()){
+            cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RED<<" Ale..."<<RESET<<endl;
+            cout<<RED<<BOLD<<"Z powod braku energii zaden z budynkow nie wykonal pracy!"<<RESET<<endl;
+            tura++;
+            ruch=0;
+            cout<<endl;
+            return true;
+        } else{
+            return false;
         }
     }else{
         cout<<YELLOW<<"Anulowano przejscie do kolejnej rundy."<<RESET<<endl;
+        return true;
     }
 }
 
 void Colony::update(){}
 
 void Colony::save(){
-    saveBuildings("save_buildings.txt");
-    saveColony("save_colony.txt");
+    saveBuildings("test_buildings.txt");
+    saveColony("test_colony.txt");
     cout<<YELLOW<<"Gra zostala zapisana do pliku ."<<RESET<<endl;
 }
 
 void Colony::load(){
-    loadBuildings("save_buildings.txt");
-    loadColony("save_colony.txt");
+    loadBuildings("test_buildings.txt");
+    loadColony("test_colony.txt");
     cout<<CLEAR_SCREEN<<endl;
     cout<<YELLOW<<"Gra zostala wczytana z pliku."<<RESET<<endl;
 }
@@ -357,10 +372,10 @@ void Colony::loadBuildings(string nazwa_plik) {
 
                 case TypBudynku::FARM: {
                     double f;
-                    int tim;
-                    plik >> w_ptype  >> f>>tim;
+                    int tim,ct;
+                    plik >> w_ptype  >> f>>tim>>ct;
                 
-                    auto farm = make_unique<Farm>(w_n, k, f, static_cast<TypFarm>(w_ptype), w,tim);
+                    auto farm = make_unique<Farm>(w_n, k, f, static_cast<TypFarm>(w_ptype), w,tim,ct);
 
                     farm->setId(w_id); 
                     
