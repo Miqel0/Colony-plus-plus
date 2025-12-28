@@ -29,8 +29,12 @@ void Logistics::prnt(){
     }else{if(food<reqFood){
     cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
     }}}
-    cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<RESET<<endl;
-    cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<RESET<<endl;
+    if(stone!=0){
+        cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<RESET<<endl;
+    }
+    if(titan!=0){
+        cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<RESET<<endl;
+    }
     cout<<endl;
 }
 
@@ -163,4 +167,22 @@ void Logistics::updateZburzBudynek(Building* budynek){
     default:
         break;
     }
+}
+
+
+
+double Logistics::getReqEnergy() const{return reqEnergy;}
+double Logistics::getGenEnergy() const{return genEnergy;}
+double Logistics::getReqFood() const{return reqFood;}
+double Logistics::getFood() const{return food;}
+int Logistics::getStone() const{return stone;}
+int Logistics::getTitan() const{return titan;}
+
+void Logistics:: load(double re,double ge,double rf,double f,int s,int ti){
+    reqEnergy = re;
+    genEnergy = ge;
+    reqFood = rf;
+    food = f;    
+    stone = s;
+    titan = ti;
 }

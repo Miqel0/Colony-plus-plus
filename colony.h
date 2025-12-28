@@ -57,8 +57,10 @@ class Colony{
     void saveBuildings(string nazwa_plik);
     void loadBuildings(string nazwa_plik);
     void saveColony(string nazwa_plik);
+    void loadColony(string nazwa_plik);
 
     void save();
+    void load();//nie wiadomo dlaczego load printuje wszsytkie budynki!!!
 
     void setNazwa();
     int getIloscBudynkow();

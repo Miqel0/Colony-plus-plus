@@ -274,17 +274,24 @@ void Colony::update(){}
 
 void Colony::save(){
     saveBuildings("save_buildings.txt");
-    saveColony("save_Colony.txt");
-    cout<<YELLOW<<"Gra została zapisana do pliku ."<<RESET<<endl;
+    saveColony("save_colony.txt");
+    cout<<YELLOW<<"Gra zostala zapisana do pliku ."<<RESET<<endl;
+}
+
+void Colony::load(){
+    loadBuildings("save1_buildings.txt");
+    loadColony("save1_colony.txt");
+    cout<<CLEAR_SCREEN<<endl;
+    cout<<YELLOW<<"Gra zostala wczytana z pliku ."<<RESET<<endl;
 }
 
 void Colony::saveColony(string nazwa_plik){
     ofstream plik(nazwa_plik);
     if(plik.is_open()){
-        plik<<nazwa_kolonii<<tura<<all_workers<<demand_workers;
-        //dodac zapisywanie Logistics
-        }
+        plik<<nazwa_kolonii<<" "<<tura<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
+
         plik.close();
+        }
 }
 
 
@@ -306,9 +313,7 @@ void Colony::loadBuildings(string nazwa_plik) {
 
     if (plik.is_open()) {
         buildings.clear();
-        
-
-
+    
     // plik<<static_cast<int>(type)<<" "<<name<<" "<<id<<" "<<kosztEnergii<<" "<<workers;
 
     //farm:     plik<<" "<<static_cast<int>(pType)<<" "<<foodGen<<" "<<time<<endl;
@@ -400,9 +405,28 @@ void Colony::loadBuildings(string nazwa_plik) {
             buildings.push_back(move(nowyBudynek));
         } 
         Building::updateLicznik(maxSaved);
+        plik.close();
     } 
-    plik.close();
 } 
+
+void Colony::loadColony(string nazwa_plik){
+    ifstream plik(nazwa_plik);
+    //plik<<nazwa_kolonii<<tura<<all_workers<<demand_workers<<f_logisyka.getGenEnergy()<<f_logisyka.getReqEnergy()<<f_logisyka.getReqFood()<<f_logisyka.getFood()<<f_logisyka.getStone()<<f_logisyka.getTitan()<<endl;
+    string nazwa;
+    int t,aw,dw,s,ti;
+    double ge,re,rf, f;
+
+    if (plik.is_open()) {
+        plik>>nazwa>>t>>aw>>dw>>ge>>re>>rf>>f>>s>>ti;
+        plik.close();
+        f_logisyka.load(re,ge,rf,f,s,ti);
+        nazwa_kolonii=nazwa;
+        demand_workers=dw;
+        all_workers=aw;
+        tura =t;
+
+    }
+}
 
 
 int Colony::getAllWorkers(){return all_workers;}

@@ -98,6 +98,9 @@ void Game::commands(){
             kolonia.prntBuildingsShort();
         }
     }
+    else if(command=="colony"){
+        kolonia.prnt();//prostsza wersja kolonii
+    }
     else if(command=="next"){//Kolejna runda
         kolonia.nextRound();
     }
@@ -150,6 +153,12 @@ void Game::commands(){
     }
     else if(command=="rename"){
         kolonia.setNazwa();
+    }
+    else if(command=="save"){
+        kolonia.save();
+    }
+    else if(command=="load"){
+        kolonia.load();
     }
 
     else{//Zła komenda

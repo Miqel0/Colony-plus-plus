@@ -24,8 +24,8 @@ class Logistics{
 
     double reqEnergy;
     double genEnergy;
-    int reqFood;
-    int food;
+    double reqFood;
+    double food;
     int stone;
     int titan;
 
@@ -38,7 +38,15 @@ class Logistics{
     
     void updateBudynek(Building* budynek);
     void updateZburzBudynek(Building* budynek);
-    //dodac gettery!!! 
+    
+    double getReqEnergy() const;
+    double getGenEnergy() const;
+    double getReqFood() const;
+    double getFood() const;
+    int getStone() const;
+    int getTitan() const;
+    
+    void load(double re,double ge,double rf,double f,int s,int ti);
 };
 
 #endif
