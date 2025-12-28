@@ -1,19 +1,12 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-
-using namespace std;
-#include "enums.h"
-
 #ifndef building_h
 #define building_h
+
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+#include "enums.h"
 
 class Building{
     protected:

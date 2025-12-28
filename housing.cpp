@@ -1,13 +1,6 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <string>
-#include <memory>
-#include <cstring>
 #include <iostream>
-#include <iomanip>
-#include <vector>
+#include <string>
+#include <fstream>
 
 using namespace std;
 #include "housing.h"
@@ -17,7 +10,7 @@ Housing::Housing(string n,double k, int r,TypDomy t,int w):Building(n,TypBudynku
 
 void Housing::prnt()const{
     Building::prnt();
-    cout<<YELLOW<<" - - - - - - - - - -  - Informacje HOUSING - - - - - - - - - "<<RESET<<endl;
+    cout<<YELLOW<<" - - - - - - - - - - - Informacje HOUSING - - - - - - - - - "<<RESET<<endl;
     cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
     cout<<"Liczba mieszkancow: "<<residents<<endl;
     
