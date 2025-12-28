@@ -39,10 +39,10 @@ double Producer::work(){
             cout<<"Wygenerowany tytan: "<<titanGen<<endl;
             return stoneGen;
         case TypProducer::KOPALNIA_KAMIENIA:
-            cout<<"Wygenerowany kamien: "<<stoneGen<<endl;
+            cout<<GREEN<<"Wygenerowany kamien: "<<stoneGen<<RESET<<endl;
             return stoneGen;
         case TypProducer::KOPALNIA_TYTANU:
-            cout<<"Wygenerowany tytan: "<<titanGen<<endl;
+            cout<<GREEN<<"Wygenerowany tytan: "<<titanGen<<RESET<<endl;
             return titanGen;
         default:
         return 0;

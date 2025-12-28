@@ -1,0 +1,10 @@
+1 Panele_sloneczne 1 0 3 2 50 
+1 Wiatrak 2 0 5 1 20 
+3 Barak 3 0 0 1 5 
+3 Rezydencja 4 0 0 2 8 
+2 Pole 5 3 1 2 4 1 0
+2 Szklarnia 6 4 1 1 3 2 0
+4 Kopalnia_kamienia 7 3 4 1 5 0
+4 Kopalnia_tytanu 8 4 4 2 0 5
+3 Rezydencja 10 0 0 2 8 
+4 Zaawansowana_kopalnia 11 4 6 3 5 5

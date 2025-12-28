@@ -15,7 +15,7 @@ class Farm: public Building{
 
     public:
     Farm();
-    Farm(string n,double k, double f,TypFarm t,int w,int tim);
+    Farm(string n,double k, double f,TypFarm t,int w,int tim,int ct);
 
     double work() override;
     void prnt() const override;

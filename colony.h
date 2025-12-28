@@ -29,7 +29,7 @@ class Colony{
     void prntBuildings();
     void prntBuildingsShort();
 
-    void nextRound();
+    bool nextRound();
     void update();
 
 
