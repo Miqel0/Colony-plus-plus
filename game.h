@@ -1,23 +1,13 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <sstream>
-#include <map>
-
-using namespace std;
-#include "building.h"
-#include "colony.h"
-#include "enums.h"
-
 #ifndef game_h
 #define game_h
+
+#include <map>
+#include <string>
+
+using namespace std;
+
+#include "enums.h"
+#include "colony.h"
 
 class Game{
     Colony kolonia;

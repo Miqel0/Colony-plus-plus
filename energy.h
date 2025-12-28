@@ -1,19 +1,12 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-
-using namespace std;
-#include "building.h"
-
 #ifndef energy_h
 #define energy_h
+
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+#include "building.h"
 
 class Energy: public Building{
     double enGen;

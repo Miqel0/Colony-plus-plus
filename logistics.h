@@ -1,27 +1,17 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-
-using namespace std;
-#include "building.h"
-#include "enums.h"
-#include "energy.h"
-#include "farm.h"
-#include "housing.h"
-
 #ifndef logistics_h
 #define logistics_h
 
+#include <vector>
+#include <memory>
+#include <string>
+
+using namespace std;
+
+#include "building.h"
+
 class Logistics{
     
-
+    
     double reqEnergy;
     double genEnergy;
     double reqFood;

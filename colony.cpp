@@ -1,20 +1,19 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
 #include <string>
-#include <memory>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
 #include <vector>
-
+#include <memory>
+#include <iostream>
+#include <fstream>
 
 using namespace std;
+
 #include "colony.h"
+#include "farm.h"
+#include "energy.h"
+#include "housing.h"
+#include "producer.h"
 
 
-Colony::Colony():tura(1),all_workers(10),demand_workers(0),nazwa_kolonii("XX"){}
+Colony::Colony():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"){}
 
 void Colony::setNazwa(){
     string nazwa;
@@ -45,7 +44,7 @@ void Colony::prnt(){
     }else{
         cout<<YELLOW<<BOLD<<" - - - - - - - - - - - "<<nazwa_kolonii<<" - - - - - - - - - "<<RESET<<endl;
     }
-        cout<<MAGENTA<<"Nr tury: "<<tura<<RESET<<endl;
+        cout<<MAGENTA<<"Nr tury: "<<tura<<"           Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
     if(demand_workers==all_workers){
         cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
     }else{
@@ -81,9 +80,9 @@ void Colony::prntBuildingsShort(){
 
 
 void Colony::addBuilding(unique_ptr<Building> b){
-    cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<b->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
+    //cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<b->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
     buildings.push_back(move(b));
-    cout<<endl;
+    //cout<<endl;
 }
 
 
@@ -110,6 +109,7 @@ void Colony::zbudujBudynek(TypEnergy typ){
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
         demand_workers+=nowyBudynek->getDemandWorkers();
+        cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
         addBuilding(move(nowyBudynek));
     }
 }
@@ -134,6 +134,7 @@ void Colony::zbudujBudynek(TypFarm typ){
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
         demand_workers+=nowyBudynek->getDemandWorkers();
+        cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
         addBuilding(move(nowyBudynek));
     }
 }
@@ -156,6 +157,7 @@ void Colony::zbudujBudynek(TypDomy typ){
     
     f_logisyka.updateBudynek(nowyBudynek.get());
     all_workers+=nowyBudynek->getResidents();
+    cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
     addBuilding(move(nowyBudynek));
 }
 
@@ -184,11 +186,13 @@ void Colony::zbudujBudynek(TypProducer typ){
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
         demand_workers+=nowyBudynek->getDemandWorkers();
+        cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
         addBuilding(move(nowyBudynek));
     }
 }
 
 void Colony::zbudujBudynek(TypBudynku typ){
+
     unique_ptr<Building> nowyBudynek;
         
     switch (typ){
@@ -209,6 +213,7 @@ void Colony::zbudujBudynek(TypBudynku typ){
         break;
     }
     demand_workers+=nowyBudynek->getDemandWorkers();
+    cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
     addBuilding(move(nowyBudynek));
 }
 
@@ -259,6 +264,7 @@ void Colony::nextRound(){
         if(f_logisyka.nextRound(buildings)){
             cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RESET<<endl;
             tura++;
+            ruch=0;
             cout<<endl;
         }else{
             cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
@@ -279,16 +285,16 @@ void Colony::save(){
 }
 
 void Colony::load(){
-    loadBuildings("save1_buildings.txt");
-    loadColony("save1_colony.txt");
+    loadBuildings("save_buildings.txt");
+    loadColony("save_colony.txt");
     cout<<CLEAR_SCREEN<<endl;
-    cout<<YELLOW<<"Gra zostala wczytana z pliku ."<<RESET<<endl;
+    cout<<YELLOW<<"Gra zostala wczytana z pliku."<<RESET<<endl;
 }
 
 void Colony::saveColony(string nazwa_plik){
     ofstream plik(nazwa_plik);
     if(plik.is_open()){
-        plik<<nazwa_kolonii<<" "<<tura<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
+        plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
 
         plik.close();
         }
@@ -344,7 +350,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     
                     nowyBudynek = move(energia);
                     demand_workers+=nowyBudynek->getDemandWorkers();
-                    nowyBudynek->prnt();
+                    //nowyBudynek->prnt();
 
                     break; 
                 }
@@ -360,7 +366,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     
                     nowyBudynek = move(farm);
                     demand_workers+=nowyBudynek->getDemandWorkers();
-                    nowyBudynek->prnt();
+                    //nowyBudynek->prnt();
 
                     break;
                 }
@@ -368,14 +374,14 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int r;
                     plik >> w_ptype >> r;
                 
-                    auto energia = make_unique<Housing>(w_n, k, r, static_cast<TypDomy>(w_ptype), w);
+                    auto housing = make_unique<Housing>(w_n, k, r, static_cast<TypDomy>(w_ptype), w);
                 
-                    energia->setId(w_id); 
+                    housing->setId(w_id); 
                     
-                    nowyBudynek = move(energia);
+                    nowyBudynek = move(housing);
                     
                     all_workers+=nowyBudynek->getResidents(); //jak dodawac te głupie zmienne
-                    nowyBudynek->prnt();
+                    //nowyBudynek->prnt();
 
                     break;
                 
@@ -391,7 +397,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     
                     nowyBudynek = move(producer);
                     demand_workers+=nowyBudynek->getDemandWorkers();
-                    nowyBudynek->prnt();
+                    //nowyBudynek->prnt();
 
                     break;
                 }
@@ -411,19 +417,20 @@ void Colony::loadBuildings(string nazwa_plik) {
 
 void Colony::loadColony(string nazwa_plik){
     ifstream plik(nazwa_plik);
-    //plik<<nazwa_kolonii<<tura<<all_workers<<demand_workers<<f_logisyka.getGenEnergy()<<f_logisyka.getReqEnergy()<<f_logisyka.getReqFood()<<f_logisyka.getFood()<<f_logisyka.getStone()<<f_logisyka.getTitan()<<endl;
+    //plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
     string nazwa;
-    int t,aw,dw,s,ti;
+    int t,aw,dw,s,ti,r;
     double ge,re,rf, f;
 
     if (plik.is_open()) {
-        plik>>nazwa>>t>>aw>>dw>>ge>>re>>rf>>f>>s>>ti;
+        plik>>nazwa>>t>>r>>aw>>dw>>ge>>re>>rf>>f>>s>>ti;
         plik.close();
         f_logisyka.load(re,ge,rf,f,s,ti);
         nazwa_kolonii=nazwa;
         demand_workers=dw;
         all_workers=aw;
         tura =t;
+        ruch =r;
 
     }
 }
@@ -431,3 +438,6 @@ void Colony::loadColony(string nazwa_plik){
 
 int Colony::getAllWorkers(){return all_workers;}
 int Colony::getDemandWorkers(){return demand_workers;}
+int Colony:: getRuch(){return ruch;}
+
+void Colony::setRuch(int r){ruch =r;}

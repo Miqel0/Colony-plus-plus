@@ -1,19 +1,13 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-
-using namespace std;
-#include "building.h"
-
 #ifndef producer_h
 #define producer_h
+
+#include <string>
+#include <fstream>
+
+
+using namespace std;
+
+#include "building.h"
 
 class Producer: public Building{
     double stoneGen;

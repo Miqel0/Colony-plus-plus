@@ -1,13 +1,6 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
 #include <fstream>
 #include <string>
-#include <memory>
-#include <cstring>
 #include <iostream>
-#include <iomanip>
-#include <vector>
 
 using namespace std;
 #include "energy.h"
@@ -21,8 +14,6 @@ void Energy::prnt()const{
     cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
     cout<<"Generowana energia: "<<enGen<<endl;
     
-
-
 }
 
 void Energy::save(ofstream& plik)const{

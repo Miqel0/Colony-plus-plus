@@ -1,16 +1,16 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
 #include <string>
 #include <memory>
-#include <cstring>
 #include <iostream>
 #include <iomanip>
 #include <vector>
 
 using namespace std;
+
 #include "logistics.h"
+#include "energy.h"
+#include "farm.h"
+#include "housing.h"
+#include "producer.h"
 //moze zmienc ze w basicowym na start dostaje budynek a nie ze dostaje tak o rzeczy
 //moze dodac ratusz? czy cos, co dodaje te parametry?
 Logistics::Logistics():reqEnergy(0),genEnergy(0),reqFood(20),food(1000),titan(0),stone(0){}
@@ -64,12 +64,17 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                             c_food+=c;
                             break;
                         case TypBudynku::PRODUCER:{
-                           int  a = b->getPType();
-                           cout<<a<<endl;
-                            if(a==1 || a==3){
+                            int kamien = static_cast<int>(TypProducer::KOPALNIA_KAMIENIA);
+                            int tytan  = static_cast<int>(TypProducer::KOPALNIA_TYTANU);
+                            int zaaw   = static_cast<int>(TypProducer::ZAAWANSOWANA_KOPALNIA);
+                            
+                            int  a = b->getPType();
+
+                            cout<<a<<endl;
+                            if(a==kamien || a==zaaw){
                                 c_stone+=c;
                             }
-                            if(a==2||a==3){
+                            if(a==tytan||a==zaaw){
                                 c_titan+=c;
                             }
                             break;
@@ -136,6 +141,10 @@ void Logistics::updateBudynek(Building* budynek){
         reqEnergy+=budynek->getReqEnergy();
         break;
     }
+    case TypBudynku::PRODUCER:
+        reqEnergy+=budynek->getReqEnergy();
+        break;
+    
     default:
         break;
     }
@@ -164,6 +173,9 @@ void Logistics::updateZburzBudynek(Building* budynek){
         reqEnergy-=budynek->getReqEnergy();
         break;
         }
+    case TypBudynku::PRODUCER:
+        reqEnergy-=budynek->getReqEnergy();
+        break;
     default:
         break;
     }

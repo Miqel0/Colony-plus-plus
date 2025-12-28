@@ -1,13 +1,6 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <string>
-#include <memory>
-#include <cstring>
 #include <iostream>
-#include <iomanip>
-#include <vector>
+#include <string>
+#include <fstream>
 
 using namespace std;
 #include "farm.h"

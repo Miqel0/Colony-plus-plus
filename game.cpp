@@ -1,15 +1,8 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <string>
-#include <memory>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
 #include <sstream>
+#include <iostream>
 #include <map>
+#include <string>
+#include <cctype>
 
 using namespace std;
 #include "game.h"
@@ -85,14 +78,11 @@ void Game::commands(){
             kolonia.prntBuildingsShort();
             }
         }
-        else if(arg1=="budynek"){//Sam jeden budynek szczegółowo
-            int arg2;
-            if(ss>>arg2){
-                kolonia.prntBuilding(arg2);
-            }else{
-                cout<<RED<<BOLD<<"BLAD!"<<RESET<<RED<<" Podaj poprawny nr budynku, ktorego chcesz zobaczyc!!\n";
-                cout<<endl;
-            }
+        else if(isdigit(arg1[0])){//Sam jeden budynek szczegółowo
+            
+            
+            kolonia.prntBuilding(stoi(arg1));
+  
         }
         else if(arg1.empty()){
             kolonia.prntBuildingsShort();
@@ -129,6 +119,11 @@ void Game::commands(){
 
 
     else if(command=="build"){//Budowanie konkretnego budynku 
+        if(kolonia.getRuch()==3){
+            cout<<YELLOW<<"Juz wykorzystales "<<BOLD<<"3/3"<<NO_BOLD<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej rundy!"<<RESET<<endl;
+            return;
+        }
+
         string arg1;
         ss>>arg1;
         if(stringToBudynku.count(arg1)){
@@ -143,6 +138,16 @@ void Game::commands(){
             kolonia.zbudujBudynek(stringToProducer[arg1]);
         }else{
             cout<<RED<<"Nie istnieje taki budynek!"<<RESET<<endl;
+            return;
+        
+        }
+        kolonia.setRuch(kolonia.getRuch()+1);
+        if(kolonia.getRuch()==3){
+            cout<<YELLOW<<"Wlasnie wykorzystales "<<BOLD<<MAGENTA<<"3/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej tury!"<<RESET<<endl;
+            
+        }else{
+            cout<<YELLOW<<"Wykorzystales "<<BOLD<<MAGENTA<<kolonia.getRuch()<<"/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!!" <<RESET<<endl;
+         
         }
     }
     else if(command=="destroy"){//Niszczenie konkretnego budynku.

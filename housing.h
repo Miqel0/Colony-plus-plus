@@ -1,19 +1,12 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-
-using namespace std;
-#include "building.h"
-
 #ifndef housing_h
 #define housing_h
+
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+#include "building.h"
 
 class Housing: public Building{
 

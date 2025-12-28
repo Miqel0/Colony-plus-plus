@@ -1,31 +1,20 @@
-#include <algorithm>
-#include <cstdlib>
-#include <ctime>
-#include <fstream>
-#include <memory>
-#include <string>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
-#include <sstream>
-
-using namespace std;
-#include "building.h"
-#include "enums.h"
-#include "energy.h"
-#include "farm.h"
-#include "housing.h"
-#include "logistics.h"
-#include "producer.h"
-
 #ifndef colony_h
 #define colony_h
+
+#include <string>
+#include <memory>
+#include <vector>
+
+using namespace std;
+
+#include "building.h"
+#include "logistics.h"
 
 class Colony{
     vector<unique_ptr<Building>> buildings;
     string nazwa_kolonii;
     int tura;
+    int ruch;
 
     int all_workers;
     int demand_workers;
@@ -60,13 +49,17 @@ class Colony{
     void loadColony(string nazwa_plik);
 
     void save();
-    void load();//nie wiadomo dlaczego load printuje wszsytkie budynki!!!
+    void load();
 
+    
+    void setRuch(int r);
     void setNazwa();
+
+    int getRuch();
     int getIloscBudynkow();
     int getAllWorkers();
     int getDemandWorkers();
-    
+
     
     
 };
