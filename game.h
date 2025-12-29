@@ -23,6 +23,7 @@ class Game{
     Game();
     void run();
     void commands();
+    void prntBudynki();
 
 
 };

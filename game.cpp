@@ -3,6 +3,9 @@
 #include <map>
 #include <string>
 #include <cctype>
+#include <iomanip>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 #include "game.h"
@@ -35,9 +38,9 @@ Game::Game():running(true){
     stringToProducer["zaawansowana_kopalnia"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
     
     // Skróty 
-    stringToProducer["kamien"]   = TypProducer::KOPALNIA_KAMIENIA;
-    stringToProducer["tytan"]    = TypProducer::KOPALNIA_TYTANU;
-    stringToProducer["zaaw"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
+    stringToProducer["kop_kamien"]   = TypProducer::KOPALNIA_KAMIENIA;
+    stringToProducer["kop_tytan"]    = TypProducer::KOPALNIA_TYTANU;
+    stringToProducer["zaaw_kop"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
     
 }
 
@@ -123,21 +126,34 @@ void Game::commands(){
         string arg1;
         ss>>arg1;
         if(stringToBudynku.count(arg1)){
-            kolonia.zbudujBudynek(stringToBudynku[arg1]);
+            if(kolonia.zbudujBudynek(stringToBudynku[arg1])){
+                kolonia.setRuch(kolonia.getRuch()+1);
+            }
         }else if(stringToEnergy.count(arg1)){
-            kolonia.zbudujBudynek(stringToEnergy[arg1]);
+            if(kolonia.zbudujBudynek(stringToEnergy[arg1])){
+                kolonia.setRuch(kolonia.getRuch()+1);
+            }
         }else if(stringToDomy.count(arg1)){
-            kolonia.zbudujBudynek(stringToDomy[arg1]);
+            if(kolonia.zbudujBudynek(stringToDomy[arg1])){
+                kolonia.setRuch(kolonia.getRuch()+1);
+            }
         }else if(stringToFarm.count(arg1)){
-            kolonia.zbudujBudynek(stringToFarm[arg1]);
+            if(kolonia.zbudujBudynek(stringToFarm[arg1])){
+                kolonia.setRuch(kolonia.getRuch()+1);
+            }
         }else if(stringToProducer.count(arg1)){
-            kolonia.zbudujBudynek(stringToProducer[arg1]);
-        }else{
+            if(kolonia.zbudujBudynek(stringToProducer[arg1])){
+                kolonia.setRuch(kolonia.getRuch()+1);
+            }
+        }else if(arg1.empty()){
+            prntBudynki();
+            return;
+        }
+        else{
             cout<<RED<<"Nie istnieje taki budynek!"<<RESET<<endl;
             return;
-        
         }
-        kolonia.setRuch(kolonia.getRuch()+1);
+        
         if(kolonia.getRuch()==3){
             cout<<YELLOW<<"Wlasnie wykorzystales "<<BOLD<<MAGENTA<<"3/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej tury!"<<RESET<<endl;
             
@@ -167,3 +183,58 @@ void Game::commands(){
         
     }
 }
+
+void Game::prntBudynki(){
+    vector<string> y_energy   = {"Wiatrak", "Panele"};
+    vector<string> y_farm     = {"Szklarnia", "Pole"};
+    vector<string> y_housing  = {"Barak", "Rezydencja"};
+    vector<string> y_producer = {"Kop_Kamien", "Kop_Tytan", "Zaaw_kop"};
+    //tu dodawac jak jakies nowe klasy / budynki
+
+    vector<vector<string>> colums= {y_energy, y_farm, y_housing, y_producer};
+    vector<string> headers={"ENERGY","FARM","HOUSING","PRODUCER"};//pamietaco o dodaniu tutaj jak nowe
+    const int width=15;
+    const string sep="|";
+    cout<<endl;
+    cout << YELLOW << BOLD << "DOSTEPNE BUDYNKI:" << RESET << endl;
+    //linia przed
+    for (int i = 0; i < 4; i++) {
+        cout << YELLOW<<"+" << string(width + 1, '-')<<RESET;
+    }
+        cout << YELLOW<<"+" << RESET<<endl;
+        cout<<endl;
+    for(const auto&h:headers){
+        cout<<YELLOW<<sep<<" "<<BOLD<<BLUE<<left<<setw(width)<<h<<RESET;
+    }
+    //linia gorna
+    cout<<YELLOW<<sep<<RESET<<endl;
+    for (int i = 0; i < 4; i++) {
+        cout << YELLOW<<sep << string(width + 1, '-')<<RESET; 
+    }
+    cout <<YELLOW<< sep << RESET<<endl;
+    int size=0;
+    for(const auto&col:colums){
+        if(col.size()>size){
+            size=col.size();
+        }
+    }
+    for(int wiersz=0;wiersz<size;wiersz++){
+        cout <<YELLOW<< sep << RESET;
+        for(const auto& col:colums){
+            if(wiersz<col.size()){
+                cout<<" "<<left<<setw(width)<<col[wiersz];
+            }
+            else{
+                cout<<" "<<setw(width)<<"";
+            }
+            cout <<YELLOW<< sep << RESET; 
+        }
+        cout <<endl;
+    }
+    //linia dol
+    for (int i = 0; i < 4; i++) {
+        cout << YELLOW<<"+" << string(width + 1, '-')<<RESET;
+    }
+        cout << YELLOW<<"+" << RESET<<endl;
+        cout<<endl;
+}   

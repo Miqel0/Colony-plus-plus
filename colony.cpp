@@ -13,50 +13,12 @@ using namespace std;
 #include "producer.h"
 
 
-Colony::Colony():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"){}
+Colony::Colony(){}
 
-void Colony::setNazwa(){
-    string nazwa;
-    if(nazwa_kolonii=="XX"){
-        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\nJezeli chcesz pominac ta czynnosc to napisz 'skip'\n"<<">>"<<RESET;
-    }else{
-        cout<<YELLOW<<"Na co chcesz zmienic nazwe swojej kolonii? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<">>"<<RESET;
-    }
-    cin>>nazwa;
-    if(nazwa=="skip" & nazwa_kolonii=="XX"){
-        cout<<YELLOW<<"Pomijanie wyboru nazwy..."<<RESET<<endl;
-        
-    }
-    else if(!nazwa.empty()){
-        nazwa_kolonii=nazwa;
-        cout<<YELLOW<<"Ustawiono nazwe kolonii na "<<BOLD<<nazwa<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
-    }else{
-        cout<<RED<<"Niestety nie mozesz tak nazwac swojej kolonii! \n"<<RESET<<endl;
+void Colony::setNazwa(){f_logisyka.setNazwa();}
 
-        if(nazwa_kolonii=="XX"){
-            cout<<YELLOW<<"Ustawiono nazwe kolonii na "<<BOLD<<"Kolonia"<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
-            nazwa_kolonii="Kolonia";
-        }else{
-            cout<<YELLOW<<"Zostawiono poprzednia nazwe kolonii:"<<BOLD<<nazwa_kolonii<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
-            
-        }
-      }
-    }
-void Colony::prnt(){
-    if(nazwa_kolonii=="XX"){
-        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Kolonia - - - - - - - - - "<<RESET<<endl;
-    }else{
-        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - "<<nazwa_kolonii<<" - - - - - - - - - "<<RESET<<endl;
-    }
-        cout<<MAGENTA<<"Nr tury: "<<tura<<"           Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
-    if(demand_workers==all_workers){
-        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
-    }else{
-        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
-    }
-    
-    f_logisyka.prnt();
-}
+void Colony::prnt(){f_logisyka.prnt();}
+
 
 void Colony::prntBuilding(int nr){
     if(nr>=0 && nr <= buildings.size()){
@@ -90,7 +52,7 @@ void Colony::addBuilding(unique_ptr<Building> b){
 }
 
 
-void Colony::zbudujBudynek(TypEnergy typ){
+bool Colony::zbudujBudynek(TypEnergy typ){
     unique_ptr<Building> nowyBudynek;
         
     switch (typ){
@@ -105,20 +67,22 @@ void Colony::zbudujBudynek(TypEnergy typ){
         nowyBudynek=make_unique<Energy>("Wiatrak", 0, 20,TypEnergy::WIATRAK,5);
         break;
     }
-    if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
+    if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-nowyBudynek->getDemandWorkers()<0){
         cout<<endl;
-        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(f_logisyka.getAWorkers()-f_logisyka.getAWorkers()-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
         cout<<endl;
+        return false;
         
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
-        demand_workers+=nowyBudynek->getDemandWorkers();
+        f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
         cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
         addBuilding(move(nowyBudynek));
+        return true;
     }
 }
 
-void Colony::zbudujBudynek(TypFarm typ){
+bool Colony::zbudujBudynek(TypFarm typ){
     unique_ptr<Building> nowyBudynek;
         
     switch (typ){
@@ -132,19 +96,23 @@ void Colony::zbudujBudynek(TypFarm typ){
         nowyBudynek=make_unique<Farm>("Szklarnia", 4, 3,TypFarm::SZKLARNIA,1,2,0);
         break;
     }
-    if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
-        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
+    if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-nowyBudynek->getDemandWorkers()<0){
+        cout<<endl;
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(f_logisyka.getAWorkers()-f_logisyka.getAWorkers()-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
+        cout<<endl;
+        return false;
         
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
-        demand_workers+=nowyBudynek->getDemandWorkers();
+        f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
         cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
         addBuilding(move(nowyBudynek));
+        return true;
     }
 }
 
 
-void Colony::zbudujBudynek(TypDomy typ){
+bool Colony::zbudujBudynek(TypDomy typ){
     unique_ptr<Building> nowyBudynek;
         
     switch (typ){
@@ -160,14 +128,15 @@ void Colony::zbudujBudynek(TypDomy typ){
     }
     
     f_logisyka.updateBudynek(nowyBudynek.get());
-    all_workers+=nowyBudynek->getResidents();
+    f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
     cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
     addBuilding(move(nowyBudynek));
+    return true;
 }
 
 
 
-void Colony::zbudujBudynek(TypProducer typ){
+bool Colony::zbudujBudynek(TypProducer typ){
     unique_ptr<Building> nowyBudynek;
         
     switch (typ){
@@ -184,18 +153,21 @@ void Colony::zbudujBudynek(TypProducer typ){
         nowyBudynek=make_unique<Producer>("Zaawansowana_kopalnia", 4, 5,TypProducer::ZAAWANSOWANA_KOPALNIA,6,5);
         break;
     }
-    if(all_workers-demand_workers-nowyBudynek->getDemandWorkers()<0){
-        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(all_workers-demand_workers-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
-        
+    if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-nowyBudynek->getDemandWorkers()<0){
+        cout<<endl;
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(f_logisyka.getAWorkers()-f_logisyka.getAWorkers()-nowyBudynek->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
+        cout<<endl;
+        return false;
     }else{
         f_logisyka.updateBudynek(nowyBudynek.get());
-        demand_workers+=nowyBudynek->getDemandWorkers();
+        f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
         cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
         addBuilding(move(nowyBudynek));
+        return true;
     }
 }
 
-void Colony::zbudujBudynek(TypBudynku typ){
+bool Colony::zbudujBudynek(TypBudynku typ){//tylko do celu testowania
 
     unique_ptr<Building> nowyBudynek;
         
@@ -216,9 +188,10 @@ void Colony::zbudujBudynek(TypBudynku typ){
         nowyBudynek=make_unique<Producer>();
         break;
     }
-    demand_workers+=nowyBudynek->getDemandWorkers();
+    f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
     cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
     addBuilding(move(nowyBudynek));
+    return true;
 }
 
 void Colony::zburzBudynek(int nr){
@@ -229,16 +202,16 @@ void Colony::zburzBudynek(int nr){
         cin>>dec;
         if(dec=="TAK"||dec=="tak"||dec=="Tak"){
             if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
-                if(all_workers-buildings[nr]->getResidents()<demand_workers){
-                    cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(demand_workers-all_workers+buildings[nr]->getResidents())<<" pracownikow."<<endl;
+                if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){
+                    cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
                     return;
                 }
 
             }else{
                 cout<<YELLOW<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<RESET<<endl;
-                demand_workers-=buildings[nr]->getDemandWorkers();
+                f_logisyka.setDWorkers(-buildings[nr]->getDemandWorkers());
                 if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
-                    all_workers-=buildings[nr]->getResidents();
+                    f_logisyka.setAWorkers(-buildings[nr]->getResidents());
                 }
                 f_logisyka.updateZburzBudynek(buildings[nr].get());
                 buildings.erase(buildings.begin()+nr);
@@ -254,42 +227,8 @@ void Colony::zburzBudynek(int nr){
 }
 
 
-int Colony::getIloscBudynkow(){
-    return buildings.size();
-}
 
-bool Colony::nextRound(){
-    string decyzja;
-    cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (TAK / NIE)"<<RESET<<endl;
-    cin>>decyzja;
-    if(decyzja=="TAK"||decyzja=="tak"||decyzja=="Tak"){
-        cout<<YELLOW<<">>Rozpoczynanie procedury przejscia do kolejnej rundy..."<<RESET<<endl;
-        cout<<endl;
-        if(f_logisyka.nextRound(buildings)){
-            cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RESET<<endl;
-            tura++;
-            ruch=0;
-            cout<<endl;
-            return true;
-        }else if(f_logisyka.getFood()==0){
-            cout<<RED<<"KOLONIA UMARLA, Z POWODU BRAKU JEDZENIA!!"<<RESET<<endl;
-
-            return false;
-        } else if(f_logisyka.getGenEnergy()<f_logisyka.getReqEnergy()){
-            cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RED<<" Ale..."<<RESET<<endl;
-            cout<<RED<<BOLD<<"Z powod braku energii zaden z budynkow nie wykonal pracy!"<<RESET<<endl;
-            tura++;
-            ruch=0;
-            cout<<endl;
-            return true;
-        } else{
-            return false;
-        }
-    }else{
-        cout<<YELLOW<<"Anulowano przejscie do kolejnej rundy."<<RESET<<endl;
-        return true;
-    }
-}
+bool Colony::nextRound(){return f_logisyka.czyNextRound(buildings);}
 
 void Colony::update(){}
 
@@ -306,14 +245,7 @@ void Colony::load(){
     cout<<YELLOW<<"Gra zostala wczytana z pliku."<<RESET<<endl;
 }
 
-void Colony::saveColony(string nazwa_plik){
-    ofstream plik(nazwa_plik);
-    if(plik.is_open()){
-        plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
-
-        plik.close();
-        }
-}
+void Colony::saveColony(string nazwa_plik){f_logisyka.save(nazwa_plik);}
 
 
 void Colony::saveBuildings(string nazwa_plik){
@@ -364,7 +296,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     energia->setId(w_id); 
                     
                     nowyBudynek = move(energia);
-                    demand_workers+=nowyBudynek->getDemandWorkers();
+                    f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
                     //nowyBudynek->prnt();
 
                     break; 
@@ -380,7 +312,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     farm->setId(w_id); 
                     
                     nowyBudynek = move(farm);
-                    demand_workers+=nowyBudynek->getDemandWorkers();
+                    f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
                     //nowyBudynek->prnt();
 
                     break;
@@ -395,7 +327,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     
                     nowyBudynek = move(housing);
                     
-                    all_workers+=nowyBudynek->getResidents(); //jak dodawac te głupie zmienne
+                    f_logisyka.setAWorkers(nowyBudynek->getResidents());
                     //nowyBudynek->prnt();
 
                     break;
@@ -411,7 +343,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     producer->setId(w_id); 
                     
                     nowyBudynek = move(producer);
-                    demand_workers+=nowyBudynek->getDemandWorkers();
+                    f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
                     //nowyBudynek->prnt();
 
                     break;
@@ -430,29 +362,11 @@ void Colony::loadBuildings(string nazwa_plik) {
     } 
 } 
 
-void Colony::loadColony(string nazwa_plik){
-    ifstream plik(nazwa_plik);
-    //plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
-    string nazwa;
-    int t,aw,dw,s,ti,r;
-    double ge,re,rf, f;
+void Colony::loadColony(string nazwa_plik){f_logisyka.load(nazwa_plik);}
 
-    if (plik.is_open()) {
-        plik>>nazwa>>t>>r>>aw>>dw>>ge>>re>>rf>>f>>s>>ti;
-        plik.close();
-        f_logisyka.load(re,ge,rf,f,s,ti);
-        nazwa_kolonii=nazwa;
-        demand_workers=dw;
-        all_workers=aw;
-        tura =t;
-        ruch =r;
+int Colony::getIloscBudynkow()const{return buildings.size();}
+int Colony::getAllWorkers()const{return f_logisyka.getAWorkers();}
+int Colony::getDemandWorkers()const{return f_logisyka.getDWorkers();}
+int Colony:: getRuch()const{return f_logisyka.getRuch();}
 
-    }
-}
-
-
-int Colony::getAllWorkers(){return all_workers;}
-int Colony::getDemandWorkers(){return demand_workers;}
-int Colony:: getRuch(){return ruch;}
-
-void Colony::setRuch(int r){ruch =r;}
+void Colony::setRuch(int r){f_logisyka.setRuch(r);}

@@ -12,12 +12,7 @@ using namespace std;
 
 class Colony{
     vector<unique_ptr<Building>> buildings;
-    string nazwa_kolonii;
-    int tura;
-    int ruch;
 
-    int all_workers;
-    int demand_workers;
 
     Logistics f_logisyka;
 
@@ -25,6 +20,7 @@ class Colony{
     Colony();
 
     void prnt();
+
     void prntBuilding(int nr);
     void prntBuildings();
     void prntBuildingsShort();
@@ -35,11 +31,11 @@ class Colony{
 
     void addBuilding(unique_ptr<Building> b);
 
-    void zbudujBudynek(TypEnergy typ);
-    void zbudujBudynek(TypBudynku typ);
-    void zbudujBudynek(TypFarm typ);
-    void zbudujBudynek(TypDomy typ);
-    void zbudujBudynek(TypProducer typ);
+    bool zbudujBudynek(TypEnergy typ);
+    bool zbudujBudynek(TypBudynku typ);
+    bool zbudujBudynek(TypFarm typ);
+    bool zbudujBudynek(TypDomy typ);
+    bool zbudujBudynek(TypProducer typ);
     
     void zburzBudynek(int nr); 
     
@@ -55,10 +51,10 @@ class Colony{
     void setRuch(int r);
     void setNazwa();
 
-    int getRuch();
-    int getIloscBudynkow();
-    int getAllWorkers();
-    int getDemandWorkers();
+    int getRuch()const;
+    int getIloscBudynkow()const;
+    int getAllWorkers()const;
+    int getDemandWorkers()const;
 
     
     
