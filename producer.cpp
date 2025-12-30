@@ -10,7 +10,7 @@ Producer::Producer(string n,double k, double s,TypProducer t,int w,double ti):Bu
 
 void Producer::prnt()const{
     Building::prnt();
-    cout<<YELLOW<<" - - - - - - - - - -  - Informacje PRODUCER - - - - - - - - - "<<RESET<<endl;
+    prntHeader("Informacje PRODUCER");
     cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
     if(stoneGen!=0){
         cout<<"Generowany kamien: "<<stoneGen<<endl;

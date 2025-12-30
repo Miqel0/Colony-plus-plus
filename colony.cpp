@@ -31,17 +31,27 @@ void Colony::prntBuilding(int nr){
 }
 
 void Colony::prntBuildings(){
-    for(int i=0;i<buildings.size();i++){
+    if(buildings.size()==0){
+        cout<<endl;
+        cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
+        
+    }else{
+        for(int i=0;i<buildings.size();i++){
         prntBuilding(i);
-    }
+    }}
 }
 
 
 void Colony::prntBuildingsShort(){
-    cout<<YELLOW<<" - - - - - - - - - Obecnie zbudowane budynki: - - - - - - - - -"<<RESET<<endl;
-    for(int i=0;i<buildings.size();i++){
+    prntHeader("Obecnie zbudowane budynki:");
+    if(buildings.size()==0){
+        cout<<endl;
+        cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
+        
+    }else{
+        for(int i=0;i<buildings.size();i++){
         cout<<i<<". "<<buildings[i]->getName()<<endl;
-    }
+    }}
 }
 
 

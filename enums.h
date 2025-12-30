@@ -1,7 +1,10 @@
 #ifndef enums_h
 #define enums_h
 
+#include <iostream>
 #include <string>
+#include <iomanip>
+
 using namespace std;
 
 
@@ -68,5 +71,22 @@ enum class TypProducer{//moze zrobic przechowywanie danych jako tablica??
     KOPALNIA_TYTANU=2,
     ZAAWANSOWANA_KOPALNIA=3,
 };
+
+
+
+inline void prntHeader(string text,int n=70,string col=YELLOW){
+
+    int len=text.length();
+    if(len>=n){
+        cout<<YELLOW<<BOLD<<text<<RESET<<endl;
+        return;
+    }
+    int miejsce=n-len-2;
+    int left=miejsce/2;
+    int right=miejsce-left; 
+    cout<<endl;
+    cout<<col<<string(left,'-')<<" "<<BOLD<<text<<NO_BOLD<<" "<<string(right,'-')<<RESET<<endl;
+
+}
 
 #endif

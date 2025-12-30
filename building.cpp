@@ -8,8 +8,8 @@ using namespace std;
 int Building::next_id=1;
 
 void Building:: prnt()const{
-    cout<<MAGENTA<<"<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>"<<RESET<<endl;
-    cout<<YELLOW<<" - - - - - - - - - - - Informacje o "<<BOLD<<name<<RESET<<YELLOW<<" - - - - - - - - - "<<RESET<<endl;
+    cout<<MAGENTA<<"<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>"<<RESET<<endl;
+    prntHeader(name); 
     cout<<"Type: "<<static_cast<int>(type)<<endl;
     cout<<"Nazwa: "<<name<<endl;
     cout<<"ID: "<<id<<endl;

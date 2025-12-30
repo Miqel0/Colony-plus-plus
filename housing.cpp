@@ -10,7 +10,7 @@ Housing::Housing(string n,double k, int r,TypDomy t,int w):Building(n,TypBudynku
 
 void Housing::prnt()const{
     Building::prnt();
-    cout<<YELLOW<<" - - - - - - - - - - - Informacje HOUSING - - - - - - - - - "<<RESET<<endl;
+    prntHeader("Informacje HOUSING");
     cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
     cout<<"Liczba mieszkancow: "<<residents<<endl;
     

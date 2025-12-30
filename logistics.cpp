@@ -21,9 +21,9 @@ void Logistics::prnt(){
 
 
     if(nazwa_kolonii=="XX"){
-        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Kolonia - - - - - - - - - "<<RESET<<endl;
+        prntHeader("Kolonia");
     }else{
-        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - "<<nazwa_kolonii<<" - - - - - - - - - "<<RESET<<endl;
+        prntHeader(nazwa_kolonii);
     }
         cout<<MAGENTA<<"Nr tury: "<<tura<<"           Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
     if(demand_workers==all_workers){
@@ -31,18 +31,19 @@ void Logistics::prnt(){
     }else{
         cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
     }
-    cout<<YELLOW<<" - - - - - - - - - - - Informacje LOGISTICS - - - - - - - - - "<<RESET<<endl;
+
+    prntHeader("Informacje LOGISTICS");
     if(reqEnergy>genEnergy){
-        cout<<RED<<"Energia: "<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
+        cout<<RED<<"Energia: "<<BOLD<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
     }else{
-        cout<<GREEN<<"Energia: "<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
+        cout<<GREEN<<"Energia: "<<BOLD<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
     }
     if(food>2*reqFood){
-        cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<")"<<RESET<<endl;
+        cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<")"<<RESET<<endl;
     }else{if(food>=reqFood & food<2*reqFood){
-        cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<") "<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
+        cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<") "<<NO_BOLD<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
     }else{if(food<reqFood){
-    cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
+    cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<BOLD<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
     }}}
     if(stone!=0){
         cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<RESET<<endl;
@@ -55,9 +56,9 @@ void Logistics::prnt(){
 
 void Logistics::prntRound(double f, double s, double t){
     if(nazwa_kolonii=="XX"){
-        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - Kolonia - - - - - - - - - "<<RESET<<endl;
+        prntHeader("Kolonia");
     }else{
-        cout<<YELLOW<<BOLD<<" - - - - - - - - - - - "<<nazwa_kolonii<<" - - - - - - - - - "<<RESET<<endl;
+        prntHeader(nazwa_kolonii);
     }
         cout<<MAGENTA<<"Nr tury: "<<tura<<CYAN<<" +1"<<MAGENTA<<"         Nr ruchu: 0/3"<<RESET<<endl;
     if(demand_workers==all_workers){
@@ -65,7 +66,7 @@ void Logistics::prntRound(double f, double s, double t){
     }else{
         cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
     }
-    cout<<YELLOW<<" - - - - - - - - - - - Informacje LOGISTICS - - - - - - - - - "<<RESET<<endl;
+        prntHeader("Informacje LOGISTICS");
     if(reqEnergy>genEnergy){
         cout<<RED<<"Energia: "<<BOLD<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
     }else{

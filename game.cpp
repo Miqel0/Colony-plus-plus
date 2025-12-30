@@ -196,7 +196,7 @@ void Game::prntBudynki(){
     const int width=15;
     const string sep="|";
     cout<<endl;
-    cout << YELLOW << BOLD << "DOSTEPNE BUDYNKI:" << RESET << endl;
+    prntHeader("DOSTEPNE BUDYNKI");
     //linia przed
     for (int i = 0; i < 4; i++) {
         cout << YELLOW<<"+" << string(width + 1, '-')<<RESET;
