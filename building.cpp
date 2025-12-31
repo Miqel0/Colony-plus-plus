@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 #include "building.h"
@@ -8,14 +9,7 @@ using namespace std;
 int Building::next_id=1;
 
 void Building:: prnt()const{
-    cout<<MAGENTA<<"<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>"<<RESET<<endl;
-    cout<<YELLOW<<" - - - - - - - - - - - Informacje o "<<BOLD<<name<<RESET<<YELLOW<<" - - - - - - - - - "<<RESET<<endl;
-    cout<<"Type: "<<static_cast<int>(type)<<endl;
-    cout<<"Nazwa: "<<name<<endl;
-    cout<<"ID: "<<id<<endl;
-    cout<<"Koszt energii: "<<kosztEnergii<<endl;
-    cout<<"Pracownicy: "<<workers<<endl;
-
+    prntTablica2(name,"Type: ",cleanNum(static_cast<int>(type)),"ID: ",cleanNum(id),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers));
 }
 
 void Building::save(ofstream& plik)const{

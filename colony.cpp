@@ -31,25 +31,32 @@ void Colony::prntBuilding(int nr){
 }
 
 void Colony::prntBuildings(){
-    for(int i=0;i<buildings.size();i++){
+    if(buildings.size()==0){
+        cout<<endl;
+        cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
+        
+    }else{
+        for(int i=0;i<buildings.size();i++){
         prntBuilding(i);
-    }
+    }}
 }
 
 
 void Colony::prntBuildingsShort(){
-    cout<<YELLOW<<" - - - - - - - - - Obecnie zbudowane budynki: - - - - - - - - -"<<RESET<<endl;
-    for(int i=0;i<buildings.size();i++){
-        cout<<i<<". "<<buildings[i]->getName()<<endl;
-    }
+    prntHeader("Obecnie zbudowane budynki:");
+    if(buildings.size()==0){
+        cout<<endl;
+        cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
+        
+    }else{
+        for(int i=0;i<buildings.size();i++){
+            string str=cleanNum(i)+". ";
+            cout<<YELLOW<<BOLD<<left<<setw(5)<<str<<RESET<<buildings[i]->getName()<<endl;
+    }}
 }
 
 
-void Colony::addBuilding(unique_ptr<Building> b){
-    //cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<b->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
-    buildings.push_back(move(b));
-    //cout<<endl;
-}
+void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
 
 
 bool Colony::zbudujBudynek(TypEnergy typ){

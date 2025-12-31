@@ -1,7 +1,11 @@
 #ifndef enums_h
 #define enums_h
 
+#include <iostream>
+#include <sstream>
 #include <string>
+#include <iomanip>
+
 using namespace std;
 
 
@@ -68,5 +72,57 @@ enum class TypProducer{//moze zrobic przechowywanie danych jako tablica??
     KOPALNIA_TYTANU=2,
     ZAAWANSOWANA_KOPALNIA=3,
 };
+
+
+
+inline void prntHeader(string text,int n=70,string col=YELLOW){
+
+    int len=text.length();
+    if(len>=n){
+        cout<<YELLOW<<BOLD<<text<<RESET<<endl;
+        return;
+    }
+    int miejsce=n-len-2;
+    int left=miejsce/2;
+    int right=miejsce-left; 
+    cout<<endl;
+    cout<<col<<string(left,'-')<<" "<<BOLD<<text<<NO_BOLD<<" "<<string(right,'-')<<RESET<<endl;
+
+}
+
+
+template <typename T>
+inline string cleanNum(T val) {
+    stringstream ss;
+    ss << val;
+    return ss.str();
+}
+
+inline void prntTablica2(string n, string s11, string s12, string s13, string s14, string s21, string s22, string s23, string s24) {
+    prntHeader(n);
+    const int col = 33;
+    const string sep = " | ";
+    
+    cout << YELLOW << BOLD;
+    
+  
+    string col1 = s11 + s12;
+    cout << left << setw(col) << col1 << NO_BOLD << sep << BOLD << s13 << s14 << endl;
+    
+
+    string col2 = s21 + s22;
+    cout << left << setw(col) << col2 << NO_BOLD << sep << BOLD << s23 << s24 << RESET << endl;
+}
+
+inline void prntTablica1(string n, string s11, string s12, string s13, string s14) {
+    prntHeader(n);
+    const int col = 33;
+    const string sep = " | ";
+    
+    cout << YELLOW << BOLD;
+    
+    string col1 = s11 + s12;
+    cout << left << setw(col) << col1 << NO_BOLD << sep << BOLD << s13 << s14 << RESET << endl;
+}
 
 #endif
