@@ -10,12 +10,7 @@ Housing::Housing(string n,double k, int r,TypDomy t,int w):Building(n,TypBudynku
 
 void Housing::prnt()const{
     Building::prnt();
-    prntHeader("Informacje HOUSING");
-    cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
-    cout<<"Liczba mieszkancow: "<<residents<<endl;
-    
-
-
+    prntTablica1("Informacje HOUSING","Pod type: ",cleanNum(static_cast<int>(pType)),"Liczba mieszkancow: ", cleanNum(residents));
 }
 
 void Housing::save(ofstream& plik)const{

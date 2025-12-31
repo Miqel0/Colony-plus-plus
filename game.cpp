@@ -55,7 +55,7 @@ void Game::run(){
 }
 
 void Game::commands(){
-    cout<<YELLOW<<">>"<<RESET;
+    cout<<BLUE<<">>"<<RESET;
     string linia;
     getline(cin,linia);
     if(linia.empty()){return;}
@@ -201,8 +201,7 @@ void Game::prntBudynki(){
     for (int i = 0; i < 4; i++) {
         cout << YELLOW<<"+" << string(width + 1, '-')<<RESET;
     }
-        cout << YELLOW<<"+" << RESET<<endl;
-        cout<<endl;
+    cout << YELLOW<<"+" << RESET<<endl;
     for(const auto&h:headers){
         cout<<YELLOW<<sep<<" "<<BOLD<<BLUE<<left<<setw(width)<<h<<RESET;
     }

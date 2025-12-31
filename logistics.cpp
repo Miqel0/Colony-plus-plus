@@ -321,9 +321,9 @@ void Logistics::load(string nazwa_plik){
 void Logistics::setNazwa(){
     string nazwa;
     if(nazwa_kolonii=="XX"){
-        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\nJezeli chcesz pominac ta czynnosc to napisz 'skip'\n"<<">>"<<RESET;
+        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\nJezeli chcesz pominac ta czynnosc to napisz 'skip'\n"<<BLUE<<">>"<<RESET;
     }else{
-        cout<<YELLOW<<"Na co chcesz zmienic nazwe swojej kolonii? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<">>"<<RESET;
+        cout<<YELLOW<<"Na co chcesz zmienic nazwe swojej kolonii? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<BLUE<<">>"<<RESET;
     }
     cin>>nazwa;
     if(nazwa=="skip" & nazwa_kolonii=="XX"){

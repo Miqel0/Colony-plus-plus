@@ -10,11 +10,8 @@ Farm::Farm(string n,double k, double f,TypFarm t,int w,int tim,int ct):Building(
 
 void Farm::prnt()const{
     Building::prnt();
-    prntHeader("Informacje FARM");
-    cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
-    cout<<"Generowane jedzenie: "<<foodGen<<endl;
-    cout<<"Czas potrzebny do urosniecia: "<<time<<" ("<<curr_time<<")"<<endl;
-
+    prntTablica1("Informacje FARM","Pod type: ",cleanNum(static_cast<int>(pType)),"Generowane jedzenie: ",cleanNum(foodGen));
+    cout<<YELLOW<<BOLD<<"Czas potrzebny do urosniecia: "<<time<<" ("<<curr_time<<")"<<RESET<<endl;
 }
 
 

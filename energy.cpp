@@ -10,10 +10,7 @@ Energy::Energy(string n,double k, double e,TypEnergy t,int w):Building(n,TypBudy
 
 void Energy::prnt()const{
     Building::prnt();
-    prntHeader("Informacje ENERGY");
-    cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
-    cout<<"Generowana energia: "<<enGen<<endl;
-    
+    prntTablica1("Informacje ENERGY","Pod type: ",cleanNum(static_cast<int>(pType)),"Generowana energia: ",cleanNum(enGen));
 }
 
 void Energy::save(ofstream& plik)const{

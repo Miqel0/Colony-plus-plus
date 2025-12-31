@@ -50,16 +50,13 @@ void Colony::prntBuildingsShort(){
         
     }else{
         for(int i=0;i<buildings.size();i++){
-        cout<<i<<". "<<buildings[i]->getName()<<endl;
+            string str=cleanNum(i)+". ";
+            cout<<YELLOW<<BOLD<<left<<setw(5)<<str<<RESET<<buildings[i]->getName()<<endl;
     }}
 }
 
 
-void Colony::addBuilding(unique_ptr<Building> b){
-    //cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<b->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
-    buildings.push_back(move(b));
-    //cout<<endl;
-}
+void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
 
 
 bool Colony::zbudujBudynek(TypEnergy typ){

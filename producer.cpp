@@ -10,17 +10,7 @@ Producer::Producer(string n,double k, double s,TypProducer t,int w,double ti):Bu
 
 void Producer::prnt()const{
     Building::prnt();
-    prntHeader("Informacje PRODUCER");
-    cout<<"Pod type: "<<static_cast<int>(pType)<<endl;
-    if(stoneGen!=0){
-        cout<<"Generowany kamien: "<<stoneGen<<endl;
-    }
-    if(titanGen!=0){
-        cout<<"Generowany tytan: "<<titanGen<<endl;
-    }
-    
-
-
+    prntTablica1("Informacje PRODUCER","Generowany kamien: ",cleanNum(stoneGen),"Generowany tytan: ",cleanNum(titanGen));
 }
 
 
