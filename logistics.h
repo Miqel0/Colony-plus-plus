@@ -17,6 +17,7 @@ class Logistics{
     int all_workers;
     int demand_workers;
     
+    double wsp_terr;
     
     double reqEnergy;
     double genEnergy;
@@ -29,7 +30,7 @@ class Logistics{
     public:
     Logistics();
     void prnt();
-    void prntRound(double f, double s, double t);
+    void prntRound(double f, double s, double t, double te);
 
     bool czyNextRound(const vector<unique_ptr<Building>>& budynki);
     bool nextRound(const vector<unique_ptr<Building>>& budynki);
@@ -42,7 +43,8 @@ class Logistics{
     void setRuch(int r);
     void setAWorkers(int aw);
     void setDWorkers(int dw);
-
+    void setStone(double s);
+    void setTitan(double t);
 
     string getNazwa() const;
     int getTura() const;

@@ -22,8 +22,10 @@ class Colony{
     void prnt();
 
     void prntBuilding(int nr);
+    void prntBuilding(string bud);
     void prntBuildings();
     void prntBuildingsShort();
+    void prntBuildingsSumm();
 
     bool nextRound();
     void update();
@@ -36,8 +38,12 @@ class Colony{
     bool zbudujBudynek(TypFarm typ);
     bool zbudujBudynek(TypDomy typ);
     bool zbudujBudynek(TypProducer typ);
+    bool zbudujBudynek(TypTerr typ);
+
+    bool buduj(unique_ptr<Building> b);
     
     void zburzBudynek(int nr); 
+    void zburzBudynek(string nazwa);
     
     void saveBuildings(string nazwa_plik);
     void loadBuildings(string nazwa_plik);
@@ -55,6 +61,10 @@ class Colony{
     int getIloscBudynkow()const;
     int getAllWorkers()const;
     int getDemandWorkers()const;
+    int getIlosc(string name)const;
+
+    bool czyBudynek(string bud)const;
+    bool czyStac(const unique_ptr<Building> &b)const;
 
     
     

@@ -5,12 +5,13 @@
 using namespace std;
 #include "producer.h"
 
-Producer:: Producer():Building("XXX",TypBudynku::PRODUCER,0,0),stoneGen(0),titanGen(0),pType(TypProducer::NIEZNANY){}
-Producer::Producer(string n,double k, double s,TypProducer t,int w,double ti):Building(n,TypBudynku::PRODUCER,k,w),stoneGen(s),titanGen(ti),pType(t){}
+Producer:: Producer():Building("XXX",TypBudynku::PRODUCER,0,0,0,0),stoneGen(0),titanGen(0),pType(TypProducer::NIEZNANY){}
+Producer::Producer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti):Building(n,TypBudynku::PRODUCER,kE,kK,kT,w),stoneGen(s),titanGen(ti),pType(t){}
 
-void Producer::prnt()const{
-    Building::prnt();
-    prntTablica1("Informacje PRODUCER","Generowany kamien: ",cleanNum(stoneGen),"Generowany tytan: ",cleanNum(titanGen));
+void Producer::prnt(int il)const{
+    //Building::prnt(il);
+    //prntTablica1("Informacje PRODUCER","Generowany kamien: ",cleanNum(stoneGen),"Generowany tytan: ",cleanNum(titanGen));
+    prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers)," "," ","Generowany kamien: ",cleanNum(stoneGen),"Generowany tytan: ",cleanNum(titanGen));
 }
 
 

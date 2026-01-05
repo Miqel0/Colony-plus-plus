@@ -17,16 +17,17 @@ class Building{
         static int next_id;
 
         double kosztEnergii;
-        
+        double kosztKamien;
+        double kosztTytan;
         int workers;
         int residents;
         
     public:
 
     Building();
-    Building(string n,TypBudynku t, double k,int w);
+    Building(string n,TypBudynku t, double kE,double kK, double kT,int w);
 
-    virtual void prnt() const;
+    virtual void prnt(int il) const;
     virtual void save(ofstream& plik) const;
     virtual double work();
     void setId(int i);
@@ -40,6 +41,9 @@ class Building{
     int getResidents() const;
     double getReqEnergy() const;
     virtual int getPType() const;
+
+    double getKosztKamien() const;
+    double getKosztTytan() const;
 };
 
 #endif

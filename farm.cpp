@@ -5,13 +5,12 @@
 using namespace std;
 #include "farm.h"
 
-Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0),foodGen(0),time(0),curr_time(0),pType(TypFarm::NIEZNANY){}
-Farm::Farm(string n,double k, double f,TypFarm t,int w,int tim,int ct):Building(n,TypBudynku::FARM,k,w),foodGen(f),time(tim),curr_time(ct),pType(t){}
+Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0,0,0),foodGen(0),time(0),curr_time(0),pType(TypFarm::NIEZNANY){}
+Farm::Farm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct):Building(n,TypBudynku::FARM,kE,kK,kT,w),foodGen(f),time(tim),curr_time(ct),pType(t){}
 
-void Farm::prnt()const{
-    Building::prnt();
-    prntTablica1("Informacje FARM","Pod type: ",cleanNum(static_cast<int>(pType)),"Generowane jedzenie: ",cleanNum(foodGen));
-    cout<<YELLOW<<BOLD<<"Czas potrzebny do urosniecia: "<<time<<" ("<<curr_time<<")"<<RESET<<endl;
+void Farm::prnt(int il)const{
+    //Building::prnt(il);
+    prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers),"Generowane jedzenie: ",cleanNum(foodGen),"Czas potrzebny do urosniecia: ",cleanNum(time)," "," ");
 }
 
 

@@ -17,10 +17,10 @@ class Producer: public Building{
 
     public:
     Producer();
-    Producer(string n,double k, double s,TypProducer t,int w,double ti);
+    Producer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
 
     double work() override;
-    void prnt() const override;
+    void prnt(int il) const override;
     void save(ofstream& plik) const override;
     int getPType() const override;
     

@@ -11,11 +11,10 @@ using namespace std;
 #include "farm.h"
 #include "housing.h"
 #include "producer.h"
+#include "terr.h"
 
-//moze zmienc ze w basicowym na start dostaje budynek a nie ze dostaje tak o rzeczy
-//moze dodac ratusz? czy cos, co dodaje te parametry?
 
-Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),food(1000),titan(0),stone(0){}
+Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),food(1000),titan(100),stone(100){}
 
 void Logistics::prnt(){
 
@@ -27,16 +26,16 @@ void Logistics::prnt(){
     }
         cout<<MAGENTA<<"Nr tury: "<<tura<<"           Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
     if(demand_workers==all_workers){
-        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
+        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<"           Wsp. terraformacji: "<<BOLD<<wsp_terr<<RESET<<endl;
     }else{
-        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
+        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<BLUE<<"           Wsp. terraformacji: "<<BOLD<<wsp_terr<<RESET<<endl;
     }
 
     prntHeader("Informacje LOGISTICS");
     if(reqEnergy>genEnergy){
-        cout<<RED<<"Energia: "<<BOLD<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
+        cout<<RED<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
     }else{
-        cout<<GREEN<<"Energia: "<<BOLD<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
+        cout<<GREEN<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
     }
     if(food>2*reqFood){
         cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<")"<<RESET<<endl;
@@ -54,7 +53,7 @@ void Logistics::prnt(){
     cout<<endl;
 }
 
-void Logistics::prntRound(double f, double s, double t){
+void Logistics::prntRound(double f, double s, double t,double te){
     if(nazwa_kolonii=="XX"){
         prntHeader("Kolonia");
     }else{
@@ -62,15 +61,15 @@ void Logistics::prntRound(double f, double s, double t){
     }
         cout<<MAGENTA<<"Nr tury: "<<tura<<CYAN<<" +1"<<MAGENTA<<"         Nr ruchu: 0/3"<<RESET<<endl;
     if(demand_workers==all_workers){
-        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
+        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<"           Wsp. terraformacji: "<<BOLD<<wsp_terr<<CYAN<<" + "<<CYAN<<te<<RESET<<endl;
     }else{
-        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<RESET<<endl;
+        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<BLUE<<"           Wsp. terraformacji: "<<BOLD<<wsp_terr<<CYAN<<" + "<<CYAN<<te<<RESET<<endl;
     }
         prntHeader("Informacje LOGISTICS");
     if(reqEnergy>genEnergy){
-        cout<<RED<<"Energia: "<<BOLD<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
+        cout<<RED<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
     }else{
-        cout<<GREEN<<"Energia: "<<BOLD<<reqEnergy<<"/"<<genEnergy<<RESET<<endl;
+        cout<<GREEN<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
     }
     if((food+f)>2*reqFood){
         cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<GREEN<<NO_BOLD<<" ("<<BOLD<<reqFood<<NO_BOLD<<")"<<RESET<<endl;
@@ -135,6 +134,7 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                 double c_food=0;
                 double c_stone=0;
                 double c_titan=0;
+                double c_terr=0;
 
                 //dodac pozostale surowce
                 for(const auto& b: budynki){
@@ -151,7 +151,7 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                             
                             int  a = b->getPType();
 
-                            cout<<a<<endl;
+                            
                             if(a==kamien || a==zaaw){
                                 c_stone+=c;
                             }
@@ -160,6 +160,9 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                             }
                             break;
                         }
+                        case TypBudynku::TERR:{
+                            c_terr+=c;
+                        }
                         default:
                             break;
                     }
@@ -167,11 +170,11 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
 
                 cout<<endl;
                 //dodawac pozostale
-                prntRound(c_food,c_stone,c_titan);
+                prntRound(c_food,c_stone,c_titan,c_terr);
                 food+=c_food;
                 stone+=c_stone;
                 titan+=c_titan;
-
+                wsp_terr+=c_terr;
 
                 cout<<endl;
                 return true;
@@ -219,7 +222,9 @@ void Logistics::updateBudynek(Building* budynek){
     case TypBudynku::PRODUCER:
         reqEnergy+=budynek->getReqEnergy();
         break;
-    
+    case TypBudynku::TERR:
+        reqEnergy+=budynek->getReqEnergy();
+        break;
     default:
         break;
     }
@@ -251,6 +256,9 @@ void Logistics::updateZburzBudynek(Building* budynek){
     case TypBudynku::PRODUCER:
         reqEnergy-=budynek->getReqEnergy();
         break;
+    case TypBudynku::TERR:
+        reqEnergy-=budynek->getReqEnergy();
+        break;
     default:
         break;
     }
@@ -260,7 +268,8 @@ void Logistics::setTura(){tura++;}
 void Logistics::setRuch(int r){ruch=r;}
 void Logistics::setAWorkers(int aw){all_workers+=aw;}
 void Logistics::setDWorkers(int dw){demand_workers+=dw;}
-
+void Logistics::setStone(double s){stone=s;}
+void Logistics::setTitan(double t){titan=t;}
 
 int Logistics::getTura() const{return tura;}
 int Logistics::getRuch() const{return ruch;}
@@ -282,7 +291,7 @@ string Logistics::getNazwa() const{return nazwa_kolonii;}
 void Logistics::save(string nazwa_plik){
     ofstream plik(nazwa_plik);
     if(plik.is_open()){
-        plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<genEnergy<<" "<<reqEnergy<<" "<<reqFood<<" "<<food<<" "<<stone<<" "<<titan<<endl;
+        plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<wsp_terr<<" "<<genEnergy<<" "<<reqEnergy<<" "<<reqFood<<" "<<food<<" "<<stone<<" "<<titan<<endl;
 
         plik.close();
         }
@@ -294,10 +303,10 @@ void Logistics::load(string nazwa_plik){
     //plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
     string nazwa;
     int t,aw,dw,s,ti,r;
-    double ge,re,rf, f;
+    double ge,re,rf, f,te;
 
     if (plik.is_open()) {
-        plik>>nazwa>>t>>r>>aw>>dw>>ge>>re>>rf>>f>>s>>ti;
+        plik>>nazwa>>t>>r>>aw>>dw>>te>>ge>>re>>rf>>f>>s>>ti;
         //wczytywanie wszsytkich parametrow
         reqEnergy = re;
         genEnergy = ge;
@@ -310,6 +319,7 @@ void Logistics::load(string nazwa_plik){
         all_workers=aw;
         tura =t;
         ruch =r;
+        wsp_terr=te;
         plik.close();
     }
 }
