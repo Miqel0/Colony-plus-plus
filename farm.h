@@ -15,10 +15,10 @@ class Farm: public Building{
 
     public:
     Farm();
-    Farm(string n,double k, double f,TypFarm t,int w,int tim,int ct);
+    Farm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct);
 
     double work() override;
-    void prnt() const override;
+    void prnt(int il) const override;
     void save(ofstream& plik) const override;
     int getPType() const override;
 

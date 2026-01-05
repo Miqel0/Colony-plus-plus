@@ -17,13 +17,20 @@ class Game{
     map<string,TypEnergy> stringToEnergy;
     map<string,TypFarm> stringToFarm;
     map<string,TypProducer> stringToProducer;
+    map<string,TypTerr> stringToTerr;
 
+    map<string, BuildingInfo> bazaDanych;
 
     public:
     Game();
     void run();
     void commands();
     void prntBudynki();
+
+    void loadGameData();
+    void prntInfo(string cat);
+    void prntCategories();
+    void prntHelp();
 
 
 };

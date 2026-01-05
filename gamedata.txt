@@ -1,0 +1,11 @@
+Wiatrak             ENERGY    10   5    0    5    0    0    20   0    Produkuje_energie
+Panele_sloneczne    ENERGY    20   2    0    3    0    0    50   0    Produkuje_energie
+Szklarnia           FARM      10   5    4    1    0    0    3    2    Jedzenie_co_2_tury
+Pole                FARM      5    0    3    1    0    0    4    1    Jedzenie_co_1_ture
+Barak               HOUSING   15   0    0    0    0    0    5    0    Daje_mieszkancow
+Rezydencja          HOUSING   30   10   0    0    0    0    8    0    Luksusowe_mieszkanie
+Kopalnia_kamienia   PRODUCER  10   0    3    4    5    0    0    0    Wydobywa_kamien
+Kopalnia_tytanu     PRODUCER  30   0    4    4    0    5    0    0    Wydobywa_tytan
+Zaawansowana_kop    PRODUCER  50   50   4    6    5    5    0    0    Wydobywa_wszystko
+cos1                TERR      10   5    2    5    0    0    20   0    Terraformacja_Mala
+cos2                TERR      20   2    1    3    0    0    50   0    Terraformacja_Duza

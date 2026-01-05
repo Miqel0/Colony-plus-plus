@@ -8,15 +8,16 @@ using namespace std;
 
 #include "building.h"
 
+
 class Housing: public Building{
 
     TypDomy pType;
 
     public:
     Housing();
-    Housing(string n,double k, int r,TypDomy t,int w);
+    Housing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
     
-    void prnt() const override;
+    void prnt(int il) const override;
     void save(ofstream& plik) const override;
     int getPType() const override;
 
