@@ -104,7 +104,7 @@ void Game::startTutorial() {
 
     // COLONY 
     cout << CYAN << "[NARRATOR]:" << RESET << " Swietnie. Zanim zaczniemy budowe, musisz ocenic nasze zasoby." << endl;
-    cout << "Wpisz komende " << BG_BLACK << WHITE << " colony " << RESET << ", aby wyswietlic stan magazynow." << endl;
+    cout << "Wpisz komende " << BG_BLACK << RED << " colony " << RESET << ", aby wyswietlic stan magazynow." << endl;
     if (cin.peek() == '\n') cin.ignore();
     string komenda;
 
@@ -125,7 +125,7 @@ void Game::startTutorial() {
     cout << endl;
     cout << CYAN << "[NARRATOR]:" << RESET << " Widzisz? Mamy troche Kamienia, ale zero Energii. A bez pradu nie beda dzialac zadne budynki." << endl;
     cout << "Musimy postawic " << BLUE << "Maly_Wiatrak" << RESET << ". Zapewni on zasilanie dla reszty bazy." << endl;
-    cout << "Wpisz: " << BG_BLACK << WHITE << " build maly_wiatrak " << RESET << endl;
+    cout << "Wpisz: " << BG_BLACK << BLUE << " build maly_wiatrak " << RESET << endl;
 
     while(true) {
         cout << BLUE << ">>" << RESET;
@@ -147,7 +147,7 @@ void Game::startTutorial() {
     cout << endl;
     cout << CYAN << "[NARRATOR]:" << RESET << " Doskonale! Turbiny sie kreca. Teraz czas na jedzenie." << endl;
     cout << "Zapasy sa male. Musimy zasiac " << GREEN << "Pole_Ziemniakow" << RESET << ", zanim zaloga zacznie glodowac." << endl;
-    cout << "Wpisz: " << BG_BLACK << WHITE << " build pole_ziemniakow " << RESET << endl;
+    cout << "Wpisz: " << BG_BLACK << GREEN << " build pole_ziemniakow " << RESET << endl;
 
     while(true) {
         cout << BLUE << ">>" << RESET;
@@ -170,20 +170,55 @@ void Game::startTutorial() {
     cout << CYAN << "[NARRATOR]:" << RESET << " Baza operacyjna gotowa. Podstawowe systemy dzialaja." << endl;
     cout << "Teraz wszystko w Twoich rekach, Kapitanie." << endl;
     cout << "Pamietaj o rozwijaniu " << MAGENTA << "TERRAFORMACJI" << RESET << ", aby odblokowac lepsze technologie (Tytan)." << endl;
-    cout << "Jakbys sie zgubil to wpisz, "<<YELLOW<<"help" <<RESET<<"albo"<<YELLOW<<"rules"<<RESET<< endl;
+    cout << "Jakbys sie zgubil to wpisz, "<<YELLOW<<"help" <<RESET<<" albo "<<YELLOW<<"rules"<<RESET<< endl;
     cout << "Powodzenia. Bez odbioru." << endl;
     cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
 }
 
+bool Game:: checkConfig(){
+    ifstream plik("config.txt");
+    int czy;
+    if (!plik.is_open()) {
+        cout << RED<<BOLD << "BLAD: Nie mozna otworzyc config.txt!" << RESET << endl;
+        return false;
+    }else{
+        plik>>czy;
+        plik.close();
+    }
+    if(czy==1){
+        return true;
+    }else if(czy==0){
+        return false;
+    }else{
+        return false;
+    }
+}
+
+void Game::saveConfig(){
+     ofstream plik("config.txt");
+    if(plik.is_open()){
+        plik<<1;
+        plik.close();
+        }
+}
+
+
+
+
+
 void Game::run(){
-    cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (TAK/NIE)"<<RESET<<endl;
-    string odp;
-    cin>>odp;
-    if(odp=="tak"||odp=="TAK"||odp=="Tak"||odp=="t"){
-        kolonia.load();
-    } else {
-    
+    if(checkConfig()){
+        cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (TAK/NIE)"<<RESET<<endl;
+        string odp;
+        cin>>odp;
+        if(odp=="tak"||odp=="TAK"||odp=="Tak"||odp=="t"){
+            kolonia.load();
+        }else{
+            startTutorial();
+        }
+    } else{
         startTutorial();
+        saveConfig();
     }
 
   
