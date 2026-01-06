@@ -22,16 +22,16 @@ void Farm::save(ofstream& plik)const{
 
 double Farm::work(){
     curr_time++;
-    cout<<YELLOW<<"- - - - - - - - - - - - - - - -"<<RESET<<endl;
-    cout<<curr_time<<"/"<<time<<endl;
+    //cout<<YELLOW<<"- - - - - - - - - - - - - - - -"<<RESET<<endl;
+    //cout<<curr_time<<"/"<<time<<endl;
     if(curr_time==time){
 
-        cout<<GREEN<<"Jedzenie gotowe do zbioru!!"<<endl;
-        cout<<"Wyprodukowano: "<<foodGen<<" jedzenia"<<RESET<<endl;
+        //cout<<GREEN<<"Jedzenie gotowe do zbioru!!"<<endl;
+        //cout<<"Wyprodukowano: "<<foodGen<<" jedzenia"<<RESET<<endl;
         curr_time=0;
         return foodGen;
     }else{
-        cout<<YELLOW<<"Potrzeba jeszcze "<<time-curr_time<<" rund do wyrosniecia!"<<RESET<<endl;
+        //cout<<YELLOW<<"Potrzeba jeszcze "<<time-curr_time<<" rund do wyrosniecia!"<<RESET<<endl;
         return 0;
     }
     

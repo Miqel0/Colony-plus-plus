@@ -21,7 +21,7 @@ Game::Game():running(true){
     // Mapa Energy - TypEnergy
     stringToEnergy["wiatrak"]          = TypEnergy::WIATRAK;
     stringToEnergy["panele"]           = TypEnergy::PANELE;
-
+    stringToEnergy["panele_sloneczne"]           = TypEnergy::PANELE;
     // 3. Mapa Farm - TypFarm
     stringToFarm["pole"]      = TypFarm::POLE;
     stringToFarm["szklarnia"] = TypFarm::SZKLARNIA;
@@ -35,7 +35,7 @@ Game::Game():running(true){
     // 5. Mapa Producer - TypProducer
     stringToProducer["kopalnia_kamienia"]     = TypProducer::KOPALNIA_KAMIENIA;
     stringToProducer["kopalnia_tytanu"]       = TypProducer::KOPALNIA_TYTANU;
-    stringToProducer["zaawansowana_kopalnia"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
+    stringToProducer["zaaw_kopalnia"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
 
     // 6. Mapa Terr - TypTerr
     stringToTerr["cos1"]      = TypTerr::cos1;
@@ -51,9 +51,16 @@ Game::Game():running(true){
 }
 
 void Game::run(){
-   
-    cout<<CLEAR_SCREEN<<YELLOW<<"Witaj przybyszu!"<<RESET<<endl;
-    kolonia.setNazwa();
+    cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (TAK/NIE)"<<RESET<<endl;
+    string odp;
+    cin>>odp;
+    if(odp=="tak"||odp=="TAK"||odp=="Tak"||odp=="t"){
+        kolonia.load();
+    }else{
+        cout<<CLEAR_SCREEN<<YELLOW<<"Witaj przybyszu!"<<RESET<<endl;
+        kolonia.setNazwa();
+    }
+
   
     while(running){
         commands();
@@ -99,12 +106,14 @@ void Game::commands(){
         kolonia.prnt();//prostsza wersja kolonii
     }
     else if(command=="next"){//Kolejna runda
-        if(!kolonia.nextRound()){
+        int wynik=kolonia.nextRound();
+        if(wynik==1){
+            sprawdzLvlTerr();
+        }else if(wynik==-1){
             cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
             cout<<">>>>>>> PRZEGRANA!! <<<<<<<"<<RESET<<endl;
             running=false;
         }
-
     }
     else if(command=="exit"){//Wyjscie z gry
 
@@ -132,8 +141,9 @@ void Game::commands(){
 
     else if(command=="build"){//Budowanie konkretnego budynku 
         string arg1;
+        int ilosc=kolonia.getIloscBudynkow();
         ss>>arg1;
-
+        
         if(arg1.empty()){
             cout << YELLOW << "Aby zbudowac, wpisz: " <<WHITE<< BG_BLACK << "build [nazwa]" << RESET << endl<<endl;
             cout << YELLOW << "Aby zobaczyc liste budynkow, wpisz: " <<WHITE<< BG_BLACK << "info" << RESET << endl;
@@ -143,6 +153,15 @@ void Game::commands(){
         if(kolonia.getRuch()==3){
             cout<<YELLOW<<"Juz wykorzystales "<<BOLD<<"3/3"<<NO_BOLD<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej rundy!"<<RESET<<endl;
             return;
+        }
+        arg1[0]=tolower(arg1[0]);
+        
+        if(bazaDanych.count(arg1)){
+            BuildingInfo info = bazaDanych[arg1];
+            if(info.lvlTerr>kolonia.getLvlTerr()){
+                cout<<RED<<"Nie istnieje taki budynek!"<<RESET<<endl;
+                return;
+            }
         }
 
         if(stringToBudynku.count(arg1)){
@@ -176,11 +195,16 @@ void Game::commands(){
             return;
         }
         
+        
         if(kolonia.getRuch()==3){
             cout<<YELLOW<<"Wlasnie wykorzystales "<<BOLD<<MAGENTA<<"3/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej tury!"<<RESET<<endl;
             
         }else{
-            cout<<YELLOW<<"Wykorzystales "<<BOLD<<MAGENTA<<kolonia.getRuch()<<"/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!!" <<RESET<<endl;
+            if(ilosc==kolonia.getIloscBudynkow()){
+                //cout<<YELLOW<<"Nie wykorzystales nowego ruchu! Aktualnie wykrozystales "<<BOLD<<MAGENTA<<kolonia.getRuch()<<"/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!!" <<RESET<<endl;
+            }else{
+                cout<<YELLOW<<"Wykorzystales "<<BOLD<<MAGENTA<<kolonia.getRuch()<<"/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!!" <<RESET<<endl;
+            }
          
         }
    
@@ -228,7 +252,33 @@ void Game::commands(){
     }
 }
 
+void Game::sprawdzLvlTerr(){
 
+    if(kolonia.sprawdzLvlTerr()){
+        //Sprawdzanie czy istnieje jakis budynek ktory sie odblokowal
+        int a=0;
+        for(const auto&[klucz,info]:bazaDanych){
+            if(info.lvlTerr==kolonia.getLvlTerr()){
+                a=1;
+            }
+        }
+        if(a==0){//Jak nie to wychodzi z tej funkcji
+            return;
+        }
+
+        cout<<endl;
+        cout<<GREEN<<"Odblokowywujesz nowe budynki!"<<RESET<<endl;
+        cout<<endl;
+        cout << MAGENTA << BOLD << left << setw(20) << "NAZWA" << RESET << YELLOW << " | " << "Opis" << RESET << endl;
+        cout<<YELLOW<<string(42,'-')<<RESET<<endl;
+        for(const auto &[k,info]:bazaDanych){
+            if(info.lvlTerr==kolonia.getLvlTerr()){
+                cout << MAGENTA << BOLD << left << setw(20) << info.nazwa << RESET << YELLOW << " | " << info.opis << RESET << endl;
+            }
+        }
+        cout<<endl;
+    }
+}
 
 void Game::loadGameData(){
     ifstream plik("gamedata.txt");
@@ -239,9 +289,9 @@ void Game::loadGameData(){
 
     string n, type, opis;
     double kK, kT, kE, gk, gt, gi; 
-    int w, x;
+    int w, x,lt;
 
-    while(plik>>n>>type>>kK>>kT>>kE>>w>>gk>>gt>>gi>>x>>opis){
+    while(plik>>n>>type>>kK>>kT>>kE>>w>>gk>>gt>>gi>>x>>lt>>opis){
         replace(opis.begin(), opis.end(), '_', ' ');
 
         BuildingInfo nowy;
@@ -255,6 +305,7 @@ void Game::loadGameData(){
         nowy.genTytan=gt;
         nowy.genInne=gi;
         nowy.x=x;
+        nowy.lvlTerr=lt;
         nowy.opis=opis;
         string klucz =n;
         klucz[0]=tolower(klucz[0]);
@@ -273,44 +324,44 @@ void Game::prntInfo(string cat){
     cout<<YELLOW<<string(120,'-')<<RESET<<endl;
     string sep=" | ";
     const int w_n = 20;
-    const int w = 20;
+    const int w = 15;
     const int w_op = 30;
 
-    cout << BLUE <<BOLD<< left << setw(w_n) << "NAZWA"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "koszt budowy: KAMIEN"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "koszt budowy: TYTAN"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "WORKERS"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "wymagany PRAD";
+    cout << BLUE <<BOLD<< left << setw(w_n) << "NAZWA"<<YELLOW<<NO_BOLD<<sep<<BOLD<<CYAN<< setw(w-2) << "koszt: KAMIEN"<<YELLOW<<NO_BOLD<<sep<<BOLD<<CYAN<< setw(w-3) << "koszt: TYTAN"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-3) << "req. WORKERS"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-6) << "req. PRAD";
     if(cat=="ENERGY"){
-        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "gen. PRAD"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
+        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-6) << "gen. PRAD"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
     }else     
     if(cat=="HOUSING"){
-        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "residents"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
+        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-6) << "residents"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
     }else 
     if(cat=="FARM"){
-        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "gen. jedzenie"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "TIME"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
+        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-2) << "gen. jedzenie"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-11) << "TIME"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
     }else 
     if(cat=="PRODUCER"){
-        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "gen. STONE"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "gTYTAN"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
+        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-5) << "gen. STONE"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-5) << "gen. TYTAN"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
     }else 
     if(cat=="TERR"){
-        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w) << "gen. terr"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
+        cout<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<< setw(w-6) << "gen. terr"<<YELLOW<<NO_BOLD<<sep<<BOLD<<BLUE<<setw(w) << "OPIS"<<RESET<<endl;
     }
     cout<<YELLOW<<string(120,'-')<<RESET<<endl;
 
     for(const auto &[k,info]:bazaDanych){
-        if(cat==info.type){
-            cout<<left<<setw(w_n)<<info.nazwa<<YELLOW<<sep<<RESET<<setw(w)<<info.kKamien<<YELLOW<<sep<<RESET<<setw(w)<<info.kTytan<<YELLOW<<sep<<RESET<<setw(w)<<info.workers<<YELLOW<<sep<<RESET<<setw(w)<<info.reqEnergy;
+        if(cat==info.type&&info.lvlTerr<=kolonia.getLvlTerr()){
+            cout<<left<<setw(w_n)<<info.nazwa<<YELLOW<<sep<<RESET<<CYAN<<setw(w-2)<<info.kKamien<<YELLOW<<sep<<RESET<<CYAN<<setw(w-3)<<info.kTytan<<YELLOW<<sep<<RESET<<setw(w-3)<<info.workers<<YELLOW<<sep<<RESET<<setw(w-6)<<info.reqEnergy;
             if(cat=="ENERGY"){
-                cout<<YELLOW<<sep<<RESET<< setw(w) << info.genInne<<YELLOW<<sep<<info.opis<<RESET<<endl;
+                cout<<YELLOW<<sep<<RESET<< setw(w-6) << info.genInne<<YELLOW<<sep<<info.opis<<RESET<<endl;
             }else     
             if(cat=="HOUSING"){
-                cout<<YELLOW<<sep<<RESET<< setw(w) << info.genInne<<YELLOW<<sep<<info.opis<<RESET<<endl;
+                cout<<YELLOW<<sep<<RESET<< setw(w-6) << info.genInne<<YELLOW<<sep<<info.opis<<RESET<<endl;
             }else
             if(cat=="FARM"){
-                cout<<YELLOW<<sep<<RESET<< setw(w) << info.genInne<<YELLOW<<sep<<RESET<<setw(w)<<info.x<<YELLOW<<sep<<info.opis<<RESET<<endl;
+                cout<<YELLOW<<sep<<RESET<< setw(w-2) << info.genInne<<YELLOW<<sep<<RESET<<setw(w-11)<<info.x<<YELLOW<<sep<<info.opis<<RESET<<endl;
             }else
             if(cat=="PRODUCER"){
-                cout<< YELLOW<<sep<<RESET<<setw(w) << info.genKamien<<YELLOW<<sep<<RESET<<setw(w)<<info.genTytan<<YELLOW<<sep<<info.opis<<RESET<<endl;
+                cout<< YELLOW<<sep<<RESET<<setw(w-5) << info.genKamien<<YELLOW<<sep<<RESET<<setw(w-5)<<info.genTytan<<YELLOW<<sep<<info.opis<<RESET<<endl;
             }else
             if(cat=="TERR"){
-                cout<< YELLOW<<sep<<RESET<<setw(w) << info.genInne<<RESET<<endl;
+                cout<< YELLOW<<sep<<RESET<<setw(w-6) << info.genInne<<YELLOW<<sep<<info.opis<<RESET<<endl;
             }
         
         
@@ -421,8 +472,7 @@ void Game::prntHelp(){
     // SHOW
     cout << BG_BLACK << left << setw(w) << "show" << RESET << YELLOW << sep << "Podsumowanie ilosci zbudowanych budynkow." << RESET << endl;
     cout << BG_BLACK << left << setw(w) << "show full" << RESET << YELLOW << sep << "Szczegolowa lista wszystkich zbudowanych budynkow." << RESET << endl;
-    cout << BG_BLACK << left << setw(w) << "show [id]" << RESET << YELLOW << sep << "Szczegoly konkretnego zbudowanego budynku (po ID)." << RESET << endl;
-
+    
     // COLONY 
     cout << BG_BLACK << left << setw(w) << "colony" << RESET << YELLOW << sep << "Podsumowanie surowcow, energii i pracownikow." << RESET << endl;
     
@@ -430,7 +480,7 @@ void Game::prntHelp(){
     cout << BG_BLACK << left << setw(w) << "next" << RESET << YELLOW << sep << "Konczy ture (produkcja/konsumpcja)." << RESET << endl;
 
     // DESTROY 
-    cout << BG_BLACK << left << setw(w) << "destroy [id/nazwa]" << RESET << YELLOW << sep << "Niszczy budynek (odzyskuje czesc surowcow/ludzi)." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "destroy [nazwa]" << RESET << YELLOW << sep << "Niszczy budynek (odzyskuje czesc surowcow/ludzi)." << RESET << endl;
     
     // RENAME
     cout << BG_BLACK << left << setw(w) << "rename" << RESET << YELLOW << sep << "Zmiana nazwy kolonii." << RESET << endl;

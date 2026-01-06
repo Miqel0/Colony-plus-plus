@@ -32,6 +32,7 @@ class Game{
     void prntCategories();
     void prntHelp();
 
+    void sprawdzLvlTerr();
 
 };
 
