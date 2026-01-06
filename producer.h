@@ -22,7 +22,10 @@ class Producer: public Building{
     double work() override;
     void prnt(int il) const override;
     void save(ofstream& plik) const override;
+
+    double getGenTitan() const;
     int getPType() const override;
+    TypProducer getTypeProducer() const;
     
 };
 

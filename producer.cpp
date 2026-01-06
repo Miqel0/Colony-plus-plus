@@ -23,21 +23,8 @@ void Producer::save(ofstream& plik)const{
 
 double Producer::work(){
     //cout<<YELLOW<<"- - - - - - - - - - - - - - - -"<<RESET<<endl;
-    
-    switch(pType){
-        case TypProducer::ZAAWANSOWANA_KOPALNIA:
-            //cout<<"Wygenerowany kamien: "<<stoneGen<<endl;
-            //cout<<"Wygenerowany tytan: "<<titanGen<<endl;
-            return stoneGen;
-        case TypProducer::KOPALNIA_KAMIENIA:
-            //cout<<GREEN<<"Wygenerowany kamien: "<<stoneGen<<RESET<<endl;
-            return stoneGen;
-        case TypProducer::KOPALNIA_TYTANU:
-            //cout<<GREEN<<"Wygenerowany tytan: "<<titanGen<<RESET<<endl;
-            return titanGen;
-        default:
-        return 0;
-
-}
+    return stoneGen;
 }
 int Producer::getPType() const{return static_cast<int>(pType);}
+TypProducer Producer::getTypeProducer() const{return pType;}
+double Producer::getGenTitan() const{return titanGen;}

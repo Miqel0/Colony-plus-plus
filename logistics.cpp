@@ -14,7 +14,8 @@ using namespace std;
 #include "terr.h"
 
 
-Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(0),food(1000),titan(100),stone(100){}
+//Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(0),food(1000),titan(100),stone(100){}
+Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(1000),food(100),titan(0),stone(50){}
 
 void Logistics::prnt(){
 
@@ -146,19 +147,13 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                             c_food+=c;
                             break;
                         case TypBudynku::PRODUCER:{
-                            int kamien = static_cast<int>(TypProducer::KOPALNIA_KAMIENIA);
-                            int tytan  = static_cast<int>(TypProducer::KOPALNIA_TYTANU);
-                            int zaaw   = static_cast<int>(TypProducer::ZAAWANSOWANA_KOPALNIA);
-                            
-                            int  a = b->getPType();
-
-                            
-                            if(a==kamien || a==zaaw){
-                                c_stone+=c;
+                            Producer* p = static_cast<Producer*>(b.get());
+                            TypProducer pTyp=p->getTypeProducer();
+                            c_stone+=c;
+                            if(pTyp==TypProducer::WIERTLO_GLEBINOWE||pTyp==TypProducer::KOMBINAT_GORNICZY||pTyp==TypProducer::AUTOMAT_WYDOBYWCZY){
+                                c_titan += p->getGenTitan();
                             }
-                            if(a==tytan||a==zaaw){
-                                c_titan+=c;
-                            }
+                            
                             break;
                         }
                         case TypBudynku::TERR:{
@@ -203,8 +198,8 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
 
 
 bool Logistics::sprawdzLvlTerr(){
-    vector<int> poziomy={10,20,50,100,200,500,1000,2000,5000};
-    if(poziomy[lvl_terr]<wsp_terr){
+    vector<int> progi={10,20,50,100,200,500,1000,2000,5000};
+    if(progi[lvl_terr]<wsp_terr){
         lvl_terr++;
         cout<<MAGENTA<<"Osiagnales kolejny poziom terraformacji!! \n"<<BOLD<<"Aktualny poziom "<<lvl_terr<<RESET<<endl;
         return true;

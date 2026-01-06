@@ -1,11 +1,24 @@
-Wiatrak             ENERGY    10   5    0    5    0    0    20   0  0  Produkuje_energie
-Panele_sloneczne    ENERGY    20   2    0    3    0    0    50   0  1  Produkuje_energie
-Szklarnia           FARM      10   5    4    1    0    0    3    2  1  Jedzenie_co_2_tury
-Pole                FARM      5    0    3    1    0    0    4    1  0  Jedzenie_co_1_ture
-Barak               HOUSING   15   0    0    0    0    0    5    0  0  Daje_mieszkancow
-Rezydencja          HOUSING   30   10   0    0    0    0    8    0  1  Luksusowe_mieszkanie
-Kopalnia_kamienia   PRODUCER  10   0    3    4    5    0    0    0  0  Wydobywa_kamien
-Kopalnia_tytanu     PRODUCER  30   0    4    4    0    5    0    0  0  Wydobywa_tytan
-Zaaw_kopalnia       PRODUCER  50   50   4    6    5    5    0    0  3  Wydobywa_wszystko
-cos1                TERR      10   5    2    5    0    0    20   0  0  Terraformacja_mala
-cos2                TERR      20   2    1    3    0    0    50   0  0  Terraformacja_duza
+Maly_Wiatrak        ENERGY     15    0    0    1    0    0    15   0    0    Tania_energia_na_start
+Duzy_Panel          ENERGY     50    10   0    2    0    0    40   0    1    Wydajniejsza_energia
+Reaktor_Jadrowy     ENERGY     200   100  0    5    0    0    150  0    3    Potega_atomu_dla_przemyslu
+Fuzja_Zimna         ENERGY     500   300  0    10   0    0    500  0    6    Nieskonczona_energia
+
+Pole_Ziemniakow     FARM       10    0    2    2    0    0    10   1    0    Podstawowe_zrodlo_jedzenia_(_to_nie_jest_nawiazanie_do_Marsjanina...)
+Szklarnia_Hydro     FARM       40    10   10   3    0    0    60   2    2    Efektywna_uprawa_roslin
+Farma_Alg           FARM       150   50   30   5    0    0    120  3    4    Masowa_produkcja_biomasy
+Syntezator_Bialka   FARM       300   150  100  2    0    0    400  4    6    Sztuczne_jedzenie_z_laboratorium
+
+Barak_Robotniczy    HOUSING    20    0    0    0    0    0    4    0    0    Ciasne_lozko_dla_zalogi
+Kwatery_Zalogi      HOUSING    60    20   5    0    0    0    10   0    2    Standardowe_mieszkania
+Kopula_Mieszkalna   HOUSING    250   100  50   0    0    0    40   0    4    Luksusowe_miasto_pod_szklem
+Metropolia          HOUSING    800   400  200  0    0    0    100  0    7    Wielopoziomowe_osiedle
+
+Odkrywka_Kamienia   PRODUCER   20    0    3    4    8    0    0    0    0    Proste_wydobycie_kamienia
+Wiertlo_Glebinowe   PRODUCER   50    20   10   6    10   5    0    0    1    Wydobywa_kamien_i_tytan
+Kombinat_Gorniczy   PRODUCER   200   100  40   15   30   15   0    0    3    Ciezki_przemysl_wydobywczy
+Automat_Wydobywczy  PRODUCER   600   300  150  2    80   40   0    0    5    Autonomiczna_kopalnia_bezzalogowa
+
+Stacja_Badawcza     TERR       40    0    5    2    0    0    2    0    0    Badanie_atmosfery_Marsa
+Kominy_Cieplne      TERR       120   30   20   5    0    0    8    0    2    Uwalnianie_gazow_z_podziemi
+Generator_O2        TERR       400   200  100  10   0    0    25   0    4    Produkcja_tlenu_na_skale_globalna
+Lustra_Orbitalne    TERR       1500  1000 500  20   0    0    100  0    7    Ostateczna_terraformacja_planety
