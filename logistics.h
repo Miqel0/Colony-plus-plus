@@ -18,6 +18,7 @@ class Logistics{
     int demand_workers;
     
     double wsp_terr;
+    int lvl_terr;
     
     double reqEnergy;
     double genEnergy;
@@ -32,11 +33,13 @@ class Logistics{
     void prnt();
     void prntRound(double f, double s, double t, double te);
 
-    bool czyNextRound(const vector<unique_ptr<Building>>& budynki);
+    int czyNextRound(const vector<unique_ptr<Building>>& budynki);
     bool nextRound(const vector<unique_ptr<Building>>& budynki);
     
     void updateBudynek(Building* budynek);
     void updateZburzBudynek(Building* budynek);
+
+    bool sprawdzLvlTerr();
 
     void setNazwa();
     void setTura();
@@ -58,6 +61,7 @@ class Logistics{
     double getFood() const;
     int getStone() const;
     int getTitan() const;
+    int getLvlTerr() const;
 
     void save(string nazwa_plik);
     void load(string nazwa_plik);

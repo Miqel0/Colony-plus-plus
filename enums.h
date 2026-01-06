@@ -15,24 +15,24 @@ inline const string NO_BOLD   = "\033[22m";
 inline const string UNDERLINE = "\033[4m";
 
 // KOLORY
-inline const std::string BLACK   = "\033[30m";
-inline const std::string RED     = "\033[31m";
-inline const std::string GREEN   = "\033[32m";
-inline const std::string YELLOW  = "\033[33m";
-inline const std::string BLUE    = "\033[34m"; 
-inline const std::string MAGENTA = "\033[35m"; 
-inline const std::string CYAN    = "\033[36m"; 
-inline const std::string WHITE   = "\033[37m"; 
+inline const string BLACK   = "\033[30m";
+inline const string RED     = "\033[31m";
+inline const string GREEN   = "\033[32m";
+inline const string YELLOW  = "\033[33m";
+inline const string BLUE    = "\033[34m"; 
+inline const string MAGENTA = "\033[35m"; 
+inline const string CYAN    = "\033[36m"; 
+inline const string WHITE   = "\033[37m"; 
 
 // TŁA  
-inline const std::string BG_BLACK   = "\033[40m";
-inline const std::string BG_RED     = "\033[41m";
-inline const std::string BG_GREEN   = "\033[42m";
-inline const std::string BG_YELLOW  = "\033[43m";
-inline const std::string BG_BLUE    = "\033[44m";
-inline const std::string BG_MAGENTA = "\033[45m";
-inline const std::string BG_CYAN    = "\033[46m";
-inline const std::string BG_WHITE   = "\033[47m";
+inline const string BG_BLACK   = "\033[40m";
+inline const string BG_RED     = "\033[41m";
+inline const string BG_GREEN   = "\033[42m";
+inline const string BG_YELLOW  = "\033[43m";
+inline const string BG_BLUE    = "\033[44m";
+inline const string BG_MAGENTA = "\033[45m";
+inline const string BG_CYAN    = "\033[46m";
+inline const string BG_WHITE   = "\033[47m";
 
 // INNE
 inline const std::string CLEAR_SCREEN = "\033[2J\033[1;1H"; // czyszczenie ekranu 
@@ -93,9 +93,9 @@ struct BuildingInfo {
     // Produkcja
     double genKamien;
     double genTytan;  
-    double genInne;   // Prąd / Jedzenie / Mieszkańcy / WspTerr
-    
-    int x;     // czas wzrostu (Farmy) 
+    double genInne;  
+    double lvlTerr;
+    int x;     
     string opis;
 };
 

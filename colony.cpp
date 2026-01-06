@@ -322,7 +322,7 @@ void Colony::zburzBudynek(string nazwa){
 
 
 
-bool Colony::nextRound(){return f_logisyka.czyNextRound(buildings);}
+int Colony::nextRound(){return f_logisyka.czyNextRound(buildings);}
 
 void Colony::update(){}
 
@@ -479,12 +479,14 @@ bool Colony::czyBudynek(string bud)const{
     return false;
 }
 
+bool Colony::sprawdzLvlTerr(){return f_logisyka.sprawdzLvlTerr();}
+
 bool Colony::czyStac(const unique_ptr<Building> &b)const{
     int czy=0;
     if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){
         czy=1;
     }else{
-        cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia, i "<<b->getKosztTytan()-f_logisyka.getTitan()<<NO_BOLD<<" tytanu!";
+        cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia, i "<<-(b->getKosztTytan()-f_logisyka.getTitan())<<NO_BOLD<<" tytanu!"<<RESET<<endl;
         czy=0;
     }
     if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()<0){
@@ -506,6 +508,7 @@ int Colony::getIloscBudynkow()const{return buildings.size();}
 int Colony::getAllWorkers()const{return f_logisyka.getAWorkers();}
 int Colony::getDemandWorkers()const{return f_logisyka.getDWorkers();}
 int Colony:: getRuch()const{return f_logisyka.getRuch();}
+int Colony::getLvlTerr() const{return f_logisyka.getLvlTerr();}
 int Colony::getIlosc(string name)const{
     if(name.empty()) return 0;
     int il=0;

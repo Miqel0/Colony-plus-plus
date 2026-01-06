@@ -27,7 +27,7 @@ class Colony{
     void prntBuildingsShort();
     void prntBuildingsSumm();
 
-    bool nextRound();
+    int nextRound();
     void update();
 
 
@@ -62,6 +62,10 @@ class Colony{
     int getAllWorkers()const;
     int getDemandWorkers()const;
     int getIlosc(string name)const;
+
+    int getLvlTerr() const;
+
+    bool sprawdzLvlTerr();
 
     bool czyBudynek(string bud)const;
     bool czyStac(const unique_ptr<Building> &b)const;

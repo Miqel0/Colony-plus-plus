@@ -22,8 +22,8 @@ void Terr::save(ofstream& plik)const{
 
 
 double Terr::work(){
-    cout<<YELLOW<<"- - - - - - - - - - - - - - - -"<<RESET<<endl;
-    cout<<"Zwiekszony wspolczynnik terraformacji: "<<terrGen<<endl;
+    //cout<<YELLOW<<"- - - - - - - - - - - - - - - -"<<RESET<<endl;
+    //cout<<"Zwiekszony wspolczynnik terraformacji: "<<terrGen<<endl;
     return terrGen;
 }
 
