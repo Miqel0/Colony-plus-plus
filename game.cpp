@@ -12,42 +12,167 @@ using namespace std;
 
 Game::Game():running(true){
 
-    // Mapa głównych kategorii - TypBudynku
+    // // Mapa głównych kategorii - TypBudynku
+    // stringToBudynku["energy"]   = TypBudynku::ENERGY;
+    // stringToBudynku["farm"]     = TypBudynku::FARM;
+    // stringToBudynku["housing"]  = TypBudynku::HOUSING;
+    // stringToBudynku["producer"] = TypBudynku::PRODUCER;
+
+    // // Mapa Energy - TypEnergy
+    // stringToEnergy["wiatrak"]          = TypEnergy::WIATRAK;
+    // stringToEnergy["panele"]           = TypEnergy::PANELE;
+    // stringToEnergy["panele_sloneczne"]           = TypEnergy::PANELE;
+    // // 3. Mapa Farm - TypFarm
+    // stringToFarm["pole"]      = TypFarm::POLE;
+    // stringToFarm["szklarnia"] = TypFarm::SZKLARNIA;
+
+
+    // // 4. Mapa Domy - TypDomy
+    // stringToDomy["barak"]      = TypDomy::BARAK;
+    // stringToDomy["rezydencja"] = TypDomy::REZYDENCJA;
+
+
+    // // 5. Mapa Producer - TypProducer
+    // stringToProducer["kopalnia_kamienia"]     = TypProducer::KOPALNIA_KAMIENIA;
+    // stringToProducer["kopalnia_tytanu"]       = TypProducer::KOPALNIA_TYTANU;
+    // stringToProducer["zaaw_kopalnia"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
+
+    // // 6. Mapa Terr - TypTerr
+    // stringToTerr["cos1"]      = TypTerr::cos1;
+    // stringToTerr["cos2"] = TypTerr::cos2;
+    
+    // // Skróty 
+    // stringToProducer["kop_kamien"]   = TypProducer::KOPALNIA_KAMIENIA;
+    // stringToProducer["kop_tytan"]    = TypProducer::KOPALNIA_TYTANU;
+    // stringToProducer["zaaw_kop"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
+
+    // Mapa głównych kategorii
     stringToBudynku["energy"]   = TypBudynku::ENERGY;
     stringToBudynku["farm"]     = TypBudynku::FARM;
     stringToBudynku["housing"]  = TypBudynku::HOUSING;
     stringToBudynku["producer"] = TypBudynku::PRODUCER;
 
-    // Mapa Energy - TypEnergy
-    stringToEnergy["wiatrak"]          = TypEnergy::WIATRAK;
-    stringToEnergy["panele"]           = TypEnergy::PANELE;
-    stringToEnergy["panele_sloneczne"]           = TypEnergy::PANELE;
-    // 3. Mapa Farm - TypFarm
-    stringToFarm["pole"]      = TypFarm::POLE;
-    stringToFarm["szklarnia"] = TypFarm::SZKLARNIA;
+    // ENERGY
+    stringToEnergy["maly_wiatrak"]    = TypEnergy::MALY_WIATRAK;
+    stringToEnergy["duzy_panel"]      = TypEnergy::DUZY_PANEL;
+    stringToEnergy["reaktor_jadrowy"] = TypEnergy::REAKTOR_JADROWY;
+    stringToEnergy["fuzja_zimna"]     = TypEnergy::FUZJA_ZIMNA;
 
+    // FARM
+    stringToFarm["pole_ziemniakow"]   = TypFarm::POLE_ZIEMNIAKOW;
+    stringToFarm["szklarnia_hydro"]   = TypFarm::SZKLARNIA_HYDRO;
+    stringToFarm["farma_alg"]         = TypFarm::FARMA_ALG;
+    stringToFarm["syntezator_bialka"] = TypFarm::SYNTEZATOR_BIALKA;
 
-    // 4. Mapa Domy - TypDomy
-    stringToDomy["barak"]      = TypDomy::BARAK;
-    stringToDomy["rezydencja"] = TypDomy::REZYDENCJA;
+    // HOUSING
+    stringToDomy["barak_robotniczy"]  = TypDomy::BARAK_ROBOTNICZY;
+    stringToDomy["kwatery_zalogi"]    = TypDomy::KWATERY_ZALOGI;
+    stringToDomy["kopula_mieszkalna"] = TypDomy::KOPULA_MIESZKALNA;
+    stringToDomy["metropolia"]        = TypDomy::METROPOLIA;
 
+    // PRODUCER
+    stringToProducer["odkrywka_kamienia"]  = TypProducer::ODKRYWKA_KAMIENIA;
+    stringToProducer["wiertlo_glebinowe"]  = TypProducer::WIERTLO_GLEBINOWE;
+    stringToProducer["kombinat_gorniczy"]  = TypProducer::KOMBINAT_GORNICZY;
+    stringToProducer["automat_wydobywczy"] = TypProducer::AUTOMAT_WYDOBYWCZY;
 
-    // 5. Mapa Producer - TypProducer
-    stringToProducer["kopalnia_kamienia"]     = TypProducer::KOPALNIA_KAMIENIA;
-    stringToProducer["kopalnia_tytanu"]       = TypProducer::KOPALNIA_TYTANU;
-    stringToProducer["zaaw_kopalnia"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
-
-    // 6. Mapa Terr - TypTerr
-    stringToTerr["cos1"]      = TypTerr::cos1;
-    stringToTerr["cos2"] = TypTerr::cos2;
-    
-    // Skróty 
-    stringToProducer["kop_kamien"]   = TypProducer::KOPALNIA_KAMIENIA;
-    stringToProducer["kop_tytan"]    = TypProducer::KOPALNIA_TYTANU;
-    stringToProducer["zaaw_kop"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
+    // TERR
+    stringToTerr["stacja_badawcza"]  = TypTerr::STACJA_BADAWCZA;
+    stringToTerr["kominy_cieplne"]   = TypTerr::KOMINY_CIEPLNE;
+    stringToTerr["generator_o2"]     = TypTerr::GENERATOR_O2;
+    stringToTerr["lustra_orbitalne"] = TypTerr::LUSTRA_ORBITALNE;
 
     loadGameData();
     
+}
+
+
+void Game::startTutorial() {
+    cout << CLEAR_SCREEN;
+    cout << RED << "------------------------------------------------------------" << RESET << endl;
+    cout << BOLD << MAGENTA << "                 ROK 2142. SEKTOR OMEGA-4." << RESET << endl;
+    cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
+    
+    cout << YELLOW << "Komputer pokladowy: " << GREEN << "ONLINE" << RESET << endl;
+    cout << YELLOW << "Systemy podtrzymywania zycia: " << GREEN << "STABILNE" << RESET << endl;
+    cout << "Witaj, Kapitanie. Ladownik osiadl na powierzchni Marsa." << endl << endl;
+
+    //  NAZWA 
+    cout << CYAN << "[NARRATOR]:" << RESET << " Pierwszym krokiem jest zarejestrowanie nazwy naszej placowki w systemie." << endl;
+    kolonia.setNazwa(); 
+    cout << endl;
+
+    // COLONY 
+    cout << CYAN << "[NARRATOR]:" << RESET << " Swietnie. Zanim zaczniemy budowe, musisz ocenic nasze zasoby." << endl;
+    cout << "Wpisz komende " << BG_BLACK << WHITE << " colony " << RESET << ", aby wyswietlic stan magazynow." << endl;
+    if (cin.peek() == '\n') cin.ignore();
+    string komenda;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c); // Normalizacja
+
+        if(komenda == "colony") {
+            kolonia.prnt();
+            break;
+        } else {
+            cout << RED << "[SYSTEM]: Niepoprawna komenda. Prosze wpisac 'colony'." << RESET << endl;
+        }
+    }
+
+    // BUILD WIATRAK 
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Widzisz? Mamy troche Kamienia, ale zero Energii. A bez pradu nie beda dzialac zadne budynki." << endl;
+    cout << "Musimy postawic " << BLUE << "Maly_Wiatrak" << RESET << ". Zapewni on zasilanie dla reszty bazy." << endl;
+    cout << "Wpisz: " << BG_BLACK << WHITE << " build maly_wiatrak " << RESET << endl;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "build maly_wiatrak") {
+            if(stringToEnergy.count("maly_wiatrak")){
+                kolonia.zbudujBudynek(stringToEnergy["maly_wiatrak"]);
+                kolonia.setRuch(kolonia.getRuch()+1);
+            }
+            break;
+        } else {
+            cout << RED << "[SYSTEM]: Blad. Priorytetem jest 'build maly_wiatrak'." << RESET << endl;
+        }
+    }
+
+    // BUILD FARM
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Doskonale! Turbiny sie kreca. Teraz czas na jedzenie." << endl;
+    cout << "Zapasy sa male. Musimy zasiac " << GREEN << "Pole_Ziemniakow" << RESET << ", zanim zaloga zacznie glodowac." << endl;
+    cout << "Wpisz: " << BG_BLACK << WHITE << " build pole_ziemniakow " << RESET << endl;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "build pole_ziemniakow") {
+            if(stringToFarm.count("pole_ziemniakow")){
+                kolonia.zbudujBudynek(stringToFarm["pole_ziemniakow"]);
+                kolonia.setRuch(kolonia.getRuch()+1);
+            }
+            break;
+        } else {
+            cout << RED << "[SYSTEM]: Zaloga jest glodna! Wpisz 'build pole_ziemniakow'." << RESET << endl;
+        }
+    }
+
+    // ZAKONCZENIE 
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Baza operacyjna gotowa. Podstawowe systemy dzialaja." << endl;
+    cout << "Teraz wszystko w Twoich rekach, Kapitanie." << endl;
+    cout << "Pamietaj o rozwijaniu " << MAGENTA << "TERRAFORMACJI" << RESET << ", aby odblokowac lepsze technologie (Tytan)." << endl;
+    cout << "Jakbys sie zgubil to wpisz, "<<YELLOW<<"help" <<RESET<<"albo"<<YELLOW<<"rules"<<RESET<< endl;
+    cout << "Powodzenia. Bez odbioru." << endl;
+    cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
 }
 
 void Game::run(){
@@ -56,9 +181,9 @@ void Game::run(){
     cin>>odp;
     if(odp=="tak"||odp=="TAK"||odp=="Tak"||odp=="t"){
         kolonia.load();
-    }else{
-        cout<<CLEAR_SCREEN<<YELLOW<<"Witaj przybyszu!"<<RESET<<endl;
-        kolonia.setNazwa();
+    } else {
+    
+        startTutorial();
     }
 
   
@@ -94,8 +219,9 @@ void Game::commands(){
             //kolonia.prntBuildingsShort();
             kolonia.prntBuildingsSumm();
         }
-        else if(kolonia.czyBudynek(arg1)){
-            kolonia.prntBuilding(arg1);
+        else if(bazaDanych.count(arg1)){
+            string poprawnaNazwa = bazaDanych[arg1].nazwa;
+            kolonia.prntBuilding(poprawnaNazwa);
         }
         else{
             cout<<RED<<"Nie ma takiej komendy!"<<RESET<<endl;
@@ -149,6 +275,7 @@ void Game::commands(){
             cout << YELLOW << "Aby zobaczyc liste budynkow, wpisz: " <<WHITE<< BG_BLACK << "info" << RESET << endl;
             return;
         }
+        for(auto &c : arg1) c = tolower(c);
         
         if(kolonia.getRuch()==3){
             cout<<YELLOW<<"Juz wykorzystales "<<BOLD<<"3/3"<<NO_BOLD<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej rundy!"<<RESET<<endl;
@@ -230,6 +357,9 @@ void Game::commands(){
     else if(command=="help"){
         prntHelp();
     }
+    else if(command=="rules"){
+        prntRules();
+    }
     else if(command=="destroy"){//Niszczenie konkretnego budynku.
 
         string arg1;
@@ -250,6 +380,7 @@ void Game::commands(){
         cout<<RED<<BOLD<<"Nieznana komenda!!\n\n"<<RESET;
         
     }
+    cout<<endl;
 }
 
 void Game::sprawdzLvlTerr(){
@@ -308,11 +439,14 @@ void Game::loadGameData(){
         nowy.lvlTerr=lt;
         nowy.opis=opis;
         string klucz =n;
-        klucz[0]=tolower(klucz[0]);
+        for(auto &c : klucz) c = tolower(c);
+
         bazaDanych[klucz]=nowy;
     }
     plik.close();
 }
+
+
 
 void Game::prntInfo(string cat){
     for (auto &c : cat) c = toupper(c);
@@ -453,6 +587,27 @@ void Game::prntCategories(){
 
 }
 
+void Game::prntRules() {
+    prntHeader("ZASADY PRZETRWANIA NA MARSIE");
+
+    cout << YELLOW << BOLD << "1. EKONOMIA I PRZETRWANIE" << RESET << endl;
+    cout << "   - " << CYAN << "ENERGIA" << RESET << ": Jest kluczowa. Przy jej braku zaden z budynkow nie bedzie dzialal." << endl;
+    cout << "   - " << GREEN << "JEDZENIE" << RESET << ": Twoi ludzie musza jesc. Jesli w magazynie zabraknie jedzenia, kolonia " << RED << "UMIERA" << RESET << "." << endl;
+    cout << "   - " << BLUE << "PRACOWNICY" << RESET << ": Kazdy budynek wymaga rak do pracy. Buduj domy (Housing), aby zwiekszyc populacje." << endl << endl;
+
+    cout << YELLOW << BOLD << "2. ROZWOJ" << RESET << endl;
+    cout << "   - Buduj kopalnie, aby zdobywac " << MAGENTA << "KAMIEN" << RESET << " i " << MAGENTA << "TYTAN" << RESET << "." << endl;
+    cout << "   - Inwestuj w budynki " << MAGENTA << "TERR" << RESET << " (Terraformacja). Zwiekszaja one poziom przystosowania planety." << endl;
+    cout << "   - Wyzszy poziom terraformacji = odblokowanie nowych, lepszych budynkow." << endl << endl;
+
+    cout << YELLOW << BOLD << "3. ROZGRYWKA" << RESET << endl;
+    cout << "   - Masz " << BOLD << "3 punkty ruchu" << NO_BOLD << " na ture. Kazde zbudowanie budynku zuzywa 1 ruch." << endl;
+    cout << "   - Gdy skonczysz ruchy, wpisz " << BG_BLACK << "next" << RESET << ", aby zakonczyc ture i zebrac surowce." << endl;
+    cout << "   - Uzywaj " << BG_BLACK << "info" << RESET << ", aby sprawdzic koszty budynkow." << endl;
+    cout << endl;
+}
+
+
 void Game::prntHelp(){
     const int w = 25;
     const string sep = " | ";
@@ -471,7 +626,7 @@ void Game::prntHelp(){
 
     // SHOW
     cout << BG_BLACK << left << setw(w) << "show" << RESET << YELLOW << sep << "Podsumowanie ilosci zbudowanych budynkow." << RESET << endl;
-    cout << BG_BLACK << left << setw(w) << "show full" << RESET << YELLOW << sep << "Szczegolowa lista wszystkich zbudowanych budynkow." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "show [name]" << RESET << YELLOW << sep << "Pokazuje informacje szegolowe o danym budynku." << RESET << endl;
     
     // COLONY 
     cout << BG_BLACK << left << setw(w) << "colony" << RESET << YELLOW << sep << "Podsumowanie surowcow, energii i pracownikow." << RESET << endl;
@@ -485,7 +640,8 @@ void Game::prntHelp(){
     // RENAME
     cout << BG_BLACK << left << setw(w) << "rename" << RESET << YELLOW << sep << "Zmiana nazwy kolonii." << RESET << endl;
 
-    // SAVE/LOAD , EXIT
+    // SAVE/LOAD , EXIT, RULES
+    cout << BG_BLACK << left << setw(w) << "rules" << RESET << YELLOW << sep << "Wyswietla krotki poradnik jak grac." << RESET << endl;
     cout << BG_BLACK << left << setw(w) << "save / load" << RESET << YELLOW << sep << "Zapis i wczytanie stanu gry." << RESET << endl;
     cout << BG_BLACK << left << setw(w) << "exit" << RESET << YELLOW << sep << "Wyjscie z gry." << RESET << endl;
 

@@ -24,6 +24,7 @@ class Game{
     public:
     Game();
     void run();
+    void startTutorial();
     void commands();
     void prntBudynki();
 
@@ -31,6 +32,7 @@ class Game{
     void prntInfo(string cat);
     void prntCategories();
     void prntHelp();
+    void prntRules();
 
     void sprawdzLvlTerr();
 
