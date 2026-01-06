@@ -34,6 +34,9 @@ class Game{
     void prntHelp();
     void prntRules();
 
+    bool checkConfig();
+    void saveConfig();
+
     void sprawdzLvlTerr();
 
 };

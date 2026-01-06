@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -342,16 +343,13 @@ void Logistics::load(string nazwa_plik){
 void Logistics::setNazwa(){
     string nazwa;
     if(nazwa_kolonii=="XX"){
-        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\nJezeli chcesz pominac ta czynnosc to napisz 'skip'\n"<<BLUE<<">>"<<RESET;
+        cout<<YELLOW<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (nie uzywaj polskich znakow, a spacje zastap '_'!! )\n"<<BLUE<<">>"<<RESET;
     }else{
-        cout<<YELLOW<<"Na co chcesz zmienic nazwe swojej kolonii? (w celu unikniecia bledow nie uzywaj spacji i polskich znakow!!)\n"<<BLUE<<">>"<<RESET;
+        cout<<YELLOW<<"Na co chcesz zmienic nazwe swojej kolonii? (nie uzywaj polskich znakow, a spacje zastap '_'!!)\n"<<BLUE<<">>"<<RESET;
     }
     cin>>nazwa;
-    if(nazwa=="skip" & nazwa_kolonii=="XX"){
-        cout<<YELLOW<<"Pomijanie wyboru nazwy..."<<RESET<<endl;
-        
-    }
-    else if(!nazwa.empty()){
+    if(!nazwa.empty()){
+        replace(nazwa.begin(), nazwa.end(), '_', ' ');
         nazwa_kolonii=nazwa;
         cout<<YELLOW<<"Ustawiono nazwe kolonii na "<<BOLD<<nazwa<<RESET<<YELLOW<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<RESET<<endl;
     }else{
