@@ -16,7 +16,7 @@ using namespace std;
 
 
 //Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(0),food(1000),titan(100),stone(100){}
-Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(1000),food(100),titan(0),stone(50){}
+Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(0),food(100),titan(0),stone(50){}
 
 void Logistics::prnt(){
 
@@ -91,9 +91,9 @@ void Logistics::prntRound(double f, double s, double t,double te){
 
 int Logistics::czyNextRound(const vector<unique_ptr<Building>>& budynki){
     string decyzja;
-    cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (TAK / NIE)"<<RESET<<endl;
+    cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (y / n)"<<RESET<<endl;
     cin>>decyzja;
-    if(decyzja=="TAK"||decyzja=="tak"||decyzja=="Tak"||decyzja=="t"){
+    if(decyzja=="y"||decyzja=="yes"||decyzja=="tak"||decyzja=="t"){
         cout<<YELLOW<<">>Rozpoczynanie procedury przejscia do kolejnej rundy..."<<RESET<<endl;
         cout<<endl;
         if(nextRound(budynki)){
@@ -297,6 +297,46 @@ string Logistics::getNazwa() const{return nazwa_kolonii;}
 int Logistics::getLvlTerr() const{return lvl_terr;}   
 
     
+void Logistics::setSandbox(){
+    stone = 50000;
+    titan = 50000;
+    food = 50000;
+    genEnergy = 50000; 
+    all_workers = 1000; 
+    demand_workers = 0;
+    lvl_terr = 10; 
+    wsp_terr = 1000;
+    cout << MAGENTA << BOLD << "[DEBUG]: Uruchomiono tryb SANDBOX. Masz nieskonczone zasoby!" << RESET << endl;
+}
+
+void Logistics::setCustom(){
+    string ti,st,fo,wo,lvl,gen;
+    prntHeader("Konfiguracja niestandardowa gry");
+    cout<<YELLOW<<"Podaj po spacji parametry ktore chcesz ustawic, jak chcesz ich nie zmieniac, to zamiast nich napisz "<<BOLD<<"'-' "<<NO_BOLD<<"!"<<RESET<<endl;
+    cout<<"kamien tytan jedzenie workers poziom_terr gen_energy"<<endl;
+    cout<<BLUE<<">>"<<RESET;
+    cin>>ti>>st>>fo>>wo>>lvl>>gen;
+
+    if(ti!="-"){
+        titan=stoi(ti);
+    }
+    if(st!="-"){
+        stone=stoi(st);
+    }
+    if(fo!="-"){
+        food=stoi(fo);
+    }
+    if(wo!="-"){
+        all_workers=stoi(wo);
+    }
+    if(lvl!="-"){
+        lvl_terr=stoi(lvl);
+    }
+    if(gen!="-"){
+        genEnergy=stoi(gen);
+    }
+    cout << MAGENTA << BOLD << "[DEBUG]: Uruchomiono tryb CUSTOM." << RESET << endl;
+}
 
 
 void Logistics::save(string nazwa_plik){
