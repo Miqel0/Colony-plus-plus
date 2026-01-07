@@ -108,4 +108,4 @@ W trakcie gry mozliwe jest wpisywanie poniższych komend:
 
 ## 📝 Autor
 
-**@Miquel** - Projekt wykonany na zaliczenie przedmiotu *Języki Programowania*.
+**Michał Pawlica / @Miquel** - Projekt wykonany na zaliczenie przedmiotu *Języki Programowania*.
