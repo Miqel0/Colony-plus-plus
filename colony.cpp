@@ -325,9 +325,9 @@ void Colony::zburzBudynek(int nr){
     if(nr>=0 && nr < buildings.size()){
         string dec;
         cout<<YELLOW<<"Czy na pewno chcesz wyburzyc budynek: "<<buildings[nr]->getName()<<RESET<<endl;
-        cout<<YELLOW<<">>Potwierdz wpisujac TAK, albo anuluj NIE."<<RESET<<endl;
+        cout<<YELLOW<<">>Potwierdz wpisujac y, albo anuluj n."<<RESET<<endl;
         cin>>dec;
-        if(dec=="TAK"||dec=="tak"||dec=="Tak"){
+        if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
             if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
                 if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){
                     cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
@@ -367,9 +367,9 @@ void Colony::zburzBudynek(string nazwa){
     if(nam!="X"){
         string dec;
         cout<<YELLOW<<"Czy na pewno chcesz wyburzyc budynek: "<<nam<<RESET<<endl;
-        cout<<YELLOW<<">>Potwierdz wpisujac TAK, albo anuluj NIE."<<RESET<<endl;
+        cout<<YELLOW<<">>Potwierdz wpisujac y, albo anuluj n."<<RESET<<endl;
         cin>>dec;
-        if(dec=="TAK"||dec=="tak"||dec=="Tak"){
+        if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
             if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
                 if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){
                     cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
@@ -555,6 +555,10 @@ bool Colony::czyBudynek(string bud)const{
     return false;
 }
 
+void Colony::setSandbox(){f_logisyka.setSandbox();}
+void Colony::setCustom(){f_logisyka.setCustom();}
+
+
 bool Colony::sprawdzLvlTerr(){return f_logisyka.sprawdzLvlTerr();}
 
 bool Colony::czyStac(const unique_ptr<Building> &b)const{
@@ -562,7 +566,17 @@ bool Colony::czyStac(const unique_ptr<Building> &b)const{
     if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){
         czy=1;
     }else{
-        cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia, i "<<-(b->getKosztTytan()-f_logisyka.getTitan())<<NO_BOLD<<" tytanu!"<<RESET<<endl;
+        if(b->getKosztKamien()>f_logisyka.getStone()){
+            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia!"<<RESET<<endl;
+        
+        }else if(b->getKosztTytan()>f_logisyka.getTitan()){
+            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztTytan()-f_logisyka.getTitan()<<NO_BOLD<<" tytanu!"<<RESET<<endl;
+        
+        }else if(b->getKosztKamien()>f_logisyka.getStone()&&b->getKosztTytan()>f_logisyka.getTitan()){
+            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia, i "<<b->getKosztTytan()-f_logisyka.getTitan()<<NO_BOLD<<" tytanu!"<<RESET<<endl;
+
+        }
+        
         czy=0;
     }
     if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()<0){

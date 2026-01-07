@@ -63,6 +63,9 @@ class Logistics{
     int getTitan() const;
     int getLvlTerr() const;
 
+    void setSandbox();
+    void setCustom();
+
     void save(string nazwa_plik);
     void load(string nazwa_plik);
     

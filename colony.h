@@ -70,6 +70,8 @@ class Colony{
     bool czyBudynek(string bud)const;
     bool czyStac(const unique_ptr<Building> &b)const;
 
+    void setSandbox();
+    void setCustom();
     
     
 };

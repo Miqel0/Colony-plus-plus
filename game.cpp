@@ -207,21 +207,65 @@ void Game::saveConfig(){
 
 
 void Game::run(){
-    if(checkConfig()){
-        cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (TAK/NIE)"<<RESET<<endl;
-        string odp;
-        cin>>odp;
-        if(odp=="tak"||odp=="TAK"||odp=="Tak"||odp=="t"){
-            kolonia.load();
-        }else{
-            startTutorial();
-        }
-    } else{
-        startTutorial();
-        saveConfig();
+
+    //Wersja testowa poczatku gry
+    cout << CLEAR_SCREEN;
+    cout << YELLOW << "WYBIERZ TRYB GRY:" << RESET << endl;
+    cout << " [" << BOLD << "1" << NO_BOLD << "] NORMALNY (Podstawowa wersja)" << endl;
+    cout << " [" << BOLD << "2" << NO_BOLD << "] SANDBOX / TESTY (Duzo surowcow, odblokowane budynki)" << endl;
+    cout << " [" << BOLD << "3" << NO_BOLD << "] CUSTOM (Wpisz wlasne wartosci)" << endl;
+    cout << BLUE << ">> " << RESET;
+    
+    int tryb;
+    
+    while(!(cin >> tryb)){
+        cout << RED << "To nie jest liczba! Wpisz 1, 2 lub 3: " << RESET;
+    
     }
 
-  
+    if(tryb == 2){
+        kolonia.setSandbox();
+        saveConfig();
+    } else if(tryb == 3){
+        kolonia.setCustom();
+        saveConfig();
+    }
+    cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
+    
+    cout<<YELLOW<<"Czy chcesz przejsc samouczek? (y/n)"<<RESET<<endl;
+    string odp;
+    cin>>odp;
+    if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
+        startTutorial();
+    }
+
+
+    cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (y/n)"<<RESET<<endl;
+
+    cin>>odp;
+    if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
+        kolonia.load();
+    }
+    
+
+    // //Podstawowa wrsja poczatku gry 
+    // cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl;
+    // if(checkConfig()){
+    //     cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (y/n)"<<RESET<<endl;
+    //     string odp;
+    //     cin>>odp;
+    //     if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
+    //         kolonia.load();
+    //     }else{
+    //         startTutorial();
+    //     }
+    // } else{
+    //     startTutorial();
+    //     saveConfig();
+    // }
+
+    cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
+
     while(running){
         commands();
     }
@@ -285,9 +329,9 @@ void Game::commands(){
             cout<<CYAN<<BOLD<<"Zamykanie gry!"<<YELLOW<<"\n<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> "<<RESET<<endl;
             running=false;
         }else{
-        cout<<YELLOW<<"Czy na pewno chcesz wyjsc z gry? Stracisz niezapisany postep!\n(TAK/NIE)\n"<<RESET;
+        cout<<YELLOW<<"Czy na pewno chcesz wyjsc z gry? Stracisz niezapisany postep!\n(y/n)\n"<<RESET;
         cin>>dec;
-        if(dec=="TAK"||dec=="tak"||dec=="Tak"){
+        if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
         cout<<CYAN<<BOLD<<"Zamykanie gry!"<<YELLOW<<"\n<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> "<<RESET<<endl;
         running=false;
         }else{
@@ -394,6 +438,9 @@ void Game::commands(){
     }
     else if(command=="rules"){
         prntRules();
+    }
+    else if(command=="cheat"){
+        kolonia.setSandbox();
     }
     else if(command=="destroy"){//Niszczenie konkretnego budynku.
 
