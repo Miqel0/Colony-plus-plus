@@ -248,6 +248,9 @@ bool Colony::zbudujBudynek(TypProducer typ){
         case TypProducer::WIERTLO_GLEBINOWE:
             nowyBudynek = make_unique<Producer>("Wiertlo_Glebinowe", 10.0, 50.0, 20.0, 10.0, TypProducer::WIERTLO_GLEBINOWE, 6, 5.0);
             break;
+        case TypProducer::KOPALNIA_TYTANU:
+            nowyBudynek = make_unique<Producer>("Kopalnia_Tytanu", 5.0, 35.0, 0.0, 0.0, TypProducer::KOPALNIA_TYTANU, 6, 5.0);
+            break;
         case TypProducer::KOMBINAT_GORNICZY:
             nowyBudynek = make_unique<Producer>("Kombinat_Gorniczy", 40.0, 200.0, 100.0, 30.0, TypProducer::KOMBINAT_GORNICZY, 15, 15.0);
             break;
@@ -288,37 +291,6 @@ bool Colony::zbudujBudynek(TypTerr typ){
         default: return false;
     }
     return buduj(move(nowyBudynek));
-}
-
-
-
-bool Colony::zbudujBudynek(TypBudynku typ){//tylko do celu testowania
-
-    unique_ptr<Building> nowyBudynek;
-        
-    switch (typ){
-    case TypBudynku::NIEZNANY:
-        nowyBudynek=make_unique<Building>();
-        break;
-    case TypBudynku::ENERGY:
-        nowyBudynek=make_unique<Energy>();
-        break;
-    case TypBudynku::FARM:
-        nowyBudynek=make_unique<Farm>();
-        break;
-    case TypBudynku::HOUSING:
-        nowyBudynek=make_unique<Housing>();
-        break;
-    case TypBudynku::PRODUCER:
-        nowyBudynek=make_unique<Producer>();
-        break;
-    default:
-        return false;
-    }
-    f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
-    cout<<YELLOW<<"Dodano nowy budynek: "<<BOLD<<nowyBudynek->getName()<<RESET<<YELLOW<<"!!"<<RESET<<endl;
-    addBuilding(move(nowyBudynek));
-    return true;
 }
 
 void Colony::zburzBudynek(int nr){
@@ -599,6 +571,8 @@ int Colony::getAllWorkers()const{return f_logisyka.getAWorkers();}
 int Colony::getDemandWorkers()const{return f_logisyka.getDWorkers();}
 int Colony:: getRuch()const{return f_logisyka.getRuch();}
 int Colony::getLvlTerr() const{return f_logisyka.getLvlTerr();}
+int Colony::getToNextLvlTerr() const{return f_logisyka.getTitan();}
+
 int Colony::getIlosc(string name)const{
     if(name.empty()) return 0;
     int il=0;

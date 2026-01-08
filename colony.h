@@ -34,7 +34,6 @@ class Colony{
     void addBuilding(unique_ptr<Building> b);
 
     bool zbudujBudynek(TypEnergy typ);
-    bool zbudujBudynek(TypBudynku typ);
     bool zbudujBudynek(TypFarm typ);
     bool zbudujBudynek(TypDomy typ);
     bool zbudujBudynek(TypProducer typ);
@@ -62,6 +61,7 @@ class Colony{
     int getAllWorkers()const;
     int getDemandWorkers()const;
     int getIlosc(string name)const;
+    int getToNextLvlTerr() const;
 
     int getLvlTerr() const;
 

@@ -12,46 +12,6 @@ using namespace std;
 
 Game::Game():running(true){
 
-    // // Mapa głównych kategorii - TypBudynku
-    // stringToBudynku["energy"]   = TypBudynku::ENERGY;
-    // stringToBudynku["farm"]     = TypBudynku::FARM;
-    // stringToBudynku["housing"]  = TypBudynku::HOUSING;
-    // stringToBudynku["producer"] = TypBudynku::PRODUCER;
-
-    // // Mapa Energy - TypEnergy
-    // stringToEnergy["wiatrak"]          = TypEnergy::WIATRAK;
-    // stringToEnergy["panele"]           = TypEnergy::PANELE;
-    // stringToEnergy["panele_sloneczne"]           = TypEnergy::PANELE;
-    // // 3. Mapa Farm - TypFarm
-    // stringToFarm["pole"]      = TypFarm::POLE;
-    // stringToFarm["szklarnia"] = TypFarm::SZKLARNIA;
-
-
-    // // 4. Mapa Domy - TypDomy
-    // stringToDomy["barak"]      = TypDomy::BARAK;
-    // stringToDomy["rezydencja"] = TypDomy::REZYDENCJA;
-
-
-    // // 5. Mapa Producer - TypProducer
-    // stringToProducer["kopalnia_kamienia"]     = TypProducer::KOPALNIA_KAMIENIA;
-    // stringToProducer["kopalnia_tytanu"]       = TypProducer::KOPALNIA_TYTANU;
-    // stringToProducer["zaaw_kopalnia"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
-
-    // // 6. Mapa Terr - TypTerr
-    // stringToTerr["cos1"]      = TypTerr::cos1;
-    // stringToTerr["cos2"] = TypTerr::cos2;
-    
-    // // Skróty 
-    // stringToProducer["kop_kamien"]   = TypProducer::KOPALNIA_KAMIENIA;
-    // stringToProducer["kop_tytan"]    = TypProducer::KOPALNIA_TYTANU;
-    // stringToProducer["zaaw_kop"] = TypProducer::ZAAWANSOWANA_KOPALNIA;
-
-    // Mapa głównych kategorii
-    stringToBudynku["energy"]   = TypBudynku::ENERGY;
-    stringToBudynku["farm"]     = TypBudynku::FARM;
-    stringToBudynku["housing"]  = TypBudynku::HOUSING;
-    stringToBudynku["producer"] = TypBudynku::PRODUCER;
-
     // ENERGY
     stringToEnergy["maly_wiatrak"]    = TypEnergy::MALY_WIATRAK;
     stringToEnergy["duzy_panel"]      = TypEnergy::DUZY_PANEL;
@@ -75,6 +35,7 @@ Game::Game():running(true){
     stringToProducer["wiertlo_glebinowe"]  = TypProducer::WIERTLO_GLEBINOWE;
     stringToProducer["kombinat_gorniczy"]  = TypProducer::KOMBINAT_GORNICZY;
     stringToProducer["automat_wydobywczy"] = TypProducer::AUTOMAT_WYDOBYWCZY;
+    stringToProducer["kopalnia_tytanu"] = TypProducer::KOPALNIA_TYTANU;
 
     // TERR
     stringToTerr["stacja_badawcza"]  = TypTerr::STACJA_BADAWCZA;
@@ -279,8 +240,8 @@ void Game::commands(){
     stringstream ss(linia);
     string command;
     ss>>command;
-    //Opisane kolejne komendy
 
+    //Opisane kolejne komendy
     
     if(command=="show"){//Pokazywanie konkretych elementów:
         string arg1;
@@ -312,13 +273,15 @@ void Game::commands(){
     }
     else if(command=="next"){//Kolejna runda
         int wynik=kolonia.nextRound();
-        if(wynik==1){
-            sprawdzLvlTerr();
+        if(wynik==2){
+            prntNewLvlTerr();
         }else if(wynik==-1){
             cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
             cout<<">>>>>>> PRZEGRANA!! <<<<<<<"<<RESET<<endl;
             running=false;
         }
+
+        
     }
     else if(command=="exit"){//Wyjscie z gry
 
@@ -370,11 +333,7 @@ void Game::commands(){
             }
         }
 
-        if(stringToBudynku.count(arg1)){
-            if(kolonia.zbudujBudynek(stringToBudynku[arg1])){
-                kolonia.setRuch(kolonia.getRuch()+1);
-            }
-        }else if(stringToEnergy.count(arg1)){
+        if(stringToEnergy.count(arg1)){
             if(kolonia.zbudujBudynek(stringToEnergy[arg1])){
                 kolonia.setRuch(kolonia.getRuch()+1);
             }
@@ -465,9 +424,10 @@ void Game::commands(){
     cout<<endl;
 }
 
-void Game::sprawdzLvlTerr(){
+void Game::prntNewLvlTerr(){
 
-    if(kolonia.sprawdzLvlTerr()){
+        cout<<MAGENTA<<"Osiagnales kolejny poziom terraformacji!! \n"<<BOLD<<"Aktualny poziom "<<kolonia.getLvlTerr()<<RESET<<endl;
+    
         //Sprawdzanie czy istnieje jakis budynek ktory sie odblokowal
         int a=0;
         for(const auto&[klucz,info]:bazaDanych){
@@ -475,9 +435,9 @@ void Game::sprawdzLvlTerr(){
                 a=1;
             }
         }
-        if(a==0){//Jak nie to wychodzi z tej funkcji
-            return;
-        }
+        if(a==0){//Jak nie ma zadnego to wychodzi z tej funkcji
+            return;}
+        
 
         cout<<endl;
         cout<<GREEN<<"Odblokowywujesz nowe budynki!"<<RESET<<endl;
@@ -490,8 +450,8 @@ void Game::sprawdzLvlTerr(){
             }
         }
         cout<<endl;
-    }
 }
+
 
 void Game::loadGameData(){
     ifstream plik("gamedata.txt");
@@ -663,7 +623,7 @@ void Game::prntCategories(){
     cout << BLUE << BOLD << left << setw(w) << "PRODUCER" << RESET << YELLOW << sep << "Przemysl wydobywczy. Pozyskuje surowce konstrukcyjne (Kamien, Tytan)." << RESET << endl;
 
     // TERR
-    cout << BLUE << BOLD << left << setw(w) << "TERR" << RESET << YELLOW << sep << "Inzynieria planetarna. Przystosowuje atmosfere Marsa (odblokowuje nowe technologie)." << RESET << endl;
+    cout << BLUE << BOLD << left << setw(w) << "TERR" << RESET << YELLOW << sep << "Inzynieria terraformacyjna. Przystosowuje atmosfere Marsa (odblokowuje nowe technologie)." << RESET << endl;
          
     cout << endl;
 
@@ -701,7 +661,6 @@ void Game::prntHelp(){
 
     // INFO 
     cout << BG_BLACK << left << setw(w) << "info" << RESET << YELLOW << sep << "Wyswietla liste dostepnych kategorii budynkow." << RESET << endl;
-    cout << BG_BLACK << left << setw(w) << "info [kategoria]" << RESET << YELLOW << sep << "Pokazuje szczegoly budynkow z danej kategorii (np. info ENERGY)." << RESET << endl;
 
     // BUILD
     cout << BG_BLACK << left << setw(w) << "build [nazwa]" << RESET << YELLOW << sep << "Buduje budynek (np. " << BG_BLACK << WHITE << "build wiatrak" << RESET << YELLOW << ")." << RESET << endl;

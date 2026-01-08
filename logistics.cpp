@@ -16,9 +16,10 @@ using namespace std;
 
 
 //Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(0),food(1000),titan(100),stone(100){}
-Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(0),food(100),titan(0),stone(50){}
+Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_kolonii("XX"),reqEnergy(0),genEnergy(0),reqFood(20),wsp_terr(0),lvl_terr(0),food(100),titan(0),stone(85){}
 
 void Logistics::prnt(){
+    string sep = YELLOW+" | ";
 
 
     if(nazwa_kolonii=="XX"){
@@ -26,19 +27,32 @@ void Logistics::prnt(){
     }else{
         prntHeader(nazwa_kolonii);
     }
-        cout<<MAGENTA<<"Nr tury: "<<tura<<"                  Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
-    if(demand_workers==all_workers){
-        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<"                   Poziom wsp. terraformacji: "<<BOLD<<lvl_terr<<RESET<<endl;
+    //Linia 1
+    string line1= "Nr tury: "+cleanNum(tura);
+        //cout<<MAGENTA<<"Nr tury: "<<tura<<"                       "<<YELLOW<<" | "<<MAGENTA<<"Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
+    cout<<MAGENTA<<left<<setw(33)<<line1<<sep<<MAGENTA<<"Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
+    
+    //Linia 2
+    string line2 = "Poziom terraformacji: "+BOLD+cleanNum(lvl_terr);
+    cout<<BLUE<<left<<setw(33+4)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<cleanNum(getToNextLvlTerr())<<NO_BOLD<<" punktow!"<<RESET<<endl;
+    
+    //Linia 3
+    string line3="Energia: "+BOLD+cleanNum(genEnergy)+"/"+cleanNum(reqEnergy);
+    if(reqEnergy>genEnergy){
+        cout<<RED<<left<<setw(33+4)<<line3<<NO_BOLD<<sep;
     }else{
-        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<BLUE<<"           Poziom wsp. terraformacji: "<<BOLD<<lvl_terr<<RESET<<endl;
+        cout<<GREEN<<left<<setw(33+4)<<line3<<NO_BOLD<<sep;
     }
 
-    prntHeader("Informacje LOGISTICS");
-    if(reqEnergy>genEnergy){
-        cout<<RED<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
+    if(demand_workers==all_workers){
+        cout<<BLUE<<"Pracownicy: "<<cleanNum(demand_workers)<<"/"<<cleanNum(all_workers)<<RESET<<endl;
+        //cout<<BLUE<<left<<setw(33)<<l2<<sep<<"Poziom wsp. terraformacji: "<<BOLD<<lvl_terr<<RESET<<endl;
     }else{
-        cout<<GREEN<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
+        cout<<BLUE<<"Pracownicy: "<<cleanNum(demand_workers)<<"/"<<cleanNum(all_workers)<<RESET<<endl;
+        //cout<<GREEN<<left<<setw(33)<<l2<<sep<<"Poziom wsp. terraformacji: "<<BOLD<<lvl_terr<<RESET<<endl;}
     }
+    
+    //Linia 4
     if(food>2*reqFood){
         cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<")"<<RESET<<endl;
     }else{if(food>=reqFood & food<2*reqFood){
@@ -46,46 +60,92 @@ void Logistics::prnt(){
     }else{if(food<reqFood){
     cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<BOLD<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
     }}}
-    if(stone!=0){
-        cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<RESET<<endl;
-    }
-    if(titan!=0){
-        cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<RESET<<endl;
-    }
+
+    prntHeader("Posiadane surowce:");
+    cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<RESET<<endl;
+    cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<RESET<<endl;
+    
     cout<<endl;
+    
 }
 
-void Logistics::prntRound(double f, double s, double t,double te){
+void Logistics::prntRound(double f, double s, double t,double te,int n){
+    
+    string sep = YELLOW+" | ";
+
+
     if(nazwa_kolonii=="XX"){
         prntHeader("Kolonia");
     }else{
         prntHeader(nazwa_kolonii);
     }
-        cout<<MAGENTA<<"Nr tury: "<<tura<<CYAN<<" +1"<<MAGENTA<<"         Nr ruchu: 0/3"<<RESET<<endl;
-    if(demand_workers==all_workers){
-        cout<<BLUE<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<"           Poziom wsp. terraformacji: "<<BOLD<<lvl_terr<<CYAN<<" + "<<CYAN<<te<<RESET<<endl;
+    //Linia 1
+    string line1= "Nr tury: "+cleanNum(tura)+CYAN+" +1";
+    cout<<MAGENTA<<left<<setw(33+5)<<line1<<sep<<MAGENTA<<"Nr ruchu: "<<ruch<<"/3"<<RESET<<endl;
+    
+    //Linia 2
+    string line2;
+    if(n==1){
+        int next=getToNextLvlTerr()+te;
+        line2 = "Poziom terraformacji: "+BOLD+cleanNum(lvl_terr-1)+CYAN+" +1";
+        cout<<BLUE<<left<<setw(33+9)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<CYAN<<0<<BLUE<<NO_BOLD<<" punktow!"<<RESET<<endl;
     }else{
-        cout<<GREEN<<"Pracownicy: "<<demand_workers<<"/"<<all_workers<<BLUE<<"           Poziom wsp. terraformacji: "<<BOLD<<lvl_terr<<CYAN<<" + "<<CYAN<<te<<RESET<<endl;
-    }
-        prntHeader("Informacje LOGISTICS");
+        line2 = "Poziom terraformacji: "+BOLD+cleanNum(lvl_terr);
+        if(te!=0){
+            int next=getToNextLvlTerr()+te;
+            cout<<BLUE<<left<<setw(33+9)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<cleanNum(next)<<CYAN<<" - "<<te<<NO_BOLD<<BLUE<<" punktow!"<<RESET<<endl;
+        }else{
+            cout<<BLUE<<left<<setw(33+4)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<cleanNum(getToNextLvlTerr())<<NO_BOLD<<" punktow!"<<RESET<<endl;
+    }}
+
+  
+    
+    //Linia 3
+    string line3="Energia: "+BOLD+cleanNum(genEnergy)+"/"+cleanNum(reqEnergy);
     if(reqEnergy>genEnergy){
-        cout<<RED<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
+        cout<<RED<<left<<setw(33+4)<<line3<<NO_BOLD<<sep;
     }else{
-        cout<<GREEN<<"Energia: "<<BOLD<<genEnergy<<"/"<<reqEnergy<<RESET<<endl;
+        cout<<GREEN<<left<<setw(33+4)<<line3<<NO_BOLD<<sep;
     }
-    if((food+f)>2*reqFood){
-        cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<GREEN<<NO_BOLD<<" ("<<BOLD<<reqFood<<NO_BOLD<<")"<<RESET<<endl;
-    }else{if((food+f)>=reqFood & (food+f)<2*reqFood){
-        cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<RED<<NO_BOLD<<" ("<<BOLD<<reqFood<<NO_BOLD<<") "<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
-    }else{if((food+f)<reqFood){
-    cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<NO_BOLD<<RED<<" ("<<BOLD<<reqFood<<NO_BOLD<<")!"<<BOLD<<" Brakuje "<<BOLD<<reqFood+f-food<<NO_BOLD<<" jedzenia!!!"<<RESET<<endl;
-    }}}
-    if(stone!=0){
-        cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<CYAN<<" + "<<s<<YELLOW<<NO_BOLD<<RESET<<endl;
+
+    if(demand_workers==all_workers){
+        cout<<BLUE<<"Pracownicy: "<<cleanNum(demand_workers)<<"/"<<cleanNum(all_workers)<<RESET<<endl;
+    }else{
+        cout<<BLUE<<"Pracownicy: "<<cleanNum(demand_workers)<<"/"<<cleanNum(all_workers)<<RESET<<endl;
     }
-    if(titan!=0){
-        cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<CYAN<<" + "<<t<<YELLOW<<NO_BOLD<<RESET<<endl;
+    
+    //Linia 4
+
+    if(f!=0){
+        if((food+f)>2*reqFood){
+            cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<GREEN<<NO_BOLD<<" ("<<BOLD<<reqFood<<NO_BOLD<<")"<<RESET<<endl;
+        }else{if((food+f)>=reqFood & (food+f)<2*reqFood){
+            cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<RED<<NO_BOLD<<" ("<<BOLD<<reqFood<<NO_BOLD<<") "<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
+        }else{if((food+f)<reqFood){
+        cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<NO_BOLD<<RED<<" ("<<BOLD<<reqFood<<NO_BOLD<<")!"<<BOLD<<" Brakuje "<<BOLD<<reqFood+f-food<<NO_BOLD<<" jedzenia!!!"<<RESET<<endl;
+        }}}
+    }else{
+        if(food>2*reqFood){
+            cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<")"<<RESET<<endl;
+        }else{if(food>=reqFood & food<2*reqFood){
+            cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<") "<<NO_BOLD<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
+        }else{if(food<reqFood){
+        cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<BOLD<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
+        }}}
     }
+
+    prntHeader("Posiadane surowce:");
+    if(s!=0){
+        cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<CYAN<<" + "<<s<<RESET<<endl;
+    }else{
+        cout<<YELLOW<<"Posiadany kamien: "<<BOLD<<stone<<RESET<<endl;
+    }
+    if(t!=0){
+        cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<CYAN<<" + "<<t<<RESET<<endl;
+    }else{
+        cout<<YELLOW<<"Posiadany tytan: "<<BOLD<<titan<<RESET<<endl;
+    }
+    
     cout<<endl;
 }
 
@@ -96,12 +156,17 @@ int Logistics::czyNextRound(const vector<unique_ptr<Building>>& budynki){
     if(decyzja=="y"||decyzja=="yes"||decyzja=="tak"||decyzja=="t"){
         cout<<YELLOW<<">>Rozpoczynanie procedury przejscia do kolejnej rundy..."<<RESET<<endl;
         cout<<endl;
-        if(nextRound(budynki)){
+        int czyNext=nextRound(budynki);
+        if(czyNext==0||czyNext==1){
             cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RESET<<endl;
             tura++;
             ruch=0;
             cout<<endl;
-            return 1;
+            if(czyNext==1){
+                return 2;
+            }else{
+                return 1;
+            }
         }else if(food==0){
             cout<<RED<<"KOLONIA UMARLA, Z POWODU BRAKU JEDZENIA!!"<<RESET<<endl;
 
@@ -121,7 +186,7 @@ int Logistics::czyNextRound(const vector<unique_ptr<Building>>& budynki){
         return 0;
     }
 }
-bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
+int Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
         if((food-reqFood)>=0){
             cout<<GREEN<<"Ilosc jedzenia:"<<BOLD<< "ZGODNA"<<RESET<<endl;
             cout<<endl;
@@ -138,6 +203,7 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                 double c_stone=0;
                 double c_titan=0;
                 double c_terr=0;
+                int new_lvl=0;
 
                 //dodac pozostale surowce
                 for(const auto& b: budynki){
@@ -150,10 +216,9 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                         case TypBudynku::PRODUCER:{
                             Producer* p = static_cast<Producer*>(b.get());
                             TypProducer pTyp=p->getTypeProducer();
-                            c_stone+=c;
-                            if(pTyp==TypProducer::WIERTLO_GLEBINOWE||pTyp==TypProducer::KOMBINAT_GORNICZY||pTyp==TypProducer::AUTOMAT_WYDOBYWCZY){
-                                c_titan += p->getGenTitan();
-                            }
+                            c_stone += c;
+                            c_titan += p->getGenTitan();
+                            
                             
                             break;
                         }
@@ -168,13 +233,23 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
 
                 cout<<endl;
                 //dodawac pozostale
-                prntRound(c_food,c_stone,c_titan,c_terr);
+                wsp_terr+=c_terr;
+                if(sprawdzLvlTerr()){
+                    new_lvl=1;
+                }
+
+                prntRound(c_food,c_stone,c_titan,c_terr,new_lvl);
                 food+=c_food;
                 stone+=c_stone;
                 titan+=c_titan;
-                wsp_terr+=c_terr;
                 cout<<endl;
-                return true;
+
+                if(new_lvl==1){
+                    return 1;
+                }else{
+
+                    return 0;
+                }
 
             }else{
 
@@ -186,23 +261,22 @@ bool Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                     cout<<GREEN<<"Ilosc jedzenia:"<<BOLD<< "ZGODNA"<<RESET<<endl;
                     cout<<endl;
                 }
-                return false;
+                return -1;
             }
         }else{
             cout<<RED<<"Ilosc jedzenia:"<<BOLD<< "BRAK"<<RESET<<endl;
             cout<<RED<<BOLD<<"Brak jedzenia!!"<<RESET<<endl;
             food=0;
             cout<<endl;
-            return false;
+            return -1;
         }
 }
 
 
 bool Logistics::sprawdzLvlTerr(){
-    vector<int> progi={10,20,50,100,200,500,1000,2000,5000};
-    if(progi[lvl_terr]<wsp_terr){
+    
+    if(progi[lvl_terr]<=wsp_terr){
         lvl_terr++;
-        cout<<MAGENTA<<"Osiagnales kolejny poziom terraformacji!! \n"<<BOLD<<"Aktualny poziom "<<lvl_terr<<RESET<<endl;
         return true;
     }else{
         return false;
@@ -295,7 +369,9 @@ int Logistics::getStone() const{return stone;}
 int Logistics::getTitan() const{return titan;}
 string Logistics::getNazwa() const{return nazwa_kolonii;}
 int Logistics::getLvlTerr() const{return lvl_terr;}   
-
+int Logistics::getToNextLvlTerr() const{
+    return progi[lvl_terr]-wsp_terr;
+}
     
 void Logistics::setSandbox(){
     stone = 50000;

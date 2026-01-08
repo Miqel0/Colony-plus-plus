@@ -27,14 +27,14 @@ class Logistics{
     int stone;
     int titan;
 
-
+    vector<int> progi={10,20,50,100,200,500,1000,2000,5000};
     public:
     Logistics();
     void prnt();
-    void prntRound(double f, double s, double t, double te);
+    void prntRound(double f, double s, double t, double te,int n);
 
     int czyNextRound(const vector<unique_ptr<Building>>& budynki);
-    bool nextRound(const vector<unique_ptr<Building>>& budynki);
+    int nextRound(const vector<unique_ptr<Building>>& budynki);
     
     void updateBudynek(Building* budynek);
     void updateZburzBudynek(Building* budynek);
@@ -62,6 +62,7 @@ class Logistics{
     int getStone() const;
     int getTitan() const;
     int getLvlTerr() const;
+    int getToNextLvlTerr() const;
 
     void setSandbox();
     void setCustom();
