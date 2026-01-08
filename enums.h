@@ -109,6 +109,7 @@ enum class TypProducer {
     WIERTLO_GLEBINOWE = 2,
     KOMBINAT_GORNICZY = 3,
     AUTOMAT_WYDOBYWCZY = 4,
+    KOPALNIA_TYTANU = 5,
 };
 
 enum class TypTerr {

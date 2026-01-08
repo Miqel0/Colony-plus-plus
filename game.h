@@ -37,7 +37,7 @@ class Game{
     bool checkConfig();
     void saveConfig();
 
-    void sprawdzLvlTerr();
+    void prntNewLvlTerr();
 
 };
 
