@@ -18,7 +18,7 @@ class Colony{
 
     public:
     Colony();
-
+    ~Colony(){};
     void prnt();
 
     void prntBuilding(int nr);
@@ -33,11 +33,11 @@ class Colony{
 
     void addBuilding(unique_ptr<Building> b);
 
-    bool zbudujBudynek(TypEnergy typ);
-    bool zbudujBudynek(TypFarm typ);
-    bool zbudujBudynek(TypDomy typ);
-    bool zbudujBudynek(TypProducer typ);
-    bool zbudujBudynek(TypTerr typ);
+    bool zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
+    bool zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct);
+    bool zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
+    bool zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
+    bool zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w);
 
     bool buduj(unique_ptr<Building> b);
     

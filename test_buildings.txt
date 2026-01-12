@@ -1,4 +1,4 @@
-5 Stacja_Badawcza 1 5 40 0 2 1 2 
-2 Pole_Ziemniakow 2 2 10 0 2 1 10 1 0
-1 Maly_Wiatrak 3 0 15 0 1 1 15 
-4 Odkrywka_Kamienia 4 3 20 0 4 1 8 0
+1 Maly_Wiatrak 1 0 15 0 1 0 15 
+2 Pole_Ziemniakow 2 2 10 0 2 0 50 1 0
+4 Odkrywka_Kamienia 3 3 20 0 4 0 8 0
+5 Stacja_Badawcza 4 5 40 0 2 0 2 

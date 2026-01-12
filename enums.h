@@ -47,38 +47,6 @@ enum class TypBudynku {
     TERR = 5,
 };
 
-// enum class TypEnergy {
-//     NIEZNANY = 0,
-//     WIATRAK = 1,
-//     PANELE = 2,
-// };
-
-// enum class TypFarm {
-//     NIEZNANY = 0,
-//     SZKLARNIA = 1,
-//     POLE = 2,
-// };
-
-// enum class TypDomy {
-//     NIEZNANY = 0,
-//     BARAK = 1,
-//     REZYDENCJA = 2,
-// };
-
-// enum class TypProducer { // moze zrobic przechowywanie danych jako tablica??
-//     NIEZNANY = 0,
-//     KOPALNIA_KAMIENIA = 1,
-//     KOPALNIA_TYTANU = 2,
-//     ZAAWANSOWANA_KOPALNIA = 3,
-// };
-
-// enum class TypTerr { // moze zrobic przechowywanie danych jako tablica??
-//     NIEZNANY = 0,
-//     cos1 = 1,
-//     cos2 = 2,
-//     cos3 = 3,
-// };
-
 enum class TypEnergy {
     NIEZNANY = 0,
     MALY_WIATRAK = 1,

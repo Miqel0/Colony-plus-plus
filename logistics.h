@@ -30,6 +30,7 @@ class Logistics{
     vector<int> progi={10,20,50,100,200,500,1000,2000,5000};
     public:
     Logistics();
+    ~Logistics(){};
     void prnt();
     void prntRound(double f, double s, double t, double te,int n);
 

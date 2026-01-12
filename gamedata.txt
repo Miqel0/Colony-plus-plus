@@ -3,8 +3,8 @@ Duzy_Panel          ENERGY     50    10   0    2    0    0    40   0    1    Wyd
 Reaktor_Jadrowy     ENERGY     200   100  0    5    0    0    150  0    3    Potega_atomu_dla_przemyslu
 Fuzja_Zimna         ENERGY     500   300  0    10   0    0    500  0    6    Nieskonczona_energia
 
-Pole_Ziemniakow     FARM       10    0    2    2    0    0    10   1    0    Podstawowe_zrodlo_jedzenia_(_to_nie_jest_nawiazanie_do_Marsjanina...)
-Szklarnia_Hydro     FARM       40    10   10   3    0    0    60   2    2    Efektywna_uprawa_roslin
+Pole_Ziemniakow     FARM       10    0    2    2    0    0    50   1    0    Podstawowe_zrodlo_jedzenia_(_to_nie_jest_nawiazanie_do_Marsjanina...)
+Szklarnia_Hydro     FARM       40    10   10   3    0    0    90   2    2    Efektywna_uprawa_roslin
 Farma_Alg           FARM       150   50   30   5    0    0    120  3    4    Masowa_produkcja_biomasy
 Syntezator_Bialka   FARM       300   150  100  2    0    0    400  4    6    Sztuczne_jedzenie_z_laboratorium
 

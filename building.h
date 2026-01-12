@@ -26,6 +26,7 @@ class Building{
 
     Building();
     Building(string n,TypBudynku t, double kE,double kK, double kT,int w);
+    virtual ~Building(){};
 
     virtual void prnt(int il) const;
     virtual void save(ofstream& plik) const;
