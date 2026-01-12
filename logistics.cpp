@@ -88,12 +88,12 @@ void Logistics::prntRound(double f, double s, double t,double te,int n){
     if(n==1){
         int next=getToNextLvlTerr()+te;
         line2 = "Poziom terraformacji: "+BOLD+cleanNum(lvl_terr-1)+CYAN+" +1";
-        cout<<BLUE<<left<<setw(33+9)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<CYAN<<0<<BLUE<<NO_BOLD<<" punktow!"<<RESET<<endl;
+        cout<<BLUE<<left<<setw(33+4)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<CYAN<<0<<BLUE<<NO_BOLD<<" punktow!"<<RESET<<endl;
     }else{
         line2 = "Poziom terraformacji: "+BOLD+cleanNum(lvl_terr);
         if(te!=0){
             int next=getToNextLvlTerr()+te;
-            cout<<BLUE<<left<<setw(33+9)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<cleanNum(next)<<CYAN<<" - "<<te<<NO_BOLD<<BLUE<<" punktow!"<<RESET<<endl;
+            cout<<BLUE<<left<<setw(33+4)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<cleanNum(next)<<CYAN<<" - "<<te<<NO_BOLD<<BLUE<<" punktow!"<<RESET<<endl;
         }else{
             cout<<BLUE<<left<<setw(33+4)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<cleanNum(getToNextLvlTerr())<<NO_BOLD<<" punktow!"<<RESET<<endl;
     }}

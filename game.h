@@ -23,6 +23,7 @@ class Game{
 
     public:
     Game();
+    ~Game(){};
     void run();
     void startTutorial();
     void commands();
@@ -36,6 +37,8 @@ class Game{
 
     bool checkConfig();
     void saveConfig();
+
+    void build(BuildingInfo info);
 
     void prntNewLvlTerr();
 

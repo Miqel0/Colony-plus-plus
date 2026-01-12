@@ -14,6 +14,7 @@ class Energy: public Building{
 
     public:
     Energy();
+    ~Energy(){};
     Energy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
 
     void prnt(int il) const override;

@@ -110,8 +110,13 @@ bool Colony::buduj(unique_ptr<Building> b){
         f_logisyka.setTitan(f_logisyka.getTitan() - b->getKosztTytan());
 
         f_logisyka.updateBudynek(b.get());
-        f_logisyka.setDWorkers(b->getDemandWorkers());
         
+        
+        if(b->getTyp()==TypBudynku::HOUSING){
+            f_logisyka.setAWorkers(b->getResidents());
+        }else{
+            f_logisyka.setDWorkers(b->getDemandWorkers());
+        }
         cout << YELLOW << "Dodano nowy budynek: " << BOLD << b->getName() << RESET << YELLOW << "!!" << RESET << endl;
         addBuilding(move(b));
         return true; 
@@ -121,175 +126,31 @@ bool Colony::buduj(unique_ptr<Building> b){
     }
 }
 
-bool Colony::zbudujBudynek(TypEnergy typ){
-    unique_ptr<Building> nowyBudynek = nullptr;
-    switch (typ){
-        case TypEnergy::NIEZNANY: 
-            nowyBudynek = make_unique<Energy>(); 
-            break;
-        // case TypEnergy::PANELE: 
-        //     nowyBudynek = make_unique<Energy>("Panele_sloneczne", 0, 10.0, 5.0, 50.0, TypEnergy::PANELE, 3); 
-        //     break;
-        // case TypEnergy::WIATRAK: 
-        //     nowyBudynek = make_unique<Energy>("Wiatrak", 0, 20.0, 2.0, 20.0, TypEnergy::WIATRAK, 5); 
-        //     break;
-        case TypEnergy::MALY_WIATRAK: 
-            // Konstruktor: (Nazwa, ReqEnergy, KosztKamien, KosztTytan, GenEnergy, Typ, Workers)
-
-            nowyBudynek = make_unique<Energy>("Maly_Wiatrak", 0.0, 15.0, 0.0, 15.0, TypEnergy::MALY_WIATRAK, 1); 
-            break;
-        case TypEnergy::DUZY_PANEL: 
-            nowyBudynek = make_unique<Energy>("Duzy_Panel", 0.0, 50.0, 10.0, 40.0, TypEnergy::DUZY_PANEL, 2); 
-            break;
-        case TypEnergy::REAKTOR_JADROWY: 
-            nowyBudynek = make_unique<Energy>("Reaktor_Jadrowy", 0.0, 200.0, 100.0, 150.0, TypEnergy::REAKTOR_JADROWY, 5); 
-            break;
-        case TypEnergy::FUZJA_ZIMNA: 
-            nowyBudynek = make_unique<Energy>("Fuzja_Zimna", 0.0, 500.0, 300.0, 500.0, TypEnergy::FUZJA_ZIMNA, 10); 
-            break;
-        default: return false;
-    }
+bool Colony::zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w){
+    unique_ptr<Building> nowyBudynek = make_unique<Energy>(n,kE,kK,kT,e,t,w);
     return buduj(move(nowyBudynek));
 }
 
-bool Colony::zbudujBudynek(TypFarm typ){
-    unique_ptr<Building> nowyBudynek;
-    switch (typ){
-        case TypFarm::NIEZNANY: 
-            nowyBudynek = make_unique<Farm>(); 
-            break;
-        // case TypFarm::POLE: 
-        //     nowyBudynek = make_unique<Farm>("Pole", 3, 5.0, 0.0, 4, TypFarm::POLE, 1, 1, 0); 
-        //     break;
-        // case TypFarm::SZKLARNIA: 
-        //     nowyBudynek = make_unique<Farm>("Szklarnia", 4, 10.0, 5.0, 3, TypFarm::SZKLARNIA, 1, 2, 0); 
-        //     break;
-        case TypFarm::POLE_ZIEMNIAKOW: 
-            // Konstruktor: (Nazwa, ReqEnergy, KosztKamien, KosztTytan, GenFood, Typ, Workers, Time, Lvl)
-            nowyBudynek = make_unique<Farm>("Pole_Ziemniakow", 2.0, 10.0, 0.0, 10.0, TypFarm::POLE_ZIEMNIAKOW, 2, 1, 0); 
-            break;
-        case TypFarm::SZKLARNIA_HYDRO: 
-            nowyBudynek = make_unique<Farm>("Szklarnia_Hydro", 10.0, 40.0, 10.0, 60.0, TypFarm::SZKLARNIA_HYDRO, 3, 2, 2); 
-            break;
-        case TypFarm::FARMA_ALG: 
-            nowyBudynek = make_unique<Farm>("Farma_Alg", 30.0, 150.0, 50.0, 120.0, TypFarm::FARMA_ALG, 5, 3, 4); 
-            break;
-        case TypFarm::SYNTEZATOR_BIALKA: 
-            nowyBudynek = make_unique<Farm>("Syntezator_Bialka", 100.0, 300.0, 150.0, 400.0, TypFarm::SYNTEZATOR_BIALKA, 2, 4, 6); 
-            break;
-        default: return false;
-    }
-   
+bool Colony::zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct){
+    unique_ptr<Building> nowyBudynek = make_unique<Farm>(n,kE,kK,kT,f,t,w,tim,ct); 
     return buduj(move(nowyBudynek));
 }
 
 
-bool Colony::zbudujBudynek(TypDomy typ){
-    unique_ptr<Building> nowyBudynek;
-    switch (typ){
-        case TypDomy::NIEZNANY:
-            nowyBudynek=make_unique<Housing>();
-            break;
-        // case TypDomy::BARAK:
-        //     nowyBudynek=make_unique<Housing>("Barak", 0, 15.0, 0.0, 5, TypDomy::BARAK, 0);
-        //     break;
-        // case TypDomy::REZYDENCJA:
-        //     nowyBudynek=make_unique<Housing>("Rezydencja", 0, 30.0, 10.0, 8, TypDomy::REZYDENCJA, 0);
-        //     break;
-        case TypDomy::BARAK_ROBOTNICZY:
-            // Konstruktor: (Nazwa, ReqEnergy, KosztKamien, KosztTytan, Residents, Typ, Workers)
-            nowyBudynek = make_unique<Housing>("Barak_Robotniczy", 0.0, 20.0, 0.0, 4, TypDomy::BARAK_ROBOTNICZY, 0);
-            break;
-        case TypDomy::KWATERY_ZALOGI:
-            nowyBudynek = make_unique<Housing>("Kwatery_Zalogi", 5.0, 60.0, 20.0, 10, TypDomy::KWATERY_ZALOGI, 2);
-            break;
-        case TypDomy::KOPULA_MIESZKALNA:
-            nowyBudynek = make_unique<Housing>("Kopula_Mieszkalna", 50.0, 250.0, 100.0, 40, TypDomy::KOPULA_MIESZKALNA, 4);
-            break;
-        case TypDomy::METROPOLIA:
-            nowyBudynek = make_unique<Housing>("Metropolia", 200.0, 800.0, 400.0, 100, TypDomy::METROPOLIA, 7);
-            break;
-        default:
-            return false;
-    }
-    if(czyStac(nowyBudynek)) { 
-         f_logisyka.setStone(f_logisyka.getStone() - nowyBudynek->getKosztKamien());
-         f_logisyka.setTitan(f_logisyka.getTitan() - nowyBudynek->getKosztTytan());
-         f_logisyka.updateBudynek(nowyBudynek.get());
-         f_logisyka.setAWorkers(nowyBudynek->getResidents());
-         cout << YELLOW << "Zbudowano dom: " << nowyBudynek->getName() << endl;
-         addBuilding(move(nowyBudynek));
-         return true;
-    }
-    return false;
-}
-
-
-
-bool Colony::zbudujBudynek(TypProducer typ){
-    unique_ptr<Building> nowyBudynek;
-    switch (typ){
-        case TypProducer::NIEZNANY:
-            nowyBudynek=make_unique<Producer>();
-            break;
-        // case TypProducer::KOPALNIA_KAMIENIA:
-        //     nowyBudynek=make_unique<Producer>("Kopalnia_kamienia", 3, 20.0, 5.0, 5, TypProducer::KOPALNIA_KAMIENIA, 4, 0);
-        //     break;
-        // case TypProducer::KOPALNIA_TYTANU:
-        //     nowyBudynek=make_unique<Producer>("Kopalnia_tytanu", 4, 30.0, 0, 0, TypProducer::KOPALNIA_TYTANU, 4, 5);
-        //     break;
-        // case TypProducer::ZAAWANSOWANA_KOPALNIA:
-        //     nowyBudynek=make_unique<Producer>("Zaawansowana_kopalnia", 4, 50.0, 50.0, 5, TypProducer::ZAAWANSOWANA_KOPALNIA, 6, 5);
-        //     break;
-        case TypProducer::ODKRYWKA_KAMIENIA:
-            // Konstruktor: (Nazwa, ReqEnergy, KosztKamien, KosztTytan, GenStone, Typ, Workers, GenTitan)
-            nowyBudynek = make_unique<Producer>("Odkrywka_Kamienia", 3.0, 20.0, 0.0, 8.0, TypProducer::ODKRYWKA_KAMIENIA, 4, 0.0);
-            break;
-        case TypProducer::WIERTLO_GLEBINOWE:
-            nowyBudynek = make_unique<Producer>("Wiertlo_Glebinowe", 10.0, 50.0, 20.0, 10.0, TypProducer::WIERTLO_GLEBINOWE, 6, 5.0);
-            break;
-        case TypProducer::KOPALNIA_TYTANU:
-            nowyBudynek = make_unique<Producer>("Kopalnia_Tytanu", 5.0, 35.0, 0.0, 0.0, TypProducer::KOPALNIA_TYTANU, 6, 5.0);
-            break;
-        case TypProducer::KOMBINAT_GORNICZY:
-            nowyBudynek = make_unique<Producer>("Kombinat_Gorniczy", 40.0, 200.0, 100.0, 30.0, TypProducer::KOMBINAT_GORNICZY, 15, 15.0);
-            break;
-        case TypProducer::AUTOMAT_WYDOBYWCZY:
-            nowyBudynek = make_unique<Producer>("Automat_Wydobywczy", 150.0, 600.0, 300.0, 80.0, TypProducer::AUTOMAT_WYDOBYWCZY, 2, 40.0);
-            break;
-        default:
-            return false;
-    }
+bool Colony::zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w){
+    unique_ptr<Building> nowyBudynek=make_unique<Housing>(n,kE,kK,kT,r,t,w);
     return buduj(move(nowyBudynek));
 }
 
-bool Colony::zbudujBudynek(TypTerr typ){
-    unique_ptr<Building> nowyBudynek = nullptr;
-    switch (typ){
-        case TypTerr::NIEZNANY: 
-            nowyBudynek = make_unique<Terr>(); 
-            break;
-        // case TypTerr::cos1: 
-        //     nowyBudynek = make_unique<Terr>("Panele_sloneczne", 0, 10.0, 5.0, 50.0, TypTerr::cos1, 3); 
-        //     break;
-        // case TypTerr::cos2: 
-        //     nowyBudynek = make_unique<Terr>("Wiatrak", 0, 20.0, 2.0, 20.0, TypTerr::cos2, 5); 
-        //     break;
-        case TypTerr::STACJA_BADAWCZA: 
-            // Konstruktor: (Nazwa, ReqEnergy, KosztKamien, KosztTytan, GenTerr, Typ, Workers)
-            nowyBudynek = make_unique<Terr>("Stacja_Badawcza", 5.0, 40.0, 0.0, 2.0, TypTerr::STACJA_BADAWCZA, 2); 
-            break;
-        case TypTerr::KOMINY_CIEPLNE: 
-            nowyBudynek = make_unique<Terr>("Kominy_Cieplne", 20.0, 120.0, 30.0, 8.0, TypTerr::KOMINY_CIEPLNE, 5); 
-            break;
-        case TypTerr::GENERATOR_O2: 
-            nowyBudynek = make_unique<Terr>("Generator_O2", 100.0, 400.0, 200.0, 25.0, TypTerr::GENERATOR_O2, 10); 
-            break;
-        case TypTerr::LUSTRA_ORBITALNE: 
-            nowyBudynek = make_unique<Terr>("Lustra_Orbitalne", 500.0, 1500.0, 1000.0, 100.0, TypTerr::LUSTRA_ORBITALNE, 20); 
-            break;
-        default: return false;
-    }
+
+
+bool Colony::zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti){
+    unique_ptr<Building> nowyBudynek=make_unique<Producer>(n,kE,kK,kT,s,t,w,ti);
+    return buduj(move(nowyBudynek));
+}
+
+bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w){
+    unique_ptr<Building> nowyBudynek = make_unique<Terr>(n,kE,kK,kT,te,t,w); 
     return buduj(move(nowyBudynek));
 }
 

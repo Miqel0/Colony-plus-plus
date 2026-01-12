@@ -15,6 +15,7 @@ class Housing: public Building{
 
     public:
     Housing();
+    ~Housing(){};
     Housing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
     
     void prnt(int il) const override;

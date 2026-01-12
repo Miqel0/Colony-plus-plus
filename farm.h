@@ -16,7 +16,7 @@ class Farm: public Building{
     public:
     Farm();
     Farm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct);
-
+    ~Farm(){};
     double work() override;
     void prnt(int il) const override;
     void save(ofstream& plik) const override;
