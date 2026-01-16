@@ -154,45 +154,17 @@ bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypT
     return buduj(move(nowyBudynek));
 }
 
-void Colony::zburzBudynek(int nr){
-    if(nr>=0 && nr < buildings.size()){
-        string dec;
-        cout<<YELLOW<<"Czy na pewno chcesz wyburzyc budynek: "<<buildings[nr]->getName()<<RESET<<endl;
-        cout<<YELLOW<<">>Potwierdz wpisujac y, albo anuluj n."<<RESET<<endl;
-        cin>>dec;
-        if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
-            if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
-                if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){
-                    cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
-                    return;
-                }
-
-            }else{
-                cout<<YELLOW<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<RESET<<endl;
-                f_logisyka.setDWorkers(-buildings[nr]->getDemandWorkers());
-                if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
-                    f_logisyka.setAWorkers(-buildings[nr]->getResidents());
-                }
-                f_logisyka.updateZburzBudynek(buildings[nr].get());
-                buildings.erase(buildings.begin()+nr);
-            }
-        }else{
-            cout<<YELLOW<<"Anulowano wyburzanie budynku."<<RESET<<endl;
-        }
-    }else{
-        cout<<RED<<"Blad: Nie ma budynku o takim ID: "<<nr<<RESET<<endl;
-        cout<<endl;
-    }
-    
-}
 
 
 void Colony::zburzBudynek(string nazwa){
-    nazwa[0]=toupper(nazwa[0]);
+    
     string nam="X";
     int nr=0;
     for(int i=0;i<buildings.size();i++){
-        if(buildings[i]->getName()==nazwa){
+        string bud=buildings[i]->getName();
+        for(auto &c : bud) c = tolower(c);
+        
+        if(bud==nazwa){
             nam=buildings[i]->getName();
             nr=i;
         }
@@ -250,7 +222,7 @@ void Colony::saveColony(string nazwa_plik){f_logisyka.save(nazwa_plik);}
 
 
 void Colony::saveBuildings(string nazwa_plik){
-    ofstream plik(nazwa_plik);
+    ofstream plik("data/"+nazwa_plik);
     if(plik.is_open()){
          for(const auto& b : buildings){
             b->save(plik);
@@ -263,7 +235,7 @@ void Colony::saveBuildings(string nazwa_plik){
 
 
 void Colony::loadBuildings(string nazwa_plik) {
-    ifstream plik(nazwa_plik);
+    ifstream plik("data/"+nazwa_plik);
 
     if (plik.is_open()) {
         buildings.clear();

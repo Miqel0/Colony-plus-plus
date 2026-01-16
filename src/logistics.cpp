@@ -88,7 +88,7 @@ void Logistics::prntRound(double f, double s, double t,double te,int n){
     if(n==1){
         int next=getToNextLvlTerr()+te;
         line2 = "Poziom terraformacji: "+BOLD+cleanNum(lvl_terr-1)+CYAN+" +1";
-        cout<<BLUE<<left<<setw(33+4)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<CYAN<<0<<BLUE<<NO_BOLD<<" punktow!"<<RESET<<endl;
+        cout<<BLUE<<left<<setw(33+9)<<line2<<RESET<<sep<<BLUE<<"Do kolejnego poziomu brakuje: "<<BOLD<<CYAN<<0<<BLUE<<NO_BOLD<<" punktow!"<<RESET<<endl;
     }else{
         line2 = "Poziom terraformacji: "+BOLD+cleanNum(lvl_terr);
         if(te!=0){
@@ -416,7 +416,7 @@ void Logistics::setCustom(){
 
 
 void Logistics::save(string nazwa_plik){
-    ofstream plik(nazwa_plik);
+    ofstream plik("data/"+nazwa_plik);
     if(plik.is_open()){
         plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<wsp_terr<<" "<<lvl_terr<<" "<<genEnergy<<" "<<reqEnergy<<" "<<reqFood<<" "<<food<<" "<<stone<<" "<<titan<<endl;
 
@@ -426,7 +426,7 @@ void Logistics::save(string nazwa_plik){
 
 
 void Logistics::load(string nazwa_plik){
-    ifstream plik(nazwa_plik);
+    ifstream plik("data/"+nazwa_plik);
     //plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
     string nazwa;
     int t,aw,dw,s,ti,r,lt;
