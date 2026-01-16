@@ -9,7 +9,14 @@
 
 using namespace std;
 #include "game.h"
+
+// ==========================================
+// KONSTRUKTOR 
+// ==========================================
+
 Game::Game():running(true){
+
+    //Definiowanie mapy stringow do typu danej budynku (nie dalo sie tego automatycznie zrobic)
 
     // ENERGY
     stringToEnergy["maly_wiatrak"]    = TypEnergy::MALY_WIATRAK;
@@ -41,11 +48,91 @@ Game::Game():running(true){
     stringToTerr["kominy_cieplne"]   = TypTerr::KOMINY_CIEPLNE;
     stringToTerr["generator_o2"]     = TypTerr::GENERATOR_O2;
     stringToTerr["lustra_orbitalne"] = TypTerr::LUSTRA_ORBITALNE;
-
     loadGameData();
-    
 }
 
+// ==========================================
+// GRA
+// ==========================================
+
+void Game::run(){
+    cout << CLEAR_SCREEN;
+
+    //Wersja testowa poczatku gry
+    string tryb;
+    while(true) {
+        
+        cout << YELLOW << "WYBIERZ TRYB GRY:" << RESET << endl;
+        cout << " [" << BOLD << "1" << NO_BOLD << "] NORMALNY (Podstawowa wersja)" << endl;
+        cout << " [" << BOLD << "2" << NO_BOLD << "] SANDBOX / TESTY (Duzo surowcow, odblokowane budynki)" << endl;
+        cout << " [" << BOLD << "3" << NO_BOLD << "] CUSTOM (Wpisz wlasne wartosci)" << endl;
+        cout << BLUE << ">> " << RESET;
+        cin>>tryb;
+        
+        if(tryb=="1"|tryb=="2"|tryb=="3") { 
+            int b = stoi(tryb);
+            switch(stoi(tryb)){
+                case 1:
+                    break;
+                case 2:
+                    kolonia.setSandbox();
+                    saveConfig();
+                    break;
+                case 3:
+                    kolonia.setCustom();
+                    saveConfig();
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }else{
+            cout << RED << "To nie jest liczba! Wpisz 1, 2 lub 3: " << BLUE << endl;
+            cout<<endl;
+        }
+    }
+    
+    cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
+    
+    cout<<YELLOW<<"Czy chcesz przejsc samouczek? (y/n)"<<RESET<<endl;
+    string odp;
+    cin>>odp;
+    if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
+        startTutorial();
+    }
+
+
+    cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (y/n)"<<RESET<<endl;
+
+    cin>>odp;
+    if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
+        kolonia.load();
+    }
+    
+
+    // //Podstawowa wrsja poczatku gry - bez testowania
+
+    // cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl;
+    // if(checkConfig()){
+    //     cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (y/n)"<<RESET<<endl;
+    //     string odp;
+    //     cin>>odp;
+    //     if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
+    //         kolonia.load();
+    //     }else{
+    //         startTutorial();
+    //     }
+    // } else{
+    //     startTutorial();
+    //     saveConfig();
+    // }
+
+    cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
+
+    while(running){
+        commands();
+    }
+}
 
 void Game::startTutorial() {
     cout << CLEAR_SCREEN;
@@ -71,7 +158,7 @@ void Game::startTutorial() {
     while(true) {
         cout << BLUE << ">>" << RESET;
         getline(cin, komenda);
-        for(auto &c : komenda) c = tolower(c); // Normalizacja
+        for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "colony") {
             kolonia.prnt();
@@ -124,7 +211,7 @@ void Game::startTutorial() {
             cout << RED << "[SYSTEM]: Zaloga jest glodna! Wpisz 'build pole_ziemniakow'." << RESET << endl;
         }
     }
-// KAMIEN
+    // KAMIEN
     cout << endl;
     cout << CYAN << "[NARRATOR]:" << RESET << " Brzuchy pelne, ale nasz magazyn z Kamieniem wlasnie opustoszal." << endl;
     cout << "Aby budowac dalej, musimy wydobywac surowce z powierzchni. Zbudujmy " << YELLOW << "Odkrywke_Kamienia" << RESET << "." << endl;
@@ -145,7 +232,7 @@ void Game::startTutorial() {
             cout << RED << "[SYSTEM]: Brak surowcow do dalszej ekspansji! Wpisz 'build odkrywka_kamienia'." << RESET << endl;
         }
     }
-// NEXT
+    // NEXT
     cout << endl;
     cout << "[NARRATOR]: W kazdej turze mozesz wykonac maksymalnie " << BOLD << "3 AKCJE BUDOWANIA" << NO_BOLD << "." << endl;
     cout << "Wykorzystales juz limit (3/3). Aby nasi ludzie mogli odpoczac, a maszyny wyprodukowac surowce, musisz zakonczyc ture." << endl;
@@ -203,109 +290,9 @@ void Game::startTutorial() {
     cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
 }
 
-bool Game:: checkConfig(){
-    ifstream plik("data/config.txt");
-    int czy;
-    if (!plik.is_open()) {
-        cout << RED<<BOLD << "BLAD: Nie mozna otworzyc config.txt!" << RESET << endl;
-        return false;
-    }else{
-        plik>>czy;
-        plik.close();
-    }
-    if(czy==1){
-        return true;
-    }else if(czy==0){
-        return false;
-    }else{
-        return false;
-    }
-}
-
-void Game::saveConfig(){
-     ofstream plik("config.txt");
-    if(plik.is_open()){
-        plik<<1;
-        plik.close();
-        }
-}
-
-
-
-
-
-void Game::run(){
-
-    //Wersja testowa poczatku gry
-    cout << CLEAR_SCREEN;
-    cout << YELLOW << "WYBIERZ TRYB GRY:" << RESET << endl;
-    cout << " [" << BOLD << "1" << NO_BOLD << "] NORMALNY (Podstawowa wersja)" << endl;
-    cout << " [" << BOLD << "2" << NO_BOLD << "] SANDBOX / TESTY (Duzo surowcow, odblokowane budynki)" << endl;
-    cout << " [" << BOLD << "3" << NO_BOLD << "] CUSTOM (Wpisz wlasne wartosci)" << endl;
-    cout << BLUE << ">> " << RESET;
-    
-    int tryb;
-    int a=0;
-    while(a==0){
-        cin>>tryb;
-        switch(tryb){
-            case 1:
-                a=1;
-                break;
-            case 2:
-                kolonia.setSandbox();
-                saveConfig();
-                a=1;
-                break;
-            case 3:
-                kolonia.setCustom();
-                saveConfig();
-                a=1;
-                break;
-            default:
-                cout << RED << "To nie jest liczba! Wpisz 1, 2 lub 3: " << RESET;
-                break;
-        }}
-    cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
-    
-    cout<<YELLOW<<"Czy chcesz przejsc samouczek? (y/n)"<<RESET<<endl;
-    string odp;
-    cin>>odp;
-    if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
-        startTutorial();
-    }
-
-
-    cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (y/n)"<<RESET<<endl;
-
-    cin>>odp;
-    if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
-        kolonia.load();
-    }
-    
-
-    // //Podstawowa wrsja poczatku gry 
-    // cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl;
-    // if(checkConfig()){
-    //     cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (y/n)"<<RESET<<endl;
-    //     string odp;
-    //     cin>>odp;
-    //     if(odp=="y"||odp=="yes"||odp=="tak"||odp=="t"){
-    //         kolonia.load();
-    //     }else{
-    //         startTutorial();
-    //     }
-    // } else{
-    //     startTutorial();
-    //     saveConfig();
-    // }
-
-    cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
-
-    while(running){
-        commands();
-    }
-}
+// ==========================================
+// KOMENDY
+// ==========================================
 
 void Game::commands(){
     cout<<BLUE<<">>"<<RESET;
@@ -324,14 +311,13 @@ void Game::commands(){
         if(arg1.empty()){//Pokazanie wszystkich bzudowanych budynków
             kolonia.prntBuildingsSumm();
         }
-        else if(bazaDanych.count(arg1)){
+        else if(bazaDanych.count(arg1)){//Pokazywanie informacji o zbudowanym budynku
             string poprawnaNazwa = bazaDanych[arg1].nazwa;
             kolonia.prntBuilding(poprawnaNazwa);
         }
         else{
             cout<<RED<<"Nie ma takiej komendy!"<<RESET<<endl;
         }
-
     }
     else if(command=="colony"){//Wyświetlanie danych kolonii
         kolonia.prnt();
@@ -339,14 +325,12 @@ void Game::commands(){
     else if(command=="next"){//Kolejna runda
         int wynik=kolonia.nextRound();
         if(wynik==2){
-            prntNewLvlTerr();
+            prntNewLvlTerr();//Wyswietlanie odblokowanych budynkow
         }else if(wynik==-1){
             cout<<RED<<BOLD<<">>>>>>> KONIEC GRY!! <<<<<<<"<<endl;
             cout<<">>>>>>> PRZEGRANA!! <<<<<<<"<<RESET<<endl;
             running=false;
         }
-
-        
     }
     else if(command=="exit"){//Wyjscie z gry
 
@@ -356,13 +340,13 @@ void Game::commands(){
         cout<<YELLOW<<"Czy na pewno chcesz wyjsc z gry? Stracisz niezapisany postep!\n(y/n)\n"<<RESET;
         cin>>dec;
         if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
-        cout<<CYAN<<BOLD<<"Zamykanie gry!"<<YELLOW<<"\n<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> "<<RESET<<endl;
-        running=false;
+            cout<<CYAN<<BOLD<<"Zamykanie gry!"<<YELLOW<<"\n<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> "<<RESET<<endl;
+            running=false;
         }else{
             cout<<CYAN<<BOLD<<"Anulowano zamykanie gry!\n"<<RESET<<endl;
         }
     }
-    else if(command=="x"){//testowe
+    else if(command=="x"){//testowe wychodzenie z gry
         cout<<CYAN<<BOLD<<"Zamykanie gry!"<<YELLOW<<"\n<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> "<<RESET<<endl;
         running=false;
     }
@@ -373,14 +357,14 @@ void Game::commands(){
         int ilosc=kolonia.getIloscBudynkow();
         ss>>arg1;
         
-        if(arg1.empty()){
+        if(arg1.empty()){ 
             cout << YELLOW << "Aby zbudowac, wpisz: " <<WHITE<< BG_BLACK << "build [nazwa]" << RESET << endl<<endl;
             cout << YELLOW << "Aby zobaczyc liste budynkow, wpisz: " <<WHITE<< BG_BLACK << "info" << RESET << endl;
             return;
         }
         for(auto &c : arg1) c = tolower(c);
         
-        if(kolonia.getRuch()==3){
+        if(kolonia.getRuch()==3){ //Sprawdzanie warunku z iloscia ruchow w turze
             cout<<YELLOW<<"Juz wykorzystales "<<BOLD<<MAGENTA<<"3/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej rundy!"<<RESET<<endl;
             return;
         }
@@ -397,9 +381,6 @@ void Game::commands(){
             cout<<RED<<"Nie istnieje taki budynek!"<<RESET<<endl;
             return;
         }
-        
-        
-        
         if(kolonia.getRuch()==3){
             cout<<YELLOW<<"Wlasnie wykorzystales "<<BOLD<<MAGENTA<<"3/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!! \nWpisz "<<WHITE<<BG_BLACK<<"next "<<RESET<<YELLOW<<"aby przejsc do kolejnej tury!"<<RESET<<endl;
             
@@ -409,37 +390,8 @@ void Game::commands(){
             }else{
                 cout<<YELLOW<<"Wykorzystales "<<BOLD<<MAGENTA<<kolonia.getRuch()<<"/3"<<NO_BOLD<<YELLOW<<" ruchow w tej turze!!" <<RESET<<endl;
             }
-         
         }
-   
-    } else if(command=="info"){
-        string arg1;
-        ss>>arg1;
-        if(arg1.empty()){
-            prntCategories();
-        }else{
-            prntInfo(arg1);
-        }
-    }
-
-    else if(command=="rename"){
-        kolonia.setNazwa();
-    }
-    else if(command=="save"){
-        kolonia.save();
-    }
-    else if(command=="load"){
-        kolonia.load();
-    }
-    else if(command=="help"){
-        prntHelp();
-    }
-    else if(command=="rules"){
-        prntRules();
-    }
-    else if(command=="cheat"){
-        kolonia.setSandbox();
-    }
+    } 
     else if(command=="destroy"){//Niszczenie konkretnego budynku.
 
         string arg1;
@@ -449,83 +401,77 @@ void Game::commands(){
         if(bazaDanych.count(arg1)){
 
             kolonia.zburzBudynek(arg1);
-        
-
         }else{
             cout<<RED<<"Nie ma takiego budynku!!"<<RESET<<endl;
+        }
 
+    }else if(command=="info"){ //Wyswietlanie informacji o danych budynkach (przed zbudowniem)
+        string arg1;
+        ss>>arg1;
+        if(arg1.empty()){ //Wyswietlanie kategorii
+            prntCategories();
+        }else{
+            prntInfo(arg1); //Wyswietlanie infrmacji o danej kategorii
         }
     }
+
+    else if(command=="rename"){ //Zmiana nazwy kolonii
+        kolonia.setNazwa();
+    }
+    else if(command=="save"){//Zapis gry - wszystkich danych do plikow
+        kolonia.save();
+    }
+    else if(command=="load"){//Wczytanie gry z plikow
+        kolonia.load();
+    }
+    else if(command=="help"){//WYswietlenie helpa
+        prntHelp();
+    }
+    else if(command=="rules"){//Wyswietlnie zasad / instrukcja
+        prntRules();
+    }
+    else if(command=="cheat"){//Wlaczenie trybu z nieskonczonymi zasobami w trakcie gry
+        kolonia.setSandbox();
+    }
+    
     else{//Zła komenda
         cout<<RED<<BOLD<<"Nieznana komenda!!\n\n"<<RESET;
-        
     }
     cout<<endl;
 }
 
-void Game::build(BuildingInfo info){
-    string typ=info.type;
-    string nazwa=info.nazwa;
-    if(typ=="FARM"){
-        if(kolonia.zbudujFarm(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToFarm[nazwa],info.workers,info.x,0)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="ENERGY"){
-        if(kolonia.zbudujEnergy(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToEnergy[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="HOUSING"){
-        if(kolonia.zbudujHousing(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToDomy[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="PRODUCER"){
-        if(kolonia.zbudujProducer(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genKamien,stringToProducer[nazwa],info.workers,info.genTytan)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="TERR"){
-        if(kolonia.zbudujTerr(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToTerr[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
+// ==========================================
+// RZECZY Z PLIKAMI (LOAD)
+// ==========================================
+
+bool Game::checkConfig(){ //Sprawdzanie config
+    ifstream plik("data/config.txt");
+    int czy;
+    if (!plik.is_open()) {
+        cout << RED<<BOLD << "BLAD: Nie mozna otworzyc config.txt!" << RESET << endl;
+        return false;
     }else{
-        return;
+        plik>>czy;
+        plik.close();
+    }
+    if(czy==1){
+        return true;
+    }else if(czy==0){
+        return false;
+    }else{
+        return false;
     }
 }
 
-
-void Game::prntNewLvlTerr(){
-
-        cout<<MAGENTA<<"Osiagnales kolejny poziom terraformacji!! \n"<<BOLD<<"Aktualny poziom "<<kolonia.getLvlTerr()<<RESET<<endl;
-    
-        //Sprawdzanie czy istnieje jakis budynek ktory sie odblokowal
-        int a=0;
-        for(const auto&[klucz,info]:bazaDanych){
-            if(info.lvlTerr==kolonia.getLvlTerr()){
-                a=1;
-            }
+void Game::saveConfig(){ //Zapisywanie config
+     ofstream plik("config.txt");
+    if(plik.is_open()){
+        plik<<1;
+        plik.close();
         }
-        if(a==0){//Jak nie ma zadnego to wychodzi z tej funkcji
-            return;}
-        
-
-        cout<<endl;
-        cout<<GREEN<<"Odblokowywujesz nowe budynki!"<<RESET<<endl;
-        cout<<endl;
-        cout << MAGENTA << BOLD << left << setw(20) << "NAZWA" << RESET << YELLOW << " | " << "Opis" << RESET << endl;
-        cout<<YELLOW<<string(42,'-')<<RESET<<endl;
-        for(const auto &[k,info]:bazaDanych){
-            if(info.lvlTerr==kolonia.getLvlTerr()){
-                cout << MAGENTA << BOLD << left << setw(20) << info.nazwa << RESET << YELLOW << " | " << info.opis << RESET << endl;
-            }
-        }
-        cout<<endl;
 }
 
-
-void Game::loadGameData(){
+void Game::loadGameData(){ //Wczytywanie danych o budynkach - tylko na poczatku gry
     ifstream plik("data/gamedata.txt");
     if (!plik.is_open()) {
         cout << RED<<BOLD << "BLAD: Nie mozna otworzyc gamedata.txt!" << RESET << endl;
@@ -560,9 +506,75 @@ void Game::loadGameData(){
     plik.close();
 }
 
+// ==========================================
+// BUDOWANIE
+// ==========================================
 
+void Game::build(BuildingInfo info){//Budowanie budynkow w zaleznosci od danej kategorii
+    string typ=info.type;
+    string nazwa=info.nazwa;
+    if(typ=="FARM"){
+        if(kolonia.zbudujFarm(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToFarm[nazwa],info.workers,info.x,0)){
+            kolonia.setRuch(kolonia.getRuch()+1);
+        }
+    }
+    else if(typ=="ENERGY"){
+        if(kolonia.zbudujEnergy(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToEnergy[nazwa],info.workers)){
+            kolonia.setRuch(kolonia.getRuch()+1);
+        }
+    }
+    else if(typ=="HOUSING"){
+        if(kolonia.zbudujHousing(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToDomy[nazwa],info.workers)){
+            kolonia.setRuch(kolonia.getRuch()+1);
+        }
+    }
+    else if(typ=="PRODUCER"){
+        if(kolonia.zbudujProducer(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genKamien,stringToProducer[nazwa],info.workers,info.genTytan)){
+            kolonia.setRuch(kolonia.getRuch()+1);
+        }
+    }
+    else if(typ=="TERR"){
+        if(kolonia.zbudujTerr(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToTerr[nazwa],info.workers)){
+            kolonia.setRuch(kolonia.getRuch()+1);
+        }
+    }else{
+        return;
+    }
+}
 
-void Game::prntInfo(string cat){
+// ==========================================
+// WYSWIETLANIE
+// ==========================================
+
+void Game::prntNewLvlTerr(){//Wyswietlanie komunikatu i nowych budynkow przy osiagnieciu nowego poziomu
+
+        cout<<MAGENTA<<"Osiagnales kolejny poziom terraformacji!! \n"<<BOLD<<"Aktualny poziom "<<kolonia.getLvlTerr()<<RESET<<endl;
+    
+        //Sprawdzanie czy istnieje jakis budynek ktory sie odblokowal
+        int a=0;
+        for(const auto&[klucz,info]:bazaDanych){
+            if(info.lvlTerr==kolonia.getLvlTerr()){
+                a=1;
+            }
+        }
+        if(a==0){
+            return;}
+        
+
+        cout<<endl;
+        cout<<GREEN<<"Odblokowywujesz nowe budynki!"<<RESET<<endl;
+        cout<<endl;
+        cout << MAGENTA << BOLD << left << setw(20) << "NAZWA" << RESET << YELLOW << " | " << "Opis" << RESET << endl;
+        cout<<YELLOW<<string(42,'-')<<RESET<<endl;
+        for(const auto &[k,info]:bazaDanych){//Wypisanie kazdego budynku, ktory odblokowuje sie na danym poziomie
+            if(info.lvlTerr==kolonia.getLvlTerr()){
+                cout << MAGENTA << BOLD << left << setw(20) << info.nazwa << RESET << YELLOW << " | " << info.opis << RESET << endl;
+            }
+        }
+        cout<<endl;
+}
+
+void Game::prntInfo(string cat){//Wyswietlanie informacji o danej kategorii budynkow
     for (auto &c : cat) c = toupper(c);
     if(!(cat=="ENERGY"||cat=="HOUSING"||cat=="FARM"||cat=="PRODUCER"||cat=="TERR")){
         cout<<RED<<BOLD<<"Nie ma takiej kategorii!!"<<RESET<<endl;
@@ -617,63 +629,7 @@ void Game::prntInfo(string cat){
     }
 }
 
-void Game::prntBudynki(){
-    vector<string> y_energy   = {"Wiatrak", "Panele"};
-    vector<string> y_farm     = {"Szklarnia", "Pole"};
-    vector<string> y_housing  = {"Barak", "Rezydencja"};
-    vector<string> y_producer = {"Kop_Kamien", "Kop_Tytan", "Zaaw_kop"};
-    vector<string> y_terr = {"Cos1","Cos2"};
-    //tu dodawac jak jakies nowe klasy / budynki
-
-    vector<vector<string>> colums= {y_energy, y_farm, y_housing, y_producer,y_terr};
-    vector<string> headers={"ENERGY","FARM","HOUSING","PRODUCER","TERR"};//pamietaco o dodaniu tutaj jak nowe
-    const int width=15;
-    const string sep="|";
-    cout<<endl;
-    prntHeader("DOSTEPNE BUDYNKI");
-    //linia przed
-    for (int i = 0; i < 5; i++) {
-        cout << YELLOW<<"+" << string(width + 1, '-')<<RESET;
-    }
-    cout << YELLOW<<"+" << RESET<<endl;
-    for(const auto&h:headers){
-        cout<<YELLOW<<sep<<" "<<BOLD<<BLUE<<left<<setw(width)<<h<<RESET;
-    }
-    //linia gorna
-    cout<<YELLOW<<sep<<RESET<<endl;
-    for (int i = 0; i < 5; i++) {
-        cout << YELLOW<<sep << string(width + 1, '-')<<RESET; 
-    }
-    cout <<YELLOW<< sep << RESET<<endl;
-    int size=0;
-    for(const auto&col:colums){
-        if(col.size()>size){
-            size=col.size();
-        }
-    }
-    for(int wiersz=0;wiersz<size;wiersz++){
-        cout <<YELLOW<< sep << RESET;
-        for(const auto& col:colums){
-            if(wiersz<col.size()){
-                cout<<" "<<left<<setw(width)<<col[wiersz];
-            }
-            else{
-                cout<<" "<<setw(width)<<"";
-            }
-            cout <<YELLOW<< sep << RESET; 
-        }
-        cout <<endl;
-    }
-    //linia dol
-    for (int i = 0; i < 5; i++) {
-        cout << YELLOW<<"+" << string(width + 1, '-')<<RESET;
-    }
-        cout << YELLOW<<"+" << RESET<<endl;
-        cout<<endl;
-}   
-
-
-void Game::prntCategories(){
+void Game::prntCategories(){//Wyswietlanie wszystkich kategorii budynkow (same kategorie + krotki opis)
     const int w = 25;
     const string sep = " | ";
 
@@ -696,34 +652,44 @@ void Game::prntCategories(){
 
     // TERR
     cout << BLUE << BOLD << left << setw(w) << "TERR" << RESET << YELLOW << sep << "Inzynieria terraformacyjna. Przystosowuje atmosfere Marsa (odblokowuje nowe technologie)." << RESET << endl;
-         
     cout << endl;
 
 }
 
-void Game::prntRules() {
-    prntHeader("ZASADY PRZETRWANIA NA MARSIE");
+void Game::prntRules() {//Wyswietlenie instrukcji
+    prntHeader("PODRECZNIK KOLONIZATORA - ZASADY GRY");
 
-    cout << YELLOW << BOLD << "1. EKONOMIA I PRZETRWANIE" << RESET << endl;
-    cout << "   - " << CYAN << "ENERGIA" << RESET << ": Jest kluczowa. Przy jej braku zaden z budynkow nie bedzie dzialal." << endl;
-    cout << "   - " << GREEN << "JEDZENIE" << RESET << ": Twoi ludzie musza jesc. Jesli w magazynie zabraknie jedzenia, kolonia " << RED << "UMIERA" << RESET << "." << endl;
-    cout << "   - " << BLUE << "PRACOWNICY" << RESET << ": Kazdy budynek wymaga rak do pracy. Buduj domy (Housing), aby zwiekszyc populacje." << endl << endl;
+    // 1. CEL GRY
+    cout << YELLOW << BOLD << "1. CEL GLOWNY: TERRAFORMACJA" << RESET << endl;
+    cout << "   Twoim zadaniem jest przystosowanie Marsa do zycia. Buduj budynki w nowej kolonii" << MAGENTA << "TERR" << RESET << "." << endl;
+    cout << "   - Zwiekszanie " << MAGENTA << "Wskaznika Terraformacji" << RESET << " odblokowuje nowe technologie (i dostep do tytan!)." << endl;
 
-    cout << YELLOW << BOLD << "2. ROZWOJ" << RESET << endl;
-    cout << "   - Buduj kopalnie, aby zdobywac " << MAGENTA << "KAMIEN" << RESET << " i " << MAGENTA << "TYTAN" << RESET << "." << endl;
-    cout << "   - Inwestuj w budynki " << MAGENTA << "TERR" << RESET << " (Terraformacja). Zwiekszaja one poziom przystosowania planety." << endl;
-    cout << "   - Wyzszy poziom terraformacji = odblokowanie nowych, lepszych budynkow." << endl << endl;
+    // 2. PRZETRWANIE (Warunki porażki)
+    cout << YELLOW << BOLD << "2. EKONOMIA ZYCIA (WAZNE!)" << RESET << endl;
+    cout << "   - " << GREEN << "JEDZENIE" << RESET << ": Jest pobierane " << BOLD << "automatycznie" << NO_BOLD << " na poczatku kazdej nowej tury." << endl;
+    cout << "     Jesli magazyn jedzenia bedzie pusty -> " << RED << BOLD << "KOLONIA UMIERA (KONIEC GRY)" << RESET << "." << endl;
+    cout << "   - " << YELLOW << "ENERGIA" << RESET << ": Musisz produkowac wiecej pradu niz zuzywasz (albo dokladnie tyle samo)." << endl;
+    cout << "     Brak energii = " << RED << "STOP PRODUKCJI" << RESET << " we wszystkich budynkach (farmy tez przestaja dzialac!)." << endl << endl;
 
-    cout << YELLOW << BOLD << "3. ROZGRYWKA" << RESET << endl;
-    cout << "   - Masz " << BOLD << "3 punkty ruchu" << NO_BOLD << " na ture. Kazde zbudowanie budynku zuzywa 1 ruch." << endl;
-    cout << "   - Gdy skonczysz ruchy, wpisz " << BG_BLACK << "next" << RESET << ", aby zakonczyc ture i zebrac surowce." << endl;
-    cout << "   - Uzywaj " << BG_BLACK << "info" << RESET << ", aby sprawdzic koszty budynkow." << endl;
+    // 3. SYSTEM TUR
+    cout << YELLOW << BOLD << "3. MECHANIKA TURY" << RESET << endl;
+    cout << "   - W kazdej turze masz do dyspozycji " << BOLD << "3 PUNKTY RUCHU" << NO_BOLD << "." << endl;
+    cout << "   - " << CYAN << "1 Budynek = 1 Ruch" << RESET << "." << endl;
+    cout << "   - Gdy wykorzystasz ruchy (lub wczesniej), wpisz " << BG_BLACK << "next" << RESET << "." << endl;
+    cout << "   - Dopiero po wpisaniu 'next' nastepuje produkcja surowcow i konsumpcja jedzenia." << endl << endl;
+
+    // 4. ZARZADZANIE
+    cout << YELLOW << BOLD << "4. BUDOWANIE I NISZCZENIE" << RESET << endl;
+    cout << "   - Uzywaj " << BG_BLACK << "info" << RESET << ", aby sprawdzic wymagania i koszt budynkow." << endl;
+    cout << "   - Aby zdobyc pracownikow, musisz budowac domy (" << BLUE << "Housing" << RESET << ")." << endl;
+    cout << "   - Mozesz zburzyc budynek komenda " << BG_BLACK << "destroy [nazwa]" << RESET << "." << endl;
+    cout <<  BLUE << "Zburzenie zwalnia pracownikow" << RESET << " do innej pracy." << endl;
+    
     cout << endl;
 }
 
-
-void Game::prntHelp(){
-    const int w = 25;
+void Game::prntHelp(){//Help - inormacje o komendach
+    const int w = 30; 
     const string sep = " | ";
 
     prntHeader("LISTA DOSTEPNYCH KOMEND");
@@ -731,33 +697,26 @@ void Game::prntHelp(){
     cout << YELLOW << BOLD << left << setw(w) << "KOMENDA" << sep << "OPIS" << RESET << endl;
     cout << YELLOW << string(w, '-') << "-+-" << string(60, '-') << RESET << endl; 
 
-    // INFO 
-    cout << BG_BLACK << left << setw(w) << "info" << RESET << YELLOW << sep << "Wyswietla liste dostepnych kategorii budynkow." << RESET << endl;
-
-    // BUILD
-    cout << BG_BLACK << left << setw(w) << "build [nazwa]" << RESET << YELLOW << sep << "Buduje budynek (np. " << BG_BLACK << WHITE << "build wiatrak" << RESET << YELLOW << ")." << RESET << endl;
-
-    // SHOW
-    cout << BG_BLACK << left << setw(w) << "show" << RESET << YELLOW << sep << "Podsumowanie ilosci zbudowanych budynkow." << RESET << endl;
-    cout << BG_BLACK << left << setw(w) << "show [name]" << RESET << YELLOW << sep << "Pokazuje informacje szegolowe o danym budynku." << RESET << endl;
+    //  INFORMACJE O GRZE 
+    cout << BG_BLACK << left << setw(w) << "info" << RESET << YELLOW << sep << "Lista dostepnych kategorii budynkow." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "info [kategoria]" << RESET << YELLOW << sep << "Szczegoly budynkow z kategorii (np. info ENERGY)." << RESET << endl;
     
-    // COLONY 
-    cout << BG_BLACK << left << setw(w) << "colony" << RESET << YELLOW << sep << "Podsumowanie surowcow, energii i pracownikow." << RESET << endl;
-    
-    // NEXT
-    cout << BG_BLACK << left << setw(w) << "next" << RESET << YELLOW << sep << "Konczy ture (produkcja/konsumpcja)." << RESET << endl;
+    //  ZARZADZANIE KOLONIA 
+    cout << BG_BLACK << left << setw(w) << "colony" << RESET << YELLOW << sep << "Stan surowcow, energii i pracownikow." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "show" << RESET << YELLOW << sep << "Lista wybudowanych przez Ciebie budynkow." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "show [nazwa]" << RESET << YELLOW << sep << "Szczegoly Twojego wybudowanego budynku." << RESET << endl;
 
-    // DESTROY 
-    cout << BG_BLACK << left << setw(w) << "destroy [nazwa]" << RESET << YELLOW << sep << "Niszczy budynek (odzyskuje czesc surowcow/ludzi)." << RESET << endl;
-    
-    // RENAME
+    // AKCJE 
+    cout << BG_BLACK << left << setw(w) << "build [nazwa]" << RESET << YELLOW << sep << "Buduje budynek (kosztuje 1 ruch)." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "destroy [nazwa]" << RESET << YELLOW << sep << "Niszczy budynek (odzyskuje czesc surowcow)." << RESET << endl;
     cout << BG_BLACK << left << setw(w) << "rename" << RESET << YELLOW << sep << "Zmiana nazwy kolonii." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "next" << RESET << YELLOW << sep << "Zakoncz ture (produkcja/konsumpcja)." << RESET << endl;
 
-    // SAVE/LOAD , EXIT, RULES
-    cout << BG_BLACK << left << setw(w) << "rules" << RESET << YELLOW << sep << "Wyswietla krotki poradnik jak grac." << RESET << endl;
+    // SYSTEM
     cout << BG_BLACK << left << setw(w) << "save / load" << RESET << YELLOW << sep << "Zapis i wczytanie stanu gry." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "rules" << RESET << YELLOW << sep << "Wyswietla zasady gry." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "cheat" << RESET << YELLOW << sep << "Aktywuje tryb Sandbox (surowce)." << RESET << endl;
     cout << BG_BLACK << left << setw(w) << "exit" << RESET << YELLOW << sep << "Wyjscie z gry." << RESET << endl;
 
     cout << endl;
 }
-

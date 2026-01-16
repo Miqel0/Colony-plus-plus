@@ -9,19 +9,24 @@ using namespace std;
 #include "building.h"
 
 class Energy: public Building{
-    double enGen;
-    TypEnergy pType;
+    private:
+        double enGen;
+        TypEnergy pType;
 
     public:
-    Energy();
-    ~Energy(){};
-    Energy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
+        //KONSTRUKTOR
+        Energy();
+        Energy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
+        ~Energy(){};
 
-    void prnt(int il) const override;
-    void save(ofstream& plik) const override;
+        //OVERRIDE
+        void prnt(int il) const override;
+        void save(ofstream& plik) const override;
 
-    int getPType() const override;
-    double getEnergy() const;
+        //GETTERY
+        int getPType() const override;
+        double getEnergy() const;
+        
 };
 
 #endif

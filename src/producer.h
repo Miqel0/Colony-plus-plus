@@ -10,22 +10,26 @@ using namespace std;
 #include "building.h"
 
 class Producer: public Building{
-    double stoneGen;
-    double titanGen;
-    TypProducer pType;
-
+    private:
+        double stoneGen;
+        double titanGen;
+        TypProducer pType;
 
     public:
-    Producer();
-    Producer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
+        //KONSTRUKTORY
+        Producer();
+        Producer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
+        ~Producer(){};
 
-    double work() override;
-    void prnt(int il) const override;
-    void save(ofstream& plik) const override;
+        //OVERRIDE
+        double work() override;
+        void prnt(int il) const override;
+        void save(ofstream& plik) const override;
 
-    double getGenTitan() const;
-    int getPType() const override;
-    TypProducer getTypeProducer() const;
+        //GETTERY
+        double getGenTitan() const;
+        int getPType() const override;
+        TypProducer getTypeProducer() const;
     
 };
 

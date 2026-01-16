@@ -11,68 +11,72 @@ using namespace std;
 #include "logistics.h"
 
 class Colony{
-    vector<unique_ptr<Building>> buildings;
+    private:
+        //Wektor zbudowanych budynkow
+        vector<unique_ptr<Building>> buildings;
 
-
-    Logistics f_logisyka;
+        //Obiekt loogityki - zarzadza wszystkimi parametrami
+        //Z tego powodu zeby prosicej bylo sie odwolywac z Game
+        Logistics f_logisyka;
 
     public:
-    Colony();
-    ~Colony(){};
-    void prnt();
+        Colony();
+        ~Colony(){};
 
-    void prntBuilding(int nr);
-    void prntBuilding(string bud);
-    void prntBuildings();
-    void prntBuildingsShort();
-    void prntBuildingsSumm();
+        //WYSWIETLANIE
+        void prnt();
+        void prntBuilding(int nr);
+        void prntBuilding(string bud);
+        void prntBuildings();
+        void prntBuildingsShort();
+        void prntBuildingsSumm();
 
-    int nextRound();
-    void update();
+        //BUDOWANIE
+        bool czyBudynek(string bud)const;
+        bool czyStac(const unique_ptr<Building> &b)const;
+
+        void addBuilding(unique_ptr<Building> b);
+
+        bool zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
+        bool zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct);
+        bool zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
+        bool zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
+        bool zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w);
+
+        bool buduj(unique_ptr<Building> b);
+        void zburzBudynek(string nazwa);
 
 
-    void addBuilding(unique_ptr<Building> b);
+        //NEXT ROUND
+        int nextRound();
+        
 
-    bool zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
-    bool zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct);
-    bool zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
-    bool zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
-    bool zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w);
+        bool sprawdzLvlTerr();
 
-    bool buduj(unique_ptr<Building> b);
-    
-    void zburzBudynek(int nr); 
-    void zburzBudynek(string nazwa);
-    
-    void saveBuildings(string nazwa_plik);
-    void loadBuildings(string nazwa_plik);
-    void saveColony(string nazwa_plik);
-    void loadColony(string nazwa_plik);
+        //SAVE / LOAD
+        void saveBuildings(string nazwa_plik);
+        void loadBuildings(string nazwa_plik);
+        void saveColony(string nazwa_plik);
+        void loadColony(string nazwa_plik);
 
-    void save();
-    void load();
+        void save();
+        void load();
 
-    
-    void setRuch(int r);
-    void setNazwa();
 
-    int getRuch()const;
-    int getIloscBudynkow()const;
-    int getAllWorkers()const;
-    int getDemandWorkers()const;
-    int getIlosc(string name)const;
-    int getToNextLvlTerr() const;
+        //SETTERY
+        void setSandbox();
+        void setCustom();
+        void setRuch(int r);
+        void setNazwa();
 
-    int getLvlTerr() const;
-
-    bool sprawdzLvlTerr();
-
-    bool czyBudynek(string bud)const;
-    bool czyStac(const unique_ptr<Building> &b)const;
-
-    void setSandbox();
-    void setCustom();
-    
+        //GETTERY
+        int getRuch()const;
+        int getIloscBudynkow()const;
+        int getAllWorkers()const;
+        int getDemandWorkers()const;
+        int getIlosc(string name)const;
+        int getToNextLvlTerr() const;
+        int getLvlTerr() const;
     
 };
 

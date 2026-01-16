@@ -8,7 +8,11 @@
 
 using namespace std;
 
+// ==========================================
 // FORMATOWANIE TEKSTU
+// ==========================================
+
+//PODSTAWOWE
 inline const string RESET     = "\033[0m";
 inline const string BOLD      = "\033[1m"; 
 inline const string NO_BOLD   = "\033[22m"; 
@@ -37,7 +41,10 @@ inline const string BG_WHITE   = "\033[47m";
 // INNE
 inline const std::string CLEAR_SCREEN = "\033[2J\033[1;1H"; // czyszczenie ekranu 
 
+// ==========================================
 // ENUMY
+// ==========================================
+
 enum class TypBudynku {
     NIEZNANY = 0,
     ENERGY = 1,
@@ -89,7 +96,7 @@ enum class TypTerr {
 };
 
 
-
+//Do mapy gamedata - wczytywanie danych o budynkach 
 struct BuildingInfo {
     string nazwa;
     string type;
@@ -109,12 +116,14 @@ struct BuildingInfo {
     string opis;
 };
 
-// FUNKCJE POMOCNICZE
+// ==========================================
+// FUNKCJE POMOCNICZE - UNIWERSALNE
+// ==========================================
 
+//WYSWIETLANIE NAGLOWKA
 inline void prntHeader(string text, string col = MAGENTA, int n = 70) {
     int len = text.length();
     
-    // POPRAWKA: uwzględniamy margines (-2), żeby uniknąć liczb ujemnych
     if (len >= n - 2) { 
         cout << YELLOW << BOLD << text << RESET << endl;
         return;
@@ -125,10 +134,10 @@ inline void prntHeader(string text, string col = MAGENTA, int n = 70) {
     int right = miejsce - left; 
 
     cout << endl;
-    // Tutaj była główna przyczyna błędów (dziwne spacje w stringach)
     cout << YELLOW << string(left, '-') << " " << BOLD << col << text << YELLOW << NO_BOLD << " " << string(right, '-') << RESET << endl;
 }
 
+//TEMPLATE do czyszczenia liczb - do wyswietlania
 template <typename T>
 inline string cleanNum(T val) {
     stringstream ss;
@@ -136,8 +145,7 @@ inline string cleanNum(T val) {
     return ss.str();
 }
 
-// Przeciążenia funkcji prntTablica
-
+// WYSWIETLANIE TABLIC - 2 WIERSZE
 inline void prntTablica(string n, string s11, string s12, string s13, string s14, string s21, string s22, string s23, string s24) {
     prntHeader(n);
     const int col = 33;
@@ -152,6 +160,7 @@ inline void prntTablica(string n, string s11, string s12, string s13, string s14
     cout << left << setw(col) << col2 << NO_BOLD << sep << BOLD << s23 << s24 << RESET << endl << endl;
 }
 
+// WYSWIETLANIE TABLIC - 1 WIERSZ
 inline void prntTablica(string n, string s11, string s12, string s13, string s14) {
     prntHeader(n);
     const int col = 33;
@@ -163,6 +172,7 @@ inline void prntTablica(string n, string s11, string s12, string s13, string s14
     cout << left << setw(col) << col1 << NO_BOLD << sep << BOLD << s13 << s14 << RESET << endl << endl;
 }
 
+// WYSWIETLANIE TABLIC - 3 WIERSZE
 inline void prntTablica(string n, string s11, string s12, string s13, string s14, string s21, string s22, string s23, string s24, string s31, string s32, string s33, string s34) {
     prntHeader(n);
     const int col = 33;
