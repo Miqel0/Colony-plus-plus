@@ -15,13 +15,19 @@ using namespace std;
 #include "producer.h"
 #include "terr.h"
 
+// ==========================================
+// KONSTRUKTOR
+// ==========================================
 Colony::Colony(){}
 
-void Colony::setNazwa(){f_logisyka.setNazwa();}
+// ==========================================
+// WYSWIETLANIE
+// ==========================================
 
+//WYSWIETLANIE INFORMACJI Z COLONY / LOGISTICS - colony
 void Colony::prnt(){f_logisyka.prnt();}
 
-
+//WYSWIETLANIE BUDYNKU O DANYM ID
 void Colony::prntBuilding(int nr){
     if(nr>=0 && nr <= buildings.size()){
         buildings[nr]->prnt(getIlosc(buildings[nr]->getName()));
@@ -29,11 +35,10 @@ void Colony::prntBuilding(int nr){
         cout<<RED<<"Blad: Nie ma budynku o takim ID: "<<RESET<<nr<<endl;
         cout<<endl;
     }
-    
 }
 
+//WYSWIETLANIE BUDYNKU O DANEJ NAZWIE - show [nazwa]
 void Colony::prntBuilding(string bud){
-    
     int nr=-1;
     for(int i=0;i<buildings.size();i++){
         string nazwa=buildings[i]->getName();
@@ -48,21 +53,21 @@ void Colony::prntBuilding(string bud){
         cout<<RED<<"Blad: Nie ma budynku o takiej nazwie: "<<RESET<<nr<<endl;
         cout<<endl;
     }
-    
 }
 
+//WYSWIETLANIE WSZYSTKICH BUDYNKOW - caly wektor buildings z parametrami
 void Colony::prntBuildings(){
     if(buildings.size()==0){
         cout<<endl;
         cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
-        
     }else{
         for(int i=0;i<buildings.size();i++){
         prntBuilding(i);
-    }}
+        }
+    }
 }
 
-
+//WYSWIETLANIE WSZYSTKICH BUDYNKOW - caly wektor buildings SAME NAZWY
 void Colony::prntBuildingsShort(){
     prntHeader("Obecnie zbudowane budynki:");
     if(buildings.size()==0){
@@ -73,8 +78,11 @@ void Colony::prntBuildingsShort(){
         for(int i=0;i<buildings.size();i++){
             string str=cleanNum(i)+". ";
             cout<<YELLOW<<BOLD<<left<<setw(5)<<str<<RESET<<buildings[i]->getName()<<endl;
-    }}
+        }
+    }
 }
+
+//WYSWIETLANIE WSZYSTKICH BUDYNKOW PODSUMOWANIE - ILOSC BUDYNKOW DANEGO TYPU - show
 void Colony::prntBuildingsSumm(){
     prntHeader("Obecnie zbudowane budynki");
     if(buildings.size()==0){
@@ -82,7 +90,7 @@ void Colony::prntBuildingsSumm(){
         cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
         return;
     }
-    map<string,int> licznik;
+    map<string,int> licznik;//Robienie mapy z nazwy budynku i ilosci - w wketorze buildings
 
     for(auto const &b: buildings){
         licznik[b->getName()]++;
@@ -92,11 +100,12 @@ void Colony::prntBuildingsSumm(){
     const string sep=" | ";
     cout<<BLUE<<BOLD<<left<<setw(w_n)<<"NAZWA BUDYNKU"<<NO_BOLD<<YELLOW<<sep<<BOLD<<BLUE<<setw(w_i)<<"ILOSC"<<RESET<<endl;
     cout << YELLOW << string(w_n, '-') << "-+-" << string(w_i, '-') << RESET << endl;
-    for(auto const &[nazwa,ilosc]:licznik){
+    for(auto const &[nazwa,ilosc]:licznik){//Wyswietlanie budynkow: nazwa - ilosc
         cout<<YELLOW<<left<<setw(w_n)<<nazwa<<sep<<BOLD<<ilosc<<RESET<<endl;
     }
     cout<<endl;
 }
+
 
 
 void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
@@ -360,8 +369,6 @@ bool Colony::czyBudynek(string bud)const{
     return false;
 }
 
-void Colony::setSandbox(){f_logisyka.setSandbox();}
-void Colony::setCustom(){f_logisyka.setCustom();}
 
 
 bool Colony::sprawdzLvlTerr(){return f_logisyka.sprawdzLvlTerr();}
@@ -399,14 +406,28 @@ bool Colony::czyStac(const unique_ptr<Building> &b)const{
 
 void Colony::loadColony(string nazwa_plik){f_logisyka.load(nazwa_plik);}
 
+// ==========================================
+// SETTERY
+// ==========================================
+
+void Colony::setNazwa(){f_logisyka.setNazwa();}
+
+void Colony::setRuch(int r){f_logisyka.setRuch(r);}
+
+void Colony::setSandbox(){f_logisyka.setSandbox();}
+void Colony::setCustom(){f_logisyka.setCustom();}
+
+// ==========================================
+// GETTERY
+// ==========================================
+
 int Colony::getIloscBudynkow()const{return buildings.size();}
 int Colony::getAllWorkers()const{return f_logisyka.getAWorkers();}
 int Colony::getDemandWorkers()const{return f_logisyka.getDWorkers();}
 int Colony:: getRuch()const{return f_logisyka.getRuch();}
 int Colony::getLvlTerr() const{return f_logisyka.getLvlTerr();}
 int Colony::getToNextLvlTerr() const{return f_logisyka.getTitan();}
-
-int Colony::getIlosc(string name)const{
+int Colony::getIlosc(string name)const{//Zwracanie ilosci budynku o danej nazwie
     if(name.empty()) return 0;
     int il=0;
     name[0]=toupper(name[0]);
@@ -417,5 +438,3 @@ int Colony::getIlosc(string name)const{
     }
     return il;
 }
-
-void Colony::setRuch(int r){f_logisyka.setRuch(r);}

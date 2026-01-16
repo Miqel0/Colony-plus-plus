@@ -19,32 +19,37 @@ class Building{
         double kosztEnergii;
         double kosztKamien;
         double kosztTytan;
+        
         int workers;
         int residents;
         
     public:
+        //KONSTRUKTORY
+        Building();
+        Building(string n,TypBudynku t, double kE,double kK, double kT,int w);
+        virtual ~Building(){};
 
-    Building();
-    Building(string n,TypBudynku t, double kE,double kK, double kT,int w);
-    virtual ~Building(){};
+        //VIRTUAL
+        virtual void prnt(int il) const;
+        virtual void save(ofstream& plik) const;
+        virtual double work();
 
-    virtual void prnt(int il) const;
-    virtual void save(ofstream& plik) const;
-    virtual double work();
-    void setId(int i);
+        //PRZY LOAD
+        void setId(int i);
 
-    static void updateLicznik(int wczytaneMaxId); 
+        //LICZENIE ILOSCI ZBUDOWANYCH BUDYNKOW
+        static void updateLicznik(int wczytaneMaxId); 
 
-    string getName() const;
-    int getDemandWorkers() const;
-    TypBudynku getTyp() const;
-
-    int getResidents() const;
-    double getReqEnergy() const;
-    virtual int getPType() const;
-
-    double getKosztKamien() const;
-    double getKosztTytan() const;
+        //GETTERY
+        string getName() const;
+        int getDemandWorkers() const;
+        TypBudynku getTyp() const;
+        int getResidents() const;
+        double getReqEnergy() const;
+        virtual int getPType() const;
+        double getKosztKamien() const;
+        double getKosztTytan() const;
+        
 };
 
 #endif

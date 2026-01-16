@@ -10,19 +10,26 @@ using namespace std;
 
 
 class Terr: public Building{
-    TypTerr pType;
-    double terrGen;
+
+    private:
+        TypTerr pType;
+        double terrGen;
 
     public:
-    Terr();
-    Terr(string n, double kE,double kK, double kT, double te,TypTerr t,int w);
 
-    void prnt(int il) const override;
-    void save(ofstream& plik) const override;
+        //KONSTRUKTOR
+        Terr();
+        Terr(string n, double kE,double kK, double kT, double te,TypTerr t,int w);
+        ~Terr(){};
 
-    int getPType() const override;
-    double getTerr() const;
-    double work();
+        //OVERRIDE
+        void prnt(int il) const override;
+        void save(ofstream& plik) const override;
+        double work() override;
+
+        //GETTERY
+        int getPType() const override;
+        double getTerr() const;
 };
 
 #endif

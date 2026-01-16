@@ -10,37 +10,43 @@ using namespace std;
 #include "colony.h"
 
 class Game{
-    Colony kolonia;
-    bool running;
-    map<string,TypBudynku> stringToBudynku;
-    map<string,TypDomy> stringToDomy;
-    map<string,TypEnergy> stringToEnergy;
-    map<string,TypFarm> stringToFarm;
-    map<string,TypProducer> stringToProducer;
-    map<string,TypTerr> stringToTerr;
-
-    map<string, BuildingInfo> bazaDanych;
 
     public:
-    Game();
-    ~Game(){};
-    void run();
-    void startTutorial();
-    void commands();
-    void prntBudynki();
+        Game();
+        ~Game(){};
+        
+        //GRA
+        void run();
+        void startTutorial();
+        void commands();
+        void build(BuildingInfo info);
+        
+        //PLIKI
+        void loadGameData();
+        bool checkConfig();
+        void saveConfig();
 
-    void loadGameData();
-    void prntInfo(string cat);
-    void prntCategories();
-    void prntHelp();
-    void prntRules();
+        //WYSWIETLANIE
+        void prntInfo(string cat);
+        void prntCategories();
+        void prntHelp();
+        void prntRules();
+        void prntNewLvlTerr();
 
-    bool checkConfig();
-    void saveConfig();
+    private:
+        bool running;
+        
+        //Tworzenie obiektu kolonia
+        Colony kolonia;
 
-    void build(BuildingInfo info);
-
-    void prntNewLvlTerr();
+        //Mapy do zamiany strignu na typ budynku
+        map<string,TypBudynku> stringToBudynku;
+        map<string,TypDomy> stringToDomy;
+        map<string,TypEnergy> stringToEnergy;
+        map<string,TypFarm> stringToFarm;
+        map<string,TypProducer> stringToProducer;
+        map<string,TypTerr> stringToTerr;
+        map<string, BuildingInfo> bazaDanych;
 
 };
 
