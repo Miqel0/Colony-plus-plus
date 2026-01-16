@@ -204,7 +204,7 @@ void Game::startTutorial() {
 }
 
 bool Game:: checkConfig(){
-    ifstream plik("config.txt");
+    ifstream plik("data/config.txt");
     int czy;
     if (!plik.is_open()) {
         cout << RED<<BOLD << "BLAD: Nie mozna otworzyc config.txt!" << RESET << endl;
@@ -245,19 +245,27 @@ void Game::run(){
     cout << BLUE << ">> " << RESET;
     
     int tryb;
-    
-    while(!(cin >> tryb)){
-        cout << RED << "To nie jest liczba! Wpisz 1, 2 lub 3: " << RESET;
-    
-    }
-
-    if(tryb == 2){
-        kolonia.setSandbox();
-        saveConfig();
-    } else if(tryb == 3){
-        kolonia.setCustom();
-        saveConfig();
-    }
+    int a=0;
+    while(a==0){
+        cin>>tryb;
+        switch(tryb){
+            case 1:
+                a=1;
+                break;
+            case 2:
+                kolonia.setSandbox();
+                saveConfig();
+                a=1;
+                break;
+            case 3:
+                kolonia.setCustom();
+                saveConfig();
+                a=1;
+                break;
+            default:
+                cout << RED << "To nie jest liczba! Wpisz 1, 2 lub 3: " << RESET;
+                break;
+        }}
     cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
     
     cout<<YELLOW<<"Czy chcesz przejsc samouczek? (y/n)"<<RESET<<endl;
@@ -438,13 +446,13 @@ void Game::commands(){
 
         ss>>arg1;
 
-        if(isdigit(arg1[0])){
-
-            kolonia.zburzBudynek(stoi(arg1));//Testowe
-
-        }else{
+        if(bazaDanych.count(arg1)){
 
             kolonia.zburzBudynek(arg1);
+        
+
+        }else{
+            cout<<RED<<"Nie ma takiego budynku!!"<<RESET<<endl;
 
         }
     }
@@ -518,7 +526,7 @@ void Game::prntNewLvlTerr(){
 
 
 void Game::loadGameData(){
-    ifstream plik("gamedata.txt");
+    ifstream plik("data/gamedata.txt");
     if (!plik.is_open()) {
         cout << RED<<BOLD << "BLAD: Nie mozna otworzyc gamedata.txt!" << RESET << endl;
         return;
