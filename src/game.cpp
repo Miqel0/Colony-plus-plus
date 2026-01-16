@@ -56,37 +56,42 @@ Game::Game():running(true){
 // ==========================================
 
 void Game::run(){
+    cout << CLEAR_SCREEN;
 
     //Wersja testowa poczatku gry
-    cout << CLEAR_SCREEN;
-    cout << YELLOW << "WYBIERZ TRYB GRY:" << RESET << endl;
-    cout << " [" << BOLD << "1" << NO_BOLD << "] NORMALNY (Podstawowa wersja)" << endl;
-    cout << " [" << BOLD << "2" << NO_BOLD << "] SANDBOX / TESTY (Duzo surowcow, odblokowane budynki)" << endl;
-    cout << " [" << BOLD << "3" << NO_BOLD << "] CUSTOM (Wpisz wlasne wartosci)" << endl;
-    cout << BLUE << ">> " << RESET;
-    
-    int tryb;
-    int a=0;
-    while(a==0){
+    string tryb;
+    while(true) {
+        
+        cout << YELLOW << "WYBIERZ TRYB GRY:" << RESET << endl;
+        cout << " [" << BOLD << "1" << NO_BOLD << "] NORMALNY (Podstawowa wersja)" << endl;
+        cout << " [" << BOLD << "2" << NO_BOLD << "] SANDBOX / TESTY (Duzo surowcow, odblokowane budynki)" << endl;
+        cout << " [" << BOLD << "3" << NO_BOLD << "] CUSTOM (Wpisz wlasne wartosci)" << endl;
+        cout << BLUE << ">> " << RESET;
         cin>>tryb;
-        switch(tryb){
-            case 1:
-                a=1;
-                break;
-            case 2:
-                kolonia.setSandbox();
-                saveConfig();
-                a=1;
-                break;
-            case 3:
-                kolonia.setCustom();
-                saveConfig();
-                a=1;
-                break;
-            default:
-                cout << RED << "To nie jest liczba! Wpisz 1, 2 lub 3: " << RESET;
-                break;
-        }}
+        
+        if(tryb=="1"|tryb=="2"|tryb=="3") { 
+            int b = stoi(tryb);
+            switch(stoi(tryb)){
+                case 1:
+                    break;
+                case 2:
+                    kolonia.setSandbox();
+                    saveConfig();
+                    break;
+                case 3:
+                    kolonia.setCustom();
+                    saveConfig();
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }else{
+            cout << RED << "To nie jest liczba! Wpisz 1, 2 lub 3: " << BLUE << endl;
+            cout<<endl;
+        }
+    }
+    
     cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl; 
     
     cout<<YELLOW<<"Czy chcesz przejsc samouczek? (y/n)"<<RESET<<endl;
@@ -106,6 +111,7 @@ void Game::run(){
     
 
     // //Podstawowa wrsja poczatku gry - bez testowania
+
     // cout <<YELLOW<< endl << string(50, '-') <<RESET<< endl;
     // if(checkConfig()){
     //     cout<<YELLOW<<"Czy chcesz wczytac zapisana gre? (y/n)"<<RESET<<endl;
@@ -334,8 +340,8 @@ void Game::commands(){
         cout<<YELLOW<<"Czy na pewno chcesz wyjsc z gry? Stracisz niezapisany postep!\n(y/n)\n"<<RESET;
         cin>>dec;
         if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
-        cout<<CYAN<<BOLD<<"Zamykanie gry!"<<YELLOW<<"\n<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> "<<RESET<<endl;
-        running=false;
+            cout<<CYAN<<BOLD<<"Zamykanie gry!"<<YELLOW<<"\n<> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> "<<RESET<<endl;
+            running=false;
         }else{
             cout<<CYAN<<BOLD<<"Anulowano zamykanie gry!\n"<<RESET<<endl;
         }
@@ -651,22 +657,34 @@ void Game::prntCategories(){//Wyswietlanie wszystkich kategorii budynkow (same k
 }
 
 void Game::prntRules() {//Wyswietlenie instrukcji
-    prntHeader("ZASADY PRZETRWANIA NA MARSIE");
+    prntHeader("PODRECZNIK KOLONIZATORA - ZASADY GRY");
 
-    cout << YELLOW << BOLD << "1. EKONOMIA I PRZETRWANIE" << RESET << endl;
-    cout << "   - " << CYAN << "ENERGIA" << RESET << ": Jest kluczowa. Przy jej braku zaden z budynkow nie bedzie dzialal." << endl;
-    cout << "   - " << GREEN << "JEDZENIE" << RESET << ": Twoi ludzie musza jesc. Jesli w magazynie zabraknie jedzenia, kolonia " << RED << "UMIERA" << RESET << "." << endl;
-    cout << "   - " << BLUE << "PRACOWNICY" << RESET << ": Kazdy budynek wymaga rak do pracy. Buduj domy (Housing), aby zwiekszyc populacje." << endl << endl;
+    // 1. CEL GRY
+    cout << YELLOW << BOLD << "1. CEL GLOWNY: TERRAFORMACJA" << RESET << endl;
+    cout << "   Twoim zadaniem jest przystosowanie Marsa do zycia. Buduj budynki w nowej kolonii" << MAGENTA << "TERR" << RESET << "." << endl;
+    cout << "   - Zwiekszanie " << MAGENTA << "Wskaznika Terraformacji" << RESET << " odblokowuje nowe technologie (i dostep do tytan!)." << endl;
 
-    cout << YELLOW << BOLD << "2. ROZWOJ" << RESET << endl;
-    cout << "   - Buduj kopalnie, aby zdobywac " << MAGENTA << "KAMIEN" << RESET << " i " << MAGENTA << "TYTAN" << RESET << "." << endl;
-    cout << "   - Inwestuj w budynki " << MAGENTA << "TERR" << RESET << " (Terraformacja). Zwiekszaja one poziom przystosowania planety." << endl;
-    cout << "   - Wyzszy poziom terraformacji = odblokowanie nowych, lepszych budynkow." << endl << endl;
+    // 2. PRZETRWANIE (Warunki porażki)
+    cout << YELLOW << BOLD << "2. EKONOMIA ZYCIA (WAZNE!)" << RESET << endl;
+    cout << "   - " << GREEN << "JEDZENIE" << RESET << ": Jest pobierane " << BOLD << "automatycznie" << NO_BOLD << " na poczatku kazdej nowej tury." << endl;
+    cout << "     Jesli magazyn jedzenia bedzie pusty -> " << RED << BOLD << "KOLONIA UMIERA (KONIEC GRY)" << RESET << "." << endl;
+    cout << "   - " << YELLOW << "ENERGIA" << RESET << ": Musisz produkowac wiecej pradu niz zuzywasz (albo dokladnie tyle samo)." << endl;
+    cout << "     Brak energii = " << RED << "STOP PRODUKCJI" << RESET << " we wszystkich budynkach (farmy tez przestaja dzialac!)." << endl << endl;
 
-    cout << YELLOW << BOLD << "3. ROZGRYWKA" << RESET << endl;
-    cout << "   - Masz " << BOLD << "3 punkty ruchu" << NO_BOLD << " na ture. Kazde zbudowanie budynku zuzywa 1 ruch." << endl;
-    cout << "   - Gdy skonczysz ruchy, wpisz " << BG_BLACK << "next" << RESET << ", aby zakonczyc ture i zebrac surowce." << endl;
-    cout << "   - Uzywaj " << BG_BLACK << "info" << RESET << ", aby sprawdzic koszty budynkow." << endl;
+    // 3. SYSTEM TUR
+    cout << YELLOW << BOLD << "3. MECHANIKA TURY" << RESET << endl;
+    cout << "   - W kazdej turze masz do dyspozycji " << BOLD << "3 PUNKTY RUCHU" << NO_BOLD << "." << endl;
+    cout << "   - " << CYAN << "1 Budynek = 1 Ruch" << RESET << "." << endl;
+    cout << "   - Gdy wykorzystasz ruchy (lub wczesniej), wpisz " << BG_BLACK << "next" << RESET << "." << endl;
+    cout << "   - Dopiero po wpisaniu 'next' nastepuje produkcja surowcow i konsumpcja jedzenia." << endl << endl;
+
+    // 4. ZARZADZANIE
+    cout << YELLOW << BOLD << "4. BUDOWANIE I NISZCZENIE" << RESET << endl;
+    cout << "   - Uzywaj " << BG_BLACK << "info" << RESET << ", aby sprawdzic wymagania i koszt budynkow." << endl;
+    cout << "   - Aby zdobyc pracownikow, musisz budowac domy (" << BLUE << "Housing" << RESET << ")." << endl;
+    cout << "   - Mozesz zburzyc budynek komenda " << BG_BLACK << "destroy [nazwa]" << RESET << "." << endl;
+    cout <<  BLUE << "Zburzenie zwalnia pracownikow" << RESET << " do innej pracy." << endl;
+    
     cout << endl;
 }
 

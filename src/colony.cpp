@@ -107,19 +107,52 @@ void Colony::prntBuildingsSumm(){
 }
 
 
+// ==========================================
+// BUDOWANIE
+// ==========================================
 
-void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
+//Budowanie Energy
+bool Colony::zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w){
+    unique_ptr<Building> nowyBudynek = make_unique<Energy>(n,kE,kK,kT,e,t,w);
+    return buduj(move(nowyBudynek));
+}
 
+//Budowanie Farm
+bool Colony::zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct){
+    unique_ptr<Building> nowyBudynek = make_unique<Farm>(n,kE,kK,kT,f,t,w,tim,ct); 
+    return buduj(move(nowyBudynek));
+}
+
+//Budowanie Housing
+bool Colony::zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w){
+    unique_ptr<Building> nowyBudynek=make_unique<Housing>(n,kE,kK,kT,r,t,w);
+    return buduj(move(nowyBudynek));
+}
+
+//Budowanie Prodcuer
+bool Colony::zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti){
+    unique_ptr<Building> nowyBudynek=make_unique<Producer>(n,kE,kK,kT,s,t,w,ti);
+    return buduj(move(nowyBudynek));
+}
+
+//Budowanie Terr
+bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w){
+    unique_ptr<Building> nowyBudynek = make_unique<Terr>(n,kE,kK,kT,te,t,w); 
+    return buduj(move(nowyBudynek));
+}
+
+//Budowanie budynku i aktalziowanie parametrow
 bool Colony::buduj(unique_ptr<Building> b){
     if (b == nullptr) return false;
     
     if(czyStac(b)){
         
+        //Odejmowanie materalow, ktore sa wykorzystane do budowania
         f_logisyka.setStone(f_logisyka.getStone() - b->getKosztKamien());
         f_logisyka.setTitan(f_logisyka.getTitan() - b->getKosztTytan());
 
+        //Aktualizowanie logistyki
         f_logisyka.updateBudynek(b.get());
-        
         
         if(b->getTyp()==TypBudynku::HOUSING){
             f_logisyka.setAWorkers(b->getResidents());
@@ -127,6 +160,8 @@ bool Colony::buduj(unique_ptr<Building> b){
             f_logisyka.setDWorkers(b->getDemandWorkers());
         }
         cout << YELLOW << "Dodano nowy budynek: " << BOLD << b->getName() << RESET << YELLOW << "!!" << RESET << endl;
+        
+        //Dodawanie ostatecznie danego budynka do listy budynkow
         addBuilding(move(b));
         return true; 
     }
@@ -135,41 +170,46 @@ bool Colony::buduj(unique_ptr<Building> b){
     }
 }
 
-bool Colony::zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w){
-    unique_ptr<Building> nowyBudynek = make_unique<Energy>(n,kE,kK,kT,e,t,w);
-    return buduj(move(nowyBudynek));
+//Funkcja pomocniczna do budowania
+void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
+
+//Sprawdzanie wymaganych parametrow do zbudowania
+bool Colony::czyStac(const unique_ptr<Building> &b)const{
+    int czy=0;
+    if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){ // sprwdza czy jest wystarczajaca liczba kamienia i tytanu do zbudowania
+        czy=1;
+    }else{
+        if(b->getKosztKamien()>f_logisyka.getStone()){
+            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia!"<<RESET<<endl;
+        
+        }else if(b->getKosztTytan()>f_logisyka.getTitan()){
+            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztTytan()-f_logisyka.getTitan()<<NO_BOLD<<" tytanu!"<<RESET<<endl;
+        
+        }else if(b->getKosztKamien()>f_logisyka.getStone()&&b->getKosztTytan()>f_logisyka.getTitan()){
+            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia, i "<<b->getKosztTytan()-f_logisyka.getTitan()<<NO_BOLD<<" tytanu!"<<RESET<<endl;
+        }
+        
+        czy=0;
+    }
+    if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()<0){ // sprawdza czy jest wystarczajaca liczba workerow - zeby wybudowac dany budynek
+        cout<<endl;
+        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
+        cout<<endl;
+        czy=0;
+    }
+    if(czy==1){
+        return true;
+    }else{
+        return false;
+    }
 }
 
-bool Colony::zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct){
-    unique_ptr<Building> nowyBudynek = make_unique<Farm>(n,kE,kK,kT,f,t,w,tim,ct); 
-    return buduj(move(nowyBudynek));
-}
-
-
-bool Colony::zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w){
-    unique_ptr<Building> nowyBudynek=make_unique<Housing>(n,kE,kK,kT,r,t,w);
-    return buduj(move(nowyBudynek));
-}
-
-
-
-bool Colony::zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti){
-    unique_ptr<Building> nowyBudynek=make_unique<Producer>(n,kE,kK,kT,s,t,w,ti);
-    return buduj(move(nowyBudynek));
-}
-
-bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w){
-    unique_ptr<Building> nowyBudynek = make_unique<Terr>(n,kE,kK,kT,te,t,w); 
-    return buduj(move(nowyBudynek));
-}
-
-
-
+//Wyburzanie budynku
 void Colony::zburzBudynek(string nazwa){
-    
+
     string nam="X";
     int nr=0;
-    for(int i=0;i<buildings.size();i++){
+    for(int i=0;i<buildings.size();i++){//Szukanie dowolnego budynku o danej nazwie (nie ma znaczenia ktorego sie usunie, bo i tak wyswietla sie ich suma)
         string bud=buildings[i]->getName();
         for(auto &c : bud) c = tolower(c);
         
@@ -178,19 +218,19 @@ void Colony::zburzBudynek(string nazwa){
             nr=i;
         }
     }
-    if(nam!="X"){
+
+    if(nam!="X"){//Czy nazwa zostala zmieniona?
         string dec;
         cout<<YELLOW<<"Czy na pewno chcesz wyburzyc budynek: "<<nam<<RESET<<endl;
         cout<<YELLOW<<">>Potwierdz wpisujac y, albo anuluj n."<<RESET<<endl;
         cin>>dec;
         if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
             if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
-                if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){
+                if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){ //Sprawdzenie czy aby na pewno mozna usunac dany budynek - nie moze brakowac pracownikow!
                     cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
                     return;
                 }
-
-            }else{
+            }else{//Wszystko pasuje, wiec mozna zburzyc
                 cout<<YELLOW<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<RESET<<endl;
                 f_logisyka.setDWorkers(-buildings[nr]->getDemandWorkers());
                 if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
@@ -209,17 +249,33 @@ void Colony::zburzBudynek(string nazwa){
 }
 
 
+// ==========================================
+// SAVE / LOAD
+// ==========================================
 
-int Colony::nextRound(){return f_logisyka.czyNextRound(buildings);}
-
-void Colony::update(){}
-
+//Zapisywanie wszystkiego - save
 void Colony::save(){
     saveBuildings("test_buildings.txt");
     saveColony("test_colony.txt");
     cout<<YELLOW<<"Gra zostala zapisana do pliku ."<<RESET<<endl;
 }
 
+//Zapisywanie danych z Logistics - parametry
+void Colony::saveColony(string nazwa_plik){f_logisyka.save(nazwa_plik);}
+
+//Zapisywanie wszystkich budynkow
+void Colony::saveBuildings(string nazwa_plik){
+    ofstream plik("data/"+nazwa_plik);
+    if(plik.is_open()){
+         for(const auto& b : buildings){
+            b->save(plik); //Wykorzystanie przeciazonej funkcji virtualnej save()
+        }
+        plik.close();
+    }
+
+}
+
+//Wczytywanie wszystkiego - load
 void Colony::load(){
     loadBuildings("test_buildings.txt");
     loadColony("test_colony.txt");
@@ -227,64 +283,45 @@ void Colony::load(){
     cout<<YELLOW<<"Gra zostala wczytana z pliku."<<RESET<<endl;
 }
 
-void Colony::saveColony(string nazwa_plik){f_logisyka.save(nazwa_plik);}
-
-
-void Colony::saveBuildings(string nazwa_plik){
-    ofstream plik("data/"+nazwa_plik);
-    if(plik.is_open()){
-         for(const auto& b : buildings){
-            b->save(plik);
-        }
-        plik.close();
-    }
-
-}
-
-
-
+//Wczytywanie wszystkich budynkow
 void Colony::loadBuildings(string nazwa_plik) {
     ifstream plik("data/"+nazwa_plik);
 
     if (plik.is_open()) {
+
         buildings.clear();
-    
-    // plik<<static_cast<int>(type)<<" "<<name<<" "<<id<<" "<<kosztEnergii<<" "<<workers;
 
-    //farm:     plik<<" "<<static_cast<int>(pType)<<" "<<foodGen<<" "<<time<<endl;
-    //energy:     plik<<" "<<static_cast<int>(pType)<<" "<<enGen<<" "<<endl;
-        //uniwersalne dane
-
+        //Parametry
         int w_type, w_id, w, maxSaved = 0, w_ptype;
         string w_n;
         double kE,kT,kK;
 
-
+        //Przejscie przez plik, linijka po linijce
         while (plik >> w_type >> w_n >> w_id >> kE>>kK>>kT >> w) {
             
             TypBudynku typ = static_cast<TypBudynku>(w_type);
             unique_ptr<Building> nowyBudynek = nullptr;
+
+            //Tworzenie konkretnego budynku na podstawie wczytynych danych, w zaleznosci od typu budynku 
             switch (typ) {
                 case TypBudynku::NIEZNANY:
-
                     break;
 
                 case TypBudynku::ENERGY: {
+                    //Dodatkowe parametry
                     double e;
                     plik >> w_ptype >> e;
-                
-                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, static_cast<TypEnergy>(w_ptype), w);
-                
-                    energia->setId(w_id); 
                     
+                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, static_cast<TypEnergy>(w_ptype), w);
+                    
+                    energia->setId(w_id); //Ustawianie poprawnego ID (bo psuje sie podczas wczytywania
                     nowyBudynek = move(energia);
                     f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
-                    //nowyBudynek->prnt();
-
                     break; 
                 }
 
                 case TypBudynku::FARM: {
+                    //Dodatkowe parametry
                     double f;
                     int tim,ct;
                     plik >> w_ptype  >> f>>tim>>ct;
@@ -292,73 +329,74 @@ void Colony::loadBuildings(string nazwa_plik) {
                     auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, static_cast<TypFarm>(w_ptype), w,tim,ct);
 
                     farm->setId(w_id); 
-                    
                     nowyBudynek = move(farm);
                     f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
-                    //nowyBudynek->prnt();
-
                     break;
                 }
                 case TypBudynku::HOUSING:{
+                    //Dodatkowe parametry
                     int r;
                     plik >> w_ptype >> r;
-                
+    
                     auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, static_cast<TypDomy>(w_ptype), w);
                 
-                    housing->setId(w_id); 
-                    
+                    housing->setId(w_id);                
                     nowyBudynek = move(housing);
-                    
                     f_logisyka.setAWorkers(nowyBudynek->getResidents());
-                    //nowyBudynek->prnt();
-
                     break;
-                
                 }
                 case TypBudynku::PRODUCER: {
-                    double s;
-                    double ti;
+                    //Dodatkowe parametry
+                    double s, ti;
                     plik >> w_ptype  >> s>>ti;
                 
                     auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, static_cast<TypProducer>(w_ptype), w,ti);
 
                     producer->setId(w_id); 
-                    
                     nowyBudynek = move(producer);
                     f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
-                    //nowyBudynek->prnt();
-
                     break;
                 }
                 case TypBudynku::TERR: {
+                    //Dodatkowe parametry
                     double te;
                     plik >> w_ptype >> te;
                 
                     auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, static_cast<TypTerr>(w_ptype), w);
 
                     terr->setId(w_id); 
-                    
                     nowyBudynek = move(terr);
                     f_logisyka.setDWorkers(nowyBudynek->getDemandWorkers());
-                    //nowyBudynek->prnt();
-
                     break;
                 }
             } 
 
+            //Ustawienie static maxSaved na tyle ile sie wczytalo budynkow
             if (nowyBudynek != nullptr) {
                 if (w_id > maxSaved) {
                     maxSaved = w_id;
                 }
             }
+            
+            //Wrzucenie do vectora na koniec ten nowy zbudowany budynek
             buildings.push_back(move(nowyBudynek));
         } 
         Building::updateLicznik(maxSaved);
         plik.close();
     } 
 } 
+
+void Colony::loadColony(string nazwa_plik){f_logisyka.load(nazwa_plik);}
+
+// ==========================================
+// NEXT ROUND
+// ==========================================
+
+//Wywołanie funckji nextRound z Logistics
+int Colony::nextRound(){return f_logisyka.czyNextRound(buildings);}
+
+//Sprawdzenie czy istnieje dany budynek
 bool Colony::czyBudynek(string bud)const{
-    
     for(const auto &b:buildings){
         string nazwa=b->getName();
         for(auto &c : nazwa) c = tolower(c);
@@ -369,42 +407,7 @@ bool Colony::czyBudynek(string bud)const{
     return false;
 }
 
-
-
 bool Colony::sprawdzLvlTerr(){return f_logisyka.sprawdzLvlTerr();}
-
-bool Colony::czyStac(const unique_ptr<Building> &b)const{
-    int czy=0;
-    if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){
-        czy=1;
-    }else{
-        if(b->getKosztKamien()>f_logisyka.getStone()){
-            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia!"<<RESET<<endl;
-        
-        }else if(b->getKosztTytan()>f_logisyka.getTitan()){
-            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztTytan()-f_logisyka.getTitan()<<NO_BOLD<<" tytanu!"<<RESET<<endl;
-        
-        }else if(b->getKosztKamien()>f_logisyka.getStone()&&b->getKosztTytan()>f_logisyka.getTitan()){
-            cout<<RED<<"Brakuje "<<BOLD<<b->getKosztKamien()-f_logisyka.getStone()<<NO_BOLD<<" kamienia, i "<<b->getKosztTytan()-f_logisyka.getTitan()<<NO_BOLD<<" tytanu!"<<RESET<<endl;
-
-        }
-        
-        czy=0;
-    }
-    if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()<0){
-        cout<<endl;
-        cout<<RED<<"Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! "<<BOLD<<"Brakuje: "<<-(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers())<<" robotnikow!"<<RESET<<endl;
-        cout<<endl;
-        czy=0;
-    }
-    if(czy==1){
-        return true;
-    }else{
-        return false;
-    }
-}
-
-void Colony::loadColony(string nazwa_plik){f_logisyka.load(nazwa_plik);}
 
 // ==========================================
 // SETTERY

@@ -49,7 +49,7 @@ class Colony{
 
         //NEXT ROUND
         int nextRound();
-        void update();
+        
 
         bool sprawdzLvlTerr();
 
