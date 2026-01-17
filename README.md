@@ -93,18 +93,20 @@ W trakcie gry mozliwe jest wpisywanie poniższych komend:
 | :--- | :--- | :--- |
 | **`info`** | *-brak-* | Wyświetla listę dostępnych kategorii budynków. |
 | **`info`** | `[kategoria]` | Pokazuje szczegóły i koszty budynków z danej kategorii (np. `info ENERGY`). |
-| **`build`** | `[nazwa]` | Buduje budynek, jeśli masz surowce (np. `build wiatrak`). |
-| **`destroy`** | `[nazwa]` | Niszczy budynek i odzyskuje część zasobów/ludzi. |
+| **`build`** | `[nazwa]` | Buduje budynek, jeśli posiadasz surowce (np. `build wiatrak`). Zużywa 1 punkt ruchu. |
+| **`destroy`** | `[nazwa]` | Niszczy budynek, zwalnia pracowników i odzyskuje część surowców. |
 | **`show`** | *-brak-* | Wyświetla podsumowanie ilości posiadanych budynków. |
 | **`show`** | `[nazwa]` | Pokazuje szczegóły konkretnego typu zbudowanego budynku. |
 | **`colony`** | *-brak-* | Wyświetla główny panel statystyk (surowce, energia, pracownicy). |
 | **`next`** | *-brak-* | Kończy turę. Następuje produkcja i konsumpcja zasobów. |
 | **`rename`** | *-brak-* | Pozwala zmienić nazwę kolonii. |
-| **`rules`** | *-brak-* | Wyświetla krótki poradnik i zasady przetrwania. |
-| **`help`** | *-brak-* | Wyświetla listę dostępnych komend, wraz z ich opisami i zastosowaniami. |
+| **`rules`** | *-brak-* | Wyświetla poradnik: cel gry, zasady przetrwania i mechanikę. |
+| **`help`** | *-brak-* | Wyświetla listę dostępnych komend wraz z opisami. |
 | **`save`** | *-brak-* | Zapisuje stan gry do pliku. |
 | **`load`** | *-brak-* | Wczytuje stan gry z pliku. |
 | **`exit`** | *-brak-* | Wyjście z gry. |
+
+---
 
 ## Autor
 
