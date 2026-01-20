@@ -232,7 +232,7 @@ void Colony::zburzBudynek(string nazwa){
                 }
             }else{//Wszystko pasuje, wiec mozna zburzyc
                 cout<<YELLOW<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<RESET<<endl;
-                f_logisyka.setDWorkers(-buildings[nr]->getDemandWorkers());
+                
                 if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
                     f_logisyka.setAWorkers(-buildings[nr]->getResidents());
                 }
