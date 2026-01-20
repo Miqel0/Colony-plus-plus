@@ -24,7 +24,7 @@ Logistics::Logistics():tura(1),all_workers(10),ruch(0),demand_workers(0),nazwa_k
 // NEXT ROUND
 // ==========================================
 
-//GLONA FUNKCJA NEXTROUND
+//GLOWNA FUNKCJA NEXT ROUND
 int Logistics::czyNextRound(const vector<unique_ptr<Building>>& budynki){
     string decyzja;
     cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (y / n)"<<RESET<<endl;
@@ -329,6 +329,15 @@ void Logistics::updateBudynek(Building* budynek){
 
 //AKTUALIZOWANIE DANYCH PO ZBURZENIU BUDYNKU
 void Logistics::updateZburzBudynek(Building* budynek){
+
+    //Odzyskiwanie pracownikow oraz polowy surowcow
+    setDWorkers(-budynek->getDemandWorkers());
+    int ti =budynek->getKosztTytan();
+    int st = budynek->getKosztKamien();
+
+    cout<<YELLOW<<"Odzyskano "<<BOLD<<cleanNum(st/2)<<NO_BOLD<<" kamienia, oraz "<<BOLD<<cleanNum(ti/2)<<NO_BOLD<<" tytanu!"<<RESET<<endl;
+    titan+=ti/2;
+    stone+=st/2;
 
     switch (budynek->getTyp())
     {

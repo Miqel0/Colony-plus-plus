@@ -106,6 +106,8 @@ W trakcie gry mozliwe jest wpisywanie poniższych komend:
 | **`load`** | *-brak-* | Wczytuje stan gry z pliku. |
 | **`exit`** | *-brak-* | Wyjście z gry. |
 
+---
+
 ## Autor
 
 **Michał Pawlica / @Miqel0** - Projekt wykonany na zaliczenie przedmiotu *Języki Programowania*.

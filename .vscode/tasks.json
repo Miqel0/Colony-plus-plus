@@ -2,16 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Mars Colony",
+            "label": "Build",
             "type": "shell",
             "command": "cl.exe",
             "args": [
-                "/Zi",
                 "/EHsc",
                 "/std:c++17",
-                "/Fe:${workspaceFolder}\\build\\mars.exe",
-                "/Fo:${workspaceFolder}\\build\\",
-                "${workspaceFolder}\\src\\*.cpp"
+                "/Fe:${workspaceFolder}\\build\\mars.exe", 
+                "/Fo:${workspaceFolder}\\build\\", 
+                "${workspaceFolder}\\src\\*.cpp" 
             ],
             "group": {
                 "kind": "build",
@@ -26,7 +25,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "detail": "Kompilacja MSVC do folderu build"
+            "detail": "Kompilacja w tle (Cichy tryb)"
         }
     ]
 }

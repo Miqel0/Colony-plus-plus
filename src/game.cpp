@@ -48,6 +48,8 @@ Game::Game():running(true){
     stringToTerr["kominy_cieplne"]   = TypTerr::KOMINY_CIEPLNE;
     stringToTerr["generator_o2"]     = TypTerr::GENERATOR_O2;
     stringToTerr["lustra_orbitalne"] = TypTerr::LUSTRA_ORBITALNE;
+
+    //Wczytywanie parametrow budynkow
     loadGameData();
 }
 
@@ -58,7 +60,7 @@ Game::Game():running(true){
 void Game::run(){
     cout << CLEAR_SCREEN;
 
-    //Wersja testowa poczatku gry
+    
     string tryb;
     while(true) {
         
@@ -149,7 +151,7 @@ void Game::startTutorial() {
     kolonia.setNazwa(); 
     cout << endl;
 
-    // COLONY 
+    // KOLONIA
     cout << CYAN << "[NARRATOR]:" << RESET << " Swietnie. Zanim zaczniemy budowe, musisz ocenic nasze zasoby." << endl;
     cout << "Wpisz komende " << BG_BLACK << RED << " colony " << RESET << ", aby wyswietlic stan magazynow." << endl;
     if (cin.peek() == '\n') cin.ignore();
@@ -170,7 +172,7 @@ void Game::startTutorial() {
 
     // BUILD WIATRAK 
     cout << endl;
-    cout << CYAN << "[NARRATOR]:" << RESET << " Widzisz? Mamy troche Kamienia, ale zero Energii. A bez pradu nie beda dzialac zadne budynki." << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Mamy troche Kamienia, ale zero Energii. A bez pradu nie beda dzialac zadne budynki." << endl;
     cout << "Musimy postawic " << BLUE << "Maly_Wiatrak" << RESET << ". Zapewni on zasilanie dla reszty bazy." << endl;
     cout << "Wpisz: " << BG_BLACK << BLUE << " build maly_wiatrak " << RESET << endl;
 
@@ -192,7 +194,7 @@ void Game::startTutorial() {
 
     // BUILD FARM
     cout << endl;
-    cout << CYAN << "[NARRATOR]:" << RESET << " Doskonale! Turbiny sie kreca. Teraz czas na jedzenie." << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Doskonale! Turbiny sie kreca więc mamy prąd!. Teraz czas na jedzenie." << endl;
     cout << "Zapasy sa male. Musimy zasiac " << GREEN << "Pole_Ziemniakow" << RESET << ", zanim zaloga zacznie glodowac." << endl;
     cout << "Wpisz: " << BG_BLACK << GREEN << " build pole_ziemniakow " << RESET << endl;
 
@@ -254,7 +256,7 @@ void Game::startTutorial() {
     }
 
     
-    cout << CYAN << "[NARRATOR]:" << RESET << " Nowy dzien na Marsie! Magazyny zapelnily sie surowcami z nocnej zmiany." << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << "Magazyny zapelnily sie nowymi surowcami." << endl;
     
     
     // STACJA BADAWCZA
@@ -666,7 +668,7 @@ void Game::prntRules() {//Wyswietlenie instrukcji
 
     // 2. PRZETRWANIE (Warunki porażki)
     cout << YELLOW << BOLD << "2. EKONOMIA ZYCIA (WAZNE!)" << RESET << endl;
-    cout << "   - " << GREEN << "JEDZENIE" << RESET << ": Jest pobierane " << BOLD << "automatycznie" << NO_BOLD << " na poczatku kazdej nowej tury." << endl;
+    cout << "   - " << GREEN << "JEDZENIE" << RESET << ": Jest pobierane " << BOLD << "automatycznie" << NO_BOLD << " na poczatku kazdej nowej tury, kazdy mieszkaniec potrzebuje 2 jedzenia na ture." << endl;
     cout << "     Jesli magazyn jedzenia bedzie pusty -> " << RED << BOLD << "KOLONIA UMIERA (KONIEC GRY)" << RESET << "." << endl;
     cout << "   - " << YELLOW << "ENERGIA" << RESET << ": Musisz produkowac wiecej pradu niz zuzywasz (albo dokladnie tyle samo)." << endl;
     cout << "     Brak energii = " << RED << "STOP PRODUKCJI" << RESET << " we wszystkich budynkach (farmy tez przestaja dzialac!)." << endl << endl;
@@ -682,8 +684,8 @@ void Game::prntRules() {//Wyswietlenie instrukcji
     cout << YELLOW << BOLD << "4. BUDOWANIE I NISZCZENIE" << RESET << endl;
     cout << "   - Uzywaj " << BG_BLACK << "info" << RESET << ", aby sprawdzic wymagania i koszt budynkow." << endl;
     cout << "   - Aby zdobyc pracownikow, musisz budowac domy (" << BLUE << "Housing" << RESET << ")." << endl;
-    cout << "   - Mozesz zburzyc budynek komenda " << BG_BLACK << "destroy [nazwa]" << RESET << "." << endl;
-    cout <<  BLUE << "Zburzenie zwalnia pracownikow" << RESET << " do innej pracy." << endl;
+    cout << "   - Mozesz zburzyc budynek i odzyksac z niego polowe surowcow, uzywajac komendy " << BG_BLACK << "destroy [nazwa]" << RESET << "." << endl;
+    cout <<  BLUE << "Zburzenie zwalnia pracownikow" << RESET<< endl;
     
     cout << endl;
 }
@@ -708,7 +710,7 @@ void Game::prntHelp(){//Help - inormacje o komendach
 
     // AKCJE 
     cout << BG_BLACK << left << setw(w) << "build [nazwa]" << RESET << YELLOW << sep << "Buduje budynek (kosztuje 1 ruch)." << RESET << endl;
-    cout << BG_BLACK << left << setw(w) << "destroy [nazwa]" << RESET << YELLOW << sep << "Niszczy budynek (odzyskuje czesc surowcow)." << RESET << endl;
+    cout << BG_BLACK << left << setw(w) << "destroy [nazwa]" << RESET << YELLOW << sep << "Niszczy budynek (odzyskuje polowe surowcow oraz wszystkich pracownikow)." << RESET << endl;
     cout << BG_BLACK << left << setw(w) << "rename" << RESET << YELLOW << sep << "Zmiana nazwy kolonii." << RESET << endl;
     cout << BG_BLACK << left << setw(w) << "next" << RESET << YELLOW << sep << "Zakoncz ture (produkcja/konsumpcja)." << RESET << endl;
 
