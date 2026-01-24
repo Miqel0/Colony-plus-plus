@@ -96,7 +96,7 @@ enum class TypTerr {
 };
 
 
-//Do mapy gamedata - wczytywanie danych o budynkach 
+//Do mapy gamedata - wczytywanie danych o budynkach - uprascza to wczytywanie i budowanie
 struct BuildingInfo {
     string nazwa;
     string type;
@@ -137,11 +137,11 @@ inline void prntHeader(string text, string col = MAGENTA, int n = 70) {
     cout << YELLOW << string(left, '-') << " " << BOLD << col << text << YELLOW << NO_BOLD << " " << string(right, '-') << RESET << endl;
 }
 
-//TEMPLATE do czyszczenia liczb - do wyswietlania
-template <typename T>
-inline string cleanNum(T val) {
+//TEMPLATE do czyszczenia liczb - do wyswietlania bo normlanie zamienianie na string nie dzialalo dla double
+
+inline string cleanNum(double liczba) {
     stringstream ss;
-    ss << val;
+    ss << liczba;
     return ss.str();
 }
 

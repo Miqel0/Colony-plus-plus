@@ -194,7 +194,7 @@ void Game::startTutorial() {
 
     // BUILD FARM
     cout << endl;
-    cout << CYAN << "[NARRATOR]:" << RESET << " Doskonale! Turbiny sie kreca więc mamy prąd!. Teraz czas na jedzenie." << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Doskonale! Turbiny sie kreca wiec mamy prad!. Teraz czas na jedzenie." << endl;
     cout << "Zapasy sa male. Musimy zasiac " << GREEN << "Pole_Ziemniakow" << RESET << ", zanim zaloga zacznie glodowac." << endl;
     cout << "Wpisz: " << BG_BLACK << GREEN << " build pole_ziemniakow " << RESET << endl;
 
@@ -215,7 +215,7 @@ void Game::startTutorial() {
     }
     // KAMIEN
     cout << endl;
-    cout << CYAN << "[NARRATOR]:" << RESET << " Brzuchy pelne, ale nasz magazyn z Kamieniem wlasnie opustoszal." << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Jedzenie mamy zapewnione, ale jak tak dalej pojdzie to w koncu nasz magazyn z Kamieniem bedzie pusty!" << endl;
     cout << "Aby budowac dalej, musimy wydobywac surowce z powierzchni. Zbudujmy " << YELLOW << "Odkrywke_Kamienia" << RESET << "." << endl;
     cout << "Wpisz: " << BG_BLACK << YELLOW << " build odkrywka_kamienia " << RESET << endl;
 
@@ -236,10 +236,10 @@ void Game::startTutorial() {
     }
     // NEXT
     cout << endl;
-    cout << "[NARRATOR]: W kazdej turze mozesz wykonac maksymalnie " << BOLD << "3 AKCJE BUDOWANIA" << NO_BOLD << "." << endl;
-    cout << "Wykorzystales juz limit (3/3). Aby nasi ludzie mogli odpoczac, a maszyny wyprodukowac surowce, musisz zakonczyc ture." << endl;
+    cout << CYAN << "[NARRATOR]:"<<RESET<<" W kazdej turze mozesz wykonac maksymalnie " << BOLD <<CYAN<< "3 AKCJE BUDOWANIA" << NO_BOLD <<WHITE<< "." << endl;
+    cout << "Wykorzystales juz limit "<<RED<<"(3/3)"<<WHITE<<". Aby nasi ludzie mogli odpoczac, a maszyny wyprodukowac surowce, musisz zakonczyc ture." << endl;
     cout << endl;
-    cout << "Wpisz komende " << BG_BLACK << WHITE << " next " << RESET << ", aby przejsc dalej." << endl;
+    cout << "Wpisz komende " << BG_BLACK << CYAN << " next " << RESET << ", aby przejsc dalej." << endl;
 
     while(true) {
         cout << BLUE << ">>" << RESET;
@@ -247,21 +247,22 @@ void Game::startTutorial() {
         for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "next") {
-
-            int wynik = kolonia.nextRound();
-            break;
+            int wynik=90;
+            wynik = kolonia.nextRound();
+            if(wynik!=0){
+                break;
+            }else{
+                cout << RED << "[SYSTEM]: Nie mozesz nic wiecej zbudowac! Musisz przejsc do kolejnej rundy aby dalej kontynuowac samouczek." << RESET << endl;
+            }
         } else {
             cout << RED << "[SYSTEM]: Nie mozesz nic wiecej zbudowac! Musisz wpisac 'next'." << RESET << endl;
         }
     }
-
-    
-    cout << CYAN << "[NARRATOR]:" << RESET << "Magazyny zapelnily sie nowymi surowcami." << endl;
     
     
     // STACJA BADAWCZA
     cout << endl;
-    cout << CYAN << "[NARRATOR]:" << RESET << " Mamy surowce, ale potrzebuje miec ich stala produkcje. Aby ,a zeby zdobyc" << MAGENTA << "Tytan" << RESET << ", musimy poczynic postepy w Terraformacji." << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << "Mamy surowce, ale potrzebuje miec ich stala produkcje. Aby ,a zeby zdobyc " << MAGENTA << "Tytan" << RESET << ", musimy poczynic postepy w Terraformacji." << endl;
     cout << "Musimy zaczac zwiekszac wspolczynnik Terraformacji. Zbuduj " << MAGENTA << "Stacje_Badawcza" << RESET << ", aby zwiekszac poziom Terraformacji." << endl;
     cout << "Dzieki niej odblokujesz lepsze budynki i kopalnie tytanu." << endl;
     cout << "Wpisz: " << BG_BLACK << MAGENTA << " build stacja_badawcza " << RESET << endl;
@@ -466,7 +467,7 @@ bool Game::checkConfig(){ //Sprawdzanie config
 }
 
 void Game::saveConfig(){ //Zapisywanie config
-     ofstream plik("config.txt");
+     ofstream plik("data/config.txt");
     if(plik.is_open()){
         plik<<1;
         plik.close();
