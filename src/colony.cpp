@@ -255,8 +255,8 @@ void Colony::zburzBudynek(string nazwa){
 
 //Zapisywanie wszystkiego - save
 void Colony::save(){
-    saveBuildings("test_buildings.txt");
-    saveColony("test_colony.txt");
+    saveBuildings("zapis_buildings.txt");
+    saveColony("zapis_colony.txt");
     cout<<YELLOW<<"Gra zostala zapisana do pliku ."<<RESET<<endl;
 }
 
@@ -277,8 +277,8 @@ void Colony::saveBuildings(string nazwa_plik){
 
 //Wczytywanie wszystkiego - load
 void Colony::load(){
-    loadBuildings("test_buildings.txt");
-    loadColony("test_colony.txt");
+    loadBuildings("zapis_buildings.txt");
+    loadColony("zapis_colony.txt");
     cout<<CLEAR_SCREEN<<endl;
     cout<<YELLOW<<"Gra zostala wczytana z pliku."<<RESET<<endl;
 }
@@ -295,7 +295,7 @@ void Colony::loadBuildings(string nazwa_plik) {
         int w_type, w_id, w, maxSaved = 0, w_ptype;
         string w_n;
         double kE,kT,kK;
-
+        //Format linii w pliku: TypBudynku Nazwa ID KosztEnergii KosztKamienia KosztTytanu Pracownicy ParametrySpecjalne
         //Przejscie przez plik, linijka po linijce
         while (plik >> w_type >> w_n >> w_id >> kE>>kK>>kT >> w) {
             

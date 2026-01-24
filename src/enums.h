@@ -96,7 +96,7 @@ enum class TypTerr {
 };
 
 
-//Do mapy gamedata - wczytywanie danych o budynkach 
+//Do mapy gamedata - wczytywanie danych o budynkach - uprascza to wczytywanie i budowanie
 struct BuildingInfo {
     string nazwa;
     string type;

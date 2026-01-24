@@ -28,7 +28,7 @@ void Farm::save(ofstream& plik)const{
 
 double Farm::work(){// Przy pracy Farm, jest dodatkowo sprawdzany czas pracy
     curr_time++; //Kazdy Farm produkuje z inna predkoscia (musza urosnac rzeczy)
-    if(curr_time==time){
+    if(curr_time==time){//Jak mija konkretny czas - liczba tur - to dopiero wtedy produkuje jedzenie
         curr_time=0;
         return foodGen;
     }else{
