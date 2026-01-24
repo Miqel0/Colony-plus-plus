@@ -80,24 +80,23 @@ Gra korzysta z zewnętrznych plików tekstowych, w których są zapisywane infor
 ## Jak uruchomić - Instalacja
 
 1.  Przejdź do zakładki **[Releases](../../releases)** po prawej stronie.
-2.  Pobierz najnowszą pełną wersję `.zip` (`v0.1.0`) albo i wersję testową `Pre-release`.
+2.  Pobierz najnowszą pełną wersję `.zip` ([`v0.1.1`](https://github.com/Miqel0/Projekt_Kolonizacja_Marsa/releases/tag/v0.1.1)) albo i dowolną wersję testową `Pre-release`.
 3.  **Wypakuj cały folder** do dowolnego folderu.
 4.  **Ważne:** Nie zmieniaj żadnego położenia plików, jakakolwiek zmiana będzie skutkować zepsciem programu.
 5.  Uruchom plik `.exe` w terminalu obsługującym kolory (np. Windows Terminal - na Win 11, PowerShell, VS Code terminal).
 
-## 🛠️ Pobieranie Kodu Źródłowego - Kompilacja ręczna
+## Pobieranie Kodu Źródłowego - Kompilacja ręczna
 
 Jeśli chcesz zobaczyć kod, edytować go lub skompilować grę samodzielnie:
 
-1. Przejdź na **główną stronę repozytorium** (zakładka `<> Code`).
-2. **⚠️ WAŻNE:** Upewnij się, że po lewej stronie wybrana jest gałąź (branch) **`main`**.
-   * *Nie pobieraj kodu z innych gałęzi – są to wersje robocze, które mogą zawierać błędy lub nie działać poprawnie.*
-3. Kliknij zielony przycisk **Code** i wybierz **Download ZIP**.
-4. Wypakuj folder w dowolne miejsce.
+1. Przejdź do zakładki **[Releases](../../releases)** (znajduje się po prawej stronie na GitHubie).
+2. Znajdź najnowszą wersję (oznaczoną zieloną etykietą **Latest**).
+3. Przewiń do sekcji **Assets** (na dole opisu tej wersji) i kliknij **Source code (zip)**.
+4. Wypakuj pobrane archiwum w dowolne miejsce.
 5. Otwórz wypakowany folder w **Visual Studio Code**.
-6. Wciśnij **`Ctrl + Shift + B`**, aby zbudować projekt (gra skorzysta z skonfigurowanego `buildtask-a` dla Windowsa).
+6. Wciśnij **`Ctrl + Shift + B`**, aby zbudować projekt (gra skorzysta ze skonfigurowanego `buildtask-a` dla Windowsa).
 
-**ℹ️ Ważna informacja:**
+**Ważna informacja:**
 Projekt został napisany w **czystym C++**.
 Nie używam **żadnych zewnętrznych, niestandardowych bibliotek**, które trzeba by doinstalowywać. Jeśli masz działający kompilator C++ (np. MSVC w Visual Studio), gra skompiluje się od razu po pobraniu, bez błędów o brakujących plikach.
 
