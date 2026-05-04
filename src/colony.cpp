@@ -106,6 +106,21 @@ void Colony::prntBuildingsSumm(){
     cout<<endl;
 }
 
+map<string,int> Colony::UIprntBuildingsSumm()const{
+    
+    map<string,int> licznik;//Robienie mapy z nazwy budynku i ilosci - w wketorze buildings
+    if(buildings.size()==0){
+        //FIXME - dobre rzutawnie bledu czy cos
+        cout<<endl;
+        //cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
+        return licznik;
+    }
+    for(auto const &b: buildings){
+        licznik[b->getName()]++;
+    }
+    return licznik;
+}
+
 
 // ==========================================
 // BUDOWANIE
@@ -441,3 +456,12 @@ int Colony::getIlosc(string name)const{//Zwracanie ilosci budynku o danej nazwie
     }
     return il;
 }
+
+string Colony::getNazwa() const{return f_logisyka.getNazwa();}
+int Colony::getTura() const{return f_logisyka.getTura();}
+double Colony::getReqEnergy() const{return f_logisyka.getReqEnergy();}
+double Colony::getGenEnergy() const{return f_logisyka.getGenEnergy();}
+double Colony::getReqFood() const{return f_logisyka.getReqFood();}
+double Colony::getFood() const{return f_logisyka.getFood();}
+int Colony::getStone() const{return f_logisyka.getStone();}
+int Colony::getTitan() const{return f_logisyka.getTitan();}

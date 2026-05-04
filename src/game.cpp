@@ -64,6 +64,11 @@ Game::Game():running(true){
 // GRA
 // ==========================================
 
+void Game::UIrun(){
+    kolonia.load();
+    grafika.prntAll(kolonia);
+}
+
 void Game::run(){
     cout << CLEAR_SCREEN;
 
@@ -301,7 +306,7 @@ void Game::startTutorial() {
 }
 
 void runGUI(){
-     sf::RenderWindow window(sf::VideoMode({1000, 800}), "Colony ++");
+    sf::RenderWindow window(sf::VideoMode({1000, 800}), "Colony ++");
     auto cos = ImGui::SFML::Init(window);
     sf::Clock deltaClock;
     
@@ -347,6 +352,10 @@ void runGUI(){
 // ==========================================
 // KOMENDY
 // ==========================================
+
+void Game::grafikaStart(){
+    grafika.prntAll(kolonia);
+}
 
 void Game::commands(){
     cout<<BLUE<<">>"<<RESET;
@@ -485,7 +494,7 @@ void Game::commands(){
         prntRules();
     }
     else if(command=="imgui"){
-        runGUI();
+        grafika.prntAll(kolonia);
     }
     else if(command=="cheat"){//Wlaczenie trybu z nieskonczonymi zasobami w trakcie gry
         kolonia.setSandbox();

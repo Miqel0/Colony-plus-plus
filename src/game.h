@@ -8,6 +8,7 @@ using namespace std;
 
 #include "enums.h"
 #include "colony.h"
+#include "graphics.h"
 
 class Game{
 
@@ -16,10 +17,13 @@ class Game{
         ~Game(){};
         
         //GRA
+        void grafikaStart();
         void run();
         void startTutorial();
         void commands();
         void build(BuildingInfo info);
+
+        void UIrun();
         
         //PLIKI
         void loadGameData();
@@ -38,6 +42,7 @@ class Game{
         
         //Tworzenie obiektu kolonia
         Colony kolonia;
+        Graphics grafika;
 
         //Mapy do zamiany strignu na typ budynku
         map<string,TypBudynku> stringToBudynku;
