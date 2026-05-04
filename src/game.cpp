@@ -5,7 +5,14 @@
 #include <cctype>
 #include <iomanip>
 #include <vector>
+
 #include <algorithm>
+#include <cstdint>
+#include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
+#include "imgui.h"
+#include "imgui-SFML.h"
+#include <optional>
 
 using namespace std;
 #include "game.h"
@@ -293,6 +300,50 @@ void Game::startTutorial() {
     cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
 }
 
+void runGUI(){
+     sf::RenderWindow window(sf::VideoMode({1000, 800}), "Colony ++");
+    auto cos = ImGui::SFML::Init(window);
+    sf::Clock deltaClock;
+    
+    while (window.isOpen()) {
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+
+            ImGui::SFML::ProcessEvent(window, *event);
+            
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+            }
+
+        }
+        
+        ImGui::SFML::Update(window, deltaClock.restart());
+
+        
+        ImGui::SetNextWindowPos(ImVec2(100, 10), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(240, 300), ImGuiCond_Once);
+
+    ImGuiWindowFlags flagi = 0;
+    flagi |= ImGuiWindowFlags_NoMove;      
+    flagi |= ImGuiWindowFlags_NoResize;     
+    flagi |= ImGuiWindowFlags_NoCollapse;
+    ImGui::Begin("Panel Sterowania",nullptr,flagi);
+    ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+
+    ImGui::Separator();
+   
+    ImGui::End();
+        
+        window.clear();
+        
+        
+        ImGui::SFML::Render(window);
+        window.display();
+    }
+    
+    ImGui::SFML::Shutdown();
+}
+
+
 // ==========================================
 // KOMENDY
 // ==========================================
@@ -432,6 +483,9 @@ void Game::commands(){
     }
     else if(command=="rules"){//Wyswietlnie zasad / instrukcja
         prntRules();
+    }
+    else if(command=="imgui"){
+        runGUI();
     }
     else if(command=="cheat"){//Wlaczenie trybu z nieskonczonymi zasobami w trakcie gry
         kolonia.setSandbox();
