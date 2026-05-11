@@ -12,6 +12,7 @@ using namespace std;
 
 class Graphics{
     private:
+        sf::VideoMode screenSize;
         sf::RenderWindow window;
         unsigned int szer;
         unsigned int wys;

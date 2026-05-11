@@ -306,7 +306,7 @@ void Game::startTutorial() {
 }
 
 void runGUI(){
-    sf::RenderWindow window(sf::VideoMode({1000, 800}), "Colony ++");
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Colony ++");
     auto cos = ImGui::SFML::Init(window);
     sf::Clock deltaClock;
     

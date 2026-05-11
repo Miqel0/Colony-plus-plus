@@ -6,7 +6,7 @@
 #include <map>
 
 Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false){}
-Graphics::Graphics():szer(1920),wys(1080),window(sf::VideoMode({1920, 1080}), "Colony ++"),czyhelp(false),czyBudynki(false){}
+Graphics::Graphics():szer(1920),wys(1080),screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++"),czyhelp(false),czyBudynki(false){}
 
 void Graphics::prntMenu(){
     ImGui::SetNextWindowPos(ImVec2(10, 60), ImGuiCond_Once);
