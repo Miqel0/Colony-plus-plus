@@ -327,11 +327,7 @@ void runGUI(){
         ImGui::SetNextWindowPos(ImVec2(100, 10), ImGuiCond_Once);
     ImGui::SetNextWindowSize(ImVec2(240, 300), ImGuiCond_Once);
 
-    ImGuiWindowFlags flagi = 0;
-    flagi |= ImGuiWindowFlags_NoMove;      
-    flagi |= ImGuiWindowFlags_NoResize;     
-    flagi |= ImGuiWindowFlags_NoCollapse;
-    ImGui::Begin("Panel Sterowania",nullptr,flagi);
+    ImGui::Begin("Panel Sterowania",nullptr,ImGuiWindowFlags_NoMove |ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse);
     ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
 
     ImGui::Separator();
@@ -356,7 +352,10 @@ void runGUI(){
 void Game::grafikaStart(){
     grafika.prntAll(kolonia);
 }
-
+/**
+ * @brief Stara główna pętla gry z pisaniem komend
+ * 
+ */
 void Game::commands(){
     cout<<BLUE<<">>"<<RESET;
     string linia;

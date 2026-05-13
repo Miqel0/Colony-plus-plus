@@ -33,6 +33,7 @@ class Colony{
         void prntBuildingsSumm();
 
         map<string,int> UIprntBuildingsSumm() const;
+        void UIprntBuilding(string bud) const;
 
         //BUDOWANIE
         bool czyBudynek(string bud)const;

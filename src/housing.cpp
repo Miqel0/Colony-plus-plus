@@ -20,6 +20,10 @@ void Housing::prnt(int il)const{
     prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Liczba mieszkancow: ", cleanNum(residents)," "," ");
 }
 
+void Housing::UIprnt(int il)const{
+    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Liczba mieszkancow: ",cleanNum(residents)}},"Bardzo fajnie ze zapewnia miejsce dla mieszkancow!!!");
+}
+
 void Housing::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<static_cast<int>(pType)<<" "<<residents<<" "<<endl;

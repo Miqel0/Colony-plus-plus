@@ -21,6 +21,9 @@ double Terr::work(){return terrGen;}
 void Terr::prnt(int il)const{
     prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers),"Wplyw na terraformacje: ",cleanNum(terrGen));
 }
+void Terr::UIprnt(int il)const{
+    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Wplywa na terraformacje: ",cleanNum(terrGen)}},"Bardzo fajnie ze zwieksza terraforacje!!!");
+}
 
 void Terr::save(ofstream& plik)const{
     Building::save(plik);

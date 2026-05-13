@@ -22,6 +22,16 @@ void Producer::prnt(int il)const{
     prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers)," "," ","Generowany kamien: ",cleanNum(stoneGen),"Generowany tytan: ",cleanNum(titanGen));
 }
 
+void Producer::UIprnt(int il)const{
+    if(stoneGen !=0 && titanGen !=0){
+        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany kamien: ",cleanNum(stoneGen)},{"Generowany tytan: ",cleanNum(titanGen)}},"Bardzo fajnie ze generuje tytan i kamien!!!");
+    }else if( stoneGen!=0 && titanGen==0){
+        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany kamien: ",cleanNum(stoneGen)}},"Bardzo fajnie ze generuje kamien!!!");
+    }else if( titanGen!=0 && stoneGen==0){
+        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany tytan: ",cleanNum(titanGen)}},"Bardzo fajnie ze generuje tytan!!!");
+    }
+}
+
 void Producer::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<static_cast<int>(pType)<<" "<<stoneGen<<" "<<titanGen<<endl; //pilnowac przy kolejnym doawaniu

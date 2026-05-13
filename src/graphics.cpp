@@ -6,7 +6,7 @@
 #include <map>
 
 Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false){}
-Graphics::Graphics():szer(1920),wys(1080),screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++"),czyhelp(false),czyBudynki(false){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false){}
 
 void Graphics::prntMenu(){
     ImGui::SetNextWindowPos(ImVec2(10, 60), ImGuiCond_Once);
@@ -104,6 +104,13 @@ void Graphics::prntBudynki(const Colony& kolonia){
                 
                 ImGui::TableNextColumn(); 
                 ImGui::Text("%s", nazwa.c_str()); 
+                if (ImGui::IsItemHovered()) {
+                    ImGui::BeginTooltip(); 
+                    
+                    kolonia.UIprntBuilding(nazwa);
+
+                    ImGui::EndTooltip(); 
+                }
                 
                 ImGui::TableNextColumn();
                 ImGui::Text("%d", ilosc);
@@ -139,7 +146,7 @@ void Graphics::prntAll(const Colony& kolonia){
             
             if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
                 if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
-                    //pauza = !pauza; 
+                    window.close(); 
                 }
             }
             
