@@ -5,6 +5,13 @@
 #include <sstream>
 #include <string>
 #include <iomanip>
+#include <vector>
+#include <utility>
+
+#include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
+#include "imgui.h"
+#include "imgui-SFML.h"
 
 using namespace std;
 
@@ -190,4 +197,56 @@ inline void prntTablica(string n, string s11, string s12, string s13, string s14
     cout << left << setw(col) << col3 << NO_BOLD << sep << BOLD << s33 << s34 << RESET << endl << endl;
 }
 
+
+
+
+
+/**
+ * @brief Funkcja wyswietlajaca jeden wiersz tabeli
+ * 
+ * @param etykieta nazwa danego parametru
+ * @param wartosc  wartosc parametru
+ */
+inline void rysujWierszTooltip(const string& etykieta, const string& wartosc) {
+    ImGui::TableNextRow();
+    ImGui::TableNextColumn(); ImGui::Text("%s", etykieta.c_str());
+    ImGui::TableNextColumn(); ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s", wartosc.c_str());
+}
+
+/**
+ * @brief Funkcja rysująca tabelę (uniwersalna)
+ * 
+ * @param nazwa nazwa nagłówka
+ * @param dane wektor par danych do wyswietlenia w tabeli - vector<pair<string, string>>
+ * @param opis opis dłuższy napis, pod tabelą
+ */
+inline void prntTooltipTablica(const string& nazwa, 
+                               const vector<pair<string, string>>& dane, 
+                               const string& opis = "") {
+                               
+
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "--- %s ---", nazwa.c_str());
+    ImGui::Separator();
+    
+   
+    if (!dane.empty()) {
+        if (ImGui::BeginTable("StatsTooltip", 2, ImGuiTableFlags_BordersInnerH)) {
+            
+
+            for (const auto& para : dane) {
+                rysujWierszTooltip(para.first, para.second);
+            }
+            
+            ImGui::EndTable();
+        }
+    }
+    
+
+    if (!opis.empty()) {
+        ImGui::Separator();
+        ImGui::PushTextWrapPos(300.0f); 
+        ImGui::Text("%s", opis.c_str());
+        ImGui::PopTextWrapPos(); 
+    }
+}
 #endif

@@ -36,8 +36,12 @@ void Colony::prntBuilding(int nr){
         cout<<endl;
     }
 }
+/**
+ * @brief Wyświetlanie budynku o danej nazwie @param 
+ * 
+ * @param nazwa budynku
+ */
 
-//WYSWIETLANIE BUDYNKU O DANEJ NAZWIE - show [nazwa]
 void Colony::prntBuilding(string bud){
     int nr=-1;
     for(int i=0;i<buildings.size();i++){
@@ -104,6 +108,45 @@ void Colony::prntBuildingsSumm(){
         cout<<YELLOW<<left<<setw(w_n)<<nazwa<<sep<<BOLD<<ilosc<<RESET<<endl;
     }
     cout<<endl;
+}
+
+map<string,int> Colony::UIprntBuildingsSumm()const{
+    
+    map<string,int> licznik;//Robienie mapy z nazwy budynku i ilosci - w wketorze buildings
+    if(buildings.size()==0){
+        //FIXME - dobre rzutawnie bledu czy cos
+        cout<<endl;
+        //cout<<YELLOW<<BOLD<<"                      BRAK ZBUDOWANYCH BUDYNKOW"<<endl;
+        return licznik;
+    }
+    for(auto const &b: buildings){
+        licznik[b->getName()]++;
+    }
+
+    return licznik;
+}
+
+/**
+ * @brief Wyświetlanie budynku o danej nazwie @param 
+ * 
+ * @param nazwa budynku
+ */
+
+void Colony::UIprntBuilding(string bud) const{
+    int nr=-1;
+    for(int i=0;i<buildings.size();i++){
+        string nazwa=buildings[i]->getName();
+        for(auto &c : nazwa) c = tolower(c);
+        if(buildings[i]->getName()==bud){
+            nr=i;
+        }
+    }
+    if(nr>=0 && nr <= buildings.size()){
+        buildings[nr]->UIprnt(getIlosc(buildings[nr]->getName()));
+    }else{
+        cout<<RED<<"Blad: Nie ma budynku o takiej nazwie: "<<RESET<<nr<<endl;
+        cout<<endl;
+    }
 }
 
 
@@ -441,3 +484,12 @@ int Colony::getIlosc(string name)const{//Zwracanie ilosci budynku o danej nazwie
     }
     return il;
 }
+
+string Colony::getNazwa() const{return f_logisyka.getNazwa();}
+int Colony::getTura() const{return f_logisyka.getTura();}
+double Colony::getReqEnergy() const{return f_logisyka.getReqEnergy();}
+double Colony::getGenEnergy() const{return f_logisyka.getGenEnergy();}
+double Colony::getReqFood() const{return f_logisyka.getReqFood();}
+double Colony::getFood() const{return f_logisyka.getFood();}
+int Colony::getStone() const{return f_logisyka.getStone();}
+int Colony::getTitan() const{return f_logisyka.getTitan();}

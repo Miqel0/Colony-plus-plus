@@ -21,6 +21,7 @@ class Energy: public Building{
 
         //OVERRIDE
         void prnt(int il) const override;
+        void UIprnt(int il) const override;
         void save(ofstream& plik) const override;
 
         //GETTERY

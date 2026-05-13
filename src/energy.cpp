@@ -20,6 +20,10 @@ void Energy::prnt(int il)const{
     prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers),"Generowana energia: ",cleanNum(enGen));
 }
 
+void Energy::UIprnt(int il)const{
+    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowana energia: ",cleanNum(enGen)}},"Bardzo fajnie ze generuje prund!");
+}
+
 void Energy::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<static_cast<int>(pType)<<" "<<enGen<<" "<<endl;

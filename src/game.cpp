@@ -5,7 +5,14 @@
 #include <cctype>
 #include <iomanip>
 #include <vector>
+
 #include <algorithm>
+#include <cstdint>
+#include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
+#include "imgui.h"
+#include "imgui-SFML.h"
+#include <optional>
 
 using namespace std;
 #include "game.h"
@@ -56,6 +63,11 @@ Game::Game():running(true){
 // ==========================================
 // GRA
 // ==========================================
+
+void Game::UIrun(){
+    kolonia.load();
+    grafika.prntAll(kolonia);
+}
 
 void Game::run(){
     cout << CLEAR_SCREEN;
@@ -293,10 +305,57 @@ void Game::startTutorial() {
     cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
 }
 
+void runGUI(){
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Colony ++");
+    auto cos = ImGui::SFML::Init(window);
+    sf::Clock deltaClock;
+    
+    while (window.isOpen()) {
+        while (const std::optional<sf::Event> event = window.pollEvent()) {
+
+            ImGui::SFML::ProcessEvent(window, *event);
+            
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+            }
+
+        }
+        
+        ImGui::SFML::Update(window, deltaClock.restart());
+
+        
+        ImGui::SetNextWindowPos(ImVec2(100, 10), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(240, 300), ImGuiCond_Once);
+
+    ImGui::Begin("Panel Sterowania",nullptr,ImGuiWindowFlags_NoMove |ImGuiWindowFlags_NoResize|ImGuiWindowFlags_NoCollapse);
+    ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+
+    ImGui::Separator();
+   
+    ImGui::End();
+        
+        window.clear();
+        
+        
+        ImGui::SFML::Render(window);
+        window.display();
+    }
+    
+    ImGui::SFML::Shutdown();
+}
+
+
 // ==========================================
 // KOMENDY
 // ==========================================
 
+void Game::grafikaStart(){
+    grafika.prntAll(kolonia);
+}
+/**
+ * @brief Stara główna pętla gry z pisaniem komend
+ * 
+ */
 void Game::commands(){
     cout<<BLUE<<">>"<<RESET;
     string linia;
@@ -432,6 +491,9 @@ void Game::commands(){
     }
     else if(command=="rules"){//Wyswietlnie zasad / instrukcja
         prntRules();
+    }
+    else if(command=="imgui"){
+        grafika.prntAll(kolonia);
     }
     else if(command=="cheat"){//Wlaczenie trybu z nieskonczonymi zasobami w trakcie gry
         kolonia.setSandbox();

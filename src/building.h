@@ -33,7 +33,8 @@ class Building{
         virtual void prnt(int il) const;
         virtual void save(ofstream& plik) const;
         virtual double work();
-
+        virtual void UIprnt(int il) const;
+        
         //PRZY LOAD
         void setId(int i);
 

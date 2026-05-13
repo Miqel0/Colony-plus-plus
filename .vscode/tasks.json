@@ -7,10 +7,26 @@
             "command": "cl.exe",
             "args": [
                 "/EHsc",
+                "/O2",
                 "/std:c++17",
+                "/I", "C:\\BIBLIOTEKI_CPP\\SFML-3.0.2\\include", 
+                "/I", "C:\\BIBLIOTEKI_CPP\\imgui",
                 "/Fe:${workspaceFolder}\\build\\mars.exe", 
                 "/Fo:${workspaceFolder}\\build\\", 
-                "${workspaceFolder}\\src\\*.cpp" 
+                "${workspaceFolder}\\src\\*.cpp",
+                "C:\\BIBLIOTEKI_CPP\\imgui\\imgui.cpp",         
+                "C:\\BIBLIOTEKI_CPP\\imgui\\imgui_draw.cpp",    
+                "C:\\BIBLIOTEKI_CPP\\imgui\\imgui_tables.cpp",  
+                "C:\\BIBLIOTEKI_CPP\\imgui\\imgui_widgets.cpp", 
+                "C:\\BIBLIOTEKI_CPP\\imgui\\imgui-SFML.cpp",
+                "/link",
+                "/INCREMENTAL:NO",
+                "/LIBPATH:C:\\BIBLIOTEKI_CPP\\SFML-3.0.2\\lib",
+                "/machine:x64",
+                "sfml-graphics.lib",
+                "sfml-window.lib",
+                "sfml-system.lib",
+                "opengl32.lib"
             ],
             "group": {
                 "kind": "build",
@@ -25,7 +41,7 @@
                 "showReuseMessage": false,
                 "clear": true
             },
-            "detail": "Kompilacja w tle (Cichy tryb)"
+            "detail": "Kompilacja Colony++ z GUI (SFML + ImGui)"
         }
     ]
 }

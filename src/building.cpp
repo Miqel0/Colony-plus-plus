@@ -23,6 +23,8 @@ Building:: Building(string n,TypBudynku t, double kE,double kK, double kT,int w)
 //WYSWIETLANIE INFORMACJI O DANYM BUDYNKU
 void Building:: prnt(int il)const{}
 
+void Building:: UIprnt(int il)const{}
+
 //WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS nextRound
 double Building:: work(){return 0;}
 

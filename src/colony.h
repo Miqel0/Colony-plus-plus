@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -30,6 +31,9 @@ class Colony{
         void prntBuildings();
         void prntBuildingsShort();
         void prntBuildingsSumm();
+
+        map<string,int> UIprntBuildingsSumm() const;
+        void UIprntBuilding(string bud) const;
 
         //BUDOWANIE
         bool czyBudynek(string bud)const;
@@ -77,7 +81,15 @@ class Colony{
         int getIlosc(string name)const;
         int getToNextLvlTerr() const;
         int getLvlTerr() const;
-    
+  
+        string getNazwa() const;
+        int getTura() const;
+        double getReqEnergy() const;
+        double getGenEnergy() const;
+        double getReqFood() const;
+        double getFood() const;
+        int getStone() const;
+        int getTitan() const;
 };
 
 #endif
