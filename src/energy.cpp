@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTORY
 // ==========================================
 
-Energy:: Energy():Building("XXX",TypBudynku::ENERGY,0,0,0,0),enGen(0),pType(TypEnergy::NIEZNANY){}
-Energy::Energy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w):Building(n,TypBudynku::ENERGY,kE,kK,kT,w),enGen(e),pType(t){}
+Energy:: Energy():Building("XXX",TypBudynku::ENERGY,0,0,0,0),enGen(0){}
+Energy::Energy(string n, double kE,double kK, double kT, double e,int w):Building(n,TypBudynku::ENERGY,kE,kK,kT,w),enGen(e){}
 
 // ==========================================
 // OVERRIDE
@@ -26,8 +26,8 @@ void Energy::UIprnt(int il)const{
 
 void Energy::save(ofstream& plik)const{
     Building::save(plik);
-    plik<<" "<<static_cast<int>(pType)<<" "<<enGen<<" "<<endl;
+    plik<<" "<<enGen<<" "<<endl;
 }
 
 double Energy::getEnergy() const{return enGen;}
-int Energy::getPType() const{return static_cast<int>(pType);}
+

@@ -47,12 +47,13 @@ class Game{
         BuildingFactory fabryka;
 
         //Mapy do zamiany strignu na typ budynku
-        map<string,TypBudynku> stringToBudynku;
-        map<string,TypDomy> stringToDomy;
-        map<string,TypEnergy> stringToEnergy;
-        map<string,TypFarm> stringToFarm;
-        map<string,TypProducer> stringToProducer;
-        map<string,TypTerr> stringToTerr;
+        // map<string,TypBudynku> stringToBudynku;
+        // map<string,TypDomy> stringToDomy;
+        // map<string,TypEnergy> stringToEnergy;
+        // map<string,TypFarm> stringToFarm;
+        // map<string,TypProducer> stringToProducer;
+        // map<string,TypTerr> stringToTerr;
+        
         map<string, BuildingInfo> bazaDanych;
 
 };

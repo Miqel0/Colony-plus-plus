@@ -93,7 +93,6 @@ int Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                             break;
                         case TypBudynku::PRODUCER:{
                             Producer* p = static_cast<Producer*>(b.get());
-                            TypProducer pTyp=p->getTypeProducer();
                             c_stone += c;
                             c_titan += p->getGenTitan();
                             break;

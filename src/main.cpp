@@ -2,8 +2,8 @@
 
 int main() {
     Game game;
-    //game.run();
+    // game.run();
     game.UIrun();
-    //game.grafikaStart();
+    // game.grafikaStart();
     return 0;
 }

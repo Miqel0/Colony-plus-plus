@@ -10,14 +10,13 @@ using namespace std;
 class Farm: public Building{
     private:
         double foodGen;
-        TypFarm pType;
         int time;
         int curr_time;
 
     public:
         //KONSTRUKTOR
         Farm();
-        Farm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct);
+        Farm(string n, double kE,double kK, double kT, double f,int w,int tim,int ct);
         ~Farm(){};
         
         //OVERRIDE
@@ -27,7 +26,7 @@ class Farm: public Building{
         void save(ofstream& plik) const override;
 
         //GETTERY
-        int getPType() const override;
+
 
     
 };

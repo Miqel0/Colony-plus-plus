@@ -12,14 +12,13 @@ using namespace std;
 class Terr: public Building{
 
     private:
-        TypTerr pType;
         double terrGen;
 
     public:
 
         //KONSTRUKTOR
         Terr();
-        Terr(string n, double kE,double kK, double kT, double te,TypTerr t,int w);
+        Terr(string n, double kE,double kK, double kT, double te,int w);
         ~Terr(){};
 
         //OVERRIDE
@@ -29,7 +28,6 @@ class Terr: public Building{
         double work() override;
 
         //GETTERY
-        int getPType() const override;
         double getTerr() const;
 };
 

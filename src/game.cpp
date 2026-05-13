@@ -26,35 +26,35 @@ Game::Game():running(true){
     //Definiowanie mapy stringow do typu danej budynku (nie dalo sie tego automatycznie zrobic)
 
     // ENERGY
-    stringToEnergy["maly_wiatrak"]    = TypEnergy::MALY_WIATRAK;
-    stringToEnergy["duzy_panel"]      = TypEnergy::DUZY_PANEL;
-    stringToEnergy["reaktor_jadrowy"] = TypEnergy::REAKTOR_JADROWY;
-    stringToEnergy["fuzja_zimna"]     = TypEnergy::FUZJA_ZIMNA;
+    // stringToEnergy["maly_wiatrak"]    = TypEnergy::MALY_WIATRAK;
+    // stringToEnergy["duzy_panel"]      = TypEnergy::DUZY_PANEL;
+    // stringToEnergy["reaktor_jadrowy"] = TypEnergy::REAKTOR_JADROWY;
+    // stringToEnergy["fuzja_zimna"]     = TypEnergy::FUZJA_ZIMNA;
 
-    // FARM
-    stringToFarm["pole_ziemniakow"]   = TypFarm::POLE_ZIEMNIAKOW;
-    stringToFarm["szklarnia_hydro"]   = TypFarm::SZKLARNIA_HYDRO;
-    stringToFarm["farma_alg"]         = TypFarm::FARMA_ALG;
-    stringToFarm["syntezator_bialka"] = TypFarm::SYNTEZATOR_BIALKA;
+    // // FARM
+    // stringToFarm["pole_ziemniakow"]   = TypFarm::POLE_ZIEMNIAKOW;
+    // stringToFarm["szklarnia_hydro"]   = TypFarm::SZKLARNIA_HYDRO;
+    // stringToFarm["farma_alg"]         = TypFarm::FARMA_ALG;
+    // stringToFarm["syntezator_bialka"] = TypFarm::SYNTEZATOR_BIALKA;
 
-    // HOUSING
-    stringToDomy["barak_robotniczy"]  = TypDomy::BARAK_ROBOTNICZY;
-    stringToDomy["kwatery_zalogi"]    = TypDomy::KWATERY_ZALOGI;
-    stringToDomy["kopula_mieszkalna"] = TypDomy::KOPULA_MIESZKALNA;
-    stringToDomy["metropolia"]        = TypDomy::METROPOLIA;
+    // // HOUSING
+    // stringToDomy["barak_robotniczy"]  = TypDomy::BARAK_ROBOTNICZY;
+    // stringToDomy["kwatery_zalogi"]    = TypDomy::KWATERY_ZALOGI;
+    // stringToDomy["kopula_mieszkalna"] = TypDomy::KOPULA_MIESZKALNA;
+    // stringToDomy["metropolia"]        = TypDomy::METROPOLIA;
 
-    // PRODUCER
-    stringToProducer["odkrywka_kamienia"]  = TypProducer::ODKRYWKA_KAMIENIA;
-    stringToProducer["wiertlo_glebinowe"]  = TypProducer::WIERTLO_GLEBINOWE;
-    stringToProducer["kombinat_gorniczy"]  = TypProducer::KOMBINAT_GORNICZY;
-    stringToProducer["automat_wydobywczy"] = TypProducer::AUTOMAT_WYDOBYWCZY;
-    stringToProducer["kopalnia_tytanu"] = TypProducer::KOPALNIA_TYTANU;
+    // // PRODUCER
+    // stringToProducer["odkrywka_kamienia"]  = TypProducer::ODKRYWKA_KAMIENIA;
+    // stringToProducer["wiertlo_glebinowe"]  = TypProducer::WIERTLO_GLEBINOWE;
+    // stringToProducer["kombinat_gorniczy"]  = TypProducer::KOMBINAT_GORNICZY;
+    // stringToProducer["automat_wydobywczy"] = TypProducer::AUTOMAT_WYDOBYWCZY;
+    // stringToProducer["kopalnia_tytanu"] = TypProducer::KOPALNIA_TYTANU;
 
-    // TERR
-    stringToTerr["stacja_badawcza"]  = TypTerr::STACJA_BADAWCZA;
-    stringToTerr["kominy_cieplne"]   = TypTerr::KOMINY_CIEPLNE;
-    stringToTerr["generator_o2"]     = TypTerr::GENERATOR_O2;
-    stringToTerr["lustra_orbitalne"] = TypTerr::LUSTRA_ORBITALNE;
+    // // TERR
+    // stringToTerr["stacja_badawcza"]  = TypTerr::STACJA_BADAWCZA;
+    // stringToTerr["kominy_cieplne"]   = TypTerr::KOMINY_CIEPLNE;
+    // stringToTerr["generator_o2"]     = TypTerr::GENERATOR_O2;
+    // stringToTerr["lustra_orbitalne"] = TypTerr::LUSTRA_ORBITALNE;
 
     //Wczytywanie parametrow budynkow
     loadGameData();
@@ -194,11 +194,9 @@ void Game::startTutorial() {
         for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "build maly_wiatrak") {
-            if(stringToEnergy.count("maly_wiatrak")){
                 build(bazaDanych["maly_wiatrak"]);
                 kolonia.setRuch(kolonia.getRuch()+1);
-            }
-            break;
+            
         } else {
             cout << RED << "[SYSTEM]: Blad. Priorytetem jest 'build maly_wiatrak'." << RESET << endl;
         }
@@ -216,11 +214,10 @@ void Game::startTutorial() {
         for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "build pole_ziemniakow") {
-            if(stringToFarm.count("pole_ziemniakow")){
-                build(bazaDanych["pole_ziemniakow"]);
-                kolonia.setRuch(kolonia.getRuch()+1);
-            }
-            break;
+            
+            build(bazaDanych["pole_ziemniakow"]);
+            kolonia.setRuch(kolonia.getRuch()+1);
+            
         } else {
             cout << RED << "[SYSTEM]: Zaloga jest glodna! Wpisz 'build pole_ziemniakow'." << RESET << endl;
         }
@@ -285,11 +282,8 @@ void Game::startTutorial() {
         for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "build stacja_badawcza") {
-            if(stringToTerr.count("stacja_badawcza")){
-                build(bazaDanych["stacja_badawcza"]);
-                kolonia.setRuch(kolonia.getRuch()+1);
-            }
-            break;
+            build(bazaDanych["stacja_badawcza"]);
+            kolonia.setRuch(kolonia.getRuch()+1);
         } else {
             cout << RED << "[SYSTEM]: Wpisz 'build stacja_badawcza'." << RESET << endl;
         }

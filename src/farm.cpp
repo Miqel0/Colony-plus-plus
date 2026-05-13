@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTOR
 // ==========================================
 
-Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0,0,0),foodGen(0),time(0),curr_time(0),pType(TypFarm::NIEZNANY){}
-Farm::Farm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct):Building(n,TypBudynku::FARM,kE,kK,kT,w),foodGen(f),time(tim),curr_time(ct),pType(t){}
+Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0,0,0),foodGen(0),time(0),curr_time(0){}
+Farm::Farm(string n, double kE,double kK, double kT, double f,int w,int tim,int ct):Building(n,TypBudynku::FARM,kE,kK,kT,w),foodGen(f),time(tim),curr_time(ct){}
 
 // ==========================================
 // OVERRIDE
@@ -27,7 +27,7 @@ void Farm::UIprnt(int il)const{
 
 void Farm::save(ofstream& plik)const{
     Building::save(plik);
-    plik<<" "<<static_cast<int>(pType)<<" "<<foodGen<<" "<<time<<" "<<curr_time<<endl; 
+    plik<<" "<<foodGen<<" "<<time<<" "<<curr_time<<endl; 
 }
 
 double Farm::work(){// Przy pracy Farm, jest dodatkowo sprawdzany czas pracy
@@ -44,4 +44,4 @@ double Farm::work(){// Przy pracy Farm, jest dodatkowo sprawdzany czas pracy
 // GETTERY
 // ==========================================
 
-int Farm::getPType() const{return static_cast<int>(pType);}
+

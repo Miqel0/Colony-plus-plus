@@ -13,12 +13,11 @@ class Producer: public Building{
     private:
         double stoneGen;
         double titanGen;
-        TypProducer pType;
 
     public:
         //KONSTRUKTORY
         Producer();
-        Producer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
+        Producer(string n, double kE,double kK, double kT, double s,int w,double ti);
         ~Producer(){};
 
         //OVERRIDE
@@ -29,8 +28,8 @@ class Producer: public Building{
 
         //GETTERY
         double getGenTitan() const;
-        int getPType() const override;
-        TypProducer getTypeProducer() const;
+
+
     
 };
 

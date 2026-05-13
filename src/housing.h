@@ -22,7 +22,6 @@ class Housing: public Building{
         void prnt(int il) const override;
         void UIprnt(int il) const override;
         void save(ofstream& plik) const override;
-        int getPType() const override;
 
 };
 

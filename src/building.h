@@ -47,7 +47,6 @@ class Building{
         TypBudynku getTyp() const;
         int getResidents() const;
         double getReqEnergy() const;
-        virtual int getPType() const;
         double getKosztKamien() const;
         double getKosztTytan() const;
         

@@ -335,7 +335,7 @@ void Colony::loadBuildings(string nazwa_plik) {
         buildings.clear();
 
         //Parametry
-        int w_type, w_id, w, maxSaved = 0, w_ptype;
+        int w_type, w_id, w, maxSaved = 0;
         string w_n;
         double kE,kT,kK;
         //Format linii w pliku: TypBudynku Nazwa ID KosztEnergii KosztKamienia KosztTytanu Pracownicy ParametrySpecjalne
@@ -353,7 +353,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::ENERGY: {
                     //Dodatkowe parametry
                     double e;
-                    plik >> w_ptype >> e;
+                    plik >> e;
                     
                     auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, w);
                     
@@ -367,7 +367,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     //Dodatkowe parametry
                     double f;
                     int tim,ct;
-                    plik >> w_ptype  >> f>>tim>>ct;
+                    plik >> f>>tim>>ct;
                 
                     auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, w,tim,ct);
 
@@ -379,7 +379,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::HOUSING:{
                     //Dodatkowe parametry
                     int r;
-                    plik >> w_ptype >> r;
+                    plik >> r;
     
                     auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, w);
                 
@@ -391,7 +391,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::PRODUCER: {
                     //Dodatkowe parametry
                     double s, ti;
-                    plik >> w_ptype  >> s>>ti;
+                    plik >> s>>ti;
                 
                     auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, w,ti);
 
@@ -403,7 +403,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::TERR: {
                     //Dodatkowe parametry
                     double te;
-                    plik >> w_ptype >> te;
+                    plik >> te;
                 
                     auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, w);
 
