@@ -29,7 +29,7 @@ void Graphics::prntMenu(){
 void Graphics::prntStatystyki(const Colony& kolonia){
     ImGui::SetNextWindowPos(ImVec2(0, 0));
 
-    ImGui::SetNextWindowSize(ImVec2(szer, 35)); 
+    ImGui::SetNextWindowSize(ImVec2(szer, 35.0)); 
 
     ImGuiWindowFlags flagiHUD = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | 
                                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | 

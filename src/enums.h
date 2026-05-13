@@ -201,14 +201,25 @@ inline void prntTablica(string n, string s11, string s12, string s13, string s14
 
 
 
-// Funkcja rysujaca jeden wiersz
+/**
+ * @brief Funkcja wyswietlajaca jeden wiersz tabeli
+ * 
+ * @param etykieta nazwa danego parametru
+ * @param wartosc  wartosc parametru
+ */
 inline void rysujWierszTooltip(const string& etykieta, const string& wartosc) {
     ImGui::TableNextRow();
     ImGui::TableNextColumn(); ImGui::Text("%s", etykieta.c_str());
     ImGui::TableNextColumn(); ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%s", wartosc.c_str());
 }
 
-// funckja do rysowania tablic
+/**
+ * @brief Funkcja rysująca tabelę (uniwersalna)
+ * 
+ * @param nazwa nazwa nagłówka
+ * @param dane wektor par danych do wyswietlenia w tabeli - vector<pair<string, string>>
+ * @param opis opis dłuższy napis, pod tabelą
+ */
 inline void prntTooltipTablica(const string& nazwa, 
                                const vector<pair<string, string>>& dane, 
                                const string& opis = "") {
