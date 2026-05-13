@@ -154,35 +154,35 @@ void Colony::UIprntBuilding(string bud) const{
 // BUDOWANIE
 // ==========================================
 
-//Budowanie Energy
-bool Colony::zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w){
-    unique_ptr<Building> nowyBudynek = make_unique<Energy>(n,kE,kK,kT,e,t,w);
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Energy
+// bool Colony::zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w){
+//     unique_ptr<Building> nowyBudynek = make_unique<Energy>(n,kE,kK,kT,e,t,w);
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Farm
-bool Colony::zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct){
-    unique_ptr<Building> nowyBudynek = make_unique<Farm>(n,kE,kK,kT,f,t,w,tim,ct); 
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Farm
+// bool Colony::zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct){
+//     unique_ptr<Building> nowyBudynek = make_unique<Farm>(n,kE,kK,kT,f,t,w,tim,ct); 
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Housing
-bool Colony::zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w){
-    unique_ptr<Building> nowyBudynek=make_unique<Housing>(n,kE,kK,kT,r,t,w);
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Housing
+// bool Colony::zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w){
+//     unique_ptr<Building> nowyBudynek=make_unique<Housing>(n,kE,kK,kT,r,t,w);
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Prodcuer
-bool Colony::zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti){
-    unique_ptr<Building> nowyBudynek=make_unique<Producer>(n,kE,kK,kT,s,t,w,ti);
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Prodcuer
+// bool Colony::zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti){
+//     unique_ptr<Building> nowyBudynek=make_unique<Producer>(n,kE,kK,kT,s,t,w,ti);
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Terr
-bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w){
-    unique_ptr<Building> nowyBudynek = make_unique<Terr>(n,kE,kK,kT,te,t,w); 
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Terr
+// bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w){
+//     unique_ptr<Building> nowyBudynek = make_unique<Terr>(n,kE,kK,kT,te,t,w); 
+//     return buduj(move(nowyBudynek));
+// }
 
 //Budowanie budynku i aktalziowanie parametrow
 bool Colony::buduj(unique_ptr<Building> b){
@@ -355,7 +355,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     double e;
                     plik >> w_ptype >> e;
                     
-                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, static_cast<TypEnergy>(w_ptype), w);
+                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, w);
                     
                     energia->setId(w_id); //Ustawianie poprawnego ID (bo psuje sie podczas wczytywania
                     nowyBudynek = move(energia);
@@ -369,7 +369,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int tim,ct;
                     plik >> w_ptype  >> f>>tim>>ct;
                 
-                    auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, static_cast<TypFarm>(w_ptype), w,tim,ct);
+                    auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, w,tim,ct);
 
                     farm->setId(w_id); 
                     nowyBudynek = move(farm);
@@ -381,7 +381,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int r;
                     plik >> w_ptype >> r;
     
-                    auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, static_cast<TypDomy>(w_ptype), w);
+                    auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, w);
                 
                     housing->setId(w_id);                
                     nowyBudynek = move(housing);
@@ -393,7 +393,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     double s, ti;
                     plik >> w_ptype  >> s>>ti;
                 
-                    auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, static_cast<TypProducer>(w_ptype), w,ti);
+                    auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, w,ti);
 
                     producer->setId(w_id); 
                     nowyBudynek = move(producer);
@@ -405,7 +405,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     double te;
                     plik >> w_ptype >> te;
                 
-                    auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, static_cast<TypTerr>(w_ptype), w);
+                    auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, w);
 
                     terr->setId(w_id); 
                     nowyBudynek = move(terr);

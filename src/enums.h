@@ -61,46 +61,46 @@ enum class TypBudynku {
     TERR = 5,
 };
 
-enum class TypEnergy {
-    NIEZNANY = 0,
-    MALY_WIATRAK = 1,
-    DUZY_PANEL = 2,
-    REAKTOR_JADROWY = 3,
-    FUZJA_ZIMNA = 4,
-};
+// enum class TypEnergy {
+//     NIEZNANY = 0,
+//     MALY_WIATRAK = 1,
+//     DUZY_PANEL = 2,
+//     REAKTOR_JADROWY = 3,
+//     FUZJA_ZIMNA = 4,
+// };
 
-enum class TypFarm {
-    NIEZNANY = 0,
-    POLE_ZIEMNIAKOW = 1,
-    SZKLARNIA_HYDRO = 2,
-    FARMA_ALG = 3,
-    SYNTEZATOR_BIALKA = 4,
-};
+// enum class TypFarm {
+//     NIEZNANY = 0,
+//     POLE_ZIEMNIAKOW = 1,
+//     SZKLARNIA_HYDRO = 2,
+//     FARMA_ALG = 3,
+//     SYNTEZATOR_BIALKA = 4,
+// };
 
-enum class TypDomy {
-    NIEZNANY = 0,
-    BARAK_ROBOTNICZY = 1,
-    KWATERY_ZALOGI = 2,
-    KOPULA_MIESZKALNA = 3,
-    METROPOLIA = 4,
-};
+// enum class TypDomy {
+//     NIEZNANY = 0,
+//     BARAK_ROBOTNICZY = 1,
+//     KWATERY_ZALOGI = 2,
+//     KOPULA_MIESZKALNA = 3,
+//     METROPOLIA = 4,
+// };
 
-enum class TypProducer {
-    NIEZNANY = 0,
-    ODKRYWKA_KAMIENIA = 1,
-    WIERTLO_GLEBINOWE = 2,
-    KOMBINAT_GORNICZY = 3,
-    AUTOMAT_WYDOBYWCZY = 4,
-    KOPALNIA_TYTANU = 5,
-};
+// enum class TypProducer {
+//     NIEZNANY = 0,
+//     ODKRYWKA_KAMIENIA = 1,
+//     WIERTLO_GLEBINOWE = 2,
+//     KOMBINAT_GORNICZY = 3,
+//     AUTOMAT_WYDOBYWCZY = 4,
+//     KOPALNIA_TYTANU = 5,
+// };
 
-enum class TypTerr {
-    NIEZNANY = 0,
-    STACJA_BADAWCZA = 1,
-    KOMINY_CIEPLNE = 2,
-    GENERATOR_O2 = 3,
-    LUSTRA_ORBITALNE = 4,
-};
+// enum class TypTerr {
+//     NIEZNANY = 0,
+//     STACJA_BADAWCZA = 1,
+//     KOMINY_CIEPLNE = 2,
+//     GENERATOR_O2 = 3,
+//     LUSTRA_ORBITALNE = 4,
+// };
 
 
 //Do mapy gamedata - wczytywanie danych o budynkach - uprascza to wczytywanie i budowanie

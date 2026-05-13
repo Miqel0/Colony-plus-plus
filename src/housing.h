@@ -10,13 +10,12 @@ using namespace std;
 
 
 class Housing: public Building{
-    private:
-        TypDomy pType;
+
 
     public:
         //KONSTRUKTOR
         Housing();
-        Housing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
+        Housing(string n, double kE,double kK, double kT, int r,int w);
         ~Housing(){};
 
         //OVERRIDE

@@ -575,37 +575,51 @@ void Game::loadGameData(){ //Wczytywanie danych o budynkach - tylko na poczatku 
 // BUDOWANIE
 // ==========================================
 
-void Game::build(BuildingInfo info){//Budowanie budynkow w zaleznosci od danej kategorii
-    string typ=info.type;
-    string nazwa=info.nazwa;
-    if(typ=="FARM"){
-        if(kolonia.zbudujFarm(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToFarm[nazwa],info.workers,info.x,0)){
-            kolonia.setRuch(kolonia.getRuch()+1);
+void Game::build(BuildingInfo info) {
+    unique_ptr<Building> nowyBudynek = fabryka.stworzBudynek(info);
+
+
+    if (nowyBudynek != nullptr) {
+        if (kolonia.buduj(move(nowyBudynek))) {
+            kolonia.setRuch(kolonia.getRuch() + 1);
         }
-    }
-    else if(typ=="ENERGY"){
-        if(kolonia.zbudujEnergy(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToEnergy[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="HOUSING"){
-        if(kolonia.zbudujHousing(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToDomy[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="PRODUCER"){
-        if(kolonia.zbudujProducer(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genKamien,stringToProducer[nazwa],info.workers,info.genTytan)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="TERR"){
-        if(kolonia.zbudujTerr(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToTerr[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }else{
-        return;
+    } 
+    else {
+        cout << RED << "Blad: Nieznana mechanika budynku w pliku (typ)!" << RESET << endl;
     }
 }
+
+// void Game::build(BuildingInfo info){//Budowanie budynkow w zaleznosci od danej kategorii
+//     string typ=info.type;
+//     string nazwa=info.nazwa;
+//     if(typ=="FARM"){
+//         if(kolonia.zbudujFarm(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToFarm[nazwa],info.workers,info.x,0)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="ENERGY"){
+//         if(kolonia.zbudujEnergy(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToEnergy[nazwa],info.workers)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="HOUSING"){
+//         if(kolonia.zbudujHousing(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToDomy[nazwa],info.workers)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="PRODUCER"){
+//         if(kolonia.zbudujProducer(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genKamien,stringToProducer[nazwa],info.workers,info.genTytan)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="TERR"){
+//         if(kolonia.zbudujTerr(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToTerr[nazwa],info.workers)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }else{
+//         return;
+//     }
+// }
 
 // ==========================================
 // WYSWIETLANIE

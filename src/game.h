@@ -9,6 +9,7 @@ using namespace std;
 #include "enums.h"
 #include "colony.h"
 #include "graphics.h"
+#include "buildingFactory.h"
 
 class Game{
 
@@ -43,6 +44,7 @@ class Game{
         //Tworzenie obiektu kolonia
         Colony kolonia;
         Graphics grafika;
+        BuildingFactory fabryka;
 
         //Mapy do zamiany strignu na typ budynku
         map<string,TypBudynku> stringToBudynku;
