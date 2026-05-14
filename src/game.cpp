@@ -66,7 +66,7 @@ Game::Game():running(true){
 
 void Game::UIrun(){
     kolonia.load();
-    grafika.prntAll(kolonia);
+    grafika.prntAll(kolonia, bazaDanych,*this);
 }
 
 void Game::run(){
@@ -344,7 +344,7 @@ void runGUI(){
 // ==========================================
 
 void Game::grafikaStart(){
-    grafika.prntAll(kolonia);
+    grafika.prntAll(kolonia, bazaDanych,*this);
 }
 /**
  * @brief Stara główna pętla gry z pisaniem komend
@@ -487,7 +487,7 @@ void Game::commands(){
         prntRules();
     }
     else if(command=="imgui"){
-        grafika.prntAll(kolonia);
+        grafika.prntAll(kolonia, bazaDanych,*this);
     }
     else if(command=="cheat"){//Wlaczenie trybu z nieskonczonymi zasobami w trakcie gry
         kolonia.setSandbox();

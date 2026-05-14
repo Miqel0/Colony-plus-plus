@@ -45,6 +45,7 @@ class Game{
         Colony kolonia;
         Graphics grafika;
         BuildingFactory fabryka;
+        map<string, BuildingInfo> bazaDanych;
 
         //Mapy do zamiany strignu na typ budynku
         // map<string,TypBudynku> stringToBudynku;
@@ -54,7 +55,6 @@ class Game{
         // map<string,TypProducer> stringToProducer;
         // map<string,TypTerr> stringToTerr;
         
-        map<string, BuildingInfo> bazaDanych;
 
 };
 

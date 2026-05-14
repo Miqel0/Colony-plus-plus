@@ -33,6 +33,11 @@ class Building{
         virtual void prnt(int il) const;
         virtual void save(ofstream& plik) const;
         virtual double work();
+        /**
+         * @brief Funkcja wyświetlająca dane o budynku
+         * 
+         * @param il ilość danego budynku
+         */
         virtual void UIprnt(int il) const;
         
         //PRZY LOAD

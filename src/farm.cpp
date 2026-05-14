@@ -22,7 +22,7 @@ void Farm::prnt(int il)const{
 }
 
 void Farm::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowane jedzenie: ",cleanNum(foodGen)},{"Czas potrzebny do urosniecia: ",cleanNum(time)}},"Bardzo fajnie ze generuje jedzenie!!!");
+    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowane jedzenie: ",cleanNum(foodGen)},{"Czas potrzebny do urosniecia: ",cleanNum(time)}});
 }
 
 void Farm::save(ofstream& plik)const{

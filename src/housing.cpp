@@ -21,7 +21,7 @@ void Housing::prnt(int il)const{
 }
 
 void Housing::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Liczba mieszkancow: ",cleanNum(residents)}},"Bardzo fajnie ze zapewnia miejsce dla mieszkancow!!!");
+    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Liczba mieszkancow: ",cleanNum(residents)}});
 }
 
 void Housing::save(ofstream& plik)const{

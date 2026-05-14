@@ -10,6 +10,9 @@ using namespace std;
 
 
 
+class Game; 
+//Żeby móc korzystać z funkcji klasy Game (i wpływać na różne rzeczy)
+
 class Graphics{
     private:
         sf::VideoMode screenSize;
@@ -25,11 +28,11 @@ class Graphics{
         Graphics(unsigned int szer_,unsigned int wys_);
         ~Graphics(){};
 
-        void prntAll(const Colony& kolonia);
+        void prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntMenu();
         void prntStatystyki(const Colony& kolonia);
         void prntPomoc();
-        void prntBudynki(const Colony& kolonia);
+        void prntBudynki(const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych);
 
 
 

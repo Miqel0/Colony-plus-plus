@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <map>
 #include <string>
 #include <iomanip>
 #include <vector>
@@ -220,12 +221,12 @@ inline void rysujWierszTooltip(const string& etykieta, const string& wartosc) {
  * @param dane wektor par danych do wyswietlenia w tabeli - vector<pair<string, string>>
  * @param opis opis dłuższy napis, pod tabelą
  */
-inline void prntTooltipTablica(const string& nazwa, 
-                               const vector<pair<string, string>>& dane, 
-                               const string& opis = "") {
-                               
+inline void prntTooltipTablica(const string& nazwa, const vector<pair<string, string>>& dane) {
+    float window_width = ImGui::GetWindowWidth();
+    float text_width = ImGui::CalcTextSize(nazwa.c_str()).x;
 
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "--- %s ---", nazwa.c_str());
+    ImGui::SetCursorPosX((window_width - text_width) * 0.5f);  
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%s", nazwa.c_str());
     ImGui::Separator();
     
    
@@ -241,12 +242,20 @@ inline void prntTooltipTablica(const string& nazwa,
         }
     }
     
+}
 
-    if (!opis.empty()) {
+inline void prntOpis(const std::string &nazwa, const  map<std::string, BuildingInfo>& bazaDanych){
+        string nazwa_=nazwa;
+        for(auto &c : nazwa_) c = tolower(c);
         ImGui::Separator();
         ImGui::PushTextWrapPos(300.0f); 
-        ImGui::Text("%s", opis.c_str());
-        ImGui::PopTextWrapPos(); 
-    }
+        
+        if (bazaDanych.count(nazwa_)) {
+            ImGui::Text("%s", bazaDanych.at(nazwa_).opis.c_str());
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Brak opisu.");
+        }
+        ImGui::PopTextWrapPos();    
 }
+
 #endif

@@ -109,7 +109,11 @@ void Colony::prntBuildingsSumm(){
     }
     cout<<endl;
 }
-
+/**
+ * @brief Funkcja tworząca mapę z vectora zbudowanych budynków
+ * 
+ * @return map<string,int> zawiera liczbę zbudowanych kolejnych budynków.
+ */
 map<string,int> Colony::UIprntBuildingsSumm()const{
     
     map<string,int> licznik;//Robienie mapy z nazwy budynku i ilosci - w wketorze buildings
@@ -127,11 +131,10 @@ map<string,int> Colony::UIprntBuildingsSumm()const{
 }
 
 /**
- * @brief Wyświetlanie budynku o danej nazwie @param 
+ * @brief Wyświetlanie parametrów budynku o danej nazwie @param 
  * 
  * @param nazwa budynku
  */
-
 void Colony::UIprntBuilding(string bud) const{
     int nr=-1;
     for(int i=0;i<buildings.size();i++){

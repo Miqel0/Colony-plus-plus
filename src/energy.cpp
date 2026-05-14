@@ -21,7 +21,7 @@ void Energy::prnt(int il)const{
 }
 
 void Energy::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowana energia: ",cleanNum(enGen)}},"Bardzo fajnie ze generuje prund!");
+    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowana energia: ",cleanNum(enGen)}});
 }
 
 void Energy::save(ofstream& plik)const{

@@ -1,4 +1,5 @@
 #include "graphics.h"
+#include "game.h"
 #include <SFML/System/Clock.hpp>
 #include "imgui.h"
 #include "imgui-SFML.h"
@@ -83,7 +84,7 @@ void Graphics::prntStatystyki(const Colony& kolonia){
     ImGui::End();
 }
 
-void Graphics::prntBudynki(const Colony& kolonia){
+void Graphics::prntBudynki(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych){
     ImGui::SetNextWindowSize(ImVec2(400, 600)); 
     ImGui::Begin("Zbudowane Budynki",&czyBudynki, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
@@ -108,6 +109,7 @@ void Graphics::prntBudynki(const Colony& kolonia){
                     ImGui::BeginTooltip(); 
                     
                     kolonia.UIprntBuilding(nazwa);
+                    prntOpis(nazwa,bazaDanych);
 
                     ImGui::EndTooltip(); 
                 }
@@ -130,8 +132,13 @@ void Graphics::prntPomoc(){
     
     ImGui::End();
 }
-
-void Graphics::prntAll(const Colony& kolonia){
+/**
+ * @brief Ogólna funkcja, która wyświetla wszystkie rzeczy na ekran, sprawdzajac różne warunki
+ * 
+ * @param kolonia wskaźnik do kolonii
+ * @param bazaDanych wskaźnik do mapy z informacjami o wszystkich budynkach.
+ */
+void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
     auto cos = ImGui::SFML::Init(window);
     sf::Clock deltaClock;
     
@@ -163,7 +170,7 @@ void Graphics::prntAll(const Colony& kolonia){
         }
 
         if(czyBudynki){
-            prntBudynki(kolonia);
+            prntBudynki(kolonia, bazaDanych);
         }
         
         
