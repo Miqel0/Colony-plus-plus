@@ -11,6 +11,10 @@ using namespace std;
 #include "building.h"
 #include "logistics.h"
 
+/**
+ * @brief Klasa zarządzająca budynkami, zawiera w sobie: Logistics f_logisyka
+ * 
+ */
 class Colony{
     private:
         //Wektor zbudowanych budynkow

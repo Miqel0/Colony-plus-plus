@@ -557,6 +557,7 @@ void Game::loadGameData(){ //Wczytywanie danych o budynkach - tylko na poczatku 
         nowy.x=x;
         nowy.lvlTerr=lt;
         nowy.opis=opis;
+
         string klucz =n;
         for(auto &c : klucz) c = tolower(c);
 
@@ -701,6 +702,8 @@ void Game::prntInfo(string cat){//Wyswietlanie informacji o danej kategorii budy
         }
     }
 }
+
+
 
 void Game::prntCategories(){//Wyswietlanie wszystkich kategorii budynkow (same kategorie + krotki opis)
     const int w = 25;

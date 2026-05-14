@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
@@ -104,7 +105,10 @@ enum class TypBudynku {
 // };
 
 
-//Do mapy gamedata - wczytywanie danych o budynkach - uprascza to wczytywanie i budowanie
+/**
+ * @brief Zawiera w sobie wszystkie parametry danego budynku wczytane z gamedata.txt
+ * 
+ */
 struct BuildingInfo {
     string nazwa;
     string type;
@@ -198,8 +202,17 @@ inline void prntTablica(string n, string s11, string s12, string s13, string s14
     cout << left << setw(col) << col3 << NO_BOLD << sep << BOLD << s33 << s34 << RESET << endl << endl;
 }
 
-
-
+/**
+ * @brief Funkcja do usuwania '_' z tekstu.
+ * 
+ * @param tekst string do usuniecia '_'
+ * @return string tekst bez '_'
+ */
+inline string cleanString(string tekst){
+        string tekst_ = tekst;
+        std::replace(tekst_.begin(),tekst_.end(),'_',' ');
+        return tekst_;
+}
 
 
 /**
@@ -225,8 +238,10 @@ inline void prntTooltipTablica(const string& nazwa, const vector<pair<string, st
     float window_width = ImGui::GetWindowWidth();
     float text_width = ImGui::CalcTextSize(nazwa.c_str()).x;
 
+    string nazwa_ = cleanString(nazwa);
+
     ImGui::SetCursorPosX((window_width - text_width) * 0.5f);  
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%s", nazwa.c_str());
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%s", nazwa_.c_str());
     ImGui::Separator();
     
    
@@ -243,7 +258,12 @@ inline void prntTooltipTablica(const string& nazwa, const vector<pair<string, st
     }
     
 }
-
+/**
+ * @brief Funkcja wyświetlająca opis danego budynku.
+ * 
+ * @param nazwa wskaznik do nazwy budynku z '_' i z różnymi literami
+ * @param bazaDanych wskaznik do bazy danych budynków map<std::string, BuildingInfo>
+ */
 inline void prntOpis(const std::string &nazwa, const  map<std::string, BuildingInfo>& bazaDanych){
         string nazwa_=nazwa;
         for(auto &c : nazwa_) c = tolower(c);
@@ -252,6 +272,32 @@ inline void prntOpis(const std::string &nazwa, const  map<std::string, BuildingI
         
         if (bazaDanych.count(nazwa_)) {
             ImGui::Text("%s", bazaDanych.at(nazwa_).opis.c_str());
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Brak opisu.");
+        }
+        ImGui::PopTextWrapPos();    
+}
+
+inline void prntOpis(const std::string &nazwa, string &tekst){
+        string nazwa_=nazwa;
+        for(auto &c : nazwa_) c = tolower(c);
+        ImGui::Separator();
+        ImGui::PushTextWrapPos(300.0f); 
+        
+        if (!tekst.empty()) {
+            ImGui::Text("%s", tekst.c_str());
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Brak opisu.");
+        }
+        ImGui::PopTextWrapPos();    
+}
+
+inline void prntOpis(string &tekst){
+
+        ImGui::PushTextWrapPos(300.0f); 
+        
+        if (!tekst.empty()) {
+            ImGui::Text("%s", tekst.c_str());
         } else {
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Brak opisu.");
         }

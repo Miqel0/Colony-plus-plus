@@ -11,6 +11,10 @@ using namespace std;
 #include "graphics.h"
 #include "buildingFactory.h"
 
+/**
+ * @brief Klasa zawierająca w sobie ogólną logikę gry, ma w sobie: Colony kolonia, Graphics grafika, BuildingFactory fabryka, map<string, BuildingInfo> bazaDanych 
+ * 
+ */
 class Game{
 
     public:
@@ -25,7 +29,6 @@ class Game{
         void build(BuildingInfo info);
 
         void UIrun();
-        
         //PLIKI
         void loadGameData();
         bool checkConfig();

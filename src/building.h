@@ -8,6 +8,10 @@ using namespace std;
 
 #include "enums.h"
 
+/**
+ * @brief Główna klasa wszystkich budynków, posiada w sobie podstawowe parametry, oraz funkcje virtualne
+ * 
+ */
 class Building{
     protected:
         TypBudynku type;

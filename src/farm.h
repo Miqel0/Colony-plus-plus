@@ -7,6 +7,10 @@ using namespace std;
 
 #include "building.h"
 
+/**
+ * @brief Klasa pochodna Building, odpowiada za produkcje jedzenia
+ * 
+ */
 class Farm: public Building{
     private:
         double foodGen;

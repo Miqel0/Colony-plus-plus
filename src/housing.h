@@ -8,7 +8,10 @@ using namespace std;
 
 #include "building.h"
 
-
+/**
+ * @brief Klasa pochodna Building, odpowiada za zapewnienie mieszkania dla mieszkańców
+ * 
+ */
 class Housing: public Building{
 
 

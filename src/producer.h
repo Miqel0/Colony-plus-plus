@@ -9,6 +9,10 @@ using namespace std;
 
 #include "building.h"
 
+/**
+ * @brief Klasa pochodna Building, odpowiada za produkcje różnych surowców
+ * 
+ */
 class Producer: public Building{
     private:
         double stoneGen;

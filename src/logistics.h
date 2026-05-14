@@ -9,6 +9,10 @@ using namespace std;
 
 #include "building.h"
 
+/**
+ * @brief Klasa zarządzająca całą logiką kolonii - wszystkie parametry itp.
+ * 
+ */
 class Logistics{
     private:    
         string nazwa_kolonii;
