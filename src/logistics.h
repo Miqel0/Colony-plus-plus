@@ -45,7 +45,9 @@ class Logistics{
 
         //NEXT ROUND
         int czyNextRound(const vector<unique_ptr<Building>>& budynki);
+        NextResult UIczyNextRound(const vector<unique_ptr<Building>>& budynki);
         int nextRound(const vector<unique_ptr<Building>>& budynki);
+        NextResult UInextRound(const vector<unique_ptr<Building>>& budynki);
         bool sprawdzLvlTerr();
 
         //BUDOWANIE

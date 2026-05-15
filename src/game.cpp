@@ -499,6 +499,13 @@ void Game::commands(){
     cout<<endl;
 }
 
+/**
+ * @brief Funkcja wywoływująca funkcję NextRound z Colony
+ * 
+ * @return NextResult pakiet wyników z NextRound
+ */
+NextResult Game::UINextRound(){return kolonia.UInextRound();}
+
 // ==========================================
 // RZECZY Z PLIKAMI (LOAD)
 // ==========================================

@@ -28,6 +28,7 @@ class Game{
         void commands();
         void build(BuildingInfo info);
         BuildResult UIbuild(BuildingInfo info, Graphics& grafika);
+        NextResult UINextRound();
 
         void UIrun();
         //PLIKI

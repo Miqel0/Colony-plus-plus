@@ -137,6 +137,23 @@ struct BuildResult{
     string tekst;
 };
 
+/**
+ * @brief Struct do przekazywania wyników przejscia do kolejnej rundy
+ * 
+ */
+struct NextResult{
+    bool czy;
+    bool food;
+    bool energy;
+    bool terr;
+    string tekst;
+    double c_food;
+    double c_stone;
+    double c_titan;
+    double c_terr;
+};
+
+
 // ==========================================
 // FUNKCJE POMOCNICZE - UNIWERSALNE
 // ==========================================

@@ -58,7 +58,7 @@ class Colony{
 
         //NEXT ROUND
         int nextRound();
-        
+        NextResult UInextRound(); 
 
         bool sprawdzLvlTerr();
 

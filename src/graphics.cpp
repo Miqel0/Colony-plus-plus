@@ -6,8 +6,8 @@
 #include <optional>
 #include <map>
 
-Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, ""}){}
-Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, ""}){}
+Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, ""}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, ""}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}){}
 
 /**
  * @brief Tymczasowe wyświeltanie głównego menu z przyciskami.
@@ -176,6 +176,11 @@ void Graphics::prntBudowanie(const Colony& kolonia,const map<string, BuildingInf
     ImGui::End();
 }
 
+/**
+ * @brief Funkcja wyświetlająca wyniki budowania budynku
+ * 
+ * @param gra 
+ */
 void Graphics::prntBudowanieWyniki(Game& gra){
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
@@ -211,9 +216,6 @@ void Graphics::prntBudowanieWyniki(Game& gra){
 
 }
 
-void Graphics::BudowanieWyniki(const BuildingInfo info,Game& gra){
-
-}
 
 /**
  * @brief Funkcja wyswietlajaca informacje o dostepnych budynkach do zbudowania z danej kategorii.
@@ -335,6 +337,178 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
         cout<<RED<<BOLD<<"Nie ma takiej kategorii!!"<<RESET<<endl;
         return;
     }
+}
+
+/**
+ * @brief Wyświetlanie przycisku przejscia do kolejnej rundy
+ * 
+ */
+void Graphics::prntNextRoundButton(){
+
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImVec2 window_pos = ImVec2(viewport->WorkPos.x + viewport->WorkSize.x - 10, viewport->WorkPos.y + 10);
+
+    ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, ImVec2(1.0f, 0.0f));
+
+    if (ImGui::Begin("PrzyciskTuryFloating", nullptr,  ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBackground)) {
+        ImGui::SetWindowFontScale(3.0f);
+        if (ImGui::ArrowButton("##NextTurn", ImGuiDir_Right)) {
+            czyNextRound=true;
+        }
+        if (ImGui::IsItemHovered()) {
+                    ImGui::BeginTooltip(); 
+                    
+                    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Kliknięcie spowoduje przejście do kolejnej rundy!");
+
+                    ImGui::EndTooltip(); 
+                }
+    }
+    ImGui::End();
+}
+
+/**
+ * @brief Funkcja wyświetlająca okno z 
+ * 
+ * @param kolonia wskaźnik do koloniii
+ * @param bazaDanych wskaźnik do bazy danych 
+ * @param gra wskaznik do klasy Game
+ */
+void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra){
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    ImGui::SetNextWindowSize(ImVec2(350, 150)); 
+    ImGui::Begin("Koniec Tury", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+    
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
+    std::string pyt = "Czy na pewno chcesz zakonczyc ture?";
+    float textWidth = ImGui::CalcTextSize(pyt.c_str()).x;
+    ImGui::SetCursorPosX((350.0f - textWidth) * 0.5f); 
+    ImGui::Text("%s", pyt.c_str());
+
+    ImGui::Dummy(ImVec2(0.0f, 20.0f)); 
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+    float buttonWidth = 100.0f;
+    float spaceBetween = 40.0f;
+    float buttonsStartX = (350.0f - (2 * buttonWidth + spaceBetween)) * 0.5f;
+
+    ImGui::SetCursorPosX(buttonsStartX);
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.6f, 0.1f, 1.0f));        // Tło
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.8f, 0.2f, 1.0f)); // Najechanie
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));  // Kliknięcie
+    if (ImGui::Button("TAK", ImVec2(buttonWidth, 30))) {
+        
+        nextWynik=gra.UINextRound();  // dodac dzialanie itp
+        czyNextRound1 = true;
+        czyNextRound = false;
+    }
+    ImGui::PopStyleColor(3); 
+
+    ImGui::SameLine(0, spaceBetween); 
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.7f, 0.1f, 0.1f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.2f, 0.2f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.6f, 0.1f, 0.1f, 1.0f));
+    if (ImGui::Button("NIE", ImVec2(buttonWidth, 30))) {
+        czyNextRound = false;
+    }
+    ImGui::PopStyleColor(3);
+
+    ImGui::End();
+}
+
+
+/**
+ * @brief Funkcja wyświetlająca okno z wynikiem kolejnej rundy
+ * 
+ * @param kolonia wskaźnik do koloniii
+ * @param bazaDanych wskaźnik do bazy danych 
+ * @param gra wskaznik do klasy Game
+ */
+void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych, Game& gra) {
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    ImGui::Begin("Raport z kolonii", &czyNextRound1, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
+
+    // Brak jedzenia!
+    if (!nextWynik.food) {
+        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "KATASTROFA: KOLONIA UMARŁA Z GŁODU!");
+        ImGui::Separator();
+        ImGui::Text("Zabrakło jedzenia dla Twoich mieszkańców.");
+        
+        ImGui::Dummy(ImVec2(0.0f, 10.0f));
+        if (ImGui::Button("Zakończ grę", ImVec2(120, 30))) {
+            window.close(); 
+        }
+    } 
+    else {
+        
+        if (!nextWynik.energy) {
+            ImGui::TextColored(ImVec4(1.0f, 0.6f, 0.0f, 1.0f), "OSTRZEŻENIE: BLACKOUT!");
+            ImGui::Separator();
+            ImGui::TextWrapped("Z powodu braku prądu produkcja stanęła w miejscu! Maszyny nie pracują.");
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
+        } else {
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "PODSUMOWANIE TURY:");
+            ImGui::Separator();
+        }
+
+        double zjedzone = kolonia.getReqFood(); 
+        double bilansJedzenia = nextWynik.c_food - zjedzone;
+
+        ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.8f, 1.0f), "Gospodarka żywnościowa:");
+        
+        
+        ImGui::Bullet(); ImGui::Text("Wyprodukowano:");
+        ImGui::SameLine(); ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%.0f", nextWynik.c_food);
+        
+        
+        ImGui::Bullet(); ImGui::Text("Zjedzono:");
+        ImGui::SameLine(); ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%.0f", zjedzone);
+        
+       
+        if (bilansJedzenia >= 0) {
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "  -> Bilans: +%.0f", bilansJedzenia);
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "  -> Bilans: %.0f (Zapasy maleją!)", bilansJedzenia);
+        }
+
+        ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+        ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.8f, 1.0f), "Wydobycie i nauka:");
+        
+        
+        ImGui::Bullet(); ImGui::Text("Kamień:");
+        ImGui::SameLine(); ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "+%.0f", nextWynik.c_stone);
+        
+       
+        ImGui::Bullet(); ImGui::Text("Tytan:");
+        ImGui::SameLine(); ImGui::TextColored(ImVec4(0.4f, 0.8f, 1.0f, 1.0f), "+%.0f", nextWynik.c_titan);
+        
+        ImGui::Bullet(); ImGui::Text("Terraformacja:");
+        ImGui::SameLine(); ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "+%.0f", nextWynik.c_terr);
+
+        if (nextWynik.terr) {
+            ImGui::Dummy(ImVec2(0.0f, 10.0f));
+            ImGui::TextColored(ImVec4(0.2f, 0.8f, 1.0f, 1.0f), "AWANS TERRAFORMACJI!");
+            ImGui::Text("Odblokowano nowe technologie.");
+        }
+
+        ImGui::Dummy(ImVec2(0.0f, 15.0f));
+        ImGui::Separator();
+        
+        float buttonWidth = 120.0f;
+        ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
+        if (ImGui::Button("Dalej", ImVec2(buttonWidth, 30))) {
+            czyNextRound1 = false; 
+        }
+    }
+
+    ImGui::End();
 }
 
 /**
@@ -466,6 +640,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
        
         prntMenu();
         prntStatystyki(kolonia);
+        prntNextRoundButton();
 
         if(czyhelp){
             prntPomoc();
@@ -483,6 +658,12 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         }
         if(czyBudowanieWyniki){
             prntBudowanieWyniki(gra);
+        }
+        if(czyNextRound){
+            prntCzyNextRound(kolonia, bazaDanych,gra);
+        }
+        if(czyNextRound1){
+            prntNextRound(kolonia, bazaDanych,gra);
         }
         
         
