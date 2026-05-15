@@ -8,15 +8,18 @@ using namespace std;
 
 #include "building.h"
 
+/**
+ * @brief Klasa pochodna Building, odpowiada za produkcje prądu
+ * 
+ */
 class Energy: public Building{
     private:
         double enGen;
-        TypEnergy pType;
 
     public:
         //KONSTRUKTOR
         Energy();
-        Energy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
+        Energy(string n, double kE,double kK, double kT, double e,int w);
         ~Energy(){};
 
         //OVERRIDE
@@ -25,7 +28,6 @@ class Energy: public Building{
         void save(ofstream& plik) const override;
 
         //GETTERY
-        int getPType() const override;
         double getEnergy() const;
         
 };

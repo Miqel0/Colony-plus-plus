@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTOR
 // ==========================================
 
-Terr:: Terr():Building("XXX",TypBudynku::TERR,0,0,0,0),terrGen(0),pType(TypTerr::NIEZNANY){}
-Terr::Terr(string n, double kE,double kK, double kT, double te,TypTerr t,int w):Building(n,TypBudynku::TERR,kE,kK,kT,w),terrGen(te),pType(t){}
+Terr:: Terr():Building("XXX",TypBudynku::TERR,0,0,0,0),terrGen(0){}
+Terr::Terr(string n, double kE,double kK, double kT, double te,int w):Building(n,TypBudynku::TERR,kE,kK,kT,w),terrGen(te){}
 
 // ==========================================
 // OVERRIDE
@@ -22,12 +22,12 @@ void Terr::prnt(int il)const{
     prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers),"Wplyw na terraformacje: ",cleanNum(terrGen));
 }
 void Terr::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Wplywa na terraformacje: ",cleanNum(terrGen)}},"Bardzo fajnie ze zwieksza terraforacje!!!");
+    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Wplywa na terraformacje: ",cleanNum(terrGen)}});
 }
 
 void Terr::save(ofstream& plik)const{
     Building::save(plik);
-    plik<<" "<<static_cast<int>(pType)<<" "<<terrGen<<" "<<endl;
+    plik<<" "<<terrGen<<" "<<endl;
 }
 
 // ==========================================
@@ -35,4 +35,4 @@ void Terr::save(ofstream& plik)const{
 // ==========================================
 
 double Terr::getTerr() const{return terrGen;}
-int Terr::getPType() const{return static_cast<int>(pType);}
+

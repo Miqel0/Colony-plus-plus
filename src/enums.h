@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <sstream>
+#include <map>
 #include <string>
 #include <iomanip>
 #include <vector>
 #include <utility>
+#include <algorithm>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
@@ -61,49 +63,52 @@ enum class TypBudynku {
     TERR = 5,
 };
 
-enum class TypEnergy {
-    NIEZNANY = 0,
-    MALY_WIATRAK = 1,
-    DUZY_PANEL = 2,
-    REAKTOR_JADROWY = 3,
-    FUZJA_ZIMNA = 4,
-};
+// enum class TypEnergy {
+//     NIEZNANY = 0,
+//     MALY_WIATRAK = 1,
+//     DUZY_PANEL = 2,
+//     REAKTOR_JADROWY = 3,
+//     FUZJA_ZIMNA = 4,
+// };
 
-enum class TypFarm {
-    NIEZNANY = 0,
-    POLE_ZIEMNIAKOW = 1,
-    SZKLARNIA_HYDRO = 2,
-    FARMA_ALG = 3,
-    SYNTEZATOR_BIALKA = 4,
-};
+// enum class TypFarm {
+//     NIEZNANY = 0,
+//     POLE_ZIEMNIAKOW = 1,
+//     SZKLARNIA_HYDRO = 2,
+//     FARMA_ALG = 3,
+//     SYNTEZATOR_BIALKA = 4,
+// };
 
-enum class TypDomy {
-    NIEZNANY = 0,
-    BARAK_ROBOTNICZY = 1,
-    KWATERY_ZALOGI = 2,
-    KOPULA_MIESZKALNA = 3,
-    METROPOLIA = 4,
-};
+// enum class TypDomy {
+//     NIEZNANY = 0,
+//     BARAK_ROBOTNICZY = 1,
+//     KWATERY_ZALOGI = 2,
+//     KOPULA_MIESZKALNA = 3,
+//     METROPOLIA = 4,
+// };
 
-enum class TypProducer {
-    NIEZNANY = 0,
-    ODKRYWKA_KAMIENIA = 1,
-    WIERTLO_GLEBINOWE = 2,
-    KOMBINAT_GORNICZY = 3,
-    AUTOMAT_WYDOBYWCZY = 4,
-    KOPALNIA_TYTANU = 5,
-};
+// enum class TypProducer {
+//     NIEZNANY = 0,
+//     ODKRYWKA_KAMIENIA = 1,
+//     WIERTLO_GLEBINOWE = 2,
+//     KOMBINAT_GORNICZY = 3,
+//     AUTOMAT_WYDOBYWCZY = 4,
+//     KOPALNIA_TYTANU = 5,
+// };
 
-enum class TypTerr {
-    NIEZNANY = 0,
-    STACJA_BADAWCZA = 1,
-    KOMINY_CIEPLNE = 2,
-    GENERATOR_O2 = 3,
-    LUSTRA_ORBITALNE = 4,
-};
+// enum class TypTerr {
+//     NIEZNANY = 0,
+//     STACJA_BADAWCZA = 1,
+//     KOMINY_CIEPLNE = 2,
+//     GENERATOR_O2 = 3,
+//     LUSTRA_ORBITALNE = 4,
+// };
 
 
-//Do mapy gamedata - wczytywanie danych o budynkach - uprascza to wczytywanie i budowanie
+/**
+ * @brief Zawiera w sobie wszystkie parametry danego budynku wczytane z gamedata.txt
+ * 
+ */
 struct BuildingInfo {
     string nazwa;
     string type;
@@ -121,6 +126,15 @@ struct BuildingInfo {
     double lvlTerr;
     int x;     
     string opis;
+};
+
+/**
+ * @brief Struct do przekazywania wyników budowania / a może i wszystkich błędów itp
+ * 
+ */
+struct BuildResult{
+    bool czy;
+    string tekst;
 };
 
 // ==========================================
@@ -197,8 +211,17 @@ inline void prntTablica(string n, string s11, string s12, string s13, string s14
     cout << left << setw(col) << col3 << NO_BOLD << sep << BOLD << s33 << s34 << RESET << endl << endl;
 }
 
-
-
+/**
+ * @brief Funkcja do usuwania '_' z tekstu.
+ * 
+ * @param tekst string do usuniecia '_'
+ * @return string tekst bez '_'
+ */
+inline string cleanString(string tekst){
+        string tekst_ = tekst;
+        std::replace(tekst_.begin(),tekst_.end(),'_',' ');
+        return tekst_;
+}
 
 
 /**
@@ -220,12 +243,14 @@ inline void rysujWierszTooltip(const string& etykieta, const string& wartosc) {
  * @param dane wektor par danych do wyswietlenia w tabeli - vector<pair<string, string>>
  * @param opis opis dłuższy napis, pod tabelą
  */
-inline void prntTooltipTablica(const string& nazwa, 
-                               const vector<pair<string, string>>& dane, 
-                               const string& opis = "") {
-                               
+inline void prntTooltipTablica(const string& nazwa, const vector<pair<string, string>>& dane) {
+    float window_width = ImGui::GetWindowWidth();
+    float text_width = ImGui::CalcTextSize(nazwa.c_str()).x;
 
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "--- %s ---", nazwa.c_str());
+    string nazwa_ = cleanString(nazwa);
+
+    ImGui::SetCursorPosX((window_width - text_width) * 0.5f);  
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%s", nazwa_.c_str());
     ImGui::Separator();
     
    
@@ -241,12 +266,51 @@ inline void prntTooltipTablica(const string& nazwa,
         }
     }
     
-
-    if (!opis.empty()) {
+}
+/**
+ * @brief Funkcja wyświetlająca opis danego budynku.
+ * 
+ * @param nazwa wskaznik do nazwy budynku z '_' i z różnymi literami
+ * @param bazaDanych wskaznik do bazy danych budynków map<std::string, BuildingInfo>
+ */
+inline void prntOpis(const std::string &nazwa, const  map<std::string, BuildingInfo>& bazaDanych){
+        string nazwa_=nazwa;
+        for(auto &c : nazwa_) c = tolower(c);
         ImGui::Separator();
         ImGui::PushTextWrapPos(300.0f); 
-        ImGui::Text("%s", opis.c_str());
-        ImGui::PopTextWrapPos(); 
-    }
+        
+        if (bazaDanych.count(nazwa_)) {
+            ImGui::Text("%s", bazaDanych.at(nazwa_).opis.c_str());
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Brak opisu.");
+        }
+        ImGui::PopTextWrapPos();    
 }
+
+inline void prntOpis(const std::string &nazwa, string &tekst){
+        string nazwa_=nazwa;
+        for(auto &c : nazwa_) c = tolower(c);
+        ImGui::Separator();
+        ImGui::PushTextWrapPos(300.0f); 
+        
+        if (!tekst.empty()) {
+            ImGui::Text("%s", tekst.c_str());
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Brak opisu.");
+        }
+        ImGui::PopTextWrapPos();    
+}
+
+inline void prntOpis(string &tekst){
+
+        ImGui::PushTextWrapPos(300.0f); 
+        
+        if (!tekst.empty()) {
+            ImGui::Text("%s", tekst.c_str());
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Brak opisu.");
+        }
+        ImGui::PopTextWrapPos();    
+}
+
 #endif

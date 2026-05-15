@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTOR
 // ==========================================
 
-Producer:: Producer():Building("XXX",TypBudynku::PRODUCER,0,0,0,0),stoneGen(0),titanGen(0),pType(TypProducer::NIEZNANY){}
-Producer::Producer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti):Building(n,TypBudynku::PRODUCER,kE,kK,kT,w),stoneGen(s),titanGen(ti),pType(t){}
+Producer:: Producer():Building("XXX",TypBudynku::PRODUCER,0,0,0,0),stoneGen(0),titanGen(0){}
+Producer::Producer(string n, double kE,double kK, double kT, double s,int w,double ti):Building(n,TypBudynku::PRODUCER,kE,kK,kT,w),stoneGen(s),titanGen(ti){}
 
 // ==========================================
 // OVERRIDE
@@ -24,23 +24,22 @@ void Producer::prnt(int il)const{
 
 void Producer::UIprnt(int il)const{
     if(stoneGen !=0 && titanGen !=0){
-        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany kamien: ",cleanNum(stoneGen)},{"Generowany tytan: ",cleanNum(titanGen)}},"Bardzo fajnie ze generuje tytan i kamien!!!");
+        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany kamien: ",cleanNum(stoneGen)},{"Generowany tytan: ",cleanNum(titanGen)}});
     }else if( stoneGen!=0 && titanGen==0){
-        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany kamien: ",cleanNum(stoneGen)}},"Bardzo fajnie ze generuje kamien!!!");
+        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany kamien: ",cleanNum(stoneGen)}});
     }else if( titanGen!=0 && stoneGen==0){
-        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany tytan: ",cleanNum(titanGen)}},"Bardzo fajnie ze generuje tytan!!!");
+        prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany tytan: ",cleanNum(titanGen)}});
     }
 }
 
 void Producer::save(ofstream& plik)const{
     Building::save(plik);
-    plik<<" "<<static_cast<int>(pType)<<" "<<stoneGen<<" "<<titanGen<<endl; //pilnowac przy kolejnym doawaniu
+    plik<<" "<<stoneGen<<" "<<titanGen<<endl; //pilnowac przy kolejnym doawaniu
 }
 
 // ==========================================
 // GETTERY
 // ==========================================
 
-int Producer::getPType() const{return static_cast<int>(pType);}
-TypProducer Producer::getTypeProducer() const{return pType;}
+
 double Producer::getGenTitan() const{return titanGen;}

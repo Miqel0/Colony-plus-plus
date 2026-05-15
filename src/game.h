@@ -9,7 +9,12 @@ using namespace std;
 #include "enums.h"
 #include "colony.h"
 #include "graphics.h"
+#include "buildingFactory.h"
 
+/**
+ * @brief Klasa zawierająca w sobie ogólną logikę gry, ma w sobie: Colony kolonia, Graphics grafika, BuildingFactory fabryka, map<string, BuildingInfo> bazaDanych 
+ * 
+ */
 class Game{
 
     public:
@@ -22,9 +27,9 @@ class Game{
         void startTutorial();
         void commands();
         void build(BuildingInfo info);
+        BuildResult UIbuild(BuildingInfo info, Graphics& grafika);
 
         void UIrun();
-        
         //PLIKI
         void loadGameData();
         bool checkConfig();
@@ -43,15 +48,17 @@ class Game{
         //Tworzenie obiektu kolonia
         Colony kolonia;
         Graphics grafika;
+        BuildingFactory fabryka;
+        map<string, BuildingInfo> bazaDanych;
 
         //Mapy do zamiany strignu na typ budynku
-        map<string,TypBudynku> stringToBudynku;
-        map<string,TypDomy> stringToDomy;
-        map<string,TypEnergy> stringToEnergy;
-        map<string,TypFarm> stringToFarm;
-        map<string,TypProducer> stringToProducer;
-        map<string,TypTerr> stringToTerr;
-        map<string, BuildingInfo> bazaDanych;
+        // map<string,TypBudynku> stringToBudynku;
+        // map<string,TypDomy> stringToDomy;
+        // map<string,TypEnergy> stringToEnergy;
+        // map<string,TypFarm> stringToFarm;
+        // map<string,TypProducer> stringToProducer;
+        // map<string,TypTerr> stringToTerr;
+        
 
 };
 

@@ -26,35 +26,35 @@ Game::Game():running(true){
     //Definiowanie mapy stringow do typu danej budynku (nie dalo sie tego automatycznie zrobic)
 
     // ENERGY
-    stringToEnergy["maly_wiatrak"]    = TypEnergy::MALY_WIATRAK;
-    stringToEnergy["duzy_panel"]      = TypEnergy::DUZY_PANEL;
-    stringToEnergy["reaktor_jadrowy"] = TypEnergy::REAKTOR_JADROWY;
-    stringToEnergy["fuzja_zimna"]     = TypEnergy::FUZJA_ZIMNA;
+    // stringToEnergy["maly_wiatrak"]    = TypEnergy::MALY_WIATRAK;
+    // stringToEnergy["duzy_panel"]      = TypEnergy::DUZY_PANEL;
+    // stringToEnergy["reaktor_jadrowy"] = TypEnergy::REAKTOR_JADROWY;
+    // stringToEnergy["fuzja_zimna"]     = TypEnergy::FUZJA_ZIMNA;
 
-    // FARM
-    stringToFarm["pole_ziemniakow"]   = TypFarm::POLE_ZIEMNIAKOW;
-    stringToFarm["szklarnia_hydro"]   = TypFarm::SZKLARNIA_HYDRO;
-    stringToFarm["farma_alg"]         = TypFarm::FARMA_ALG;
-    stringToFarm["syntezator_bialka"] = TypFarm::SYNTEZATOR_BIALKA;
+    // // FARM
+    // stringToFarm["pole_ziemniakow"]   = TypFarm::POLE_ZIEMNIAKOW;
+    // stringToFarm["szklarnia_hydro"]   = TypFarm::SZKLARNIA_HYDRO;
+    // stringToFarm["farma_alg"]         = TypFarm::FARMA_ALG;
+    // stringToFarm["syntezator_bialka"] = TypFarm::SYNTEZATOR_BIALKA;
 
-    // HOUSING
-    stringToDomy["barak_robotniczy"]  = TypDomy::BARAK_ROBOTNICZY;
-    stringToDomy["kwatery_zalogi"]    = TypDomy::KWATERY_ZALOGI;
-    stringToDomy["kopula_mieszkalna"] = TypDomy::KOPULA_MIESZKALNA;
-    stringToDomy["metropolia"]        = TypDomy::METROPOLIA;
+    // // HOUSING
+    // stringToDomy["barak_robotniczy"]  = TypDomy::BARAK_ROBOTNICZY;
+    // stringToDomy["kwatery_zalogi"]    = TypDomy::KWATERY_ZALOGI;
+    // stringToDomy["kopula_mieszkalna"] = TypDomy::KOPULA_MIESZKALNA;
+    // stringToDomy["metropolia"]        = TypDomy::METROPOLIA;
 
-    // PRODUCER
-    stringToProducer["odkrywka_kamienia"]  = TypProducer::ODKRYWKA_KAMIENIA;
-    stringToProducer["wiertlo_glebinowe"]  = TypProducer::WIERTLO_GLEBINOWE;
-    stringToProducer["kombinat_gorniczy"]  = TypProducer::KOMBINAT_GORNICZY;
-    stringToProducer["automat_wydobywczy"] = TypProducer::AUTOMAT_WYDOBYWCZY;
-    stringToProducer["kopalnia_tytanu"] = TypProducer::KOPALNIA_TYTANU;
+    // // PRODUCER
+    // stringToProducer["odkrywka_kamienia"]  = TypProducer::ODKRYWKA_KAMIENIA;
+    // stringToProducer["wiertlo_glebinowe"]  = TypProducer::WIERTLO_GLEBINOWE;
+    // stringToProducer["kombinat_gorniczy"]  = TypProducer::KOMBINAT_GORNICZY;
+    // stringToProducer["automat_wydobywczy"] = TypProducer::AUTOMAT_WYDOBYWCZY;
+    // stringToProducer["kopalnia_tytanu"] = TypProducer::KOPALNIA_TYTANU;
 
-    // TERR
-    stringToTerr["stacja_badawcza"]  = TypTerr::STACJA_BADAWCZA;
-    stringToTerr["kominy_cieplne"]   = TypTerr::KOMINY_CIEPLNE;
-    stringToTerr["generator_o2"]     = TypTerr::GENERATOR_O2;
-    stringToTerr["lustra_orbitalne"] = TypTerr::LUSTRA_ORBITALNE;
+    // // TERR
+    // stringToTerr["stacja_badawcza"]  = TypTerr::STACJA_BADAWCZA;
+    // stringToTerr["kominy_cieplne"]   = TypTerr::KOMINY_CIEPLNE;
+    // stringToTerr["generator_o2"]     = TypTerr::GENERATOR_O2;
+    // stringToTerr["lustra_orbitalne"] = TypTerr::LUSTRA_ORBITALNE;
 
     //Wczytywanie parametrow budynkow
     loadGameData();
@@ -66,7 +66,7 @@ Game::Game():running(true){
 
 void Game::UIrun(){
     kolonia.load();
-    grafika.prntAll(kolonia);
+    grafika.prntAll(kolonia, bazaDanych,*this);
 }
 
 void Game::run(){
@@ -194,11 +194,9 @@ void Game::startTutorial() {
         for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "build maly_wiatrak") {
-            if(stringToEnergy.count("maly_wiatrak")){
                 build(bazaDanych["maly_wiatrak"]);
                 kolonia.setRuch(kolonia.getRuch()+1);
-            }
-            break;
+            
         } else {
             cout << RED << "[SYSTEM]: Blad. Priorytetem jest 'build maly_wiatrak'." << RESET << endl;
         }
@@ -216,11 +214,10 @@ void Game::startTutorial() {
         for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "build pole_ziemniakow") {
-            if(stringToFarm.count("pole_ziemniakow")){
-                build(bazaDanych["pole_ziemniakow"]);
-                kolonia.setRuch(kolonia.getRuch()+1);
-            }
-            break;
+            
+            build(bazaDanych["pole_ziemniakow"]);
+            kolonia.setRuch(kolonia.getRuch()+1);
+            
         } else {
             cout << RED << "[SYSTEM]: Zaloga jest glodna! Wpisz 'build pole_ziemniakow'." << RESET << endl;
         }
@@ -285,11 +282,8 @@ void Game::startTutorial() {
         for(auto &c : komenda) c = tolower(c);
 
         if(komenda == "build stacja_badawcza") {
-            if(stringToTerr.count("stacja_badawcza")){
-                build(bazaDanych["stacja_badawcza"]);
-                kolonia.setRuch(kolonia.getRuch()+1);
-            }
-            break;
+            build(bazaDanych["stacja_badawcza"]);
+            kolonia.setRuch(kolonia.getRuch()+1);
         } else {
             cout << RED << "[SYSTEM]: Wpisz 'build stacja_badawcza'." << RESET << endl;
         }
@@ -350,7 +344,7 @@ void runGUI(){
 // ==========================================
 
 void Game::grafikaStart(){
-    grafika.prntAll(kolonia);
+    grafika.prntAll(kolonia, bazaDanych,*this);
 }
 /**
  * @brief Stara główna pętla gry z pisaniem komend
@@ -493,7 +487,7 @@ void Game::commands(){
         prntRules();
     }
     else if(command=="imgui"){
-        grafika.prntAll(kolonia);
+        grafika.prntAll(kolonia, bazaDanych,*this);
     }
     else if(command=="cheat"){//Wlaczenie trybu z nieskonczonymi zasobami w trakcie gry
         kolonia.setSandbox();
@@ -563,6 +557,7 @@ void Game::loadGameData(){ //Wczytywanie danych o budynkach - tylko na poczatku 
         nowy.x=x;
         nowy.lvlTerr=lt;
         nowy.opis=opis;
+
         string klucz =n;
         for(auto &c : klucz) c = tolower(c);
 
@@ -575,37 +570,91 @@ void Game::loadGameData(){ //Wczytywanie danych o budynkach - tylko na poczatku 
 // BUDOWANIE
 // ==========================================
 
-void Game::build(BuildingInfo info){//Budowanie budynkow w zaleznosci od danej kategorii
-    string typ=info.type;
-    string nazwa=info.nazwa;
-    if(typ=="FARM"){
-        if(kolonia.zbudujFarm(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToFarm[nazwa],info.workers,info.x,0)){
-            kolonia.setRuch(kolonia.getRuch()+1);
+void Game::build(BuildingInfo info) {
+    unique_ptr<Building> nowyBudynek = fabryka.stworzBudynek(info);
+
+
+    if (nowyBudynek != nullptr) {
+        if (kolonia.buduj(move(nowyBudynek))) {
+            kolonia.setRuch(kolonia.getRuch() + 1);
         }
-    }
-    else if(typ=="ENERGY"){
-        if(kolonia.zbudujEnergy(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToEnergy[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="HOUSING"){
-        if(kolonia.zbudujHousing(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToDomy[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="PRODUCER"){
-        if(kolonia.zbudujProducer(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genKamien,stringToProducer[nazwa],info.workers,info.genTytan)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }
-    else if(typ=="TERR"){
-        if(kolonia.zbudujTerr(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToTerr[nazwa],info.workers)){
-            kolonia.setRuch(kolonia.getRuch()+1);
-        }
-    }else{
-        return;
+    } 
+    else {
+        cout << RED << "Blad: Nieznana mechanika budynku!" << RESET << endl;
     }
 }
+
+
+BuildResult Game::UIbuild(BuildingInfo info, Graphics& grafika) {
+   if(kolonia.getRuch()==3){ //Sprawdzanie warunku z iloscia ruchow w turze
+            return {false, "Już wykorzystałeś 3/3 ruchów w tej turze! \n Przejdź do kolejnej tury aby zbudować więcej!"};
+    }
+    string nazwa_=info.nazwa;
+    for(auto &c : nazwa_) c = tolower(c);
+    if(info.lvlTerr>kolonia.getLvlTerr()){
+        return {false, "Nie istnieje taki budynek!"};
+    }
+
+    unique_ptr<Building> nowyBudynek = fabryka.stworzBudynek(info);
+    BuildResult wynik={false,""};
+    //Stary build
+    if (nowyBudynek != nullptr) {
+        wynik =kolonia.UIbuduj(move(nowyBudynek));
+        if (wynik.czy) {
+            kolonia.setRuch(kolonia.getRuch() + 1);
+        }
+    } 
+    else {
+        cout << RED << "Blad: Nieznana mechanika budynku!" << RESET << endl;
+    }
+    //koniec tego starego builda
+
+    if(kolonia.getRuch()==3){
+            wynik.tekst+="\nWlasnie wykorzystales 3/3 ruchow w tej turze!!";
+        }else{
+            wynik.tekst+="\nWykorzystales "+to_string(kolonia.getRuch())+"/3 ruchow w tej turze!!";
+        }
+    return wynik;
+}
+        
+            
+            
+            
+        
+        
+    
+
+// void Game::build(BuildingInfo info){//Budowanie budynkow w zaleznosci od danej kategorii
+//     string typ=info.type;
+//     string nazwa=info.nazwa;
+//     if(typ=="FARM"){
+//         if(kolonia.zbudujFarm(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToFarm[nazwa],info.workers,info.x,0)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="ENERGY"){
+//         if(kolonia.zbudujEnergy(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToEnergy[nazwa],info.workers)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="HOUSING"){
+//         if(kolonia.zbudujHousing(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToDomy[nazwa],info.workers)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="PRODUCER"){
+//         if(kolonia.zbudujProducer(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genKamien,stringToProducer[nazwa],info.workers,info.genTytan)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }
+//     else if(typ=="TERR"){
+//         if(kolonia.zbudujTerr(nazwa,info.reqEnergy,info.kKamien,info.kTytan,info.genInne,stringToTerr[nazwa],info.workers)){
+//             kolonia.setRuch(kolonia.getRuch()+1);
+//         }
+//     }else{
+//         return;
+//     }
+// }
 
 // ==========================================
 // WYSWIETLANIE
@@ -693,6 +742,8 @@ void Game::prntInfo(string cat){//Wyswietlanie informacji o danej kategorii budy
         }
     }
 }
+
+
 
 void Game::prntCategories(){//Wyswietlanie wszystkich kategorii budynkow (same kategorie + krotki opis)
     const int w = 25;

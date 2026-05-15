@@ -8,6 +8,10 @@ using namespace std;
 
 #include "enums.h"
 
+/**
+ * @brief Główna klasa wszystkich budynków, posiada w sobie podstawowe parametry, oraz funkcje virtualne
+ * 
+ */
 class Building{
     protected:
         TypBudynku type;
@@ -33,6 +37,11 @@ class Building{
         virtual void prnt(int il) const;
         virtual void save(ofstream& plik) const;
         virtual double work();
+        /**
+         * @brief Funkcja wyświetlająca dane o budynku
+         * 
+         * @param il ilość danego budynku
+         */
         virtual void UIprnt(int il) const;
         
         //PRZY LOAD
@@ -47,7 +56,6 @@ class Building{
         TypBudynku getTyp() const;
         int getResidents() const;
         double getReqEnergy() const;
-        virtual int getPType() const;
         double getKosztKamien() const;
         double getKosztTytan() const;
         

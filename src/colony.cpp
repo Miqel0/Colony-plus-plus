@@ -109,7 +109,11 @@ void Colony::prntBuildingsSumm(){
     }
     cout<<endl;
 }
-
+/**
+ * @brief Funkcja tworząca mapę z vectora zbudowanych budynków
+ * 
+ * @return map<string,int> zawiera liczbę zbudowanych kolejnych budynków.
+ */
 map<string,int> Colony::UIprntBuildingsSumm()const{
     
     map<string,int> licznik;//Robienie mapy z nazwy budynku i ilosci - w wketorze buildings
@@ -127,11 +131,10 @@ map<string,int> Colony::UIprntBuildingsSumm()const{
 }
 
 /**
- * @brief Wyświetlanie budynku o danej nazwie @param 
+ * @brief Wyświetlanie parametrów budynku o danej nazwie @param 
  * 
  * @param nazwa budynku
  */
-
 void Colony::UIprntBuilding(string bud) const{
     int nr=-1;
     for(int i=0;i<buildings.size();i++){
@@ -154,35 +157,35 @@ void Colony::UIprntBuilding(string bud) const{
 // BUDOWANIE
 // ==========================================
 
-//Budowanie Energy
-bool Colony::zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w){
-    unique_ptr<Building> nowyBudynek = make_unique<Energy>(n,kE,kK,kT,e,t,w);
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Energy
+// bool Colony::zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w){
+//     unique_ptr<Building> nowyBudynek = make_unique<Energy>(n,kE,kK,kT,e,t,w);
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Farm
-bool Colony::zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct){
-    unique_ptr<Building> nowyBudynek = make_unique<Farm>(n,kE,kK,kT,f,t,w,tim,ct); 
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Farm
+// bool Colony::zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct){
+//     unique_ptr<Building> nowyBudynek = make_unique<Farm>(n,kE,kK,kT,f,t,w,tim,ct); 
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Housing
-bool Colony::zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w){
-    unique_ptr<Building> nowyBudynek=make_unique<Housing>(n,kE,kK,kT,r,t,w);
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Housing
+// bool Colony::zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w){
+//     unique_ptr<Building> nowyBudynek=make_unique<Housing>(n,kE,kK,kT,r,t,w);
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Prodcuer
-bool Colony::zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti){
-    unique_ptr<Building> nowyBudynek=make_unique<Producer>(n,kE,kK,kT,s,t,w,ti);
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Prodcuer
+// bool Colony::zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti){
+//     unique_ptr<Building> nowyBudynek=make_unique<Producer>(n,kE,kK,kT,s,t,w,ti);
+//     return buduj(move(nowyBudynek));
+// }
 
-//Budowanie Terr
-bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w){
-    unique_ptr<Building> nowyBudynek = make_unique<Terr>(n,kE,kK,kT,te,t,w); 
-    return buduj(move(nowyBudynek));
-}
+// //Budowanie Terr
+// bool Colony::zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w){
+//     unique_ptr<Building> nowyBudynek = make_unique<Terr>(n,kE,kK,kT,te,t,w); 
+//     return buduj(move(nowyBudynek));
+// }
 
 //Budowanie budynku i aktalziowanie parametrow
 bool Colony::buduj(unique_ptr<Building> b){
@@ -213,10 +216,65 @@ bool Colony::buduj(unique_ptr<Building> b){
     }
 }
 
+
+
+
+BuildResult Colony::UIbuduj(unique_ptr<Building> b){
+    if (b == nullptr) return {false, "Dziwny błąd"};
+    auto wynik=UIczyStac(b);
+    if(wynik.czy){
+        
+        //Odejmowanie materalow, ktore sa wykorzystane do budowania
+        f_logisyka.setStone(f_logisyka.getStone() - b->getKosztKamien());
+        f_logisyka.setTitan(f_logisyka.getTitan() - b->getKosztTytan());
+
+        //Aktualizowanie logistyki
+        f_logisyka.updateBudynek(b.get());
+        
+        if(b->getTyp()==TypBudynku::HOUSING){
+            f_logisyka.setAWorkers(b->getResidents());
+        }else{
+            f_logisyka.setDWorkers(b->getDemandWorkers());
+        }
+        //Dodawanie ostatecznie danego budynka do listy budynkow
+        addBuilding(move(b));
+    }
+    return wynik;
+}
+
 //Funkcja pomocniczna do budowania
 void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
 
 //Sprawdzanie wymaganych parametrow do zbudowania
+BuildResult Colony::UIczyStac(const unique_ptr<Building> &b)const{
+    string wynik="";
+    int czy=0;
+    if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){ // sprawdza czy jest wystarczajaca liczba kamienia i tytanu do zbudowania
+        czy=1;
+    }else{
+        if(b->getKosztKamien()>f_logisyka.getStone()){
+            wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia!";
+        }else if(b->getKosztTytan()>f_logisyka.getTitan()){
+            wynik+="Brakuje "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
+        }else if(b->getKosztKamien()>f_logisyka.getStone()&&b->getKosztTytan()>f_logisyka.getTitan()){
+            wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia, i "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
+        }
+        czy=2;
+    }
+    if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()<0){ // sprawdza czy jest wystarczajaca liczba workerow - zeby wybudowac dany budynek
+        if(czy==2) wynik+="\n";
+        wynik+="Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "+to_string(-(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()))+" robotnikow!";
+    }
+    if(czy==1){
+        return {true, "Udało się zbudować budynek "+cleanString(b->getName())+"!"};
+    }else{
+        return {false,wynik};
+    }
+}
+
+
+
+
 bool Colony::czyStac(const unique_ptr<Building> &b)const{
     int czy=0;
     if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){ // sprwdza czy jest wystarczajaca liczba kamienia i tytanu do zbudowania
@@ -335,7 +393,7 @@ void Colony::loadBuildings(string nazwa_plik) {
         buildings.clear();
 
         //Parametry
-        int w_type, w_id, w, maxSaved = 0, w_ptype;
+        int w_type, w_id, w, maxSaved = 0;
         string w_n;
         double kE,kT,kK;
         //Format linii w pliku: TypBudynku Nazwa ID KosztEnergii KosztKamienia KosztTytanu Pracownicy ParametrySpecjalne
@@ -353,9 +411,9 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::ENERGY: {
                     //Dodatkowe parametry
                     double e;
-                    plik >> w_ptype >> e;
+                    plik >> e;
                     
-                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, static_cast<TypEnergy>(w_ptype), w);
+                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, w);
                     
                     energia->setId(w_id); //Ustawianie poprawnego ID (bo psuje sie podczas wczytywania
                     nowyBudynek = move(energia);
@@ -367,9 +425,9 @@ void Colony::loadBuildings(string nazwa_plik) {
                     //Dodatkowe parametry
                     double f;
                     int tim,ct;
-                    plik >> w_ptype  >> f>>tim>>ct;
+                    plik >> f>>tim>>ct;
                 
-                    auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, static_cast<TypFarm>(w_ptype), w,tim,ct);
+                    auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, w,tim,ct);
 
                     farm->setId(w_id); 
                     nowyBudynek = move(farm);
@@ -379,9 +437,9 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::HOUSING:{
                     //Dodatkowe parametry
                     int r;
-                    plik >> w_ptype >> r;
+                    plik >> r;
     
-                    auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, static_cast<TypDomy>(w_ptype), w);
+                    auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, w);
                 
                     housing->setId(w_id);                
                     nowyBudynek = move(housing);
@@ -391,9 +449,9 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::PRODUCER: {
                     //Dodatkowe parametry
                     double s, ti;
-                    plik >> w_ptype  >> s>>ti;
+                    plik >> s>>ti;
                 
-                    auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, static_cast<TypProducer>(w_ptype), w,ti);
+                    auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, w,ti);
 
                     producer->setId(w_id); 
                     nowyBudynek = move(producer);
@@ -403,9 +461,9 @@ void Colony::loadBuildings(string nazwa_plik) {
                 case TypBudynku::TERR: {
                     //Dodatkowe parametry
                     double te;
-                    plik >> w_ptype >> te;
+                    plik >> te;
                 
-                    auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, static_cast<TypTerr>(w_ptype), w);
+                    auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, w);
 
                     terr->setId(w_id); 
                     nowyBudynek = move(terr);

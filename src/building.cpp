@@ -53,7 +53,6 @@ string Building:: getName()const {return name;}
 TypBudynku Building::getTyp() const {return type;}
 int Building::getResidents() const{return residents;}
 int Building::getDemandWorkers()const {return workers;}
-int Building::getPType() const{return 0;}
 double Building::getReqEnergy() const{return kosztEnergii;}
 double Building::getKosztKamien() const{return kosztKamien;}
 double Building::getKosztTytan() const{return kosztTytan;}

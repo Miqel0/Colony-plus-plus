@@ -8,22 +8,23 @@ using namespace std;
 
 #include "building.h"
 
-
+/**
+ * @brief Klasa pochodna Building, odpowiada za zapewnienie mieszkania dla mieszkańców
+ * 
+ */
 class Housing: public Building{
-    private:
-        TypDomy pType;
+
 
     public:
         //KONSTRUKTOR
         Housing();
-        Housing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
+        Housing(string n, double kE,double kK, double kT, int r,int w);
         ~Housing(){};
 
         //OVERRIDE
         void prnt(int il) const override;
         void UIprnt(int il) const override;
         void save(ofstream& plik) const override;
-        int getPType() const override;
 
 };
 
