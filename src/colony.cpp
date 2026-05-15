@@ -381,7 +381,7 @@ void Colony::load(){
     loadBuildings("zapis_buildings.txt");
     loadColony("zapis_colony.txt");
     cout<<CLEAR_SCREEN<<endl;
-    cout<<YELLOW<<"Gra zostala wczytana z pliku."<<RESET<<endl;
+    // cout<<YELLOW<<"Gra zostala wczytana z pliku."<<RESET<<endl;
 }
 
 //Wczytywanie wszystkich budynkow
