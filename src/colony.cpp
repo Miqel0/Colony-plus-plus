@@ -216,10 +216,65 @@ bool Colony::buduj(unique_ptr<Building> b){
     }
 }
 
+
+
+
+BuildResult Colony::UIbuduj(unique_ptr<Building> b){
+    if (b == nullptr) return {false, "Dziwny błąd"};
+    auto wynik=UIczyStac(b);
+    if(wynik.czy){
+        
+        //Odejmowanie materalow, ktore sa wykorzystane do budowania
+        f_logisyka.setStone(f_logisyka.getStone() - b->getKosztKamien());
+        f_logisyka.setTitan(f_logisyka.getTitan() - b->getKosztTytan());
+
+        //Aktualizowanie logistyki
+        f_logisyka.updateBudynek(b.get());
+        
+        if(b->getTyp()==TypBudynku::HOUSING){
+            f_logisyka.setAWorkers(b->getResidents());
+        }else{
+            f_logisyka.setDWorkers(b->getDemandWorkers());
+        }
+        //Dodawanie ostatecznie danego budynka do listy budynkow
+        addBuilding(move(b));
+    }
+    return wynik;
+}
+
 //Funkcja pomocniczna do budowania
 void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
 
 //Sprawdzanie wymaganych parametrow do zbudowania
+BuildResult Colony::UIczyStac(const unique_ptr<Building> &b)const{
+    string wynik="";
+    int czy=0;
+    if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){ // sprawdza czy jest wystarczajaca liczba kamienia i tytanu do zbudowania
+        czy=1;
+    }else{
+        if(b->getKosztKamien()>f_logisyka.getStone()){
+            wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia!";
+        }else if(b->getKosztTytan()>f_logisyka.getTitan()){
+            wynik+="Brakuje "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
+        }else if(b->getKosztKamien()>f_logisyka.getStone()&&b->getKosztTytan()>f_logisyka.getTitan()){
+            wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia, i "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
+        }
+        czy=2;
+    }
+    if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()<0){ // sprawdza czy jest wystarczajaca liczba workerow - zeby wybudowac dany budynek
+        if(czy==2) wynik+="\n";
+        wynik+="Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "+to_string(-(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()))+" robotnikow!";
+    }
+    if(czy==1){
+        return {true, "Udało się zbudować budynek "+cleanString(b->getName())+"!"};
+    }else{
+        return {false,wynik};
+    }
+}
+
+
+
+
 bool Colony::czyStac(const unique_ptr<Building> &b)const{
     int czy=0;
     if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){ // sprwdza czy jest wystarczajaca liczba kamienia i tytanu do zbudowania

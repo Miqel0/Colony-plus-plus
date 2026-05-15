@@ -580,9 +580,49 @@ void Game::build(BuildingInfo info) {
         }
     } 
     else {
-        cout << RED << "Blad: Nieznana mechanika budynku w pliku (typ)!" << RESET << endl;
+        cout << RED << "Blad: Nieznana mechanika budynku!" << RESET << endl;
     }
 }
+
+
+BuildResult Game::UIbuild(BuildingInfo info, Graphics& grafika) {
+   if(kolonia.getRuch()==3){ //Sprawdzanie warunku z iloscia ruchow w turze
+            return {false, "Już wykorzystałeś 3/3 ruchów w tej turze! \n Przejdź do kolejnej tury aby zbudować więcej!"};
+    }
+    string nazwa_=info.nazwa;
+    for(auto &c : nazwa_) c = tolower(c);
+    if(info.lvlTerr>kolonia.getLvlTerr()){
+        return {false, "Nie istnieje taki budynek!"};
+    }
+
+    unique_ptr<Building> nowyBudynek = fabryka.stworzBudynek(info);
+    BuildResult wynik={false,""};
+    //Stary build
+    if (nowyBudynek != nullptr) {
+        wynik =kolonia.UIbuduj(move(nowyBudynek));
+        if (wynik.czy) {
+            kolonia.setRuch(kolonia.getRuch() + 1);
+        }
+    } 
+    else {
+        cout << RED << "Blad: Nieznana mechanika budynku!" << RESET << endl;
+    }
+    //koniec tego starego builda
+
+    if(kolonia.getRuch()==3){
+            wynik.tekst+="\nWlasnie wykorzystales 3/3 ruchow w tej turze!!";
+        }else{
+            wynik.tekst+="\nWykorzystales "+to_string(kolonia.getRuch())+"/3 ruchow w tej turze!!";
+        }
+    return wynik;
+}
+        
+            
+            
+            
+        
+        
+    
 
 // void Game::build(BuildingInfo info){//Budowanie budynkow w zaleznosci od danej kategorii
 //     string typ=info.type;

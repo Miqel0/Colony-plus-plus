@@ -29,12 +29,16 @@ class Graphics{
         bool czyBudynki;
         bool czyBudowanie;
         bool czyBudowanieCategory;
+        bool czyBudowanieWyniki;
         string wybranaKategoriaBudowa;
+        BuildResult ostatniWynik;
     public:
 
         Graphics();
         Graphics(unsigned int szer_,unsigned int wys_);
         ~Graphics(){};
+
+        void BudowanieWyniki(const BuildingInfo info,Game& gra);
 
         void prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntMenu();
@@ -42,6 +46,7 @@ class Graphics{
         void prntPomoc();
         void prntBudynki(const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych);
         void prntBudowanie(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
+        void prntBudowanieWyniki(Game& gra);
         void prntBuildCategory(const string& cat,const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych,Game& gra);
 };
 

@@ -27,6 +27,7 @@ class Game{
         void startTutorial();
         void commands();
         void build(BuildingInfo info);
+        BuildResult UIbuild(BuildingInfo info, Graphics& grafika);
 
         void UIrun();
         //PLIKI

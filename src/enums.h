@@ -128,6 +128,15 @@ struct BuildingInfo {
     string opis;
 };
 
+/**
+ * @brief Struct do przekazywania wyników budowania / a może i wszystkich błędów itp
+ * 
+ */
+struct BuildResult{
+    bool czy;
+    string tekst;
+};
+
 // ==========================================
 // FUNKCJE POMOCNICZE - UNIWERSALNE
 // ==========================================
