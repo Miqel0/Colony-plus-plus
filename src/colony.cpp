@@ -496,6 +496,13 @@ void Colony::loadColony(string nazwa_plik){f_logisyka.load(nazwa_plik);}
 //Wywołanie funckji nextRound z Logistics
 int Colony::nextRound(){return f_logisyka.czyNextRound(buildings);}
 
+/**
+ * @brief Funkcja wywoływująca funkcję UIczyNextRound z Logistics
+ * 
+ * @return NextResult pakiet wyników z NextRound
+ */
+NextResult Colony::UInextRound(){return f_logisyka.UIczyNextRound(buildings);}
+
 //Sprawdzenie czy istnieje dany budynek
 bool Colony::czyBudynek(string bud)const{
     for(const auto &b:buildings){

@@ -62,6 +62,56 @@ int Logistics::czyNextRound(const vector<unique_ptr<Building>>& budynki){
         return 0;
     }
 }
+
+
+/**
+ * @brief Funkcja sprawdzajaca czy sie udalo przejsc do kolejnej rundy
+ * 
+ * @param budynki Wektor zbudowanych budynków
+ * @return NextResult NextResult pakiet wyników z NextRound
+ */
+NextResult Logistics::UIczyNextRound(const vector<unique_ptr<Building>>& budynki){
+    // string decyzja;
+    // cout<<YELLOW<<">>Czy na pewno chcesz przejsc do kolejnej tury? (y / n)"<<RESET<<endl;
+    // cin>>decyzja;
+    // if(decyzja=="y"||decyzja=="yes"||decyzja=="tak"||decyzja=="t"){
+    //     cout<<YELLOW<<">>Rozpoczynanie procedury przejscia do kolejnej rundy..."<<RESET<<endl;
+    //     cout<<endl;
+
+        NextResult odp=UInextRound(budynki);//wywolywanie funkcji sprawdzajacej zaleznosci
+        if(odp.czy){
+            // cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RESET<<endl;
+            tura++;
+            ruch=0;
+            // cout<<endl;
+            // if(czyNext==1){
+            //     return 2;
+            // }else{
+            //     return 1;
+            // }
+        }
+    //     else if(food==0){
+    //         cout<<RED<<"KOLONIA UMARLA, Z POWODU BRAKU JEDZENIA!!"<<RESET<<endl;
+
+    //         return -1;
+    //     } else if(genEnergy<reqEnergy){
+    //         cout<<GREEN<<BOLD<<"Udalo sie przejsc do kolejnej rundy!"<<RED<<" Ale..."<<RESET<<endl;
+    //         cout<<RED<<BOLD<<"Z powod braku energii zaden z budynkow nie wykonal pracy!"<<RESET<<endl;
+    //         tura++;
+    //         ruch=0;
+    //         cout<<endl;
+    //         return 1;
+    //     } else{
+    //         return 0;
+    //     }
+    // }else{
+    //     cout<<YELLOW<<"Anulowano przejscie do kolejnej rundy."<<RESET<<endl;
+    //     return 0;
+    // }
+    return odp;
+}
+
+
 //FUNKCJA SPRAWDZAJACA PARAMETRY PRZY NEXT ROUND
 int Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
         if((food-reqFood)>=0){//Czy jest wystarczajaca liczba jedzenia?
@@ -147,6 +197,108 @@ int Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
             cout<<endl;
             return -1;
         }
+}
+
+
+/**
+ * @brief 
+ * 
+ * @param budynki wektor zbudowanych budynków
+ * @return NextResult paczka z wynikami przejścia do kolejnej rundy
+ */
+NextResult Logistics::UInextRound(const vector<unique_ptr<Building>>& budynki){
+    NextResult odp = {false,false,false,false,"",0,0,0,0};    
+    if((food-reqFood)>=0){//Czy jest wystarczajaca liczba jedzenia?
+            // cout<<GREEN<<"Ilosc jedzenia:"<<BOLD<< "ZGODNA"<<RESET<<endl;
+            // cout<<endl;
+
+            odp.food=true;
+            odp.czy=true;
+            food-=reqFood;
+            
+            if(genEnergy>=reqEnergy){//Czy jest wystarczajaca liczba produkowanego pradu?
+                // cout<<GREEN<<"Ilosc energii:"<<BOLD<< "ZGODNA"<<RESET<<endl;
+                // cout<<endl;
+                odp.energy=true;
+
+                //Sprawdzanie dzialania wszystkich budynkow
+                // cout<<YELLOW<<">>Sprawdzanie produkcji budynkow:..."<<RESET<<endl;
+                // cout<<endl;
+                
+                double c_food=0;
+                double c_stone=0;
+                double c_titan=0;
+                double c_terr=0;
+                int new_lvl=0;
+
+                
+                for(const auto& b: budynki){//Przejscie po kazdym zbudowanym budynku
+                    double c=0;
+                    c=b->work();//wywolanie funkcji work() na kazdym z budynkow
+                    switch(b->getTyp()){//w zaleznosci od klasy, zwrocona wartosc jset przypisywana do czegos innego
+                        case TypBudynku::FARM:
+                            c_food+=c;
+                            break;
+                        case TypBudynku::PRODUCER:{
+                            Producer* p = static_cast<Producer*>(b.get());
+                            c_stone += c;
+                            c_titan += p->getGenTitan(); //FIXME dodac jakas pair czy cos
+                            break;
+                        }
+                        case TypBudynku::TERR:{
+                            c_terr+=c;
+                            break;
+                        }
+                        default:
+                            break;
+                    }
+                }
+
+                // cout<<endl;
+                wsp_terr+=c_terr;
+                if(sprawdzLvlTerr()){//Sprawdzenie czy nie nastapilo osiagniecie kolejnego lvl
+                    odp.terr=true;
+                }
+
+                //Wyswietlenie zaktualizowanych rzeczy po nextRound
+                odp.c_food=c_food;
+                odp.c_stone=c_stone;
+                odp.c_titan=c_titan;
+                odp.c_terr=c_terr;
+
+                // prntRound(c_food,c_stone,c_titan,c_terr,new_lvl);
+                
+                //Dodanie wyprodukowanych surowcow do zmiennej
+                food+=c_food;
+                stone+=c_stone;
+                titan+=c_titan;
+                // cout<<endl;
+
+
+            }else{//BRAK ENERGII - budynki nie pracuja
+                
+
+                // cout<<RED<<"Ilosc energii:"<<BOLD<< "BRAK"<<RESET<<endl;
+                // cout<<RED<<BOLD<<"Niewystarczajaca ilosc energi!!"<<RESET<<endl;
+                // cout<<endl;
+
+                if((food-reqFood)>=0){
+                    // cout<<GREEN<<"Ilosc jedzenia:"<<BOLD<< "ZGODNA"<<RESET<<endl;
+                    // cout<<endl;
+                    odp.food=true;
+                }
+            }
+        }else{//BRAK JEDZENIA - KONIEC GRY
+            if(genEnergy>=reqEnergy){
+            odp.energy=true;
+            }
+
+            // cout<<RED<<"Ilosc jedzenia:"<<BOLD<< "BRAK"<<RESET<<endl;
+            // cout<<RED<<BOLD<<"Brak jedzenia!!"<<RESET<<endl;
+            food=0;
+            // cout<<endl;
+        }
+    return odp;
 }
 
 //SPRAWDZANIE POZIOMU TERRAFORMACJI
