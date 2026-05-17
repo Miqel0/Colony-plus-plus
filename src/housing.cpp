@@ -10,7 +10,7 @@ using namespace std;
 // ==========================================
 
 Housing:: Housing():Building("XXX",TypBudynku::HOUSING,0,0,0,0){this->residents=0;}
-Housing::Housing(string n, double kE,double kK, double kT, int r,int w):Building(n,TypBudynku::HOUSING,kE,kK,kT,0){this->residents=r;}
+Housing::Housing(string n, int kE,int kK, int kT, int r,int w):Building(n,TypBudynku::HOUSING,kE,kK,kT,0){this->residents=r;}
 
 // ==========================================
 // OVERRIDE

@@ -15,23 +15,23 @@ using namespace std;
  */
 class Producer: public Building{
     private:
-        double stoneGen;
-        double titanGen;
+        int stoneGen;
+        int titanGen;
 
     public:
         //KONSTRUKTORY
         Producer();
-        Producer(string n, double kE,double kK, double kT, double s,int w,double ti);
+        Producer(string n, int kE,int kK, int kT, int s,int w,int ti);
         ~Producer(){};
 
         //OVERRIDE
-        double work() override;
+        int work() override;
         void prnt(int il) const override;
         void UIprnt(int il) const override;
         void save(ofstream& plik) const override;
 
         //GETTERY
-        double getGenTitan() const;
+        int getGenTitan() const;
 
 
     

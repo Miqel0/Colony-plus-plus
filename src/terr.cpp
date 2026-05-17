@@ -10,13 +10,13 @@ using namespace std;
 // ==========================================
 
 Terr:: Terr():Building("XXX",TypBudynku::TERR,0,0,0,0),terrGen(0){}
-Terr::Terr(string n, double kE,double kK, double kT, double te,int w):Building(n,TypBudynku::TERR,kE,kK,kT,w),terrGen(te){}
+Terr::Terr(string n, int kE,int kK, int kT, int te,int w):Building(n,TypBudynku::TERR,kE,kK,kT,w),terrGen(te){}
 
 // ==========================================
 // OVERRIDE
 // ==========================================
 
-double Terr::work(){return terrGen;}
+int Terr::work(){return terrGen;}
 
 void Terr::prnt(int il)const{
     prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers),"Wplyw na terraformacje: ",cleanNum(terrGen));
@@ -34,5 +34,5 @@ void Terr::save(ofstream& plik)const{
 // GETTERY
 // ==========================================
 
-double Terr::getTerr() const{return terrGen;}
+int Terr::getTerr() const{return terrGen;}
 

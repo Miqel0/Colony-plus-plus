@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -127,15 +128,15 @@ int Logistics::nextRound(const vector<unique_ptr<Building>>& budynki){
                 cout<<YELLOW<<">>Sprawdzanie produkcji budynkow:..."<<RESET<<endl;
                 cout<<endl;
 
-                double c_food=0;
-                double c_stone=0;
-                double c_titan=0;
-                double c_terr=0;
+                int c_food=0;
+                int c_stone=0;
+                int c_titan=0;
+                int c_terr=0;
                 int new_lvl=0;
 
                 
                 for(const auto& b: budynki){//Przejscie po kazdym zbudowanym budynku
-                    double c=0;
+                    int c=0;
                     c=b->work();//wywolanie funkcji work() na kazdym z budynkow
                     switch(b->getTyp()){//w zaleznosci od klasy, zwrocona wartosc jset przypisywana do czegos innego
                         case TypBudynku::FARM:
@@ -225,15 +226,15 @@ NextResult Logistics::UInextRound(const vector<unique_ptr<Building>>& budynki){
                 // cout<<YELLOW<<">>Sprawdzanie produkcji budynkow:..."<<RESET<<endl;
                 // cout<<endl;
                 
-                double c_food=0;
-                double c_stone=0;
-                double c_titan=0;
-                double c_terr=0;
+                int c_food=0;
+                int c_stone=0;
+                int c_titan=0;
+                int c_terr=0;
                 int new_lvl=0;
 
                 
                 for(const auto& b: budynki){//Przejscie po kazdym zbudowanym budynku
-                    double c=0;
+                    int c=0;
                     c=b->work();//wywolanie funkcji work() na kazdym z budynkow
                     switch(b->getTyp()){//w zaleznosci od klasy, zwrocona wartosc jset przypisywana do czegos innego
                         case TypBudynku::FARM:
@@ -350,7 +351,7 @@ void Logistics::prnt(){
     //Linia 4
     if(food>2*reqFood){
         cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<")"<<RESET<<endl;
-    }else{if(food>=reqFood & food<2*reqFood){
+    }else{if(food>=reqFood && food<2*reqFood){
         cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<") "<<NO_BOLD<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
     }else{if(food<reqFood){
     cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<BOLD<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
@@ -364,7 +365,7 @@ void Logistics::prnt(){
 }
 
 //WYSWIETLANIE WSZYSTKICH PARAMETROW COLONY PO nextRound, Z ZMIANAMI
-void Logistics::prntRound(double f, double s, double t,double te,int n){
+void Logistics::prntRound(int f, int s, int t,int te,int n){
     
     string sep = YELLOW+" | ";
 
@@ -411,7 +412,7 @@ void Logistics::prntRound(double f, double s, double t,double te,int n){
     if(f!=0){
         if((food+f)>2*reqFood){
             cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<GREEN<<NO_BOLD<<" ("<<BOLD<<reqFood<<NO_BOLD<<")"<<RESET<<endl;
-        }else{if((food+f)>=reqFood & (food+f)<2*reqFood){
+        }else{if((food+f)>=reqFood && (food+f)<2*reqFood){
             cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<RED<<NO_BOLD<<" ("<<BOLD<<reqFood<<NO_BOLD<<") "<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
         }else{if((food+f)<reqFood){
         cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<CYAN<<" + "<<f<<NO_BOLD<<RED<<" ("<<BOLD<<reqFood<<NO_BOLD<<")!"<<BOLD<<" Brakuje "<<BOLD<<reqFood+f-food<<NO_BOLD<<" jedzenia!!!"<<RESET<<endl;
@@ -419,7 +420,7 @@ void Logistics::prntRound(double f, double s, double t,double te,int n){
     }else{
         if(food>2*reqFood){
             cout<<GREEN<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<")"<<RESET<<endl;
-        }else{if(food>=reqFood & food<2*reqFood){
+        }else{if(food>=reqFood && food<2*reqFood){
             cout<<BLUE<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<BOLD<<food<<" ("<<reqFood<<") "<<NO_BOLD<<RED<<"Starczy tylko na jedna runde!"<<RESET<<endl;
         }else{if(food<reqFood){
         cout<<RED<<"Posiadane jedzenie (zapotrzebowanie na runde): "<<food<<BOLD<<" ("<<reqFood<<")!"<<BOLD<<" Brakuje "<<reqFood-food<<" jedzenia!!!"<<RESET<<endl;
@@ -522,7 +523,7 @@ void Logistics::updateZburzBudynek(Building* budynek){
 }
 
 
-pair<float, float> Logistics::UIupdateZburzBudynek(Building* budynek){
+pair<int, int> Logistics::UIupdateZburzBudynek(Building* budynek){
 
     //Odzyskiwanie pracownikow oraz polowy surowcow
     setDWorkers(-budynek->getDemandWorkers());
@@ -531,8 +532,8 @@ pair<float, float> Logistics::UIupdateZburzBudynek(Building* budynek){
 
     // cout<<YELLOW<<"Odzyskano "<<BOLD<<cleanNum(st/2)<<NO_BOLD<<" kamienia, oraz "<<BOLD<<cleanNum(ti/2)<<NO_BOLD<<" tytanu!"<<RESET<<endl;
     //Odzyskuje sie polowe surowców!
-    titan+=ti/2;
-    stone+=st/2;
+    titan+=(ti-1+2)/2;
+    stone+=(st-1+2)/2;
 
     switch (budynek->getTyp())
     {
@@ -563,7 +564,7 @@ pair<float, float> Logistics::UIupdateZburzBudynek(Building* budynek){
     default:
         break;
     }
-    return {st/2,ti/2};
+    return {(st-1+2)/2,(ti-1+2)/2};
 }
 
 // ==========================================
@@ -588,7 +589,7 @@ void Logistics::load(string nazwa_plik){
     //plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
     string nazwa;
     int t,aw,dw,s,ti,r,lt;
-    double ge,re,rf, f,te;
+    int ge,re,rf, f,te;
 
     if (plik.is_open()) {
         plik>>nazwa>>t>>r>>aw>>dw>>te>>lt>>ge>>re>>rf>>f>>s>>ti;
@@ -619,8 +620,8 @@ void Logistics::setTura(){tura++;}
 void Logistics::setRuch(int r){ruch=r;}
 void Logistics::setAWorkers(int aw){all_workers+=aw;}
 void Logistics::setDWorkers(int dw){demand_workers+=dw;}
-void Logistics::setStone(double s){stone=s;}
-void Logistics::setTitan(double t){titan=t;}
+void Logistics::setStone(int s){stone=s;}
+void Logistics::setTitan(int t){titan=t;}
 
 //USTAWIANIE PARAMETROW COLONY - ustawianie testowe - cheaty - daje duza ilosc surowcow
 void Logistics::setSandbox(){
@@ -700,10 +701,10 @@ int Logistics::getRuch() const{return ruch;}
 int Logistics::getAWorkers() const{return all_workers;}
 int Logistics::getDWorkers() const{return demand_workers;};
 
-double Logistics::getReqEnergy() const{return reqEnergy;}
-double Logistics::getGenEnergy() const{return genEnergy;}
-double Logistics::getReqFood() const{return reqFood;}
-double Logistics::getFood() const{return food;}
+int Logistics::getReqEnergy() const{return reqEnergy;}
+int Logistics::getGenEnergy() const{return genEnergy;}
+int Logistics::getReqFood() const{return reqFood;}
+int Logistics::getFood() const{return food;}
 int Logistics::getStone() const{return stone;}
 int Logistics::getTitan() const{return titan;}
 string Logistics::getNazwa() const{return nazwa_kolonii;}

@@ -13,18 +13,18 @@ using namespace std;
  */
 class Farm: public Building{
     private:
-        double foodGen;
+        int foodGen;
         int time;
         int curr_time;
 
     public:
         //KONSTRUKTOR
         Farm();
-        Farm(string n, double kE,double kK, double kT, double f,int w,int tim,int ct);
+        Farm(string n, int kE,int kK, int kT, int f,int w,int tim,int ct);
         ~Farm(){};
         
         //OVERRIDE
-        double work() override;
+        int work() override;
         void prnt(int il) const override;
         void UIprnt(int il) const override;
         void save(ofstream& plik) const override;

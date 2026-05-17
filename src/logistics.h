@@ -22,13 +22,13 @@ class Logistics{
         int all_workers;
         int demand_workers;
         
-        double wsp_terr;
+        int wsp_terr;
         int lvl_terr;
         
-        double reqEnergy;
-        double genEnergy;
-        double reqFood;
-        double food;
+        int reqEnergy;
+        int genEnergy;
+        int reqFood;
+        int food;
         int stone;
         int titan;
 
@@ -41,7 +41,7 @@ class Logistics{
         
         //WYSWIETLANIE
         void prnt();
-        void prntRound(double f, double s, double t, double te,int n);
+        void prntRound(int f, int s, int t, int te,int n);
 
         //NEXT ROUND
         int czyNextRound(const vector<unique_ptr<Building>>& budynki);
@@ -53,7 +53,7 @@ class Logistics{
         //BUDOWANIE
         void updateBudynek(Building* budynek);
         void updateZburzBudynek(Building* budynek);
-        pair<float, float>  UIupdateZburzBudynek(Building* budynek);
+        pair<int, int>  UIupdateZburzBudynek(Building* budynek);
 
         //SAVE/LOAD
         void save(string nazwa_plik);
@@ -65,8 +65,8 @@ class Logistics{
         void setRuch(int r);
         void setAWorkers(int aw);
         void setDWorkers(int dw);
-        void setStone(double s);
-        void setTitan(double t);
+        void setStone(int s);
+        void setTitan(int t);
 
         void setSandbox();
         void setCustom();
@@ -78,10 +78,10 @@ class Logistics{
         int getAWorkers() const;
         int getDWorkers() const;
         
-        double getReqEnergy() const;
-        double getGenEnergy() const;
-        double getReqFood() const;
-        double getFood() const;
+        int getReqEnergy() const;
+        int getGenEnergy() const;
+        int getReqFood() const;
+        int getFood() const;
         int getStone() const;
         int getTitan() const;
         int getLvlTerr() const;

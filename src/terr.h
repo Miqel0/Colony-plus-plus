@@ -15,23 +15,23 @@ using namespace std;
 class Terr: public Building{
 
     private:
-        double terrGen;
+        int terrGen;
 
     public:
 
         //KONSTRUKTOR
         Terr();
-        Terr(string n, double kE,double kK, double kT, double te,int w);
+        Terr(string n, int kE,int kK, int kT, int te,int w);
         ~Terr(){};
 
         //OVERRIDE
         void prnt(int il) const override;
         void UIprnt(int il) const override;
         void save(ofstream& plik) const override;
-        double work() override;
+        int work() override;
 
         //GETTERY
-        double getTerr() const;
+        int getTerr() const;
 };
 
 #endif

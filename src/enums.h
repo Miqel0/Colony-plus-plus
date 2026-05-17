@@ -110,22 +110,22 @@ enum class TypBudynku {
  * 
  */
 struct BuildingInfo {
-    string nazwa;
-    string type;
+    string nazwa="";
+    string type="";
     
     // Koszty
-    double kKamien;
-    double kTytan;
-    double reqEnergy;
-    int workers;      
+    int kKamien=0;
+    int kTytan=0;
+    int reqEnergy=0;
+    int workers=0;      
     
     // Produkcja
-    double genKamien;
-    double genTytan;  
-    double genInne;  
-    double lvlTerr;
-    int x;     
-    string opis;
+    int genKamien=0;
+    int genTytan=0;  
+    int genInne=0;  
+    int lvlTerr=0;
+    int x=0;     
+    string opis="";
 };
 
 /**
@@ -133,20 +133,23 @@ struct BuildingInfo {
  * 
  */
 struct BuildResult{
-    bool czy;
-    int kamien;
-    int tytan;
-    int workers;
+    bool czy=false;
+    int kamien=0;
+    int tytan=0;
+    int workers=0;
     string nazwa;
-    int act_ruch;
-    bool ruch;
+    int act_ruch=0;
+    bool ruch=false;
 };
-
+/**
+ * @brief Struct do przekazywania wyników burzenia.
+ * 
+ */
 struct DestroyResult{
-    bool czy;
-    int brakLudzi;
-    string nazwa;
-    pair <float,float> sur;
+    bool czy=false;
+    int brakLudzi=0;
+    string nazwa="";
+    pair <int,int> sur={0,0};
 };
 
 /**
@@ -154,15 +157,15 @@ struct DestroyResult{
  * 
  */
 struct NextResult{
-    bool czy;
-    bool food;
-    bool energy;
-    bool terr;
-    string tekst;
-    double c_food;
-    double c_stone;
-    double c_titan;
-    double c_terr;
+    bool czy=false;
+    bool food=false;
+    bool energy=false;
+    bool terr=false;
+    string tekst="";
+    int c_food=0;
+    int c_stone=0;
+    int c_titan=0;
+    int c_terr=0;
 };
 
 

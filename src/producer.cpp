@@ -10,13 +10,13 @@ using namespace std;
 // ==========================================
 
 Producer:: Producer():Building("XXX",TypBudynku::PRODUCER,0,0,0,0),stoneGen(0),titanGen(0){}
-Producer::Producer(string n, double kE,double kK, double kT, double s,int w,double ti):Building(n,TypBudynku::PRODUCER,kE,kK,kT,w),stoneGen(s),titanGen(ti){}
+Producer::Producer(string n, int kE,int kK, int kT, int s,int w,int ti):Building(n,TypBudynku::PRODUCER,kE,kK,kT,w),stoneGen(s),titanGen(ti){}
 
 // ==========================================
 // OVERRIDE
 // ==========================================
 
-double Producer::work(){return stoneGen;}
+int Producer::work(){return stoneGen;}
 
 void Producer::prnt(int il)const{
     prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers)," "," ","Generowany kamien: ",cleanNum(stoneGen),"Generowany tytan: ",cleanNum(titanGen));
@@ -42,4 +42,4 @@ void Producer::save(ofstream& plik)const{
 // ==========================================
 
 
-double Producer::getGenTitan() const{return titanGen;}
+int Producer::getGenTitan() const{return titanGen;}
