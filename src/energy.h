@@ -14,12 +14,12 @@ using namespace std;
  */
 class Energy: public Building{
     private:
-        double enGen;
+        int enGen;
 
     public:
         //KONSTRUKTOR
         Energy();
-        Energy(string n, double kE,double kK, double kT, double e,int w);
+        Energy(string n, int kE,int kK, int kT, int e,int w);
         ~Energy(){};
 
         //OVERRIDE
@@ -28,7 +28,7 @@ class Energy: public Building{
         void save(ofstream& plik) const override;
 
         //GETTERY
-        double getEnergy() const;
+        int getEnergy() const;
         
 };
 

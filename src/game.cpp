@@ -545,7 +545,7 @@ void Game::loadGameData(){ //Wczytywanie danych o budynkach - tylko na poczatku 
     }
 
     string n, type, opis;
-    double kK, kT, kE, gk, gt, gi; 
+    int kK, kT, kE, gk, gt, gi; 
     int w, x,lt;
 
     while(plik>>n>>type>>kK>>kT>>kE>>w>>gk>>gt>>gi>>x>>lt>>opis){

@@ -10,7 +10,7 @@ using namespace std;
 // ==========================================
 
 Energy:: Energy():Building("XXX",TypBudynku::ENERGY,0,0,0,0),enGen(0){}
-Energy::Energy(string n, double kE,double kK, double kT, double e,int w):Building(n,TypBudynku::ENERGY,kE,kK,kT,w),enGen(e){}
+Energy::Energy(string n, int kE,int kK, int kT, int e,int w):Building(n,TypBudynku::ENERGY,kE,kK,kT,w),enGen(e){}
 
 // ==========================================
 // OVERRIDE
@@ -29,5 +29,5 @@ void Energy::save(ofstream& plik)const{
     plik<<" "<<enGen<<" "<<endl;
 }
 
-double Energy::getEnergy() const{return enGen;}
+int Energy::getEnergy() const{return enGen;}
 

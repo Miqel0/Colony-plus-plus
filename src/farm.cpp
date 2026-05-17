@@ -10,7 +10,7 @@ using namespace std;
 // ==========================================
 
 Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0,0,0),foodGen(0),time(0),curr_time(0){}
-Farm::Farm(string n, double kE,double kK, double kT, double f,int w,int tim,int ct):Building(n,TypBudynku::FARM,kE,kK,kT,w),foodGen(f),time(tim),curr_time(ct){}
+Farm::Farm(string n, int kE,int kK, int kT, int f,int w,int tim,int ct):Building(n,TypBudynku::FARM,kE,kK,kT,w),foodGen(f),time(tim),curr_time(ct){}
 
 // ==========================================
 // OVERRIDE
@@ -30,7 +30,7 @@ void Farm::save(ofstream& plik)const{
     plik<<" "<<foodGen<<" "<<time<<" "<<curr_time<<endl; 
 }
 
-double Farm::work(){// Przy pracy Farm, jest dodatkowo sprawdzany czas pracy
+int Farm::work(){// Przy pracy Farm, jest dodatkowo sprawdzany czas pracy
     curr_time++; //Kazdy Farm produkuje z inna predkoscia (musza urosnac rzeczy)
     if(curr_time==time){//Jak mija konkretny czas - liczba tur - to dopiero wtedy produkuje jedzenie
         curr_time=0;

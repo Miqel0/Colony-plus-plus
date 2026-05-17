@@ -20,9 +20,9 @@ class Building{
         int id;
         static int next_id;
 
-        double kosztEnergii;
-        double kosztKamien;
-        double kosztTytan;
+        int kosztEnergii;
+        int kosztKamien;
+        int kosztTytan;
         
         int workers;
         int residents;
@@ -30,13 +30,13 @@ class Building{
     public:
         //KONSTRUKTORY
         Building();
-        Building(string n,TypBudynku t, double kE,double kK, double kT,int w);
+        Building(string n,TypBudynku t, int kE,int kK, int kT,int w);
         virtual ~Building(){};
 
         //VIRTUAL
         virtual void prnt(int il) const;
         virtual void save(ofstream& plik) const;
-        virtual double work();
+        virtual int work();
         /**
          * @brief Funkcja wyświetlająca dane o budynku
          * 
@@ -55,9 +55,9 @@ class Building{
         int getDemandWorkers() const;
         TypBudynku getTyp() const;
         int getResidents() const;
-        double getReqEnergy() const;
-        double getKosztKamien() const;
-        double getKosztTytan() const;
+        int getReqEnergy() const;
+        int getKosztKamien() const;
+        int getKosztTytan() const;
         
 };
 

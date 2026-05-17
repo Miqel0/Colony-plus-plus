@@ -90,10 +90,10 @@ class Colony{
   
         string getNazwa() const;
         int getTura() const;
-        double getReqEnergy() const;
-        double getGenEnergy() const;
-        double getReqFood() const;
-        double getFood() const;
+        int getReqEnergy() const;
+        int getGenEnergy() const;
+        int getReqFood() const;
+        int getFood() const;
         int getStone() const;
         int getTitan() const;
 };

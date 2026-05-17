@@ -257,10 +257,10 @@ BuildResult Colony::UIczyStac(const unique_ptr<Building> &b)const{
         wynik.czy=true;
     }else{
         if(b->getKosztKamien()>f_logisyka.getStone()){
-            // wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia!";
+            // wynik+="Brakuje "+to_string((b->getKosztKamien()-f_logisyka.getStone()))+" kamienia!";
             wynik.kamien=b->getKosztKamien()-f_logisyka.getStone();
         }else if(b->getKosztTytan()>f_logisyka.getTitan()){
-            // wynik+="Brakuje "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
+            // wynik+="Brakuje "+to_string((b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
             wynik.tytan=b->getKosztTytan()-f_logisyka.getTitan();
         }
     }
@@ -377,24 +377,24 @@ DestroyResult Colony::UIzburzBudynek(string nazwa){
         // cout<<YELLOW<<">>Potwierdz wpisujac y, albo anuluj n."<<RESET<<endl;
         // cin>>dec;
         // if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
-            if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
-                if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){ //Sprawdzenie czy aby na pewno mozna usunac dany budynek - nie moze brakowac pracownikow!
-                    // cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
-                    wynik.brakLudzi=f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents();
-                }
-            }else{//Wszystko pasuje, wiec mozna zburzyc
-                // cout<<YELLOW<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<RESET<<endl;
+        if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
+            if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){ //Sprawdzenie czy aby na pewno mozna usunac dany budynek - nie moze brakowac pracownikow!
+                // cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
+                wynik.brakLudzi=f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents();
+                return wynik;
+            }else{
                 wynik.czy=true;
-                if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
-                    f_logisyka.setAWorkers(-buildings[nr]->getResidents());
-                }
-                wynik.sur=f_logisyka.UIupdateZburzBudynek(buildings[nr].get());
-                buildings.erase(buildings.begin()+nr);
             }
-        // }else{
-        //     cout<<YELLOW<<"Anulowano wyburzanie budynku."<<RESET<<endl;
-        // }
-            
+        } else{
+            wynik.czy=true;
+        }
+        if(wynik.czy){
+            if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
+                f_logisyka.setAWorkers(-buildings[nr]->getResidents());
+            }
+            wynik.sur=f_logisyka.UIupdateZburzBudynek(buildings[nr].get());
+            buildings.erase(buildings.begin()+nr);  
+        }
     }else{
         cout<<RED<<"Blad: Nie ma budynku o takiej nazwie: "<<BOLD<<nazwa<<endl;
         cout<<endl;
@@ -448,7 +448,7 @@ void Colony::loadBuildings(string nazwa_plik) {
         //Parametry
         int w_type, w_id, w, maxSaved = 0;
         string w_n;
-        double kE,kT,kK;
+        int kE,kT,kK;
         //Format linii w pliku: TypBudynku Nazwa ID KosztEnergii KosztKamienia KosztTytanu Pracownicy ParametrySpecjalne
         //Przejscie przez plik, linijka po linijce
         while (plik >> w_type >> w_n >> w_id >> kE>>kK>>kT >> w) {
@@ -463,7 +463,7 @@ void Colony::loadBuildings(string nazwa_plik) {
 
                 case TypBudynku::ENERGY: {
                     //Dodatkowe parametry
-                    double e;
+                    int e;
                     plik >> e;
                     
                     auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, w);
@@ -476,7 +476,7 @@ void Colony::loadBuildings(string nazwa_plik) {
 
                 case TypBudynku::FARM: {
                     //Dodatkowe parametry
-                    double f;
+                    int f;
                     int tim,ct;
                     plik >> f>>tim>>ct;
                 
@@ -501,7 +501,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                 }
                 case TypBudynku::PRODUCER: {
                     //Dodatkowe parametry
-                    double s, ti;
+                    int s, ti;
                     plik >> s>>ti;
                 
                     auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, w,ti);
@@ -513,7 +513,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                 }
                 case TypBudynku::TERR: {
                     //Dodatkowe parametry
-                    double te;
+                    int te;
                     plik >> te;
                 
                     auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, w);
@@ -605,9 +605,9 @@ int Colony::getIlosc(string name)const{//Zwracanie ilosci budynku o danej nazwie
 
 string Colony::getNazwa() const{return f_logisyka.getNazwa();}
 int Colony::getTura() const{return f_logisyka.getTura();}
-double Colony::getReqEnergy() const{return f_logisyka.getReqEnergy();}
-double Colony::getGenEnergy() const{return f_logisyka.getGenEnergy();}
-double Colony::getReqFood() const{return f_logisyka.getReqFood();}
-double Colony::getFood() const{return f_logisyka.getFood();}
+int Colony::getReqEnergy() const{return f_logisyka.getReqEnergy();}
+int Colony::getGenEnergy() const{return f_logisyka.getGenEnergy();}
+int Colony::getReqFood() const{return f_logisyka.getReqFood();}
+int Colony::getFood() const{return f_logisyka.getFood();}
 int Colony::getStone() const{return f_logisyka.getStone();}
 int Colony::getTitan() const{return f_logisyka.getTitan();}

@@ -18,7 +18,7 @@ class Housing: public Building{
     public:
         //KONSTRUKTOR
         Housing();
-        Housing(string n, double kE,double kK, double kT, int r,int w);
+        Housing(string n, int kE,int kK, int kT, int r,int w);
         ~Housing(){};
 
         //OVERRIDE
