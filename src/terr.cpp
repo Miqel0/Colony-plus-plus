@@ -16,15 +16,27 @@ Terr::Terr(string n, int kE,int kK, int kT, int te,int w):Building(n,TypBudynku:
 // OVERRIDE
 // ==========================================
 
+/**
+ * @brief WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS nextRound, f. virtualna
+ *
+ * @return int zwracana wartość podczas pracy
+ */
 int Terr::work(){return terrGen;}
 
-void Terr::prnt(int il)const{
-    prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers),"Wplyw na terraformacje: ",cleanNum(terrGen));
-}
+/**
+ * @brief Funckja wyświetlająca dane danego budynku do tooltipa f.przeciążona
+ * 
+ * @param il  ilość danego budynku
+ */
 void Terr::UIprnt(int il)const{
     prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Wplywa na terraformacje: ",cleanNum(terrGen)}});
 }
 
+/**
+ * @brief Zapisywanie danych budynku do pliku
+ * 
+ * @param plik plik
+ */
 void Terr::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<terrGen<<" "<<endl;

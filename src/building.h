@@ -34,7 +34,6 @@ class Building{
         virtual ~Building(){};
 
         //VIRTUAL
-        virtual void prnt(int il) const;
         virtual void save(ofstream& plik) const;
         virtual int work();
         /**

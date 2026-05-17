@@ -38,21 +38,14 @@ class Logistics{
         //KONSTRUKTOR
         Logistics();
         ~Logistics(){};
-        
-        //WYSWIETLANIE
-        void prnt();
-        void prntRound(int f, int s, int t, int te,int n);
 
         //NEXT ROUND
-        int czyNextRound(const vector<unique_ptr<Building>>& budynki);
         NextResult UIczyNextRound(const vector<unique_ptr<Building>>& budynki);
-        int nextRound(const vector<unique_ptr<Building>>& budynki);
         NextResult UInextRound(const vector<unique_ptr<Building>>& budynki);
         bool sprawdzLvlTerr();
 
         //BUDOWANIE
         void updateBudynek(Building* budynek);
-        void updateZburzBudynek(Building* budynek);
         pair<int, int>  UIupdateZburzBudynek(Building* budynek);
 
         //SAVE/LOAD
@@ -85,8 +78,7 @@ class Logistics{
         int getStone() const;
         int getTitan() const;
         int getLvlTerr() const;
-        int getToNextLvlTerr() const;
-            
+        int getToNextLvlTerr() const;    
 };
 
 #endif

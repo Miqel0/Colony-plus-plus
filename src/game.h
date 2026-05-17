@@ -22,45 +22,25 @@ class Game{
         ~Game(){};
         
         //GRA
-        void grafikaStart();
-        void run();
-        void startTutorial();
-        void commands();
-        void build(BuildingInfo info);
-        BuildResult UIbuild(BuildingInfo info);
         vector<BuildingInfo> UIprntNewLvlTerr();
+        BuildResult UIbuild(BuildingInfo info);
         NextResult UINextRound();
         DestroyResult UIZburz(string nazwa);
+        
         void UIrun();
+
         //PLIKI
         void loadGameData();
         bool checkConfig();
         void saveConfig();
 
-        //WYSWIETLANIE
-        void prntInfo(string cat);
-        void prntCategories();
-        void prntHelp();
-        void prntRules();
-        void prntNewLvlTerr();
-
     private:
-        bool running;
-        
-        //Tworzenie obiektu kolonia
+
+        //Tworzenie elementów:
         Colony kolonia;
         Graphics grafika;
         BuildingFactory fabryka;
         map<string, BuildingInfo> bazaDanych;
-
-        //Mapy do zamiany strignu na typ budynku
-        // map<string,TypBudynku> stringToBudynku;
-        // map<string,TypDomy> stringToDomy;
-        // map<string,TypEnergy> stringToEnergy;
-        // map<string,TypFarm> stringToFarm;
-        // map<string,TypProducer> stringToProducer;
-        // map<string,TypTerr> stringToTerr;
-        
 
 };
 

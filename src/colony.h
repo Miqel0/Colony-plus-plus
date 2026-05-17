@@ -28,37 +28,18 @@ class Colony{
         Colony();
         ~Colony(){};
 
-        //WYSWIETLANIE
-        void prnt();
-        void prntBuilding(int nr);
-        void prntBuilding(string bud);
-        void prntBuildings();
-        void prntBuildingsShort();
-        void prntBuildingsSumm();
-
         map<string,int> UIprntBuildingsSumm() const;
         void UIprntBuilding(string bud) const;
 
         //BUDOWANIE
-        bool czyBudynek(string bud)const;
-        bool czyStac(const unique_ptr<Building> &b)const;
         BuildResult UIczyStac(const unique_ptr<Building> &b)const;
         void addBuilding(unique_ptr<Building> b);
 
-        // bool zbudujEnergy(string n, double kE,double kK, double kT, double e,TypEnergy t,int w);
-        // bool zbudujFarm(string n, double kE,double kK, double kT, double f,TypFarm t,int w,int tim,int ct);
-        // bool zbudujHousing(string n, double kE,double kK, double kT, int r,TypDomy t,int w);
-        // bool zbudujProducer(string n, double kE,double kK, double kT, double s,TypProducer t,int w,double ti);
-        // bool zbudujTerr(string n, double kE,double kK, double kT, double te,TypTerr t,int w);
-
         BuildResult UIbuduj(unique_ptr<Building> b);
-        bool buduj(unique_ptr<Building> b);
-        void zburzBudynek(string nazwa);
         DestroyResult UIzburzBudynek(string nazwa);
 
 
         //NEXT ROUND
-        int nextRound();
         NextResult UInextRound(); 
 
         bool sprawdzLvlTerr();

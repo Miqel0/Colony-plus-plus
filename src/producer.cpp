@@ -16,12 +16,18 @@ Producer::Producer(string n, int kE,int kK, int kT, int s,int w,int ti):Building
 // OVERRIDE
 // ==========================================
 
-int Producer::work(){return stoneGen;}
+/**
+ * @brief WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS nextRound, f. virtualna
+ *
+ * @return int zwracana wartość podczas pracy
+ */
+int Producer::work(){return stoneGen;}//FIXME WTFFF
 
-void Producer::prnt(int il)const{
-    prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers)," "," ","Generowany kamien: ",cleanNum(stoneGen),"Generowany tytan: ",cleanNum(titanGen));
-}
-
+/**
+ * @brief Funckja wyświetlająca dane danego budynku do tooltipa f.przeciążona
+ * 
+ * @param il  ilość danego budynku
+ */
 void Producer::UIprnt(int il)const{
     if(stoneGen !=0 && titanGen !=0){
         prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowany kamien: ",cleanNum(stoneGen)},{"Generowany tytan: ",cleanNum(titanGen)}});
@@ -32,6 +38,11 @@ void Producer::UIprnt(int il)const{
     }
 }
 
+/**
+ * @brief Zapisywanie danych budynku do pliku
+ * 
+ * @param plik plik
+ */
 void Producer::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<stoneGen<<" "<<titanGen<<endl; //pilnowac przy kolejnym doawaniu
@@ -40,6 +51,5 @@ void Producer::save(ofstream& plik)const{
 // ==========================================
 // GETTERY
 // ==========================================
-
 
 int Producer::getGenTitan() const{return titanGen;}
