@@ -703,6 +703,22 @@ void Game::prntNewLvlTerr(){//Wyswietlanie komunikatu i nowych budynkow przy osi
         }
         cout<<endl;
 }
+/**
+ * @brief Wyswietlanie nowych budynkow przy osiagnieciu nowego poziomu
+ * 
+ */
+vector<BuildingInfo> Game::UIprntNewLvlTerr(){
+        //Sprawdzanie czy istnieje jakis budynek ktory sie odblokowal
+        vector<BuildingInfo> pakiet;
+        
+        for(const auto&[klucz,info]:bazaDanych){
+            if(info.lvlTerr==kolonia.getLvlTerr()){
+                pakiet.push_back(info);
+            }
+        }
+    return pakiet;
+}
+
 
 void Game::prntInfo(string cat){//Wyswietlanie informacji o danej kategorii budynkow
     for (auto &c : cat) c = toupper(c);

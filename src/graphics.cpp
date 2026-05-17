@@ -7,7 +7,6 @@
 #include <map>
 #include <cfloat>
 
-
 Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, 0,0,0,"",0,false}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}),czyWyburzanie(false),czyWyburzanie1(false),destroyWynik({false,0,"",{0,0}}){}
 Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, 0,0,0,"",0,false}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}),czyWyburzanie(false),czyWyburzanie1(false),destroyWynik({false,0,"",{0,0}}){}
 
@@ -45,151 +44,236 @@ void Graphics::prntMenu(){
  * @param cat nazwa kategorii do wyświetlenia
  * @param bazaDanych 
  */
-void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& licznik, string cat,const map<string, BuildingInfo>& bazaDanych){
+void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& licznik, string cat, const map<string, BuildingInfo>& bazaDanych) {
     if (fontDefault != nullptr) ImGui::PushFont(fontDefault);
+    ImVec2 pozycja = ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y + 12.0f);
+    ImGui::SetNextWindowPos(pozycja);
     ImGui::BeginTooltip(); 
-    if(cat=="prad"){
-        ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Prąd");
 
-        struct prad_info{
-            string nazwa="";
-            int gen=0;
-            int dem=0;
-            int ilo=0;
-        };
-        vector <prad_info> gen={};
-        vector <prad_info> straty={};
-        for(const auto& [nazwa, ilosc] : licznik){
-            string nazwa_=nazwa;
-            for(auto &c : nazwa_) c = tolower(c);
-            const auto& info = bazaDanych.at(nazwa_);
-            if(info.type=="ENERGY"){
-                prad_info wynik;
-                wynik.nazwa=cleanString(info.nazwa);
-                wynik.gen=info.genInne;
-                wynik.ilo=ilosc;
+    // --- FUNKCJA POMOCNICZA DO WYŚRODKOWANIA NAGŁÓWKA ---
+    auto CenterTitle = [](const char* text, ImVec4 color) {
+        float winWidth = ImGui::GetWindowSize().x;
+        float textWidth = ImGui::CalcTextSize(text).x;
+        float posX = (winWidth - textWidth) * 0.5f;
+        if (posX > 0) ImGui::SetCursorPosX(posX); 
+        ImGui::TextColored(color, "%s", text);
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(0.0f, 2.0f));
+    };
+
+    // --- STRUKTURA DLA WSZYSTKICH KATEGORII ---
+    struct ResInfo {
+        string nazwa;
+        int gen;
+        int dem;
+        int ilo;
+    };
+
+    vector<ResInfo> gen;
+    vector<ResInfo> straty;
+    int sumaDodatkowa = 0; 
+
+    // --- GŁÓWNA LOGIKA ---
+    if (cat == "prad") {
+        CenterTitle("Energia", ImVec4(1.0f, 0.8f, 0.0f, 1.0f)); 
+
+        for (const auto& [nazwa, ilosc] : licznik) {
+            string nazwa_ = nazwa;
+            for (auto &c : nazwa_) c = tolower(c);
+            
+            // TWÓJ SPOSÓB Z .at()
+            const auto& info = bazaDanych.at(nazwa_); 
+
+            if (info.type == "ENERGY") {
+                // BEZPIECZNE PRZYPISYWANIE (rozwiązuje błędy z wektorem)
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = info.genInne * ilosc;
+                wynik.dem = 0;
+                wynik.ilo = ilosc;
                 gen.push_back(wynik);
             }
-            if(info.reqEnergy!=0){
-                prad_info wynik;
-                wynik.nazwa=cleanString(info.nazwa);
-                wynik.dem=info.reqEnergy;
-                wynik.ilo=ilosc;
+            if (info.reqEnergy != 0) {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = 0;
+                wynik.dem = info.reqEnergy * ilosc;
+                wynik.ilo = ilosc;
                 straty.push_back(wynik);
             }
         }
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "PRODUKCJA: %d",(int)kolonia.getGenEnergy());
-        for (const auto& wpis : gen) {
-            ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
-        }
-        ImGui::Separator();
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "ZAPOTRZEBOWANIE: %d",(int)kolonia.getReqEnergy());
-        for (const auto& wpis : straty) {
-            ImGui::BulletText("%s (x%d): -%d", wpis.nazwa.c_str(), wpis.ilo, wpis.dem);
-        }
-        ImGui::Separator();
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "SUMA: %d",(int)kolonia.getGenEnergy()-(int)kolonia.getReqEnergy());
+
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "PRODUKCJA: %d", (int)kolonia.getGenEnergy());
+        for (const auto& wpis : gen) ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
         
+        ImGui::Separator();
+        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "ZAPOTRZEBOWANIE: %d", (int)kolonia.getReqEnergy());
+        for (const auto& wpis : straty) ImGui::BulletText("%s (x%d): -%d", wpis.nazwa.c_str(), wpis.ilo, wpis.dem);
+        
+        ImGui::Separator();
+        int suma = (int)kolonia.getGenEnergy() - (int)kolonia.getReqEnergy();
+        ImGui::TextColored(suma >= 0 ? ImVec4(0.2f, 1.0f, 0.2f, 1.0f) : ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "BILANS: %d", suma);
+    }
+    
+    else if (cat == "ludzie") {
+        CenterTitle("Kolonisci", ImVec4(1.0f, 0.6f, 0.2f, 1.0f)); 
 
-      }
-      else if(cat=="ludzie"){
-        ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Ludzie");
-
-        struct ludzie_info{
-            string nazwa="";
-            int gen=0;
-            int dem=0;
-            int ilo=0;
-        };
-        vector <ludzie_info> gen={};
-        vector <ludzie_info> straty={};
-        for(const auto& [nazwa, ilosc] : licznik){
-            string nazwa_=nazwa;
-            for(auto &c : nazwa_) c = tolower(c);
+        for (const auto& [nazwa, ilosc] : licznik) {
+            string nazwa_ = nazwa;
+            for (auto &c : nazwa_) c = tolower(c);
+            
             const auto& info = bazaDanych.at(nazwa_);
-            if(info.type=="HOUSING"){
-                ludzie_info wynik;
-                wynik.nazwa=cleanString(info.nazwa);
-                wynik.gen=info.genInne;
-                wynik.ilo=ilosc;
+
+            if (info.type == "HOUSING") {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = info.genInne * ilosc;
+                wynik.dem = 0;
+                wynik.ilo = ilosc;
                 gen.push_back(wynik);
             }
-            if(info.workers!=0){
-                ludzie_info wynik;
-                wynik.nazwa=cleanString(info.nazwa);
-                wynik.dem=info.workers;
-                wynik.ilo=ilosc;
+            if (info.workers != 0) {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = 0;
+                wynik.dem = info.workers * ilosc;
+                wynik.ilo = ilosc;
                 straty.push_back(wynik);
             }
         }
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "DOSTĘPNI: %d",kolonia.getAllWorkers());
+
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "DOSTEPNI: %d", kolonia.getAllWorkers());
         ImGui::BulletText("Baza: +10");
-        for (const auto& wpis : gen) {
-            ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
-        }
+        for (const auto& wpis : gen) ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
+        
         ImGui::Separator();
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "ZAPOTRZEBOWANIE: %d",kolonia.getDemandWorkers());
-        for (const auto& wpis : straty) {
-            ImGui::BulletText("%s (x%d): -%d", wpis.nazwa.c_str(), wpis.ilo, wpis.dem);
-        }
+        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "ZATRUDNIENI: %d", kolonia.getDemandWorkers());
+        for (const auto& wpis : straty) ImGui::BulletText("%s (x%d): -%d", wpis.nazwa.c_str(), wpis.ilo, wpis.dem);
+        
         ImGui::Separator();
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "SUMA: %d",kolonia.getAllWorkers()-kolonia.getDemandWorkers());
-      }
-      else if(cat=="jedzenie"){
-        ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Jedzenie");
-
-        struct food_info{
-            string nazwa="";
-            int gen=0;
-            int dem=0;
-            int ilo=0;
-        };
-        vector <food_info> gen={};
-        vector <food_info> straty={};
-        for(const auto& [nazwa, ilosc] : licznik){
-            string nazwa_=nazwa;
-            for(auto &c : nazwa_) c = tolower(c);
+        int suma = kolonia.getAllWorkers() - kolonia.getDemandWorkers();
+        ImGui::TextColored(suma >= 0 ? ImVec4(0.2f, 1.0f, 0.2f, 1.0f) : ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "WOLNI: %d", suma);
+    }
+    
+    else if (cat == "jedzenie") {
+        CenterTitle("Zywnosc", ImVec4(0.6f, 1.0f, 0.2f, 1.0f)); 
+        int suma=-20;
+        for (const auto& [nazwa, ilosc] : licznik) {
+            string nazwa_ = nazwa;
+            for (auto &c : nazwa_) c = tolower(c);
+            
             const auto& info = bazaDanych.at(nazwa_);
-            if(info.type=="FARM"){
-                food_info wynik;
-                wynik.nazwa=cleanString(info.nazwa);
-                wynik.gen=info.genInne;
-                
-                wynik.ilo=ilosc;
+
+            if (info.type == "FARM") {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = info.genInne * ilosc;
+                wynik.dem = info.x;
+                wynik.ilo = ilosc;
+                suma+=wynik.gen/info.x;
                 gen.push_back(wynik);
             }
-            if(info.type=="HOUSING"){
-                food_info wynik;
-                wynik.nazwa=cleanString(info.nazwa);
-                wynik.dem=2*info.genInne;
-                wynik.ilo=ilosc;
+            if (info.type == "HOUSING") {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = 0;
+                wynik.dem = (2 * info.genInne) * ilosc;
+                wynik.ilo = ilosc;
                 straty.push_back(wynik);
             }
         }
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "PRODUKCJA: %d",0);
-        for (const auto& wpis : gen) {
-            ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
-        }
-        ImGui::Separator();
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "ZAPOTRZEBOWANIE: %d",(int)kolonia.getReqFood());//FIXME wymyslec liczenie srednie na ture
-        ImGui::BulletText("Baza: -20");
-        for (const auto& wpis : straty) {
-            ImGui::BulletText("%s (x%d): -%d", wpis.nazwa.c_str(), wpis.ilo, wpis.dem);
-        }
-        ImGui::Separator();
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "SUMA: %d",0-(int)kolonia.getReqFood());
+
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "PRODUKCJA: %d", suma); // FIXME: wstaw sumę produkcji
+        for (const auto& wpis : gen) ImGui::BulletText("%s (x%d): +%d co %d tur", wpis.nazwa.c_str(), wpis.ilo, wpis.gen,wpis.dem);//wpis.dem to co ile tur!
         
+        ImGui::Separator();
+        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "ZAPOTRZEBOWANIE: %d", (int)kolonia.getReqFood());
+        ImGui::BulletText("Baza: -20");
+        for (const auto& wpis : straty) ImGui::BulletText("%s (x%d): -%d", wpis.nazwa.c_str(), wpis.ilo, wpis.dem);
+        
+        ImGui::Separator();
+        int suma_ = suma - (int)kolonia.getReqFood();
+        ImGui::TextColored(suma_ >= 0 ? ImVec4(0.2f, 1.0f, 0.2f, 1.0f) : ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "BILANS: %d", suma);
+    }
+    
+    else if (cat == "kamien") {
+        CenterTitle("Kamien", ImVec4(0.7f, 0.7f, 0.7f, 1.0f)); 
 
-      }
+        for (const auto& [nazwa, ilosc] : licznik) {
+            string nazwa_ = nazwa;
+            for (auto &c : nazwa_) c = tolower(c);
+            
+            const auto& info = bazaDanych.at(nazwa_);
 
+            if (info.type == "PRODUCER" && info.genKamien != 0) {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = info.genKamien * ilosc;
+                wynik.dem = 0;
+                wynik.ilo = ilosc;
+                gen.push_back(wynik);
+                sumaDodatkowa += wynik.gen;
+            }
+        }
+
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "WYDOBYCIE NA TURE: %d", sumaDodatkowa);
+        for (const auto& wpis : gen) ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
+    }
+    
+    else if (cat == "tytan") {
+        CenterTitle("Tytan", ImVec4(0.4f, 0.7f, 1.0f, 1.0f)); 
+
+        for (const auto& [nazwa, ilosc] : licznik) {
+            string nazwa_ = nazwa;
+            for (auto &c : nazwa_) c = tolower(c);
+            
+            const auto& info = bazaDanych.at(nazwa_);
+
+            if (info.type == "PRODUCER" && info.genTytan != 0) {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = info.genTytan * ilosc;
+                wynik.dem = 0;
+                wynik.ilo = ilosc;
+                gen.push_back(wynik);
+                sumaDodatkowa += wynik.gen;
+            }
+        }
+
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "WYDOBYCIE NA TURE: %d", sumaDodatkowa);
+        for (const auto& wpis : gen) ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
+    }
+    
+    else if (cat == "terr") {
+        CenterTitle("Terraformacja", ImVec4(0.9f, 0.3f, 1.0f, 1.0f)); 
+
+        for (const auto& [nazwa, ilosc] : licznik) {
+            string nazwa_ = nazwa;
+            for (auto &c : nazwa_) c = tolower(c);
+            
+            const auto& info = bazaDanych.at(nazwa_);
+
+            if (info.type == "TERR") {
+                ResInfo wynik;
+                wynik.nazwa = cleanString(info.nazwa);
+                wynik.gen = info.genInne * ilosc;
+                wynik.dem = 0;
+                wynik.ilo = ilosc;
+                gen.push_back(wynik);
+                sumaDodatkowa += wynik.gen;
+            }
+        }
+
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "PUNKTY NA TURE: %d", sumaDodatkowa);
+        for (const auto& wpis : gen) ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
+    }
 
     ImGui::EndTooltip(); 
     if (fontDefault != nullptr) ImGui::PopFont();
 }
 
-
 /**
- * @brief Tymczasowe wyświetlanie parametrów kolonii
+ * @brief Wyświetlanie parametrów kolonii
  * 
  * @param kolonia wskaźnik do kolonii
  */
@@ -218,6 +302,8 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         ImGui::PopStyleColor();
         if (ImGui::IsItemHovered()) {
             if (fontDefault != nullptr) ImGui::PushFont(fontDefault);
+            ImVec2 pozycja = ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y + 12.0f);
+            ImGui::SetNextWindowPos(pozycja);
             ImGui::BeginTooltip(); 
             ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Nazwa twojej kolonii.");
             ImGui::EndTooltip(); 
@@ -226,7 +312,7 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         
         ImGui::SameLine(0.0f, 40.0f);
         
-        ImGui::Text("Prad:");
+        ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"Prad:");
         if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"prad",bazaDanych);
         }
@@ -240,32 +326,56 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
 
         ImGui::SameLine(0.0f, 25.0f);
 
-        ImGui::Text("Ludzie: %d/%d", kolonia.getDemandWorkers(), kolonia.getAllWorkers());
+        ImGui::TextColored(ImVec4(1.0f, 0.6f, 0.2f, 1.0f),"Koloniści: %d/%d", kolonia.getDemandWorkers(), kolonia.getAllWorkers());
         if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"ludzie",bazaDanych);
         }
         ImGui::SameLine(0.0f, 25.0f);
 
-        ImGui::Text("Jedzenie:");
+        ImGui::TextColored(ImVec4(0.6f, 1.0f, 0.2f, 1.0f),"Jedzenie:");
          if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"jedzenie",bazaDanych);
         }
         ImGui::SameLine();
+
+        int suma=0;
+        for (const auto& [nazwa, ilosc] : licznik) {
+            string nazwa_ = nazwa;
+            for (auto &c : nazwa_) c = tolower(c);
+            
+            const auto& info = bazaDanych.at(nazwa_);
+            if (info.type == "FARM") {
+                
+                int gen = info.genInne * ilosc;
+                suma+=gen/info.x;
+            }
+        }
+        suma-=kolonia.getReqFood();
         if (kolonia.getFood() > 2 * kolonia.getReqFood()) {
-            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Zielony
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%.0f (%d)", kolonia.getFood(), suma); // Zielony
         } else if (kolonia.getFood() >= kolonia.getReqFood()) {
-            ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Żółty 
+            ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.0f (%d)", kolonia.getFood(), suma); // Żółty 
         } else {
-            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Czerwony
+            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%.0f (%d)", kolonia.getFood(), suma); // Czerwony
         }
         ImGui::SameLine(0.0f, 40.0f); 
 
-        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Kamien: %d", kolonia.getStone());
-        ImGui::SameLine(0.0f, 20.0f);
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Kamień: %d", kolonia.getStone());
+         if (ImGui::IsItemHovered()) {
+            prntStatystykiToolTop(kolonia,licznik,"kamien",bazaDanych);
+        }
+        ImGui::SameLine(0.0f, 40.0f);
+
         ImGui::TextColored(ImVec4(0.4f, 0.7f, 1.0f, 1.0f), "Tytan: %d", kolonia.getTitan());
+         if (ImGui::IsItemHovered()) {
+            prntStatystykiToolTop(kolonia,licznik,"tytan",bazaDanych);
+        }
         ImGui::SameLine(0.0f, 40.0f);
 
         ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "Terraformacja: %d", kolonia.getLvlTerr());
+         if (ImGui::IsItemHovered()) {
+            prntStatystykiToolTop(kolonia,licznik,"terr",bazaDanych);
+        }
         ImGui::SameLine();
         ImGui::Text("(Do nast: %d)", kolonia.getToNextLvlTerr());
 
@@ -624,7 +734,7 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
                 if (ImGui::IsItemHovered()) {
                     ImGui::BeginTooltip(); 
                     
-                    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Kliknięcie spowoduje zbudowanie tego budynku!");
+                    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Kliknięcie spowoduje zbudowanie tego budynku!");
                     ImGui::Separator();
                     ImGui::Text("Zbudowanie kosztuje:\n kamień: %d \n tytan: %d", (int)info.kKamien,(int)info.kTytan);
                     ImGui::Separator();
@@ -710,7 +820,7 @@ void Graphics::prntNextRoundButton(){
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip(); 
                     
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Kliknięcie spowoduje przejście do kolejnej rundy!");
+            ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Kliknięcie spowoduje przejście do kolejnej rundy!");
 
             ImGui::EndTooltip(); 
         }
@@ -852,13 +962,40 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
 
         if (nextWynik.terr) {
             ImGui::Dummy(ImVec2(0.0f, 10.0f));
-            ImGui::TextColored(ImVec4(0.2f, 0.8f, 1.0f, 1.0f), "AWANS TERRAFORMACJI!");
-            ImGui::Text("Odblokowano nowe technologie.");
-        }
+            
+        
+            ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "AWANS TERRAFORMACJI!");
+            ImGui::Separator();
+            ImGui::Text("Odblokowano nowe technologie:");
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
+            
+            vector<BuildingInfo> wynik = gra.UIprntNewLvlTerr();
+
+        
+            if (wynik.empty()) {
+                ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Brak nowych schematow na tym poziomie.");
+            } else {
+                for (const auto& info : wynik) {
+                    
+                    string czystaNazwa = cleanString(info.nazwa);
+                    
+                    ImGui::Bullet();
+                    ImGui::SameLine();
+                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%s", czystaNazwa.c_str());
+
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::BeginTooltip();
+                        
+                        prntOpis(info.nazwa, bazaDanych); 
+                        
+                        ImGui::EndTooltip();
+                    }
+                }
+            }
+        }
         ImGui::Dummy(ImVec2(0.0f, 15.0f));
         ImGui::Separator();
-        
         float buttonWidth = 120.0f;
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
         if (ImGui::Button("Dalej", ImVec2(buttonWidth, 30))) {

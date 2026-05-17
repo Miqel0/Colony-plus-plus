@@ -28,6 +28,7 @@ class Game{
         void commands();
         void build(BuildingInfo info);
         BuildResult UIbuild(BuildingInfo info);
+        vector<BuildingInfo> UIprntNewLvlTerr();
         NextResult UINextRound();
         DestroyResult UIZburz(string nazwa);
         void UIrun();

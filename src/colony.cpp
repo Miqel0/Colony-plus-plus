@@ -590,7 +590,7 @@ int Colony::getAllWorkers()const{return f_logisyka.getAWorkers();}
 int Colony::getDemandWorkers()const{return f_logisyka.getDWorkers();}
 int Colony:: getRuch()const{return f_logisyka.getRuch();}
 int Colony::getLvlTerr() const{return f_logisyka.getLvlTerr();}
-int Colony::getToNextLvlTerr() const{return f_logisyka.getTitan();}
+int Colony::getToNextLvlTerr() const{return f_logisyka.getToNextLvlTerr();}
 int Colony::getIlosc(string name)const{//Zwracanie ilosci budynku o danej nazwie
     if(name.empty()) return 0;
     int il=0;
