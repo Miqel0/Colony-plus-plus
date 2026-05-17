@@ -16,22 +16,22 @@ Housing::Housing(string n, int kE,int kK, int kT, int r,int w):Building(n,TypBud
 // OVERRIDE
 // ==========================================
 
-void Housing::prnt(int il)const{
-    prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Liczba mieszkancow: ", cleanNum(residents)," "," ");
-}
-
+/**
+ * @brief Funckja wyświetlająca dane danego budynku do tooltipa f.przeciążona
+ * 
+ * @param il  ilość danego budynku
+ */
 void Housing::UIprnt(int il)const{
     prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Liczba mieszkancow: ",cleanNum(residents)}});
 }
 
+/**
+ * @brief Zapisywanie danych budynku do pliku
+ * 
+ * @param plik plik
+ */
 void Housing::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<residents<<" "<<endl;
 }
-
-
-// ==========================================
-// GETTERY
-// ==========================================
-
 

@@ -1,0 +1,154 @@
+/*
+Stary samouczek
+
+*/
+void Game::startTutorial() {
+    cout << CLEAR_SCREEN;
+    cout << RED << "------------------------------------------------------------" << RESET << endl;
+    cout << BOLD << MAGENTA << "                 ROK 2142. SEKTOR OMEGA-4." << RESET << endl;
+    cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
+    
+    cout << YELLOW << "Komputer pokladowy: " << GREEN << "ONLINE" << RESET << endl;
+    cout << YELLOW << "Systemy podtrzymywania zycia: " << GREEN << "STABILNE" << RESET << endl;
+    cout << "Witaj, Kapitanie. Ladownik osiadl na powierzchni Marsa." << endl << endl;
+
+    //  NAZWA 
+    cout << CYAN << "[NARRATOR]:" << RESET << " Pierwszym krokiem jest zarejestrowanie nazwy naszej placowki w systemie." << endl;
+    kolonia.setNazwa(); 
+    cout << endl;
+
+    // KOLONIA
+    cout << CYAN << "[NARRATOR]:" << RESET << " Swietnie. Zanim zaczniemy budowe, musisz ocenic nasze zasoby." << endl;
+    cout << "Wpisz komende " << BG_BLACK << RED << " colony " << RESET << ", aby wyswietlic stan magazynow." << endl;
+    if (cin.peek() == '\n') cin.ignore();
+    string komenda;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "colony") {
+            kolonia.prnt();
+            break;
+        } else {
+            cout << RED << "[SYSTEM]: Niepoprawna komenda. Prosze wpisac 'colony'." << RESET << endl;
+        }
+    }
+
+    // BUILD WIATRAK 
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Mamy troche Kamienia, ale zero Energii. A bez pradu nie beda dzialac zadne budynki." << endl;
+    cout << "Musimy postawic " << BLUE << "Maly_Wiatrak" << RESET << ". Zapewni on zasilanie dla reszty bazy." << endl;
+    cout << "Wpisz: " << BG_BLACK << BLUE << " build maly_wiatrak " << RESET << endl;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "build maly_wiatrak") {
+                build(bazaDanych["maly_wiatrak"]);
+                kolonia.setRuch(kolonia.getRuch()+1);
+            
+        } else {
+            cout << RED << "[SYSTEM]: Blad. Priorytetem jest 'build maly_wiatrak'." << RESET << endl;
+        }
+    }
+
+    // BUILD FARM
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Doskonale! Turbiny sie kreca wiec mamy prad!. Teraz czas na jedzenie." << endl;
+    cout << "Zapasy sa male. Musimy zasiac " << GREEN << "Pole_Ziemniakow" << RESET << ", zanim zaloga zacznie glodowac." << endl;
+    cout << "Wpisz: " << BG_BLACK << GREEN << " build pole_ziemniakow " << RESET << endl;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "build pole_ziemniakow") {
+            
+            build(bazaDanych["pole_ziemniakow"]);
+            kolonia.setRuch(kolonia.getRuch()+1);
+            
+        } else {
+            cout << RED << "[SYSTEM]: Zaloga jest glodna! Wpisz 'build pole_ziemniakow'." << RESET << endl;
+        }
+    }
+    // KAMIEN
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Jedzenie mamy zapewnione, ale jak tak dalej pojdzie to w koncu nasz magazyn z Kamieniem bedzie pusty!" << endl;
+    cout << "Aby budowac dalej, musimy wydobywac surowce z powierzchni. Zbudujmy " << YELLOW << "Odkrywke_Kamienia" << RESET << "." << endl;
+    cout << "Wpisz: " << BG_BLACK << YELLOW << " build odkrywka_kamienia " << RESET << endl;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "build odkrywka_kamienia") {
+            
+            build(bazaDanych["odkrywka_kamienia"]);
+                
+            
+            break;
+        } else {
+            cout << RED << "[SYSTEM]: Brak surowcow do dalszej ekspansji! Wpisz 'build odkrywka_kamienia'." << RESET << endl;
+        }
+    }
+    // NEXT
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:"<<RESET<<" W kazdej turze mozesz wykonac maksymalnie " << BOLD <<CYAN<< "3 AKCJE BUDOWANIA" << NO_BOLD <<WHITE<< "." << endl;
+    cout << "Wykorzystales juz limit "<<RED<<"(3/3)"<<WHITE<<". Aby nasi ludzie mogli odpoczac, a maszyny wyprodukowac surowce, musisz zakonczyc ture." << endl;
+    cout << endl;
+    cout << "Wpisz komende " << BG_BLACK << CYAN << " next " << RESET << ", aby przejsc dalej." << endl;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "next") {
+            int wynik=90;
+            wynik = kolonia.nextRound();
+            if(wynik!=0){
+                break;
+            }else{
+                cout << RED << "[SYSTEM]: Nie mozesz nic wiecej zbudowac! Musisz przejsc do kolejnej rundy aby dalej kontynuowac samouczek." << RESET << endl;
+            }
+        } else {
+            cout << RED << "[SYSTEM]: Nie mozesz nic wiecej zbudowac! Musisz wpisac 'next'." << RESET << endl;
+        }
+    }
+    
+    
+    // STACJA BADAWCZA
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << "Mamy surowce, ale potrzebuje miec ich stala produkcje. Aby ,a zeby zdobyc " << MAGENTA << "Tytan" << RESET << ", musimy poczynic postepy w Terraformacji." << endl;
+    cout << "Musimy zaczac zwiekszac wspolczynnik Terraformacji. Zbuduj " << MAGENTA << "Stacje_Badawcza" << RESET << ", aby zwiekszac poziom Terraformacji." << endl;
+    cout << "Dzieki niej odblokujesz lepsze budynki i kopalnie tytanu." << endl;
+    cout << "Wpisz: " << BG_BLACK << MAGENTA << " build stacja_badawcza " << RESET << endl;
+
+    while(true) {
+        cout << BLUE << ">>" << RESET;
+        getline(cin, komenda);
+        for(auto &c : komenda) c = tolower(c);
+
+        if(komenda == "build stacja_badawcza") {
+            build(bazaDanych["stacja_badawcza"]);
+            kolonia.setRuch(kolonia.getRuch()+1);
+        } else {
+            cout << RED << "[SYSTEM]: Wpisz 'build stacja_badawcza'." << RESET << endl;
+        }
+    }
+    kolonia.setRuch(1);
+    // ZAKONCZENIE 
+    cout << endl;
+    cout << CYAN << "[NARRATOR]:" << RESET << " Baza operacyjna gotowa. Podstawowe systemy dzialaja." << endl;
+    cout << "Teraz wszystko w Twoich rekach, Kapitanie." << endl;
+    cout << "Pamietaj o rozwijaniu " << MAGENTA << "TERRAFORMACJI" << RESET << ", aby odblokowac lepsze technologie." << endl;
+    cout << "Jakbys sie zgubil, wpisz "<<YELLOW<<"help" <<RESET<<" albo "<<YELLOW<<"rules"<<RESET<< endl;
+    cout << "Powodzenia. Bez odbioru." << endl;
+    cout << RED << "------------------------------------------------------------" << RESET << endl << endl;
+}

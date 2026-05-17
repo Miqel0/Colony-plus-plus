@@ -50,7 +50,7 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
     ImGui::SetNextWindowPos(pozycja);
     ImGui::BeginTooltip(); 
 
-    // --- FUNKCJA POMOCNICZA DO WYŚRODKOWANIA NAGŁÓWKA ---
+
     auto CenterTitle = [](const char* text, ImVec4 color) {
         float winWidth = ImGui::GetWindowSize().x;
         float textWidth = ImGui::CalcTextSize(text).x;
@@ -61,7 +61,7 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
         ImGui::Dummy(ImVec2(0.0f, 2.0f));
     };
 
-    // --- STRUKTURA DLA WSZYSTKICH KATEGORII ---
+
     struct ResInfo {
         string nazwa;
         int gen;
@@ -281,7 +281,7 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
     ImGui::SetNextWindowPos(ImVec2(0, 0));
     auto licznik= kolonia.UIprntBuildingsSumm();
     float gruboscPaska = 60.0f; 
-    ImGui::SetNextWindowSize(ImVec2(szer, gruboscPaska)); 
+    ImGui::SetNextWindowSize(ImVec2((float)szer, gruboscPaska)); 
 
     ImGuiWindowFlags flagiHUD = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | 
                                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | 
@@ -717,7 +717,6 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
         if(cat=="TERR"){
             ImGui::TableSetupColumn("gen. terr");
         }
-        //ImGui::TableSetupColumn("Opis");
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.2f, 1.0f)); 
         ImGui::TableHeadersRow();
         ImGui::PopStyleColor();
@@ -796,7 +795,7 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
     ImGui::End();
 
     if(!(cat=="ENERGY"||cat=="HOUSING"||cat=="FARM"||cat=="PRODUCER"||cat=="TERR")){
-        cout<<RED<<BOLD<<"Nie ma takiej kategorii!!"<<RESET<<endl;
+        cout<<"Nie ma takiej kategorii!!"<<endl;
         return;
     }
 }
@@ -1112,7 +1111,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
     io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f,NULL,ranges);
     fontDefault = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f, NULL, ranges);
     fontHUD = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Medium.ttf", 32.0f, NULL, ranges);
-    ImGui::SFML::UpdateFontTexture();
+    auto a=ImGui::SFML::UpdateFontTexture();
 
     sf::Clock deltaClock;
     

@@ -20,15 +20,26 @@ Building:: Building(string n,TypBudynku t, int kE, int kK, int kT,int w):kosztEn
 // VIRTUALNE
 // ==========================================
 
-//WYSWIETLANIE INFORMACJI O DANYM BUDYNKU
-void Building:: prnt(int il)const{}
-
+/**
+ * @brief Funkcja virtualna wyświetlająca parametry danego budynku
+ * 
+ * @param il ilość danego budynku
+ */
 void Building:: UIprnt(int il)const{}
 
-//WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS nextRound
+//
+/**
+ * @brief WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS nextRound, f. virtualna
+ * 
+ * @return int zwracana wartość podczas pracy
+ */
 int Building:: work(){return 0;}
 
-//ZAPISYWANIE DANYCH O BUDYNKU DO PLIKU
+/**
+ * @brief Zapisywanie danych budynku do pliku
+ * 
+ * @param plik plik
+ */
 void Building::save(ofstream& plik)const{
     plik<<static_cast<int>(type)<<" "<<name<<" "<<id<<" "<<kosztEnergii<<" "<<kosztKamien<<" "<<kosztTytan<<" "<<workers;
 }

@@ -16,18 +16,28 @@ Energy::Energy(string n, int kE,int kK, int kT, int e,int w):Building(n,TypBudyn
 // OVERRIDE
 // ==========================================
 
-void Energy::prnt(int il)const{
-    prntTablica(name,"Ilosc: ",cleanNum(il),"Koszt energii: ",cleanNum(kosztEnergii),"Pracownicy: ",cleanNum(workers),"Generowana energia: ",cleanNum(enGen));
-}
-
+/**
+ * @brief Funckja wyświetlająca dane danego budynku do tooltipa f.przeciążona
+ * 
+ * @param il  ilość danego budynku
+ */
 void Energy::UIprnt(int il)const{
     prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowana energia: ",cleanNum(enGen)}});
 }
 
+/**
+ * @brief Zapisywanie danych budynku do pliku
+ * 
+ * @param plik plik
+ */
 void Energy::save(ofstream& plik)const{
     Building::save(plik);
     plik<<" "<<enGen<<" "<<endl;
 }
+
+// ==========================================
+// GETTERY
+// ==========================================
 
 int Energy::getEnergy() const{return enGen;}
 

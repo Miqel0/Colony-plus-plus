@@ -25,12 +25,8 @@ class Farm: public Building{
         
         //OVERRIDE
         int work() override;
-        void prnt(int il) const override;
         void UIprnt(int il) const override;
         void save(ofstream& plik) const override;
-
-        //GETTERY
-
 
     
 };
