@@ -220,7 +220,7 @@ bool Colony::buduj(unique_ptr<Building> b){
 
 
 BuildResult Colony::UIbuduj(unique_ptr<Building> b){
-    if (b == nullptr) return {false, "Dziwny błąd"};
+    if (b == nullptr) return {false, 0,0,0};
     auto wynik=UIczyStac(b);
     if(wynik.czy){
         
@@ -245,31 +245,32 @@ BuildResult Colony::UIbuduj(unique_ptr<Building> b){
 //Funkcja pomocniczna do budowania
 void Colony::addBuilding(unique_ptr<Building> b){buildings.push_back(move(b));}
 
-//Sprawdzanie wymaganych parametrow do zbudowania
+/**
+ * @brief Sprawdzanie wymaganych parametrow do zbudowania
+ * 
+ * @param b wskaznik na budowany budynek 
+ * @return BuildResult paczka wynikow budowania
+ */
 BuildResult Colony::UIczyStac(const unique_ptr<Building> &b)const{
-    string wynik="";
-    int czy=0;
+    BuildResult wynik ={false,0,0,0,b->getName(),0};
     if(b->getKosztKamien()<=f_logisyka.getStone()&&b->getKosztTytan()<=f_logisyka.getTitan()){ // sprawdza czy jest wystarczajaca liczba kamienia i tytanu do zbudowania
-        czy=1;
+        wynik.czy=true;
     }else{
         if(b->getKosztKamien()>f_logisyka.getStone()){
-            wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia!";
+            // wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia!";
+            wynik.kamien=b->getKosztKamien()-f_logisyka.getStone();
         }else if(b->getKosztTytan()>f_logisyka.getTitan()){
-            wynik+="Brakuje "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
-        }else if(b->getKosztKamien()>f_logisyka.getStone()&&b->getKosztTytan()>f_logisyka.getTitan()){
-            wynik+="Brakuje "+to_string((int)(b->getKosztKamien()-f_logisyka.getStone()))+" kamienia, i "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
+            // wynik+="Brakuje "+to_string((int)(b->getKosztTytan()-f_logisyka.getTitan()))+" tytanu!";
+            wynik.tytan=b->getKosztTytan()-f_logisyka.getTitan();
         }
-        czy=2;
     }
     if(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()<0){ // sprawdza czy jest wystarczajaca liczba workerow - zeby wybudowac dany budynek
-        if(czy==2) wynik+="\n";
-        wynik+="Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "+to_string(-(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()))+" robotnikow!";
+
+        // wynik+="Nie mozliwe jest zbudowanie budynku, za malo dostepnych pracownikow! Brakuje: "+to_string(-(f_logisyka.getAWorkers()-f_logisyka.getDWorkers()-b->getDemandWorkers()))+" robotnikow!";
+        wynik.czy=false;
+        wynik.workers=+f_logisyka.getDWorkers()+b->getDemandWorkers()-f_logisyka.getAWorkers();
     }
-    if(czy==1){
-        return {true, "Udało się zbudować budynek "+cleanString(b->getName())+"!"};
-    }else{
-        return {false,wynik};
-    }
+    return wynik;
 }
 
 
@@ -347,6 +348,58 @@ void Colony::zburzBudynek(string nazwa){
         cout<<RED<<"Blad: Nie ma budynku o takiej nazwie: "<<BOLD<<nazwa<<endl;
         cout<<endl;
     }
+}
+
+/**
+ * @brief Funckaj burząca budynek i sprawdzająca wymogi
+ * 
+ * @param nazwa nazwa budynku do zburzenia
+ * @return DestroyResult paczka wynikowa
+ */
+DestroyResult Colony::UIzburzBudynek(string nazwa){
+    DestroyResult wynik= {false, 0, nazwa,{0,0}};
+    string nazwa_=nazwa;
+    string nam="X";
+    int nr=0;
+    for(int i=0;i<buildings.size();i++){//Szukanie dowolnego budynku o danej nazwie (nie ma znaczenia ktorego sie usunie, bo i tak wyswietla sie ich suma)
+        string bud=buildings[i]->getName();
+        for(auto &c : bud) c = tolower(c);
+        for(auto &c : nazwa_) c = tolower(c);
+        if(bud==nazwa_){
+            nam=buildings[i]->getName();
+            nr=i;
+        }
+    }
+
+    if(nam!="X"){//Czy nazwa zostala zmieniona?
+        // string dec;
+        // cout<<YELLOW<<"Czy na pewno chcesz wyburzyc budynek: "<<nam<<RESET<<endl;
+        // cout<<YELLOW<<">>Potwierdz wpisujac y, albo anuluj n."<<RESET<<endl;
+        // cin>>dec;
+        // if(dec=="y"||dec=="yes"||dec=="tak"||dec=="t"){
+            if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
+                if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){ //Sprawdzenie czy aby na pewno mozna usunac dany budynek - nie moze brakowac pracownikow!
+                    // cout<<"Niemozliwe jest zburzenie budynku: "<<buildings[nr]->getName()<<", poniewaz bedzei wtedy brakowalo "<<(f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents())<<" pracownikow."<<endl;
+                    wynik.brakLudzi=f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents();
+                }
+            }else{//Wszystko pasuje, wiec mozna zburzyc
+                // cout<<YELLOW<<">>Budynek "<<buildings[nr]->getName()<<" zostal wyburzony."<<RESET<<endl;
+                wynik.czy=true;
+                if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
+                    f_logisyka.setAWorkers(-buildings[nr]->getResidents());
+                }
+                wynik.sur=f_logisyka.UIupdateZburzBudynek(buildings[nr].get());
+                buildings.erase(buildings.begin()+nr);
+            }
+        // }else{
+        //     cout<<YELLOW<<"Anulowano wyburzanie budynku."<<RESET<<endl;
+        // }
+            
+    }else{
+        cout<<RED<<"Blad: Nie ma budynku o takiej nazwie: "<<BOLD<<nazwa<<endl;
+        cout<<endl;
+    }
+    return wynik;
 }
 
 
@@ -537,7 +590,7 @@ int Colony::getAllWorkers()const{return f_logisyka.getAWorkers();}
 int Colony::getDemandWorkers()const{return f_logisyka.getDWorkers();}
 int Colony:: getRuch()const{return f_logisyka.getRuch();}
 int Colony::getLvlTerr() const{return f_logisyka.getLvlTerr();}
-int Colony::getToNextLvlTerr() const{return f_logisyka.getTitan();}
+int Colony::getToNextLvlTerr() const{return f_logisyka.getToNextLvlTerr();}
 int Colony::getIlosc(string name)const{//Zwracanie ilosci budynku o danej nazwie
     if(name.empty()) return 0;
     int il=0;

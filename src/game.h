@@ -27,9 +27,10 @@ class Game{
         void startTutorial();
         void commands();
         void build(BuildingInfo info);
-        BuildResult UIbuild(BuildingInfo info, Graphics& grafika);
+        BuildResult UIbuild(BuildingInfo info);
+        vector<BuildingInfo> UIprntNewLvlTerr();
         NextResult UINextRound();
-
+        DestroyResult UIZburz(string nazwa);
         void UIrun();
         //PLIKI
         void loadGameData();
