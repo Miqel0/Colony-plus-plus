@@ -134,7 +134,19 @@ struct BuildingInfo {
  */
 struct BuildResult{
     bool czy;
-    string tekst;
+    int kamien;
+    int tytan;
+    int workers;
+    string nazwa;
+    int act_ruch;
+    bool ruch;
+};
+
+struct DestroyResult{
+    bool czy;
+    int brakLudzi;
+    string nazwa;
+    pair <float,float> sur;
 };
 
 /**

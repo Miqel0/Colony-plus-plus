@@ -53,6 +53,7 @@ class Logistics{
         //BUDOWANIE
         void updateBudynek(Building* budynek);
         void updateZburzBudynek(Building* budynek);
+        pair<float, float>  UIupdateZburzBudynek(Building* budynek);
 
         //SAVE/LOAD
         void save(string nazwa_plik);

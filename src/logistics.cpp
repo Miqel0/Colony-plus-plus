@@ -521,6 +521,51 @@ void Logistics::updateZburzBudynek(Building* budynek){
     }
 }
 
+
+pair<float, float> Logistics::UIupdateZburzBudynek(Building* budynek){
+
+    //Odzyskiwanie pracownikow oraz polowy surowcow
+    setDWorkers(-budynek->getDemandWorkers());
+    int ti =budynek->getKosztTytan();
+    int st = budynek->getKosztKamien();
+
+    // cout<<YELLOW<<"Odzyskano "<<BOLD<<cleanNum(st/2)<<NO_BOLD<<" kamienia, oraz "<<BOLD<<cleanNum(ti/2)<<NO_BOLD<<" tytanu!"<<RESET<<endl;
+    //Odzyskuje sie polowe surowców!
+    titan+=ti/2;
+    stone+=st/2;
+
+    switch (budynek->getTyp())
+    {
+    case TypBudynku::ENERGY:{//AKTUALIZOWANIE PRODUKCJI I ZAPOTRZEBOWANIA PRĄDU 
+        Energy* energy = static_cast<Energy*>(budynek);
+        genEnergy-=energy->getEnergy();
+        reqEnergy-=budynek->getReqEnergy();
+        break;
+    }
+    case TypBudynku::FARM:{//AKTUALIZOWANIE ZAPOTRZEBOWANIA PRĄDU 
+        reqEnergy-=budynek->getReqEnergy();
+        break;
+    }
+    case TypBudynku::HOUSING:{//AKTUALIZOWANIE ZAPOTRZEBOWANIA PRĄDU I ZYWNOSCI
+        Housing* house = static_cast<Housing*>(budynek);
+        reqFood-=2*house->getResidents();
+        reqEnergy-=budynek->getReqEnergy();
+        break;
+    }
+    case TypBudynku::PRODUCER:{//AKTUALIZOWANIE ZAPOTRZEBOWANIA PRĄDU 
+        reqEnergy-=budynek->getReqEnergy();
+        break;
+    }
+    case TypBudynku::TERR:{//AKTUALIZOWANIE ZAPOTRZEBOWANIA PRĄDU 
+        reqEnergy-=budynek->getReqEnergy();
+        break;
+    }
+    default:
+        break;
+    }
+    return {st/2,ti/2};
+}
+
 // ==========================================
 // SAVE/LOAD
 // ==========================================

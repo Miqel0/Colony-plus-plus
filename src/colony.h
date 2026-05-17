@@ -54,6 +54,7 @@ class Colony{
         BuildResult UIbuduj(unique_ptr<Building> b);
         bool buduj(unique_ptr<Building> b);
         void zburzBudynek(string nazwa);
+        DestroyResult UIzburzBudynek(string nazwa);
 
 
         //NEXT ROUND

@@ -5,17 +5,19 @@
 #include "imgui-SFML.h"
 #include <optional>
 #include <map>
+#include <cfloat>
 
-Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, ""}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}){}
-Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, ""}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}){}
+
+Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, 0,0,0,"",0,false}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}),czyWyburzanie(false),czyWyburzanie1(false),destroyWynik({false,0,"",{0,0}}){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),ostatniWynik({false, 0,0,0,"",0,false}),czyNextRound(false),czyNextRound1(false),nextWynik({false,false,false,false,"",0,0,0,0}),czyWyburzanie(false),czyWyburzanie1(false),destroyWynik({false,0,"",{0,0}}){}
 
 /**
  * @brief Tymczasowe wyświeltanie głównego menu z przyciskami.
  * 
  */
 void Graphics::prntMenu(){
-    ImGui::SetNextWindowPos(ImVec2(10, 60), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(240, 800), ImGuiCond_Once);
+    ImGui::SetNextWindowPos(ImVec2(10, 70), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(240, 400), ImGuiCond_Once);
     ImGui::Begin("Panel Sterowania",nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
     ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
     ImGui::Separator();
@@ -35,64 +37,119 @@ void Graphics::prntMenu(){
     ImGui::End();
 }
 
+
+void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& licznik, string cat,const map<string, BuildingInfo>& bazaDanych){
+    if (fontDefault != nullptr) ImGui::PushFont(fontDefault);
+    ImGui::BeginTooltip(); 
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Nazwa twojej kolonii.");
+    // if(cat=="prad"){
+    //     int gen_tot=0;
+    //     int dem_tot=0;
+    //     struct prad_info{
+    //         string nazwa;
+    //         int gen;
+    //         int dem;
+    //         int ilo;
+    //     };
+    //     vector <prad_info> dane;
+    //     for(const auto& [nazwa, ilosc] : licznik){
+    //         prad_info in {nazwa,bazaDanych[nazwa].}
+    //     }
+    // }
+
+
+    ImGui::EndTooltip(); 
+    if (fontDefault != nullptr) ImGui::PopFont();
+}
+
+
 /**
  * @brief Tymczasowe wyświetlanie parametrów kolonii
  * 
  * @param kolonia wskaźnik do kolonii
  */
-void Graphics::prntStatystyki(const Colony& kolonia){
+void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, BuildingInfo>& bazaDanych) {
     ImGui::SetNextWindowPos(ImVec2(0, 0));
-
-    ImGui::SetNextWindowSize(ImVec2(szer, 35.0)); 
+    auto licznik= kolonia.UIprntBuildingsSumm();
+    float gruboscPaska = 60.0f; 
+    ImGui::SetNextWindowSize(ImVec2(szer, gruboscPaska)); 
 
     ImGuiWindowFlags flagiHUD = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | 
                                 ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | 
                                 ImGuiWindowFlags_NoSavedSettings;
 
     if (ImGui::Begin("Główny HUD", nullptr, flagiHUD)) {
+        if (fontHUD != nullptr) {
+            ImGui::PushFont(fontHUD);
+        }
         
-        // 1. Nazwa i tura 
+
+        float srodekY = (gruboscPaska - ImGui::GetTextLineHeight()) * 0.5f;
+        ImGui::SetCursorPosY(srodekY);
+
         std::string nazwa = (kolonia.getNazwa() == "XX") ? "Kolonia" : kolonia.getNazwa();
-        ImGui::Text("%s | Tura: %d (%d/3)", nazwa.c_str(), kolonia.getTura(), kolonia.getRuch());
-        ImGui::SameLine(0.0f, 20.0f); 
+        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.0f, 1.0f)); 
+        ImGui::Text("%s", nazwa.c_str());
+        ImGui::PopStyleColor();
+        if (ImGui::IsItemHovered()) {
+            if (fontDefault != nullptr) ImGui::PushFont(fontDefault);
+            ImGui::BeginTooltip(); 
+            ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Nazwa twojej kolonii.");
+            ImGui::EndTooltip(); 
+            if (fontDefault != nullptr) ImGui::PopFont();
+        }
         
-        // 2. Energia (format %.0f)
+        ImGui::SameLine(0.0f, 40.0f);
+        
         ImGui::Text("Prad:");
         ImGui::SameLine();
         if (kolonia.getReqEnergy() > kolonia.getGenEnergy()) {
-            // Czerwony 
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%.0f/%.0f", kolonia.getGenEnergy(), kolonia.getReqEnergy());
+            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%.0f/%.0f", kolonia.getGenEnergy(), kolonia.getReqEnergy()); // Czerwony
         } else {
-            // Zielony
-            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%.0f/%.0f", kolonia.getGenEnergy(), kolonia.getReqEnergy());
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%.0f/%.0f", kolonia.getGenEnergy(), kolonia.getReqEnergy()); // Zielony
         }
-        ImGui::SameLine(0.0f, 20.0f);
 
-        // 3. Pracownicy 
+        if (ImGui::IsItemHovered()) {
+            prntStatystykiToolTop(kolonia,licznik,"prad",bazaDanych);
+        }
+
+        ImGui::SameLine(0.0f, 25.0f);
+
         ImGui::Text("Ludzie: %d/%d", kolonia.getDemandWorkers(), kolonia.getAllWorkers());
-        ImGui::SameLine(0.0f, 20.0f);
+        ImGui::SameLine(0.0f, 25.0f);
 
-        // 4. Jedzenie 
         ImGui::Text("Jedzenie:");
         ImGui::SameLine();
         if (kolonia.getFood() > 2 * kolonia.getReqFood()) {
-            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Zielony
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Zielony
         } else if (kolonia.getFood() >= kolonia.getReqFood()) {
             ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Żółty 
         } else {
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Czerwony
+            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%.0f (-%.0f)", kolonia.getFood(), kolonia.getReqFood()); // Czerwony
         }
+        ImGui::SameLine(0.0f, 40.0f); 
+
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Kamien: %d", kolonia.getStone());
         ImGui::SameLine(0.0f, 20.0f);
+        ImGui::TextColored(ImVec4(0.4f, 0.7f, 1.0f, 1.0f), "Tytan: %d", kolonia.getTitan());
+        ImGui::SameLine(0.0f, 40.0f);
 
-        // 5. Surowce stałe 
-        ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.8f, 1.0f), "Kamien: %d", kolonia.getStone());
-        ImGui::SameLine(0.0f, 15.0f);
-        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.9f, 1.0f), "Tytan: %d", kolonia.getTitan());
-        ImGui::SameLine(0.0f, 20.0f);
+        ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "Terraformacja: %d", kolonia.getLvlTerr());
+        ImGui::SameLine();
+        ImGui::Text("(Do nast: %d)", kolonia.getToNextLvlTerr());
 
-        // 6. Terraformacja 
-        ImGui::Text("Poziom Terraformacji: %d (Do nast: %d)", kolonia.getLvlTerr(), kolonia.getToNextLvlTerr());
-
+        char tekstTury[128];
+        snprintf(tekstTury, sizeof(tekstTury), "Tura: %d | Ruchy: %d/3", kolonia.getTura(), kolonia.getRuch());
+        
+        float szerokoscTekstu = ImGui::CalcTextSize(tekstTury).x;
+        
+        ImGui::SameLine(ImGui::GetWindowWidth() - szerokoscTekstu - 20.0f);
+        
+  
+        ImGui::TextColored(ImVec4(0.8f, 0.9f, 1.0f, 1.0f), "%s", tekstTury);
+        if (fontHUD != nullptr) {
+            ImGui::PopFont();
+        }
     }
     ImGui::End();
 }
@@ -103,9 +160,9 @@ void Graphics::prntStatystyki(const Colony& kolonia){
  * @param kolonia wskaźnik do koloniii
  * @param bazaDanych wskaźnik do bazy danych 
  */
-void Graphics::prntBudynki(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych){
-    ImGui::SetNextWindowSize(ImVec2(400, 600)); 
-    ImGui::Begin("Zbudowane Budynki",&czyBudynki, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+void Graphics::prntBudynki(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra){
+    ImGui::SetNextWindowSizeConstraints(ImVec2(200, 0.0f), ImVec2(300, FLT_MAX));
+    ImGui::Begin("Zbudowane Budynki",&czyBudynki,ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
     auto licznik= kolonia.UIprntBuildingsSumm();
 
@@ -113,13 +170,17 @@ void Graphics::prntBudynki(const Colony& kolonia,const map<string, BuildingInfo>
         ImGui::Text("BRAK ZBUDOWANYCH BUDYNKOW!");
 
     }else{
-
-        if (ImGui::BeginTable("TabelaBudynkow", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+        int il =2;
+        int i=0;
+        if(czyWyburzanie){il=3;}
+        if (ImGui::BeginTable("TabelaBudynkow", il, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
             
             ImGui::TableSetupColumn("Nazwa Budynku");
             ImGui::TableSetupColumn("Ilość");
+            if(czyWyburzanie){ImGui::TableSetupColumn("Akcja");}
             ImGui::TableHeadersRow();
             for (const auto& [nazwa, ilosc] : licznik) {
+                if(czyWyburzanie){ImGui::PushID(i);}
                 string nazwa_ = cleanString(nazwa);
                 ImGui::TableNextRow();
                 
@@ -136,11 +197,115 @@ void Graphics::prntBudynki(const Colony& kolonia,const map<string, BuildingInfo>
                 
                 ImGui::TableNextColumn();
                 ImGui::Text("%d", ilosc);
+                if(czyWyburzanie){
+                    ImGui::TableNextColumn();
+
+                    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+                    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.3f, 0.3f, 1.0f));
+            
+                    if (ImGui::Button("Zburz", ImVec2(80, 0))) {
+                        destroyWynik=gra.UIZburz(nazwa);
+                        czyWyburzanie1 = true;
+                        czyWyburzanie=true;
+
+                    }
+                    ImGui::PopStyleColor(2);
+                }
+
+                if(czyWyburzanie){
+                    ImGui::PopID();
+                    i++;
+                }
+                
             }
             ImGui::EndTable();
         }
+        
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(1.0f, 0.3f, 0.3f, 1.0f));
+        if(ImGui::Button("Wyburzanie!")){
+        czyWyburzanie =!czyWyburzanie;
+        }
+        ImGui::PopStyleColor(2);
     }
     ImGui::End();
+}
+
+/**
+ * @brief Funckja wyswietlajaca wynik wyburzenia budynku
+ * 
+ */
+void Graphics::prntWyburz() {
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+   
+    if (destroyWynik.czy) {
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.2f, 0.6f, 0.2f, 1.0f)); 
+    } else {
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.8f, 0.2f, 0.2f, 1.0f)); 
+    }
+
+    if (ImGui::Begin("Raport zburzenia", &czyWyburzanie1, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings)) {
+        
+        if (destroyWynik.czy) {
+            
+            ImGui::Text("Operacja zakonczona sukcesem!");
+            ImGui::Separator();
+            ImGui::Dummy(ImVec2(0.0f, 5.0f)); 
+            
+            string nazwa_ = cleanString(destroyWynik.nazwa); 
+            ImGui::Text("Budynek '%s' zostal pomyslnie zburzony.", nazwa_.c_str());
+            
+            // --- SEKCJA ODZYSKANYCH SUROWCÓW ---
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
+            ImGui::Text("Odzyskano surowce z budowy:");
+
+            if (destroyWynik.sur.first > 0) {
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.6f, 0.6f, 0.6f, 1.0f)); 
+                ImGui::BulletText("Kamien: %g", destroyWynik.sur.first);
+                ImGui::PopStyleColor();
+            }
+            if (destroyWynik.sur.second > 0) {
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 0.7f, 1.0f, 1.0f)); 
+                ImGui::BulletText("Tytan: %g", destroyWynik.sur.second);
+                ImGui::PopStyleColor();
+            }
+            
+            if (destroyWynik.sur.first <= 0 && destroyWynik.sur.second <= 0) {
+                ImGui::BulletText("Brak surowcow do odzyskania.");
+            }
+
+            
+        } else {
+            
+            string nazwa_ = cleanString(destroyWynik.nazwa);
+            ImGui::Text("Nie mozna zburzyc budynku: %s!", nazwa_.c_str());
+            ImGui::Separator();
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
+            
+            ImGui::Text("Usuniecie tego obiektu spowodowaloby kryzys na rynku pracy.");
+            ImGui::Text("Inne pracujace budynki stracilyby obsluge!");
+            
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+            ImGui::Text("Brakowaloby: %d kolonistow do utrzymania pracy!", destroyWynik.brakLudzi);
+            ImGui::PopStyleColor();
+        }
+
+        ImGui::Dummy(ImVec2(0.0f, 15.0f)); 
+
+        // Środek dla przycisku
+        float windowWidth = ImGui::GetWindowSize().x;
+        float buttonWidth = 100.0f;
+        ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f); 
+        
+        if (ImGui::Button("Zrozumiano", ImVec2(buttonWidth, 0))) {
+            czyWyburzanie1 = false;
+        }
+    }
+    ImGui::End();
+    
+    ImGui::PopStyleColor(); 
 }
 
 /**
@@ -151,9 +316,9 @@ void Graphics::prntBudynki(const Colony& kolonia,const map<string, BuildingInfo>
  * @param gra wskaznik do klasy Game
  */
 void Graphics::prntBudowanie(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra){
+    ImGui::SetNextWindowSizeConstraints(ImVec2(300, 0.0f), ImVec2(300, FLT_MAX));
     
-    ImGui::SetNextWindowSize(ImVec2(400, 300)); 
-    ImGui::Begin("Dostępne kategorie budynków",&czyBudowanie, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+    ImGui::Begin("Dostępne kategorie budynków",&czyBudowanie, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
     vector <string> kategorie={"ENERGY","FARM","HOUSING","PRODUCER","TERR"};
     vector <string> opisy = {"Budynki generujące prąd potrzebny w wszystkich innych budynkach", "Budynki generujące jedzenie, które potrzebują mieszkańcy do przeżycia. Niektóre rośliny potrzebują czasu, żeby wyrosnąć.", "Budynki te zapewniają mieszkania dla mieszkańców kolonii.", "Te budynki generują różnego rodzaju surowce potrzebne do budowania budynków.", "Te budynki odpowiadają za zwiększanie terraformacji planety, dzięki nim możesz odblokować nowe budynki."};//FIXME dodac sensowny spsoob opisów tych klas
@@ -172,7 +337,6 @@ void Graphics::prntBudowanie(const Colony& kolonia,const map<string, BuildingInf
                     ImGui::EndTooltip(); 
                 }
             }
-        ImGui::Text("%s",wybranaKategoriaBudowa.c_str());
     ImGui::End();
 }
 
@@ -181,39 +345,96 @@ void Graphics::prntBudowanie(const Colony& kolonia,const map<string, BuildingInf
  * 
  * @param gra 
  */
-void Graphics::prntBudowanieWyniki(Game& gra){
-
+void Graphics::prntBudowanieWyniki(Game& gra) {
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    ImGui::SetNextWindowSize(ImVec2(400, 300), ImGuiCond_Appearing);
-
-    ImGui::Begin("Wyniki budowy", &czyBudowanieWyniki, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
-
-    ImGui::Separator();
-    ImGui::Dummy(ImVec2(0.0f, 10.0f));
-
-        
+    
+    // Kolor paska u góry okna
     if (ostatniWynik.czy) {
-        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "SUKCES!");
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.2f, 0.6f, 0.2f, 1.0f)); 
     } else {
-        ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "BŁĄD BUDOWY:");
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.8f, 0.2f, 0.2f, 1.0f)); 
     }
 
-    ImGui::Dummy(ImVec2(0.0f, 5.0f));
+    if (ImGui::Begin("Raport z budowy", &czyBudowanieWyniki, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings)) {
+        
+        if (ostatniWynik.czy) {
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "SUKCES!");
+            ImGui::Separator();
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
+            
+            string nazwa_ = cleanString(ostatniWynik.nazwa);
+            ImGui::Text("Budynek '%s' zostal pomyslnie zbudowany.", nazwa_.c_str());
+            
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
+            ImGui::Separator();
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
+            if (ostatniWynik.act_ruch == 1 || ostatniWynik.act_ruch == 2) {
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.7f, 0.7f, 1.0f));
+                ImGui::Text("Wykorzystano akcje: %d/3 w tej rundzie.", ostatniWynik.act_ruch);
+                ImGui::PopStyleColor();
+            } 
+            else if (ostatniWynik.act_ruch == 3) {
+\
+                ImGui::TextColored(ImVec4(1.0f, 0.7f, 0.0f, 1.0f), "Wykorzystano limit akcji (3/3)!");
+                ImGui::Text("Aby zbudowac kolejny budynek, musisz przejsc do nastepnej rundy.");
+            }
+            
+        } else {
+            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "BLAD BUDOWY!");
+            ImGui::Separator();
+            ImGui::Dummy(ImVec2(0.0f, 5.0f));
+            
+            if (ostatniWynik.ruch) {
+                
 
-    ImGui::PushTextWrapPos(ImGui::GetWindowWidth() - 20.0f);
-    ImGui::Text("%s", ostatniWynik.tekst.c_str());
-    ImGui::PopTextWrapPos();
+                ImGui::Text("Osiagnieto maksymalny limit budowy w tej rundzie!");
+                ImGui::Dummy(ImVec2(0.0f, 5.0f));
+                
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+                ImGui::Text("Wykorzystales juz wszystkie 3 akcje.");
+                ImGui::PopStyleColor();
+                
+                ImGui::Text("Przejdz do nastepnej rundy, aby kontynuowac rozbudowe.");
+                
+            } else {
+                string nazwa_ = cleanString(ostatniWynik.nazwa);
+                ImGui::Text("Nie udalo sie rozpoczac budowy obiektu: %s", nazwa_.c_str());
+                ImGui::Dummy(ImVec2(0.0f, 5.0f));
+                ImGui::Text("Brakuje nastepujacych zasobow do sfinalizowania projektu:");
+                
+                if (ostatniWynik.kamien > 0) {
+                    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.7f, 0.7f, 0.7f, 1.0f)); 
+                    ImGui::BulletText("Kamien: %d szt.", ostatniWynik.kamien);
+                    ImGui::PopStyleColor();
+                }
+                if (ostatniWynik.tytan > 0) {
+                    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 0.7f, 1.0f, 1.0f)); 
+                    ImGui::BulletText("Tytan: %d szt.", ostatniWynik.tytan);
+                    ImGui::PopStyleColor();
+                }
+                if (ostatniWynik.workers > 0) {
+                    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.4f, 0.4f, 1.0f)); 
+                    ImGui::BulletText("Wolni kolonisci (sila robocza): %d", ostatniWynik.workers);
+                    ImGui::PopStyleColor();
+                }
+            }
+        }
 
-    ImGui::Dummy(ImVec2(0.0f, 10.0f));
-    ImGui::Separator();
-    if (ImGui::Button("OK", ImVec2(120, 0))) {
-        czyBudowanieWyniki = false; 
+        ImGui::Dummy(ImVec2(0.0f, 15.0f));
+
+        float windowWidth = ImGui::GetWindowSize().x;
+        float buttonWidth = 100.0f;
+        ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f); 
+        
+        if (ImGui::Button("Zrozumiano", ImVec2(buttonWidth, 0))) {
+            czyBudowanieWyniki = false; 
+        }
     }
-
     ImGui::End();
-
+    
+    ImGui::PopStyleColor();
 }
 
 
@@ -223,8 +444,8 @@ void Graphics::prntBudowanieWyniki(Game& gra){
  */
 void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych,Game& gra){//Wyswietlanie informacji o danej kategorii budynkow
     string title = "Budynki z kategorii: "+ cat;
-    ImGui::SetNextWindowSize(ImVec2(800, 200)); 
-    ImGui::Begin(title.c_str(),&czyBudowanieCategory, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+    ImGui::SetNextWindowSizeConstraints(ImVec2(800, 0.0f), ImVec2(800, FLT_MAX));
+    ImGui::Begin(title.c_str(),&czyBudowanieCategory, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
     int il_kolum=6;
     if(cat=="FARM"||cat=="PRODUCER"){
@@ -266,7 +487,7 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn(); 
                 if (ImGui::Selectable(nazwa_.c_str())) {
-                    ostatniWynik =gra.UIbuild(info,*this);
+                    ostatniWynik =gra.UIbuild(info);
                     czyBudowanieWyniki=true;
                 }
                 if (ImGui::IsItemHovered()) {
@@ -346,7 +567,7 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
 void Graphics::prntNextRoundButton(){
 
     ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImVec2 window_pos = ImVec2(viewport->WorkPos.x + viewport->WorkSize.x - 10, viewport->WorkPos.y + 10);
+    ImVec2 window_pos = ImVec2(viewport->WorkPos.x + viewport->WorkSize.x - 10, viewport->WorkPos.y + 60);
 
     ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, ImVec2(1.0f, 0.0f));
 
@@ -356,18 +577,18 @@ void Graphics::prntNextRoundButton(){
             czyNextRound=true;
         }
         if (ImGui::IsItemHovered()) {
-                    ImGui::BeginTooltip(); 
+            ImGui::BeginTooltip(); 
                     
-                    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Kliknięcie spowoduje przejście do kolejnej rundy!");
+            ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Kliknięcie spowoduje przejście do kolejnej rundy!");
 
-                    ImGui::EndTooltip(); 
-                }
+            ImGui::EndTooltip(); 
+        }
     }
     ImGui::End();
 }
 
 /**
- * @brief Funkcja wyświetlająca okno z 
+ * @brief Funkcja wyświetlająca okno z w
  * 
  * @param kolonia wskaźnik do koloniii
  * @param bazaDanych wskaźnik do bazy danych 
@@ -397,12 +618,12 @@ void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, Building
 
     ImGui::SetCursorPosX(buttonsStartX);
 
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.6f, 0.1f, 1.0f));        // Tło
-    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.8f, 0.2f, 1.0f)); // Najechanie
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));  // Kliknięcie
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.6f, 0.1f, 1.0f));        
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.8f, 0.2f, 1.0f)); 
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.5f, 0.1f, 1.0f));  
     if (ImGui::Button("TAK", ImVec2(buttonWidth, 30))) {
         
-        nextWynik=gra.UINextRound();  // dodac dzialanie itp
+        nextWynik=gra.UINextRound();  
         czyNextRound1 = true;
         czyNextRound = false;
     }
@@ -430,6 +651,12 @@ void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, Building
  * @param gra wskaznik do klasy Game
  */
 void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych, Game& gra) {
+    if (nextWynik.czy) {
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.2f, 0.6f, 0.2f, 1.0f)); 
+    } else {
+        ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.8f, 0.2f, 0.2f, 1.0f)); 
+    }
+
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     ImGui::Begin("Raport z kolonii", &czyNextRound1, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoSavedSettings);
@@ -509,6 +736,7 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
     }
 
     ImGui::End();
+    ImGui::PopStyleColor();
 }
 
 /**
@@ -614,6 +842,8 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
     io.Fonts->Clear();
     static const ImWchar ranges[] ={0x0020, 0x00FF, 0x0100, 0x017F,0,};//Polskie znaki
     io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f,NULL,ranges);
+    fontDefault = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f, NULL, ranges);
+    fontHUD = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Medium.ttf", 32.0f, NULL, ranges);
     ImGui::SFML::UpdateFontTexture();
 
     sf::Clock deltaClock;
@@ -639,7 +869,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         
        
         prntMenu();
-        prntStatystyki(kolonia);
+        prntStatystyki(kolonia,bazaDanych);
         prntNextRoundButton();
 
         if(czyhelp){
@@ -647,7 +877,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         }
 
         if(czyBudynki){
-            prntBudynki(kolonia, bazaDanych);
+            prntBudynki(kolonia, bazaDanych,gra);
         }
 
         if(czyBudowanie){
@@ -665,6 +895,10 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         if(czyNextRound1){
             prntNextRound(kolonia, bazaDanych,gra);
         }
+        if(czyWyburzanie1){
+            prntWyburz();
+        }
+        
         
         
         //updatowanie rzeczy

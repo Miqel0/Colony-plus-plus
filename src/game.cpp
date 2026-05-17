@@ -591,20 +591,35 @@ void Game::build(BuildingInfo info) {
     }
 }
 
+/**
+ * @brief Przekazanie nazwy do zburzenia budynku.
+ * 
+ * @param nazwa nazwa budynku do zburzenia.
+ * 
+ * @return DestroyResult paczka wynikowa.
+ */
+DestroyResult Game::UIZburz(string nazwa){return kolonia.UIzburzBudynek(nazwa);}
 
-BuildResult Game::UIbuild(BuildingInfo info, Graphics& grafika) {
-   if(kolonia.getRuch()==3){ //Sprawdzanie warunku z iloscia ruchow w turze
-            return {false, "Już wykorzystałeś 3/3 ruchów w tej turze! \n Przejdź do kolejnej tury aby zbudować więcej!"};
+/**
+ * @brief Funckja budujaca budynek
+ * 
+ * @param info paczka z infromacja o danym budynku
+ * @return BuildResult 
+ */
+BuildResult Game::UIbuild(BuildingInfo info) {
+    BuildResult wynik={false,0,0,0,info.nazwa,0,false};
+    if(kolonia.getRuch()==3){ //Sprawdzanie warunku z iloscia ruchow w turze
+            wynik.ruch=true;
+            return wynik;//Nie mozna budowac bo za duzo ruchow!
     }
     string nazwa_=info.nazwa;
     for(auto &c : nazwa_) c = tolower(c);
     if(info.lvlTerr>kolonia.getLvlTerr()){
-        return {false, "Nie istnieje taki budynek!"};
+        return wynik;
     }
 
     unique_ptr<Building> nowyBudynek = fabryka.stworzBudynek(info);
-    BuildResult wynik={false,""};
-    //Stary build
+
     if (nowyBudynek != nullptr) {
         wynik =kolonia.UIbuduj(move(nowyBudynek));
         if (wynik.czy) {
@@ -614,13 +629,7 @@ BuildResult Game::UIbuild(BuildingInfo info, Graphics& grafika) {
     else {
         cout << RED << "Blad: Nieznana mechanika budynku!" << RESET << endl;
     }
-    //koniec tego starego builda
-
-    if(kolonia.getRuch()==3){
-            wynik.tekst+="\nWlasnie wykorzystales 3/3 ruchow w tej turze!!";
-        }else{
-            wynik.tekst+="\nWykorzystales "+to_string(kolonia.getRuch())+"/3 ruchow w tej turze!!";
-        }
+    wynik.act_ruch=kolonia.getRuch();
     return wynik;
 }
         

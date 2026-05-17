@@ -24,6 +24,10 @@ class Graphics{
         unsigned int szer;
         unsigned int wys;
         
+        //Czcionki
+        ImFont* fontDefault = nullptr;
+        ImFont* fontHUD = nullptr;
+
         //Wyswietlanie itp
         bool czyhelp;
         bool czyBudynki;
@@ -32,9 +36,12 @@ class Graphics{
         bool czyBudowanieWyniki;
         bool czyNextRound;
         bool czyNextRound1;
+        bool czyWyburzanie;
+        bool czyWyburzanie1;
         string wybranaKategoriaBudowa;
         BuildResult ostatniWynik;
         NextResult nextWynik;
+        DestroyResult destroyWynik;
     public:
 
         Graphics();
@@ -43,16 +50,17 @@ class Graphics{
 
         void prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntMenu();
-        void prntStatystyki(const Colony& kolonia);
+        void prntStatystyki(const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych);
+        void prntStatystykiToolTop(const Colony& kolonia, map<string,int>& licznik, string cat,const map<string, BuildingInfo>& bazaDanych);
         void prntPomoc();
-        void prntBudynki(const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych);
+        void prntBudynki(const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntBudowanie(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntBudowanieWyniki(Game& gra);
         void prntBuildCategory(const string& cat,const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntNextRoundButton();
         void prntCzyNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
-    
+        void prntWyburz();
     };
 
 #endif
