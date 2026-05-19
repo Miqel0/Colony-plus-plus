@@ -27,8 +27,9 @@ class Game{
         NextResult UINextRound();
         DestroyResult UIZburz(string nazwa);
         
+        
         void UIrun();
-
+        void load();
         //PLIKI
         void loadGameData();
         bool checkConfig();

@@ -7,8 +7,8 @@
 #include <map>
 #include <cfloat>
 
-Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false){}
-Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false){}
+Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(0){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(0){}
 
 /**
  * @brief Tymczasowe wyświeltanie głównego menu z przyciskami.
@@ -81,7 +81,7 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
             string nazwa_ = nazwa;
             for (auto &c : nazwa_) c = tolower(c);
             
-            // TWÓJ SPOSÓB Z .at()
+  
             const auto& info = bazaDanych.at(nazwa_); 
 
             if (info.type == "ENERGY") {
@@ -1095,13 +1095,15 @@ void Graphics::prntPomoc(){
 
 }
 
+
 /**
- * @brief Ogólna funkcja, która wyświetla wszystkie rzeczy na ekran, sprawdzajac różne warunki
+ * @brief Funkcja przy starcie gry
  * 
- * @param kolonia wskaźnik do kolonii
- * @param bazaDanych wskaźnik do mapy z informacjami o wszystkich budynkach.
+ * @param kolonia 
+ * @param bazaDanych 
+ * @param gra 
  */
-void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
+void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
     auto cos = ImGui::SFML::Init(window);
 
     //Ustawianie czcionki!
@@ -1112,11 +1114,86 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
     fontDefault = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f, NULL, ranges);
     fontHUD = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Medium.ttf", 32.0f, NULL, ranges);
     auto a=ImGui::SFML::UpdateFontTexture();
+    prntAll(kolonia,bazaDanych,gra);
+}
 
-    sf::Clock deltaClock;
+void Graphics::prntMenuGlowne(Game& gra) {
+    sf::Clock deltaClock; 
+    while (const std::optional<sf::Event> event = window.pollEvent()) {
+        
+        ImGui::SFML::ProcessEvent(window, *event);
+        
+        if (event->is<sf::Event::Closed>()) {
+            window.close();
+        }
+        
+        if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
+            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
+                window.close(); 
+            }
+        }
+        
+    }
+    ImGui::SFML::Update(window, deltaClock.restart());
     
-    while (window.isOpen()) {
-        while (const std::optional<sf::Event> event = window.pollEvent()) {
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+    float w= 300;
+    float h=600;
+    ImGui::SetNextWindowSize(ImVec2(w,h)); 
+    
+    ImGui::Begin("Menu Główne", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+    if (fontHUD != nullptr) {
+        ImGui::PushFont(fontHUD);
+    }
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    float window_width = ImGui::GetWindowWidth();
+    float text_width = ImGui::CalcTextSize("COLONY ++").x;
+    
+    ImGui::SetCursorPosX((window_width - text_width) * 0.5f); 
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"COLONY ++");
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    ImGui::Separator();
+
+    ImGui::SetCursorPos(ImVec2(w / 2 - 150, h / 2 - 200));
+    if (ImGui::Button("Kontynuuj GRĘ", ImVec2(300, 75))) {
+        gra.load(); 
+        ekran =1; 
+    }
+
+    ImGui::SetCursorPos(ImVec2(w / 2 - 150, h / 2 -100));
+    if (ImGui::Button("NOWA GRA", ImVec2(300, 75))) {
+        // gra.load(); 
+        // ekran =1; 
+    }
+
+    ImGui::SetCursorPos(ImVec2(w / 2 - 150, h / 2 ));
+    if (ImGui::Button("USTAWIENIA", ImVec2(300, 75))) {
+        // gra.load(); 
+        // ekran =1; 
+    }
+
+    ImGui::SetCursorPos(ImVec2(w / 2 - 150, h / 2 +100));
+    if (ImGui::Button("CREDITS", ImVec2(300, 75))) {
+        // gra.load(); 
+        // ekran =1; 
+    }
+    ImGui::SetCursorPos(ImVec2(w / 2 - 150, h / 2 +200));
+    if (ImGui::Button("Wyjdź", ImVec2(300, 75))) {
+        window.close();
+    }
+
+
+    if (fontHUD != nullptr) {
+        ImGui::PopFont();
+    }
+    ImGui::End();
+}
+
+void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
+    sf::Clock deltaClock;        
+    while (const std::optional<sf::Event> event = window.pollEvent()) {
 
             ImGui::SFML::ProcessEvent(window, *event);
             
@@ -1165,11 +1242,26 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         if(czyWyburzanie1){
             prntWyburz();
         }
-        
-        
-        
-        //updatowanie rzeczy
-        
+}
+
+/**
+ * @brief Ogólna funkcja, która wyświetla wszystkie rzeczy na ekran, sprawdzajac różne warunki
+ * 
+ * @param kolonia wskaźnik do kolonii
+ * @param bazaDanych wskaźnik do mapy z informacjami o wszystkich budynkach.
+ */
+void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
+   
+    
+    while (window.isOpen()) {
+
+        if(ekran==0){
+            prntMenuGlowne(gra);
+        }
+        else if(ekran==1){
+            prntGRA(kolonia, bazaDanych,gra);
+        }
+
         window.clear();
         //rysowanie elementow (tla)
         // window.draw(siatka);
@@ -1178,6 +1270,5 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         ImGui::SFML::Render(window);
         window.display();
     }
-    
     ImGui::SFML::Shutdown();
 }

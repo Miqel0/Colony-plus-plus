@@ -35,8 +35,13 @@ Game::Game(){
  * 
  */
 void Game::UIrun(){
+    //kolonia.load();
+    grafika.UIBegin(kolonia, bazaDanych,*this);
+}
+
+
+void Game::load(){
     kolonia.load();
-    grafika.prntAll(kolonia, bazaDanych,*this);
 }
 
 /*FIXME

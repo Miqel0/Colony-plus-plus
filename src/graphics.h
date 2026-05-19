@@ -24,6 +24,7 @@ class Graphics{
         unsigned int szer;
         unsigned int wys;
         
+        int ekran;
         //Czcionki
         ImFont* fontDefault = nullptr;
         ImFont* fontHUD = nullptr;
@@ -62,6 +63,10 @@ class Graphics{
         void prntCzyNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntWyburz();
+
+        void UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
+        void prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
+        void prntMenuGlowne(Game& gra);
     };
 
 #endif
