@@ -27,13 +27,17 @@ class Game{
         NextResult UINextRound();
         DestroyResult UIZburz(string nazwa);
         
+        void save(const string& nazwa_zapisu );
         void UIrun();
-
+        void load(const string& nazwa_zapisu );
         //PLIKI
         void loadGameData();
         bool checkConfig();
         void saveConfig();
 
+        vector<string> pobierzZapisy();
+        vector<string>& getZapisy();
+        void setZapisy();
     private:
 
         //Tworzenie elementów:
@@ -41,6 +45,8 @@ class Game{
         Graphics grafika;
         BuildingFactory fabryka;
         map<string, BuildingInfo> bazaDanych;
+        vector <string> zapisy;
+        
 
 };
 

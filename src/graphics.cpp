@@ -5,10 +5,45 @@
 #include "imgui-SFML.h"
 #include <optional>
 #include <map>
+#include <vector>
+#include <iostream>
+#include <SFML/Graphics.hpp>
 #include <cfloat>
 
-Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false){}
-Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false){}
+
+/**
+ * @brief Funckja do wczytywania grafik / testur itp!
+ * 
+ * @tparam T 
+ * @param sciezka sciezka w ""
+ * @param obiektSFML jaki obiekt zdefiniowany wczesniej
+ * @return true udalo sie wczytac
+ * @return false nei udalo sie
+ */
+template <typename T>
+bool WczytajGrafike(const std::string& sciezka, T& obiektSFML) {
+    std::ifstream file(sciezka, std::ios::binary | std::ios::ate);
+    
+    if (!file.is_open()) {
+        std::cerr << "Blad: Nie mozna otworzyc pliku: " << sciezka << std::endl;
+        return false;
+    }
+
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    std::vector<char> buffer(size);
+    if (file.read(buffer.data(), size)) {
+        return obiektSFML.loadFromMemory(buffer.data(), buffer.size());
+    }
+    
+    std::cerr << "Blad: Nie udalo sie odczytac bajtow z pliku: " << sciezka << std::endl;
+    return false;
+}
+
+
+Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false){}
 
 /**
  * @brief Tymczasowe wyświeltanie głównego menu z przyciskami.
@@ -81,7 +116,7 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
             string nazwa_ = nazwa;
             for (auto &c : nazwa_) c = tolower(c);
             
-            // TWÓJ SPOSÓB Z .at()
+  
             const auto& info = bazaDanych.at(nazwa_); 
 
             if (info.type == "ENERGY") {
@@ -296,7 +331,7 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         float srodekY = (gruboscPaska - ImGui::GetTextLineHeight()) * 0.5f;
         ImGui::SetCursorPosY(srodekY);
 
-        std::string nazwa = (kolonia.getNazwa() == "XX") ? "Kolonia" : kolonia.getNazwa();
+         string nazwa = (kolonia.getNazwa() == "XX") ? "Kolonia" : kolonia.getNazwa();
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.0f, 1.0f)); 
         ImGui::Text("%s", nazwa.c_str());
         ImGui::PopStyleColor();
@@ -843,7 +878,7 @@ void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, Building
     
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-    std::string pyt = "Czy na pewno chcesz zakonczyc ture?";
+     string pyt = "Czy na pewno chcesz zakonczyc ture?";
     float textWidth = ImGui::CalcTextSize(pyt.c_str()).x;
     ImGui::SetCursorPosX((350.0f - textWidth) * 0.5f); 
     ImGui::Text("%s", pyt.c_str());
@@ -1095,14 +1130,21 @@ void Graphics::prntPomoc(){
 
 }
 
+
 /**
- * @brief Ogólna funkcja, która wyświetla wszystkie rzeczy na ekran, sprawdzajac różne warunki
+ * @brief Funkcja przy starcie gry
  * 
- * @param kolonia wskaźnik do kolonii
- * @param bazaDanych wskaźnik do mapy z informacjami o wszystkich budynkach.
+ * @param kolonia 
+ * @param bazaDanych 
+ * @param gra 
  */
-void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
+void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
     auto cos = ImGui::SFML::Init(window);
+
+    //Wczytywanie ikonki na pasku
+    sf::Image icon;
+    WczytajGrafike("assets/ikonka_test.png", icon);
+    window.setIcon(icon);
 
     //Ustawianie czcionki!
     ImGuiIO& io = ImGui::GetIO();
@@ -1110,13 +1152,441 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
     static const ImWchar ranges[] ={0x0020, 0x00FF, 0x0100, 0x017F,0,};//Polskie znaki
     io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f,NULL,ranges);
     fontDefault = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f, NULL, ranges);
-    fontHUD = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Medium.ttf", 32.0f, NULL, ranges);
+    fontHUD = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Bold.ttf", 32.0f, NULL, ranges);
+    fontMENU = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Bold.ttf", 48.0f, NULL, ranges);
     auto a=ImGui::SFML::UpdateFontTexture();
+    prntAll(kolonia,bazaDanych,gra);
+}
 
+/**
+ * @brief Funckja wyświetlająca ustawienia
+ * */
+void Graphics::prntUstawienia(){
     sf::Clock deltaClock;
+    while (const  optional<sf::Event> event = window.pollEvent()) {
+        
+        ImGui::SFML::ProcessEvent(window, *event);
+        
+        if (event->is<sf::Event::Closed>()) {
+            window.close();
+        }
+        
+        if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
+            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
+                if(czyGra){
+                    ekran=TypEkranu::GAME;
+                }else{
+                    ekran=TypEkranu::MAIN_MENU;
+                }
+            }
+        }
+    } 
+    ImGui::SFML::Update(window, deltaClock.restart());
     
-    while (window.isOpen()) {
-        while (const std::optional<sf::Event> event = window.pollEvent()) {
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+    float w = 400; 
+    float h = 600;
+    ImGui::SetNextWindowSize(ImVec2(w,h)); 
+    
+    
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 8.0f);
+    ImGui::Begin("USTAWIENIA", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+    
+    if (fontMENU != nullptr) {
+        ImGui::PushFont(fontMENU);
+    }
+    
+    
+   
+    ImGui::Dummy(ImVec2(0.0f, 20.0f));
+    float text_width = ImGui::CalcTextSize("USTAWIENIA").x;
+    ImGui::SetCursorPosX((w - text_width) * 0.5f); 
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"USTAWIENIA");
+    
+    
+    
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    ImGui::Separator();
+
+   
+    float btn_w = 320;
+    float btn_h = 75;
+    ImGui::SetCursorPos(ImVec2((w - btn_w) * 0.5f, h - 120)); 
+
+    if (ImGui::Button("WRÓĆ", ImVec2(btn_w, btn_h))) {
+        if(czyGra){
+            ekran =TypEkranu::GAME; 
+        }else{
+            ekran =TypEkranu::MAIN_MENU; 
+        }
+    }
+    
+    if (fontMENU != nullptr) {
+        ImGui::PopFont();
+    }
+    ImGui::End();
+    ImGui::PopStyleVar(); // Koniec zaokrąglania
+}
+
+/**
+ * @brief Funckja wyświetlająca credits
+ * */
+void Graphics::prntCredits(){
+    sf::Clock deltaClock;
+    while (const  optional<sf::Event> event = window.pollEvent()) {
+        
+        ImGui::SFML::ProcessEvent(window, *event);
+        
+        if (event->is<sf::Event::Closed>()) {
+            window.close();
+        }
+        
+        if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
+            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
+                ekran=TypEkranu::MAIN_MENU;
+            }
+        }
+    } 
+    ImGui::SFML::Update(window, deltaClock.restart());
+    
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+    float w = 400;
+    float h = 600;
+    ImGui::SetNextWindowSize(ImVec2(w,h)); 
+    
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 8.0f);
+    ImGui::Begin("CREDITS", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+    if (fontHUD != nullptr) {
+        ImGui::PushFont(fontMENU);
+    }
+    
+   
+    ImGui::Dummy(ImVec2(0.0f, 20.0f));
+    float text_width = ImGui::CalcTextSize("CREDITS").x;
+    ImGui::SetCursorPosX((w - text_width) * 0.5f); 
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"CREDITS");
+    
+    
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    ImGui::Separator();
+
+    float btn_w = 320;
+    float btn_h = 75;
+    ImGui::SetCursorPos(ImVec2((w - btn_w) * 0.5f, h - 120));
+    if (ImGui::Button("WRÓĆ", ImVec2(btn_w, btn_h))) {
+        ekran =TypEkranu::MAIN_MENU; 
+    }
+    
+    if (fontMENU != nullptr) {
+        ImGui::PopFont();
+    }
+    ImGui::End();
+    ImGui::PopStyleVar();
+}
+
+
+
+/**
+ * @brief Funckja wyświetlająca load - pliki do wczytania i zapisywania
+ * @param gra Referencja do obiektu gry 
+ * */
+void Graphics::prntLoad(Game& gra){
+    sf::Clock deltaClock;
+    while (const std::optional<sf::Event> event = window.pollEvent()) {
+        
+        ImGui::SFML::ProcessEvent(window, *event);
+        
+        if (event->is<sf::Event::Closed>()) {
+            window.close();
+        }
+        
+        if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
+            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
+                ekran=TypEkranu::MENU_GAME;
+            }
+        }
+    } 
+    ImGui::SFML::Update(window, deltaClock.restart());
+    
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+    float w = 500; 
+    float h = 800;
+    ImGui::SetNextWindowSize(ImVec2(w,h)); 
+    
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 8.0f);
+    ImGui::Begin("ZAPISY GRY", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+    if (fontHUD != nullptr) {
+        ImGui::PushFont(fontHUD);
+    }
+   
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    float text_width = ImGui::CalcTextSize("ZAPISY GRY").x;
+    ImGui::SetCursorPosX((w - text_width) * 0.5f); 
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"ZAPISY GRY");
+    
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
+    ImGui::Text("Utwórz nowy zapis:");
+    static char nazwaNowegoZapisu[64] = ""; 
+    
+    ImGui::SetNextItemWidth(w - 150.0f); 
+    ImGui::InputText("##NowyZapis", nazwaNowegoZapisu, sizeof(nazwaNowegoZapisu));
+    
+    ImGui::SameLine();
+    
+    if (ImGui::Button("ZAPISZ", ImVec2(100, 0))) {
+        if (strlen(nazwaNowegoZapisu) > 0) {
+            gra.save(std::string(nazwaNowegoZapisu));
+        }
+    }
+
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
+    ImGui::Text("Dostępne zapisy:");
+    
+    std::vector<std::string> dostepneZapisy = gra.getZapisy();
+
+    if (ImGui::BeginTable("TabelaZapisow", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY, ImVec2(0, h - 320))) {
+        
+        ImGui::TableSetupColumn("Nazwa", ImGuiTableColumnFlags_WidthStretch);
+        ImGui::TableSetupColumn("Wczytaj", ImGuiTableColumnFlags_WidthFixed, 100.0f);
+        ImGui::TableSetupColumn("Zapisz", ImGuiTableColumnFlags_WidthFixed, 90.0f);
+        ImGui::TableHeadersRow();
+
+        for (const auto& zapis : dostepneZapisy) {
+            ImGui::TableNextRow();
+            
+            ImGui::TableNextColumn();
+            ImGui::Text("%s", zapis.c_str());
+
+            ImGui::TableNextColumn();
+            std::string idWczytaj = "Wczytaj##" + zapis; 
+            if (ImGui::Button(idWczytaj.c_str(), ImVec2(100, 0))) {
+                gra.load(zapis);
+                ekran = TypEkranu::GAME; 
+                gra.setZapisy();
+            }
+
+            ImGui::TableNextColumn();
+            std::string idZapisz = "Zapisz##" + zapis; 
+            if (ImGui::Button(idZapisz.c_str(), ImVec2(90, 0))) {
+                gra.save(zapis);
+                gra.setZapisy();
+            }
+        }
+        ImGui::EndTable();
+    }
+
+    float btn_w = 320;
+    float btn_h = 60;
+    ImGui::SetCursorPos(ImVec2((w - btn_w) * 0.5f, h - 80));
+    if (ImGui::Button("WRÓĆ", ImVec2(btn_w, btn_h))) {
+        ekran = TypEkranu::MENU_GAME; 
+    }
+    
+    if (fontHUD != nullptr) {
+        ImGui::PopFont();
+    }
+    ImGui::End();
+    ImGui::PopStyleVar();
+}
+
+
+/**
+ * @brief Funkcja wyświetlająca menu gry 
+ * * @param gra 
+ */
+void Graphics::prntMenuGra(Game& gra) {
+    sf::Clock deltaClock; 
+    while (const  optional<sf::Event> event = window.pollEvent()) {
+        
+        ImGui::SFML::ProcessEvent(window, *event);
+        
+        if (event->is<sf::Event::Closed>()) {
+            window.close();
+        }
+        
+        if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
+            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) { 
+                ekran=TypEkranu::GAME;
+            }
+        }
+    }
+    ImGui::SFML::Update(window, deltaClock.restart());
+    
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+    float w = 320;
+    float h = 450;
+    ImGui::SetNextWindowSize(ImVec2(w,h)); 
+    
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 6.0f);
+    ImGui::Begin("Menu Gry", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+    if (fontMENU != nullptr) {
+        ImGui::PushFont(fontMENU);
+    }
+    
+    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+    float text_width = ImGui::CalcTextSize("PAUZA").x;
+    ImGui::SetCursorPosX((w - text_width) * 0.5f); 
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"PAUZA");
+    if (fontMENU != nullptr) {
+        ImGui::PopFont();
+    }
+
+     if (fontHUD != nullptr) {
+        ImGui::PushFont(fontHUD);
+    }
+    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    ImGui::Separator();
+    
+    float btn_w = 260;
+    float btn_h = 60;
+    float btn_x = (w - btn_w) * 0.5f;
+
+
+    ImGui::SetCursorPos(ImVec2(btn_x, 100));
+    if (ImGui::Button("ZAPISY GRY", ImVec2(btn_w, btn_h))) {
+        gra.load("basic"); 
+        ekran =TypEkranu::LOAD; 
+    }
+
+    ImGui::SetCursorPos(ImVec2(btn_x, 180));
+    if (ImGui::Button("USTAWIENIA", ImVec2(btn_w, btn_h))) {
+        ekran =TypEkranu::SETTINGS; 
+    }
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.0f)); 
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.3f, 0.3f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+    ImGui::SetCursorPos(ImVec2(btn_x, 260));
+    if (ImGui::Button("WYJDŹ Z GRY", ImVec2(btn_w, btn_h))) {
+        window.close();
+    }
+    
+    ImGui::SetCursorPos(ImVec2(btn_x, 340));
+    if (ImGui::Button("WYJDŹ DO MENU", ImVec2(btn_w, btn_h))) {
+        ekran=TypEkranu::MAIN_MENU;
+        czyGra=false;
+    }
+    ImGui::PopStyleColor(3);
+
+    if (fontHUD != nullptr) {
+        ImGui::PopFont();
+    }
+    ImGui::End();
+    ImGui::PopStyleVar();
+}
+
+/**
+ * @brief Funkcja wyświetlająca menu główne 
+ * * @param gra 
+ */
+void Graphics::prntMenuGlowne(Game& gra) {
+    sf::Clock deltaClock; 
+    while (const  optional<sf::Event> event = window.pollEvent()) {
+        
+        ImGui::SFML::ProcessEvent(window, *event);
+        
+        if (event->is<sf::Event::Closed>()) {
+            window.close();
+        }
+        
+        if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
+            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
+                window.close(); 
+            }
+        }
+    }
+    ImGui::SFML::Update(window, deltaClock.restart());
+    
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    
+    float w = 450;
+    float h = 680;
+    ImGui::SetNextWindowSize(ImVec2(w,h)); 
+    
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 10.0f); 
+    ImGui::Begin("Menu Główne", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+    if (fontMENU != nullptr) {
+        ImGui::PushFont(fontMENU);
+    }
+    
+    ImGui::Dummy(ImVec2(0.0f, 20.0f));
+    float text_width = ImGui::CalcTextSize("COLONY ++").x;
+    ImGui::SetCursorPosX((w - text_width) * 0.5f); 
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"COLONY ++");
+    
+    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+    ImGui::Separator();
+
+    float btn_w = 380;
+    float btn_h = 80;
+    float btn_x = (w - btn_w) * 0.5f;
+
+    ImGui::SetCursorPos(ImVec2(btn_x, 140));
+    if (ImGui::Button("Kontynuuj GRĘ", ImVec2(btn_w, btn_h))) {
+        gra.load("basic"); 
+        ekran =TypEkranu::GAME; 
+        czyGra=true;
+    }
+
+    ImGui::SetCursorPos(ImVec2(btn_x, 240));
+    if (ImGui::Button("NOWA GRA", ImVec2(btn_w, btn_h))) {
+        ekran =TypEkranu::GAME;
+        czyGra=true;
+    }
+
+    ImGui::SetCursorPos(ImVec2(btn_x, 340));
+    if (ImGui::Button("USTAWIENIA", ImVec2(btn_w, btn_h))) {
+        ekran =TypEkranu::SETTINGS; 
+    }
+
+    ImGui::SetCursorPos(ImVec2(btn_x, 440));
+    if (ImGui::Button("CREDITS", ImVec2(btn_w, btn_h))) {
+        ekran =TypEkranu::CREDITS; 
+    }
+    
+    ImGui::SetCursorPos(ImVec2(btn_x, 540));
+
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.0f)); 
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.3f, 0.3f, 1.0f));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
+    if (ImGui::Button("WYJDŹ", ImVec2(btn_w, btn_h))) {
+        window.close();
+    }
+    ImGui::PopStyleColor(3);
+
+    if (fontMENU != nullptr) {
+        ImGui::PopFont();
+    }
+    ImGui::End();
+    ImGui::PopStyleVar();
+
+}
+
+/**
+ * @brief WYswietlanie gry okien itp
+ * 
+ * @param kolonia 
+ * @param bazaDanych 
+ * @param gra 
+ */
+void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
+    sf::Clock deltaClock;        
+    while (const  optional<sf::Event> event = window.pollEvent()) {
 
             ImGui::SFML::ProcessEvent(window, *event);
             
@@ -1126,7 +1596,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
             
             if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
                 if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
-                    window.close(); 
+                    ekran=TypEkranu::MENU_GAME;
                 }
             }
             
@@ -1165,11 +1635,37 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         if(czyWyburzanie1){
             prntWyburz();
         }
-        
-        
-        
-        //updatowanie rzeczy
-        
+}
+
+/**
+ * @brief Ogólna funkcja, która wyświetla wszystkie rzeczy na ekran, sprawdzajac różne warunki
+ * 
+ * @param kolonia wskaźnik do kolonii
+ * @param bazaDanych wskaźnik do mapy z informacjami o wszystkich budynkach.
+ */
+void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
+    
+    while (window.isOpen()) {
+
+        if(ekran==TypEkranu::MAIN_MENU){
+            prntMenuGlowne(gra);
+        }
+        else if(ekran==TypEkranu::GAME){
+            prntGRA(kolonia, bazaDanych,gra);
+        }
+        else if(ekran==TypEkranu::MENU_GAME){
+            prntMenuGra(gra);
+        }
+        else if(ekran==TypEkranu::SETTINGS){
+            prntUstawienia();
+        }
+        else if(ekran==TypEkranu::CREDITS){
+            prntCredits();
+        }
+        else if(ekran==TypEkranu::LOAD){
+            prntLoad(gra);
+        }
+
         window.clear();
         //rysowanie elementow (tla)
         // window.draw(siatka);
@@ -1178,6 +1674,5 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         ImGui::SFML::Render(window);
         window.display();
     }
-    
     ImGui::SFML::Shutdown();
 }

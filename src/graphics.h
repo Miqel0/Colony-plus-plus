@@ -24,9 +24,11 @@ class Graphics{
         unsigned int szer;
         unsigned int wys;
         
+        TypEkranu ekran;
         //Czcionki
         ImFont* fontDefault = nullptr;
         ImFont* fontHUD = nullptr;
+        ImFont* fontMENU = nullptr;
 
         //Wyswietlanie itp
         bool czyhelp;
@@ -38,7 +40,12 @@ class Graphics{
         bool czyNextRound1;
         bool czyWyburzanie;
         bool czyWyburzanie1;
+
+        bool czyLoad;
+        bool czySave;
         
+        bool czyGra;
+
         string wybranaKategoriaBudowa;
         BuildResult ostatniWynik;
         NextResult nextWynik;
@@ -62,6 +69,14 @@ class Graphics{
         void prntCzyNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntWyburz();
+
+        void UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
+        void prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
+        void prntMenuGlowne(Game& gra);
+        void prntMenuGra(Game& gra);
+        void prntUstawienia();
+        void prntCredits();
+        void prntLoad(Game& gra);
     };
 
 #endif

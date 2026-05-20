@@ -50,8 +50,9 @@ class Colony{
         void saveColony(string nazwa_plik);
         void loadColony(string nazwa_plik);
 
-        void save();
-        void load();
+        void save(const string& nazwa_zapisu);
+        void load(const string& nazwa_zapisu);
+;
 
 
         //SETTERY

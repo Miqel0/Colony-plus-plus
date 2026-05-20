@@ -5,6 +5,7 @@
 #include <cctype>
 #include <iomanip>
 #include <vector>
+#include <filesystem>
 
 #include <algorithm>
 #include <cstdint>
@@ -23,6 +24,7 @@ using namespace std;
 
 Game::Game(){
     //Wczytywanie parametrow budynkow
+    zapisy=pobierzZapisy();
     loadGameData();
 }
 
@@ -35,8 +37,17 @@ Game::Game(){
  * 
  */
 void Game::UIrun(){
-    kolonia.load();
-    grafika.prntAll(kolonia, bazaDanych,*this);
+    //kolonia.load();
+    grafika.UIBegin(kolonia, bazaDanych,*this);
+}
+
+
+void Game::load(const string& nazwa_zapisu ){
+    kolonia.load(nazwa_zapisu);
+}
+
+void Game::save(const string& nazwa_zapisu ){
+    kolonia.save(nazwa_zapisu);
 }
 
 /*FIXME
@@ -47,6 +58,7 @@ Do dodania z Commands:
 - też dodać tutorial
 */
 
+vector<string>& Game::getZapisy(){return zapisy;}
 
 
 /**
@@ -59,6 +71,24 @@ NextResult Game::UINextRound(){return kolonia.UInextRound();}
 // ==========================================
 // RZECZY Z PLIKAMI (LOAD)
 // ==========================================
+void Game::setZapisy(){
+    zapisy=pobierzZapisy();
+}
+
+vector<string> Game::pobierzZapisy() {
+    std::vector<std::string> znalezioneZapisy;
+    filesystem::path sciezkaSaves = "data/saves";
+
+    if (filesystem::exists(sciezkaSaves) && filesystem::is_directory(sciezkaSaves)) {
+        for (const auto& entry : filesystem::directory_iterator(sciezkaSaves)) {
+            if (entry.is_directory()) {
+                znalezioneZapisy.push_back(entry.path().filename().string());
+                //cout<<entry.path().filename().string()<<endl;
+            }
+        }
+    }
+    return znalezioneZapisy;
+}
 
 /**
  * @brief Jakaś funkcja do wczytywania ustawień itp.

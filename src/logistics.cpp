@@ -225,7 +225,7 @@ pair<int, int> Logistics::UIupdateZburzBudynek(Building* budynek){
 
 //ZAPISYWANIE PARAMETROW COLONY - wszystkie zmienne (oprocz budynkow)
 void Logistics::save(string nazwa_plik){
-    ofstream plik("data/"+nazwa_plik);
+    ofstream plik(nazwa_plik);
     if(plik.is_open()){
         plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<wsp_terr<<" "<<lvl_terr<<" "<<genEnergy<<" "<<reqEnergy<<" "<<reqFood<<" "<<food<<" "<<stone<<" "<<titan<<endl;
 
@@ -235,7 +235,7 @@ void Logistics::save(string nazwa_plik){
 
 //WCZYTYWANIE ZAPISANYCH DANYCH
 void Logistics::load(string nazwa_plik){
-    ifstream plik("data/"+nazwa_plik);
+    ifstream plik(nazwa_plik);
 
     //kolejnosc zapisanych danych w pliku
     //plik<<nazwa_kolonii<<" "<<tura<<" "<<ruch<<" "<<all_workers<<" "<<demand_workers<<" "<<f_logisyka.getGenEnergy()<<" "<<f_logisyka.getReqEnergy()<<" "<<f_logisyka.getReqFood()<<" "<<f_logisyka.getFood()<<" "<<f_logisyka.getStone()<<" "<<f_logisyka.getTitan()<<endl;
@@ -261,6 +261,7 @@ void Logistics::load(string nazwa_plik){
         wsp_terr=te;
         lvl_terr=lt;
         plik.close();
+        //cout<<"Kolonia zostala wczytana"<<endl;
     }
 }
 
