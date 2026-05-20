@@ -34,7 +34,10 @@ class Game{
         void loadGameData();
         bool checkConfig();
         void saveConfig();
+
         vector<string> pobierzZapisy();
+        vector<string>& getZapisy();
+        void setZapisy();
     private:
 
         //Tworzenie elementów:

@@ -28,6 +28,7 @@ class Graphics{
         //Czcionki
         ImFont* fontDefault = nullptr;
         ImFont* fontHUD = nullptr;
+        ImFont* fontMENU = nullptr;
 
         //Wyswietlanie itp
         bool czyhelp;
@@ -39,6 +40,9 @@ class Graphics{
         bool czyNextRound1;
         bool czyWyburzanie;
         bool czyWyburzanie1;
+
+        bool czyLoad;
+        bool czySave;
         
         bool czyGra;
 
@@ -72,6 +76,7 @@ class Graphics{
         void prntMenuGra(Game& gra);
         void prntUstawienia();
         void prntCredits();
+        void prntLoad(Game& gra);
     };
 
 #endif

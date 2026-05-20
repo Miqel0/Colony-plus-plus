@@ -261,7 +261,7 @@ void Logistics::load(string nazwa_plik){
         wsp_terr=te;
         lvl_terr=lt;
         plik.close();
-        cout<<"Kolonia zostala wczytana"<<endl;
+        //cout<<"Kolonia zostala wczytana"<<endl;
     }
 }
 

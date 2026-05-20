@@ -184,7 +184,7 @@ void Colony::save(const string& nazwa_zapisu ){
     filesystem::create_directories(sciezkaFolderu);
     saveBuildings("data/saves/"+nazwa_zapisu+"/"+"zapis_buildings.txt");
     saveColony("data/saves/"+nazwa_zapisu+"/"+"zapis_colony.txt");
-    cout<<"Gra zostala zapisana do pliku ."<<endl;
+    //cout<<"Gra zostala zapisana do pliku ."<<endl;
 }
 
 /**
@@ -218,7 +218,7 @@ void Colony::saveBuildings(string nazwa_plik){
 void Colony::load(const string& nazwa_zapisu){
     loadBuildings("data/saves/"+nazwa_zapisu+"/"+"zapis_buildings.txt");
     loadColony("data/saves/"+nazwa_zapisu+"/"+"zapis_colony.txt");
-    cout<<"Gra zostala wczytana z pliku."<<endl;
+    //cout<<"Gra zostala wczytana z pliku."<<endl;
 }
 
 //Wczytywanie wszystkich budynkow
@@ -326,7 +326,7 @@ void Colony::loadBuildings(string nazwa_plik) {
         } 
         Building::updateLicznik(maxSaved);
         plik.close();
-        cout<<"Budynki zostaly wczytane"<<endl;
+        //cout<<"Budynki zostaly wczytane"<<endl;
     }
 } 
 

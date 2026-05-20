@@ -58,6 +58,7 @@ Do dodania z Commands:
 - też dodać tutorial
 */
 
+vector<string>& Game::getZapisy(){return zapisy;}
 
 
 /**
@@ -70,7 +71,9 @@ NextResult Game::UINextRound(){return kolonia.UInextRound();}
 // ==========================================
 // RZECZY Z PLIKAMI (LOAD)
 // ==========================================
-
+void Game::setZapisy(){
+    zapisy=pobierzZapisy();
+}
 
 vector<string> Game::pobierzZapisy() {
     std::vector<std::string> znalezioneZapisy;
@@ -80,7 +83,7 @@ vector<string> Game::pobierzZapisy() {
         for (const auto& entry : filesystem::directory_iterator(sciezkaSaves)) {
             if (entry.is_directory()) {
                 znalezioneZapisy.push_back(entry.path().filename().string());
-                cout<<entry.path().filename().string()<<endl;
+                //cout<<entry.path().filename().string()<<endl;
             }
         }
     }
