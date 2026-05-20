@@ -31,6 +31,12 @@ enum class TypBudynku {
 };
 
 /**
+ * @brief Typ ekranu.
+ * 
+ */
+enum class TypEkranu {MAIN_MENU,GAME,MENU_GAME,SETTINGS,CREDITS};
+
+/**
  * @brief Zawiera w sobie wszystkie parametry danego budynku wczytane z gamedata.txt
  * 
  */

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <map>
 #include <cctype>
+#include <filesystem>
 
 using namespace std;
 
@@ -178,10 +179,12 @@ DestroyResult Colony::UIzburzBudynek(string nazwa){
  * @brief Zapisywanie wszystkiego - save
  * 
  */
-void Colony::save(){
-    saveBuildings("zapis_buildings.txt");
-    saveColony("zapis_colony.txt");
-    // cout<<"Gra zostala zapisana do pliku ."<<endl;
+void Colony::save(const string& nazwa_zapisu ){
+    filesystem::path sciezkaFolderu = filesystem::path("data/saves") / nazwa_zapisu;
+    filesystem::create_directories(sciezkaFolderu);
+    saveBuildings("data/saves/"+nazwa_zapisu+"/"+"zapis_buildings.txt");
+    saveColony("data/saves/"+nazwa_zapisu+"/"+"zapis_colony.txt");
+    cout<<"Gra zostala zapisana do pliku ."<<endl;
 }
 
 /**
@@ -197,7 +200,7 @@ void Colony::saveColony(string nazwa_plik){f_logisyka.save(nazwa_plik);}
  * @param nazwa_plik plik do zapisu budynków
  */
 void Colony::saveBuildings(string nazwa_plik){
-    ofstream plik("data/"+nazwa_plik);
+    ofstream plik(nazwa_plik);
     if(plik.is_open()){
          for(const auto& b : buildings){
             b->save(plik); //Wykorzystanie przeciazonej funkcji virtualnej save()
@@ -212,10 +215,10 @@ void Colony::saveBuildings(string nazwa_plik){
  * 
  * @param nazwa_plik plik do zapisu parametrów kolonii
  */
-void Colony::load(){
-    loadBuildings("zapis_buildings.txt");
-    loadColony("zapis_colony.txt");
-    // cout<<"Gra zostala wczytana z pliku."<<endl;
+void Colony::load(const string& nazwa_zapisu){
+    loadBuildings("data/saves/"+nazwa_zapisu+"/"+"zapis_buildings.txt");
+    loadColony("data/saves/"+nazwa_zapisu+"/"+"zapis_colony.txt");
+    cout<<"Gra zostala wczytana z pliku."<<endl;
 }
 
 //Wczytywanie wszystkich budynkow
@@ -225,7 +228,7 @@ void Colony::load(){
  * @param nazwa_plik plik do zapisu budynków
  */
 void Colony::loadBuildings(string nazwa_plik) {
-    ifstream plik("data/"+nazwa_plik);
+    ifstream plik(nazwa_plik);
 
     if (plik.is_open()) {
 
@@ -323,7 +326,8 @@ void Colony::loadBuildings(string nazwa_plik) {
         } 
         Building::updateLicznik(maxSaved);
         plik.close();
-    } 
+        cout<<"Budynki zostaly wczytane"<<endl;
+    }
 } 
 
 void Colony::loadColony(string nazwa_plik){f_logisyka.load(nazwa_plik);}

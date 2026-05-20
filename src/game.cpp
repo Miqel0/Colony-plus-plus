@@ -5,6 +5,7 @@
 #include <cctype>
 #include <iomanip>
 #include <vector>
+#include <filesystem>
 
 #include <algorithm>
 #include <cstdint>
@@ -23,6 +24,7 @@ using namespace std;
 
 Game::Game(){
     //Wczytywanie parametrow budynkow
+    zapisy=pobierzZapisy();
     loadGameData();
 }
 
@@ -40,8 +42,12 @@ void Game::UIrun(){
 }
 
 
-void Game::load(){
-    kolonia.load();
+void Game::load(const string& nazwa_zapisu ){
+    kolonia.load(nazwa_zapisu);
+}
+
+void Game::save(const string& nazwa_zapisu ){
+    kolonia.save(nazwa_zapisu);
 }
 
 /*FIXME
@@ -64,6 +70,22 @@ NextResult Game::UINextRound(){return kolonia.UInextRound();}
 // ==========================================
 // RZECZY Z PLIKAMI (LOAD)
 // ==========================================
+
+
+vector<string> Game::pobierzZapisy() {
+    std::vector<std::string> znalezioneZapisy;
+    filesystem::path sciezkaSaves = "data/saves";
+
+    if (filesystem::exists(sciezkaSaves) && filesystem::is_directory(sciezkaSaves)) {
+        for (const auto& entry : filesystem::directory_iterator(sciezkaSaves)) {
+            if (entry.is_directory()) {
+                znalezioneZapisy.push_back(entry.path().filename().string());
+                cout<<entry.path().filename().string()<<endl;
+            }
+        }
+    }
+    return znalezioneZapisy;
+}
 
 /**
  * @brief Jakaś funkcja do wczytywania ustawień itp.
