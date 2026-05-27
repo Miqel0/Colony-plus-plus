@@ -1042,12 +1042,10 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
 
 /**
  * @brief Wyświetlanie helpa i instrukcji
- * 
- */
-void Graphics::prntPomoc(){
-
-    ImGui::SetNextWindowSize(ImVec2(800, 450), ImGuiCond_FirstUseEver);
-    ImGui::Begin("PODRECZNIK KOLONIZATORA - ZASADY GRY",&czyhelp, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+ * */
+void Graphics::prntPomoc() {
+    ImGui::SetNextWindowSize(ImVec2(800, 500), ImGuiCond_Appearing);
+    ImGui::Begin("PODRECZNIK KOLONIZATORA - ZASADY GRY", &czyhelp, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
     // ==========================================
     // 1. CEL GRY
@@ -1055,12 +1053,11 @@ void Graphics::prntPomoc(){
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "1. CEL GLOWNY: TERRAFORMACJA");
     ImGui::Separator();
     
-    ImGui::Bullet(); ImGui::Text("Twoim zadaniem jest przystosowanie Marsa do zycia. Buduj budynki w nowej kolonii");
-    ImGui::SameLine(); ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "TERR.");
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("Twoim zadaniem jest przystosowanie Marsa do zycia. Buduj budynki w nowej kolonii, aby przetrwac.");
     
-    ImGui::Bullet(); ImGui::Text("Zwiekszanie");
-    ImGui::SameLine(); ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Wskaznika Terraformacji");
-    ImGui::SameLine(); ImGui::Text("odblokowuje nowe technologie (i dostep do tytanu!).");
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("Budynki z kategorii TERR zwiekszaja Wskaznik Terraformacji. Odblokowuje to nowe technologie oraz daje dostep do tytanu.");
     
     ImGui::Dummy(ImVec2(0.0f, 10.0f)); 
 
@@ -1070,22 +1067,18 @@ void Graphics::prntPomoc(){
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "2. EKONOMIA ZYCIA (WAZNE!)");
     ImGui::Separator();
 
-    ImGui::Bullet(); ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "JEDZENIE:");
-    ImGui::SameLine(); ImGui::TextWrapped("Pobierane automatycznie na poczatku kazdej nowej tury. Kazdy mieszkaniec potrzebuje 2 jedzenia na ture.");
-    
-    // Wcięcie dla kary za brak jedzenia
+    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "[ JEDZENIE ]");
     ImGui::Indent(); 
-    ImGui::Text("Jesli magazyn jedzenia bedzie pusty -> ");
-    ImGui::SameLine(); ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "KOLONIA UMIERA (KONIEC GRY).");
+    ImGui::TextWrapped("Pobierane automatycznie na poczatku kazdej nowej tury. Kazdy mieszkaniec potrzebuje 2 jedzenia na ture.");
+    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "UWAGA: Jesli magazyn jedzenia bedzie pusty -> KOLONIA UMIERA (KONIEC GRY).");
     ImGui::Unindent();
 
-    ImGui::Bullet(); ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "ENERGIA:");
-    ImGui::SameLine(); ImGui::TextWrapped("Musisz produkowac wiecej pradu niz zuzywasz (albo dokladnie tyle samo).");
-    
+    ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "[ ENERGIA ]");
     ImGui::Indent();
-    ImGui::Text("Brak energii = ");
-    ImGui::SameLine(); ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "STOP PRODUKCJI");
-    ImGui::SameLine(); ImGui::Text("we wszystkich budynkach (farmy tez przestaja dzialac!).");
+    ImGui::TextWrapped("Musisz produkowac wiecej pradu niz zuzywasz (albo dokladnie tyle samo).");
+    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "UWAGA: Brak energii = STOP PRODUKCJI we wszystkich budynkach \n(farmy tez przestaja dzialac!).");
     ImGui::Unindent();
 
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
@@ -1096,14 +1089,14 @@ void Graphics::prntPomoc(){
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "3. MECHANIKA TURY");
     ImGui::Separator();
 
-    ImGui::Bullet(); ImGui::TextWrapped("W kazdej turze masz do dyspozycji 3 PUNKTY RUCHU.");
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("W kazdej turze masz do dyspozycji 3 PUNKTY RUCHU (1 Budynek = 1 Ruch).");
     
-    ImGui::Bullet(); ImGui::TextColored(ImVec4(0.2f, 0.8f, 1.0f, 1.0f), "1 Budynek = 1 Ruch.");
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("Gdy wykorzystasz ruchy (lub wczesniej, jesli chcesz), kliknij przycisk [NEXT], aby zakonczyc ture.");
     
-    ImGui::Bullet(); ImGui::Text("Gdy wykorzystasz ruchy (lub wczesniej), kliknij");
-    ImGui::SameLine(); ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "[next]");
-    
-    ImGui::Bullet(); ImGui::TextWrapped("Dopiero po przejsciu do nastepnej tury nastepuje produkcja surowcow i konsumpcja jedzenia.");
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("Dopiero po przejsciu do nastepnej tury nastepuje produkcja surowcow i konsumpcja jedzenia.");
 
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
@@ -1113,20 +1106,16 @@ void Graphics::prntPomoc(){
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "4. BUDOWANIE I NISZCZENIE");
     ImGui::Separator();
 
-    ImGui::Bullet(); ImGui::Text("Uzywaj panelu budowania, aby sprawdzic wymagania i koszt budynkow.");
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("Uzywaj panelu budowania, aby sprawdzic wymagania i koszt budynkow.");
     
-    ImGui::Bullet(); ImGui::Text("Aby zdobyc pracownikow, musisz budowac domy (");
-    ImGui::SameLine(); ImGui::TextColored(ImVec4(0.2f, 0.5f, 1.0f, 1.0f), "Housing");
-    ImGui::SameLine(); ImGui::Text(").");
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("Aby zdobyc pracownikow, musisz budowac domy (Kategoria: Housing).");
 
-    ImGui::Bullet(); ImGui::Text("Mozesz zburzyc budynek i odzyskac polowe surowcow.");
-
-    ImGui::Indent();
-    ImGui::TextColored(ImVec4(0.2f, 0.5f, 1.0f, 1.0f), "Zburzenie zwalnia pracownikow.");
-    ImGui::Unindent();
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("Mozesz zburzyc budynek, aby odzyskac polowe surowcow. Zburzenie zwalnia rowniez przypisanych pracownikow.");
 
     ImGui::End();
-
 }
 
 
