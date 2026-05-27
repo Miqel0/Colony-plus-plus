@@ -1663,9 +1663,10 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         //rysowanie elementow (tla)
         // window.draw(siatka);
         // window.draw(menu);
+        ImVec2 pozycjaMyszy = ImGui::GetMousePos();
         if(ekran==TypEkranu::GAME){
 
-            siatka.prntSiatka(window);
+            siatka.prntSiatka(window,pozycjaMyszy);
         }
         
         ImGui::SFML::Render(window);

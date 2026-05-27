@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <string>
+#include <utility>
 #include <SFML/Graphics.hpp>
 #include "colony.h"
 
@@ -14,6 +15,7 @@ class BuildingsGrid{
     private:
         vector<vector<TypKafelka>> siatka;
         sf::Texture kafelek_tex;
+        sf::Texture kafelek_najechany_tex;
         float kafelek_x;
         float kafelek_y;
         int siatka_size_x;
@@ -22,11 +24,14 @@ class BuildingsGrid{
         float siatka_y;
         float siatka_begin_x;
         float siatka_begin_y;
+        pair<int,int> poz_mysz;//koordynaty na siatce
 
     public:
 
         BuildingsGrid();
         ~BuildingsGrid(){};
-        void prntSiatka(sf::RenderWindow& window);
+        void prntSiatka(sf::RenderWindow& window,ImVec2& poz);
+        bool sprawdzMysz(ImVec2& poz);
+        void czyNajechane(ImVec2& poz);
     };
 #endif
