@@ -5,7 +5,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "colony.h"
-
+#include "buildingsGrid.h"
 using namespace std;
 
 
@@ -24,6 +24,8 @@ class Graphics{
         unsigned int szer;
         unsigned int wys;
         
+        //Siatka budynków
+        BuildingsGrid siatka;
         TypEkranu ekran;
         //Czcionki
         ImFont* fontDefault = nullptr;

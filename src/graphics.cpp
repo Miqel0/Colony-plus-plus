@@ -67,6 +67,11 @@ void Graphics::prntMenu(){
         czyBudowanie =!czyBudowanie;
     }
     ImGui::Separator();
+    ImVec2 pozycjaMyszy = ImGui::GetMousePos();
+    ImGui::TextWrapped("Pozycja myszy: X = %.0f, Y = %.0f", pozycjaMyszy.x, pozycjaMyszy.y);
+
+    //X=300
+    //Y=100
     ImGui::End();
 }
 
@@ -1658,6 +1663,10 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         //rysowanie elementow (tla)
         // window.draw(siatka);
         // window.draw(menu);
+        if(ekran==TypEkranu::GAME){
+
+            siatka.prntSiatka(window);
+        }
         
         ImGui::SFML::Render(window);
         window.display();

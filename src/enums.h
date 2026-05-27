@@ -31,6 +31,13 @@ enum class TypBudynku {
 };
 
 /**
+ * @brief Typy kafelków.
+ * 
+ */
+enum class TypKafelka {PUSTY,ZAJETY,BRAK};
+
+
+/**
  * @brief Typ ekranu.
  * 
  */
