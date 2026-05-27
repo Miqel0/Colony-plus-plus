@@ -53,7 +53,6 @@ void Graphics::prntMenu(){
     ImGui::SetNextWindowPos(ImVec2(10, 70), ImGuiCond_Once);
     ImGui::SetNextWindowSize(ImVec2(240, 400), ImGuiCond_Once);
     ImGui::Begin("Panel Sterowania",nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-    ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
     ImGui::Separator();
 
     if(ImGui::Button("Pomoc")){
@@ -331,7 +330,7 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         float srodekY = (gruboscPaska - ImGui::GetTextLineHeight()) * 0.5f;
         ImGui::SetCursorPosY(srodekY);
 
-         string nazwa = (kolonia.getNazwa() == "XX") ? "Kolonia" : kolonia.getNazwa();
+         string nazwa = (kolonia.getNazwa() == "XX") ? "Kolonia" : cleanString(kolonia.getNazwa());
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.0f, 1.0f)); 
         ImGui::Text("%s", nazwa.c_str());
         ImGui::PopStyleColor();
@@ -408,11 +407,11 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         ImGui::SameLine(0.0f, 40.0f);
 
         ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "Terraformacja: %d", kolonia.getLvlTerr());
-         if (ImGui::IsItemHovered()) {
-            prntStatystykiToolTop(kolonia,licznik,"terr",bazaDanych);
-        }
         ImGui::SameLine();
         ImGui::Text("(Do nast: %d)", kolonia.getToNextLvlTerr());
+        if (ImGui::IsItemHovered()) {
+           prntStatystykiToolTop(kolonia,licznik,"terr",bazaDanych);
+       }
 
         char tekstTury[128];
         snprintf(tekstTury, sizeof(tekstTury), "Tura: %d | Ruchy: %d/3", kolonia.getTura(), kolonia.getRuch());
@@ -437,7 +436,7 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
  * @param bazaDanych wskaźnik do bazy danych 
  */
 void Graphics::prntBudynki(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra){
-    ImGui::SetNextWindowSizeConstraints(ImVec2(200, 0.0f), ImVec2(300, FLT_MAX));
+    ImGui::SetNextWindowSizeConstraints(ImVec2(300, 0.0f), ImVec2(500, FLT_MAX));
     ImGui::Begin("Zbudowane Budynki",&czyBudynki,ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
     auto licznik= kolonia.UIprntBuildingsSumm();
@@ -592,7 +591,7 @@ void Graphics::prntWyburz() {
  * @param gra wskaznik do klasy Game
  */
 void Graphics::prntBudowanie(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra){
-    ImGui::SetNextWindowSizeConstraints(ImVec2(300, 0.0f), ImVec2(300, FLT_MAX));
+    ImGui::SetNextWindowSizeConstraints(ImVec2(350, 0.0f), ImVec2(300, FLT_MAX));
     
     ImGui::Begin("Dostępne kategorie budynków",&czyBudowanie, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
@@ -873,14 +872,14 @@ void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, Building
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-    ImGui::SetNextWindowSize(ImVec2(350, 150)); 
+    ImGui::SetNextWindowSize(ImVec2(375, 175)); 
     ImGui::Begin("Koniec Tury", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
     
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
      string pyt = "Czy na pewno chcesz zakonczyc ture?";
     float textWidth = ImGui::CalcTextSize(pyt.c_str()).x;
-    ImGui::SetCursorPosX((350.0f - textWidth) * 0.5f); 
+    ImGui::SetCursorPosX((375.0f - textWidth) * 0.5f); 
     ImGui::Text("%s", pyt.c_str());
 
     ImGui::Dummy(ImVec2(0.0f, 20.0f)); 
@@ -889,7 +888,7 @@ void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, Building
 
     float buttonWidth = 100.0f;
     float spaceBetween = 40.0f;
-    float buttonsStartX = (350.0f - (2 * buttonWidth + spaceBetween)) * 0.5f;
+    float buttonsStartX = (375.0f - (2 * buttonWidth + spaceBetween)) * 0.5f;
 
     ImGui::SetCursorPosX(buttonsStartX);
 
@@ -1047,7 +1046,7 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
  */
 void Graphics::prntPomoc(){
 
-    ImGui::SetNextWindowSize(ImVec2(600, 450), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(800, 450), ImGuiCond_FirstUseEver);
     ImGui::Begin("PODRECZNIK KOLONIZATORA - ZASADY GRY",&czyhelp, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
     // ==========================================
@@ -1150,10 +1149,10 @@ void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& ba
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Clear();
     static const ImWchar ranges[] ={0x0020, 0x00FF, 0x0100, 0x017F,0,};//Polskie znaki
-    io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f,NULL,ranges);
-    fontDefault = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Regular.ttf", 20.0f, NULL, ranges);
-    fontHUD = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Bold.ttf", 32.0f, NULL, ranges);
-    fontMENU = io.Fonts->AddFontFromFileTTF("fonts/ChakraPetch-Bold.ttf", 48.0f, NULL, ranges);
+    io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Regular.ttf", 25.0f,NULL,ranges);
+    fontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Regular.ttf", 25.0f, NULL, ranges);
+    fontHUD = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 32.0f, NULL, ranges);
+    fontMENU = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 48.0f, NULL, ranges);
     auto a=ImGui::SFML::UpdateFontTexture();
     prntAll(kolonia,bazaDanych,gra);
 }
@@ -1345,6 +1344,7 @@ void Graphics::prntLoad(Game& gra){
     if (ImGui::Button("ZAPISZ", ImVec2(100, 0))) {
         if (strlen(nazwaNowegoZapisu) > 0) {
             gra.save(std::string(nazwaNowegoZapisu));
+            gra.setZapisy();
         }
     }
 
@@ -1381,7 +1381,6 @@ void Graphics::prntLoad(Game& gra){
             std::string idZapisz = "Zapisz##" + zapis; 
             if (ImGui::Button(idZapisz.c_str(), ImVec2(90, 0))) {
                 gra.save(zapis);
-                gra.setZapisy();
             }
         }
         ImGui::EndTable();

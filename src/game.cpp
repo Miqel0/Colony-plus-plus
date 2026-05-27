@@ -58,7 +58,9 @@ Do dodania z Commands:
 - też dodać tutorial
 */
 
-vector<string>& Game::getZapisy(){return zapisy;}
+vector<string>& Game::getZapisy(){
+    return zapisy;
+}
 
 
 /**
