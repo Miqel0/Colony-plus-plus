@@ -150,7 +150,12 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz){
     
     kafelek_najechany_sprt.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
     kafelek_sprt.setOrigin(sf::Vector2f(kafelek_x/2,kafelek_y/2));
-    czyNajechane(poz);
+
+    sf::Vector2i pozycjaPix = sf::Mouse::getPosition(window);
+    sf::Vector2f pozycjaSwiata = window.mapPixelToCoords(pozycjaPix);
+    ImVec2 Pozycja(pozycjaSwiata.x, pozycjaSwiata.y);
+
+    czyNajechane(Pozycja);
     for(int i=0;i<siatka_size_x;i++){
         for(int j=0;j<siatka_size_y;j++){
             if(siatka[i][j]==TypKafelka::PUSTY){
