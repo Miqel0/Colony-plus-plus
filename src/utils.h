@@ -1,5 +1,5 @@
-#ifndef enums_h
-#define enums_h
+#ifndef utils_h
+#define utils_h
 
 #include <iostream>
 #include <sstream>
@@ -35,6 +35,18 @@ enum class TypBudynku {
  * 
  */
 enum class TypKafelka {PUSTY,ZAJETY,BRAK};
+
+/**
+ * @brief Dane o danym kafelku
+ * 
+ */
+struct DaneKafelek {
+    TypKafelka typ=TypKafelka::PUSTY;
+    string nazwa="";
+    int id=-1;
+
+};
+
 
 
 /**

@@ -148,7 +148,6 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
         ImGui::Separator();
         ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "ZAPOTRZEBOWANIE: %d", kolonia.getReqEnergy());
         for (const auto& wpis : straty) ImGui::BulletText("%s (x%d): -%d", wpis.nazwa.c_str(), wpis.ilo, wpis.dem);
-        
         ImGui::Separator();
         int suma = kolonia.getGenEnergy() - kolonia.getReqEnergy();
         ImGui::TextColored(suma >= 0 ? ImVec4(0.2f, 1.0f, 0.2f, 1.0f) : ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "BILANS: %d", suma);
@@ -180,7 +179,6 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
                 straty.push_back(wynik);
             }
         }
-
         ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "DOSTEPNI: %d", kolonia.getAllWorkers());
         ImGui::BulletText("Baza: +10");
         for (const auto& wpis : gen) ImGui::BulletText("%s (x%d): +%d", wpis.nazwa.c_str(), wpis.ilo, wpis.gen);
@@ -1148,6 +1146,7 @@ void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& ba
     fontHUD = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 32.0f, NULL, ranges);
     fontMENU = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 48.0f, NULL, ranges);
     auto a=ImGui::SFML::UpdateFontTexture();
+    siatka.wczytajSiatkaDane(kolonia,bazaDanych);
     prntAll(kolonia,bazaDanych,gra);
 }
 

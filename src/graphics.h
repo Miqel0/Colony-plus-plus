@@ -3,6 +3,7 @@
 
 #include <fstream>
 #include <string>
+#include <map>
 #include <SFML/Graphics.hpp>
 #include "colony.h"
 #include "buildingsGrid.h"
@@ -10,7 +11,7 @@ using namespace std;
 
 
 
-class Game; 
+class Game;
 //Żeby móc korzystać z funkcji klasy Game (i wpływać na różne rzeczy)
 
 /**
@@ -23,7 +24,7 @@ class Graphics{
         sf::RenderWindow window;
         unsigned int szer;
         unsigned int wys;
-        
+
         //Siatka budynków
         BuildingsGrid siatka;
         TypEkranu ekran;

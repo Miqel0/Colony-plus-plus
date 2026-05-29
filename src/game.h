@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "enums.h"
+#include "utils.h"
 #include "colony.h"
 #include "graphics.h"
 #include "buildingFactory.h"
@@ -41,10 +41,10 @@ class Game{
     private:
 
         //Tworzenie elementów:
-        Colony kolonia;
-        Graphics grafika;
-        BuildingFactory fabryka;
         map<string, BuildingInfo> bazaDanych;
+        Colony kolonia;
+        BuildingFactory fabryka;
+        Graphics grafika;
         vector <string> zapisy;
         
 

@@ -47,9 +47,18 @@ void Building::save(ofstream& plik)const{
 // ==========================================
 // LICZNIKI
 // ==========================================
-
+/**
+ * @brief Ustawianie unikatowy ID budowanego budynku
+ * 
+ * @param i 
+ */
 void Building:: setId(int i){id=i;}
 
+/**
+ * @brief zwięksanie licznika o 1
+ * 
+ * @param wczytaneMaxId aktualny licznik
+ */
 void Building::updateLicznik(int wczytaneMaxId){
     if(wczytaneMaxId>=next_id){
         next_id=wczytaneMaxId+1;
