@@ -11,7 +11,7 @@
 #include <vector>
 #include <iostream>
 #include <cfloat>
-
+#include <cmath>
 
 
 
@@ -71,62 +71,52 @@ BuildingsGrid::BuildingsGrid():siatka_x(1400),siatka_y(700),siatka_begin_x(400),
  * 
  * @param poz ImVec2 myszki
  */
-bool BuildingsGrid::sprawdzMysz(ImVec2& poz){
-    // KOREKTA POZYCJI 
-    float MyszX = poz.x - (siatka_begin_x - (kafelek_x / 2.0f));
-    float MyszY = poz.y - (siatka_begin_y - (kafelek_y / 2.0f));
-    
-    if (MyszX < 0 || MyszY < 0) {
-        return false;
-    }
+bool BuildingsGrid::sprawdzMysz(ImVec2& poz) {
+    float MyszX = poz.x;
+    float MyszY = poz.y;
 
-    // 2. KROK 1: Wstępny  wybór sekcji (prostokąta o wymiarach kafelek_x na kafelek_y)
-    int curr_kolumna = static_cast<int>(MyszX) / kafelek_x;
-    int curr_wiersz = (static_cast<int>(MyszY) / kafelek_y) * 2;
+    float najmniejszy_dystans = FLT_MAX; 
+    int znaleziony_wiersz = -1;
+    int znaleziona_kolumna = -1;
 
-    // 3. KROK 2: Wyliczenie pozycji lokalnej wewnątrz tego prostokąta 
-    int locX = static_cast<int>(MyszX) % (int)kafelek_x;
-    int locY = static_cast<int>(MyszY) % (int)kafelek_y;
-
-    // Pomocnicze zmienne określające środek prostokąta
-    int polX = kafelek_x / 2;
-    int polY = kafelek_y / 2;
-
-    // 4. KROK 3: Test czterech narożników
-    if (locY < polY - (locX / 2)) {
-        // Róg lewy-górny
-        curr_wiersz--;
-        curr_kolumna--;
-    }
-    else if (locY < (locX / 2) - polY) {
-        // Róg prawy-górny
-        curr_wiersz--;
-    }
-    else if (locY > polY + (locX / 2)) {
-        // Róg lewy-dolny
-        curr_wiersz++;
-        curr_kolumna--;
-    }
-    else if (locY > (polY + polX) - (locX / 2)) { 
-        // Róg prawy-dolny
-        curr_wiersz++;
-    }
-
-    // 5. KROK 4: Walidacja granic wektora i sprawdzenie typu kafelka
-    if (curr_wiersz >= 0 && curr_wiersz < siatka_size_x &&
-        curr_kolumna >= 0 && curr_kolumna < siatka_size_y) 
-    {
-        // Jeśli kafelek nie jest zamaskowany (czyli nie ma stanu BRAK)
-        if (siatka[curr_wiersz][curr_kolumna] != TypKafelka::BRAK) {
+    float max_dystans = (kafelek_x / 2.0f) * (kafelek_x / 2.0f);
+    for (int i = 0; i < siatka_size_x; i++) {
+        for (int j = 0; j < siatka_size_y; j++) {
             
-            poz_mysz = {curr_wiersz, curr_kolumna}; 
-            return true;
+            if (siatka[i][j] == TypKafelka::PUSTY) {
+                
+                float srodek_X = 0;
+                if (i % 2 == 0) {
+                    srodek_X = siatka_begin_x + j * kafelek_x;
+                } else {
+                    srodek_X = siatka_begin_x + (j + 0.5f) * kafelek_x;
+                }
+                float srodek_Y = siatka_begin_y + i * (kafelek_y / 2.0f);
+
+                float dystansX = std::abs(MyszX - srodek_X);
+                
+                float dystansY = std::abs(MyszY - srodek_Y) * (kafelek_x / kafelek_y); 
+                
+                float dystans = dystansX + dystansY;
+
+                float max_dystans = kafelek_x / 2.0f;
+
+                if (dystans <= max_dystans && dystans < najmniejszy_dystans) {
+                    najmniejszy_dystans = dystans;
+                    znaleziony_wiersz = i;
+                    znaleziona_kolumna = j;
+                }
+            }
         }
     }
 
-    return false; // Myszka jest poza sprawnym obszarem mapy
-}
+    if (znaleziony_wiersz != -1) {
+        poz_mysz = {znaleziony_wiersz, znaleziona_kolumna};
+        return true;
+    }
 
+    return false;
+}
 /**
  * @brief Funkcja sprawdzajaca czy najechane i zmieniająca texturę
  * 
