@@ -42,8 +42,8 @@ bool WczytajGrafike(const std::string& sciezka, T& obiektSFML) {
 }
 
 
-Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false){}
-Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false){}
+Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false){}
 
 /**
  * @brief Tymczasowe wyświeltanie głównego menu z przyciskami.
@@ -716,6 +716,18 @@ void Graphics::prntBudowanieWyniki(Game& gra) {
 }
 
 
+void Graphics::budowanie(BuildingInfo info,Game& gra){
+    //Tutaj jakas logika z najechaniem i kliknięcime (mam fucnkje w BuildingsGrid ktora zwraca id najechanego kafelka)
+    czyBudowa=true;
+    trzymanyBudynek = info;
+
+
+
+    //ostatniWynik=gra.UIbuild(info);
+    czyBudowa=false;
+}
+
+
 /**
  * @brief Funkcja wyswietlajaca informacje o dostepnych budynkach do zbudowania z danej kategorii.
  * 
@@ -764,6 +776,8 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn(); 
                 if (ImGui::Selectable(nazwa_.c_str())) {
+                    //O to na dole zamienic tak aby dzialalo!
+                    // FIXME
                     ostatniWynik =gra.UIbuild(info);
                     czyBudowanieWyniki=true;
                 }
@@ -1172,6 +1186,7 @@ void Graphics::prntUstawienia(){
                 }
             }
         }
+        
     } 
     ImGui::SFML::Update(window, deltaClock.restart());
     
@@ -1592,6 +1607,26 @@ void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& ba
                 }
             }
             
+            if (const auto* mouseButtonPressed = event->getIf<sf::Event::MouseButtonPressed>()) {
+        
+        ImGuiIO& io = ImGui::GetIO();
+        if (!io.WantCaptureMouse) {
+            if (czyBudowa) {
+                if (mouseButtonPressed->button == sf::Mouse::Button::Left) {
+                    pair<int,int> kliknietePole = siatka.getPozMysz();
+                    
+                    if (kliknietePole.first != -1 && kliknietePole.second != -1) {
+                        gra.UIbuild(trzymanyBudynek);
+                        czyBudowa = false; 
+                    }
+                }
+                else if (mouseButtonPressed->button == sf::Mouse::Button::Right) {
+                    czyBudowa = false;
+                }
+            }
+        }
+    }
+
         }
         
         ImGui::SFML::Update(window, deltaClock.restart());
@@ -1600,32 +1635,33 @@ void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& ba
         prntMenu();
         prntStatystyki(kolonia,bazaDanych);
         prntNextRoundButton();
-
-        if(czyhelp){
-            prntPomoc();
-        }
-
-        if(czyBudynki){
-            prntBudynki(kolonia, bazaDanych,gra);
-        }
-
-        if(czyBudowanie){
-            prntBudowanie(kolonia, bazaDanych,gra);
-        }
-        if(czyBudowanieCategory){
-            prntBuildCategory(wybranaKategoriaBudowa,kolonia,bazaDanych,gra);
-        }
-        if(czyBudowanieWyniki){
-            prntBudowanieWyniki(gra);
-        }
-        if(czyNextRound){
-            prntCzyNextRound(kolonia, bazaDanych,gra);
-        }
-        if(czyNextRound1){
-            prntNextRound(kolonia, bazaDanych,gra);
-        }
-        if(czyWyburzanie1){
-            prntWyburz();
+        if(!czyBudowa){
+            if(czyhelp){
+                prntPomoc();
+            }
+    
+            if(czyBudynki){
+                prntBudynki(kolonia, bazaDanych,gra);
+            }
+    
+            if(czyBudowanie){
+                prntBudowanie(kolonia, bazaDanych,gra);
+            }
+            if(czyBudowanieCategory){
+                prntBuildCategory(wybranaKategoriaBudowa,kolonia,bazaDanych,gra);
+            }
+            if(czyBudowanieWyniki){
+                prntBudowanieWyniki(gra);
+            }
+            if(czyNextRound){
+                prntCzyNextRound(kolonia, bazaDanych,gra);
+            }
+            if(czyNextRound1){
+                prntNextRound(kolonia, bazaDanych,gra);
+            }
+            if(czyWyburzanie1){
+                prntWyburz();
+            }
         }
 }
 
@@ -1665,7 +1701,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         ImVec2 pozycjaMyszy = ImGui::GetMousePos();
         if(ekran==TypEkranu::GAME){
 
-            siatka.prntSiatka(window,pozycjaMyszy,bazaDanych);
+            siatka.prntSiatka(window,pozycjaMyszy,bazaDanych,czyBudowa,trzymanyBudynek.nazwa);
         }
         
         ImGui::SFML::Render(window);
@@ -1673,3 +1709,9 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
     }
     ImGui::SFML::Shutdown();
 }
+
+
+
+
+bool Graphics::getCzyBudowa(){return czyBudowa;}
+BuildingInfo Graphics::getTrzymanyBudynek(){return trzymanyBudynek;}

@@ -157,7 +157,6 @@ void BuildingsGrid::czyNajechane(ImVec2& poz){
     if(!sprawdzMysz(poz)){
         poz_mysz = {-1, -1};
     }
-
 }
 
 /**
@@ -165,7 +164,7 @@ void BuildingsGrid::czyNajechane(ImVec2& poz){
  * 
  * @param window okienko
  */
-void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych ){
+void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych,bool czyBudowanie, string nazwaTrzymanego ){
     sf::Sprite kafelek_budynek(atlas_budynkow);
     kafelek_budynek.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
 
@@ -180,10 +179,10 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<st
 
             string nazwa_kafelka=siatka[i][j].nazwa;
             for(auto &c : nazwa_kafelka) c = tolower(c);
-
             if(siatka[i][j].typ==TypKafelka::BRAK){
                 continue;
-            }else{
+            }
+            else{
                 float X=0;
                 if(i%2==0){
                     X=siatka_begin_x+j*(kafelek_x);
@@ -219,9 +218,37 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<st
                 kafelek_budynek.setPosition(sf::Vector2f(X, Y));
                 window.draw(kafelek_budynek);
 
+                //Rysowanie tego budowaniowego
+                if (czyBudowanie && i == poz_mysz.first && j == poz_mysz.second) {
+                    string nazw=nazwaTrzymanego;
+                    for(auto &a:nazw) a =tolower(a);
 
+                    sf::Sprite hologram(atlas_budynkow); 
+                    hologram.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
+                    hologram.setPosition(sf::Vector2f(X, Y));
+    
+                    auto iterator_bazy = bazaDanych.find(nazwaTrzymanego);
+                    if (iterator_bazy != bazaDanych.end()) {
+                        int h_X = iterator_bazy->second.X;
+                        int h_Y = iterator_bazy->second.Y;
+            
+                        hologram.setTextureRect(sf::IntRect({h_X,h_Y},{kafelek_x, kafelek_y}));
 
+                        if (siatka[i][j].typ == TypKafelka::PUSTY) {
+                            // Można budować: Niebieski i przezroczysty 
+                            hologram.setColor(sf::Color(100, 150, 255, 180)); 
+                        } else {
+                            // Zajęte lub niedostępne: Czerwony
+                            hologram.setColor(sf::Color(255, 100, 100, 180)); 
+                        }
+            
+                        window.draw(hologram);
+                    }
+                }
             }
         }
     }
 }
+
+
+pair<int,int> BuildingsGrid::getPozMysz() const { return poz_mysz; }

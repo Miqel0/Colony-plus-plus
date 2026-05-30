@@ -21,9 +21,9 @@ class BuildingsGrid{
     private:
 
         vector<vector<DaneKafelek>> siatka;
+
+        //puste kafelki - do usunieca
         map<string,sf::Texture> texturyBudynki;
-        
-        //puste kafelki
         sf::Texture kafelek_tex;
         sf::Texture kafelek_najechany_tex;
 
@@ -46,10 +46,12 @@ class BuildingsGrid{
 
         BuildingsGrid();
         ~BuildingsGrid(){};
-        void prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych);
+        void prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych,bool czyBudowanie, string nazwaTrzymanego);
         bool sprawdzMysz(ImVec2& poz);
         void czyNajechane(ImVec2& poz);
         bool wczytajTextury(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych);
         void wczytajSiatkaDane(const Colony& kolonia,const map<string,BuildingInfo>& bazaDanych);
+
+        pair<int,int> getPozMysz() const;
     };
 #endif

@@ -43,6 +43,10 @@ class Graphics{
         bool czyNextRound1;
         bool czyWyburzanie;
         bool czyWyburzanie1;
+        
+        //Zamieszanie z budowaniem!
+        BuildingInfo trzymanyBudynek;
+        bool czyBudowa;
 
         bool czyLoad;
         bool czySave;
@@ -80,6 +84,10 @@ class Graphics{
         void prntUstawienia();
         void prntCredits();
         void prntLoad(Game& gra);
+        void budowanie(BuildingInfo info,Game& gra);
+
+        bool getCzyBudowa();
+        BuildingInfo getTrzymanyBudynek();
     };
 
 #endif
