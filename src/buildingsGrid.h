@@ -27,8 +27,12 @@ class BuildingsGrid{
         sf::Texture kafelek_tex;
         sf::Texture kafelek_najechany_tex;
 
-        float kafelek_x;
-        float kafelek_y;
+        //Textury kafelkow budynków
+        sf::Texture atlas_budynkow;
+
+
+        int kafelek_x;
+        int kafelek_y;
         int siatka_size_x;
         int siatka_size_y;
         float siatka_x;
@@ -42,7 +46,7 @@ class BuildingsGrid{
 
         BuildingsGrid();
         ~BuildingsGrid(){};
-        void prntSiatka(sf::RenderWindow& window,ImVec2& poz);
+        void prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych);
         bool sprawdzMysz(ImVec2& poz);
         void czyNajechane(ImVec2& poz);
         bool wczytajTextury(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych);

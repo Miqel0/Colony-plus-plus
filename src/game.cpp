@@ -143,8 +143,9 @@ void Game::loadGameData(){
     string n, type, opis;
     int kK, kT, kE, gk, gt, gi; 
     int w, x,lt;
+    int X,Y;
 
-    while(plik>>n>>type>>kK>>kT>>kE>>w>>gk>>gt>>gi>>x>>lt>>opis){
+    while(plik>>n>>type>>kK>>kT>>kE>>w>>gk>>gt>>gi>>x>>lt>>X>>Y>>opis){
         replace(opis.begin(), opis.end(), '_', ' ');
 
         BuildingInfo nowy;
@@ -159,6 +160,8 @@ void Game::loadGameData(){
         nowy.genInne=gi;
         nowy.x=x;
         nowy.lvlTerr=lt;
+        nowy.X=X;
+        nowy.Y=Y;
         nowy.opis=opis;
 
         string klucz =n;

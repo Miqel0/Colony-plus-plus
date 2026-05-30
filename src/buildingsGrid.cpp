@@ -51,32 +51,12 @@ bool WczytajGrafike(const std::string& sciezka, T& obiektSFML) {
  * @return false nie dual osei wczytac
  */
 bool BuildingsGrid::wczytajTextury(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych){
-    bool czy=true;
-    cout<<"Rozpoczecie wczytyawnia dancyh do siatki."<<endl;
-    for(const auto& dane: bazaDanych){
-        sf::Texture grafika;
-        string nazwa=dane.first;
-        for(auto &c : nazwa) c = tolower(c);
-        if(WczytajGrafike("assets/grid/"+nazwa+".png",grafika)){
-            texturyBudynki[nazwa]=grafika;
-        }else{
-            czy=false;
-        }
-        sf::Texture grafika2;
-        if(WczytajGrafike("assets/grid/"+nazwa+"_najechany.png",grafika2)){
-            texturyBudynki[nazwa+"_najechany"]=grafika2;
-        }else{
-            czy=false;
-        }
-        cout<<nazwa<<endl;
-    }
-
-
-    if(WczytajGrafike("assets/grid/kafelek.png",kafelek_tex)&&WczytajGrafike("assets/grid/kafelek_najechany.png",kafelek_najechany_tex)){
+    if(WczytajGrafike("assets/grafiki_siatka.png",atlas_budynkow)){
+        return true;
     }else{
-        czy=false;
-        }
-    return czy;
+        cout<<"Nie udało sie wczytac grafik budynków!"<<endl;
+        return false;
+    }
 }
 
 void BuildingsGrid::wczytajSiatkaDane(const Colony& kolonia,const map<string,BuildingInfo>& bazaDanych){
@@ -95,11 +75,20 @@ BuildingsGrid::BuildingsGrid():siatka_x(1400),siatka_y(700),siatka_begin_x(400),
    
     siatka[6][2].typ=TypKafelka::ZAJETY;
     siatka[6][2].nazwa="Pole_Ziemniakow";
+    siatka[6][3].typ=TypKafelka::ZAJETY;
+    siatka[6][3].nazwa="Odkrywka_Kamienia";
+    siatka[6][4].typ=TypKafelka::ZAJETY;
+    siatka[6][4].nazwa="Maly_Wiatrak";
+    siatka[6][5].typ=TypKafelka::ZAJETY;
+    siatka[6][5].nazwa="Stacja_Badawcza";
+    siatka[6][1].typ=TypKafelka::ZAJETY;
+    siatka[6][1].nazwa="Barak_Robotniczy";
     for (int x = 0; x < siatka_size_x; ++x) {
         for (int y = 0; y < siatka_size_y; ++y) {
             
             if((x % 2 != 0 && y == siatka_size_y - 1)||x == siatka_size_x - 1){
                 siatka[x][y].typ = TypKafelka::BRAK;
+                siatka[x][y].nazwa="brak";
             }
         }
     }
@@ -176,11 +165,9 @@ void BuildingsGrid::czyNajechane(ImVec2& poz){
  * 
  * @param window okienko
  */
-void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz){
-    sf::Sprite kafelek_sprt(kafelek_tex);
-    sf::Sprite kafelek_najechany_sprt(kafelek_najechany_tex);
-    kafelek_najechany_sprt.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
-    kafelek_sprt.setOrigin(sf::Vector2f(kafelek_x/2,kafelek_y/2));
+void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych ){
+    sf::Sprite kafelek_budynek(atlas_budynkow);
+    kafelek_budynek.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
 
     sf::Vector2i pozycjaPix = sf::Mouse::getPosition(window);
     sf::Vector2f pozycjaSwiata = window.mapPixelToCoords(pozycjaPix);
@@ -190,30 +177,13 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz){
 
     for(int i=0;i<siatka_size_x;i++){
         for(int j=0;j<siatka_size_y;j++){
-            if(siatka[i][j].typ==TypKafelka::PUSTY){
-                float X=0;
-                if(i%2==0){
-                    X=siatka_begin_x+j*(kafelek_x);
 
-                }else{
-                    X=(float)(siatka_begin_x+(j+0.5)*(kafelek_x));
-                }
+            string nazwa_kafelka=siatka[i][j].nazwa;
+            for(auto &c : nazwa_kafelka) c = tolower(c);
 
-                float Y=siatka_begin_y+i*(kafelek_y/2.0f);
-
-                if(i == poz_mysz.first && j == poz_mysz.second){
-                    kafelek_najechany_sprt.setPosition(sf::Vector2f(X, Y));
-                    window.draw(kafelek_najechany_sprt);
-                } 
-                else {
-                    kafelek_sprt.setPosition(sf::Vector2f(X, Y));
-                    window.draw(kafelek_sprt);
-                }
-            } 
-            else if(siatka[i][j].typ==TypKafelka::BRAK){
+            if(siatka[i][j].typ==TypKafelka::BRAK){
                 continue;
-            }
-            else if(siatka[i][j].typ==TypKafelka::ZAJETY){
+            }else{
                 float X=0;
                 if(i%2==0){
                     X=siatka_begin_x+j*(kafelek_x);
@@ -221,31 +191,37 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz){
                 }else{
                     X=(float)(siatka_begin_x+(j+0.5)*(kafelek_x));
                 }
-
                 float Y=siatka_begin_y+i*(kafelek_y/2.0f);
 
-                //Rysowanie tla pod budynki
-                kafelek_sprt.setPosition(sf::Vector2f(X, Y));
-                window.draw(kafelek_sprt);
-                
-                string nazwa_kafelka= siatka[i][j].nazwa;
-                for(auto &c : nazwa_kafelka) c = tolower(c);
+                //koordynaty textury w atlasie
+                int t_X=0;
+                int t_Y=0;
+                //Czy najechane
                 if(i == poz_mysz.first && j == poz_mysz.second){
-                    nazwa_kafelka+="_najechany";
-                }
-                
-                auto iterator_tekstury = texturyBudynki.find(nazwa_kafelka);
-                if (iterator_tekstury != texturyBudynki.end()){
+                    t_Y+=100;
+                } 
 
-                    sf::Sprite kafelek_budynek(texturyBudynki.at(nazwa_kafelka));
-                    kafelek_budynek.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
-                    kafelek_budynek.setPosition(sf::Vector2f(X, Y));
-                    window.draw(kafelek_budynek);
+                if(siatka[i][j].typ==TypKafelka::PUSTY){
+                    t_X=800;
                 } else{
-                    cout<<"Brakuje "<<nazwa_kafelka<<"!"<<endl;
+                    auto iterator_tekstury = bazaDanych.find(nazwa_kafelka);
+                    
+                    if (iterator_tekstury != bazaDanych.end()){
+                        
+                        t_X=bazaDanych.at(nazwa_kafelka).X;
+                        t_Y+=bazaDanych.at(nazwa_kafelka).Y;
+                    } else{
+                        cout<<"Brakuje "<<nazwa_kafelka<<"!"<<endl;
+                    }
                 }
+
+                kafelek_budynek.setTextureRect(sf::IntRect({t_X, t_Y}, {kafelek_x, kafelek_y}));
+                kafelek_budynek.setPosition(sf::Vector2f(X, Y));
+                window.draw(kafelek_budynek);
+
+
+
             }
         }
     }
-    
 }

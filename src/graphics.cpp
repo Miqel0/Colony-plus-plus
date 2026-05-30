@@ -1665,7 +1665,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         ImVec2 pozycjaMyszy = ImGui::GetMousePos();
         if(ekran==TypEkranu::GAME){
 
-            siatka.prntSiatka(window,pozycjaMyszy);
+            siatka.prntSiatka(window,pozycjaMyszy,bazaDanych);
         }
         
         ImGui::SFML::Render(window);
