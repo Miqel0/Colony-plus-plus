@@ -21,7 +21,7 @@ class Terr: public Building{
 
         //KONSTRUKTOR
         Terr();
-        Terr(string n, int kE,int kK, int kT, int te,int w);
+        Terr(string n, int kE,int kK, int kT, int te,int w, int X_,int Y_);
         ~Terr(){};
 
         //OVERRIDE

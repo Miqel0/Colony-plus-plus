@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "enums.h"
+#include "utils.h"
 #include "colony.h"
 #include "graphics.h"
 #include "buildingFactory.h"
@@ -23,9 +23,10 @@ class Game{
         
         //GRA
         vector<BuildingInfo> UIprntNewLvlTerr();
-        BuildResult UIbuild(BuildingInfo info);
+        BuildResult UIbuild(BuildingInfo info,pair<int,int> kliknietePole);
         NextResult UINextRound();
         DestroyResult UIZburz(string nazwa);
+        DestroyResult UIZburzID(int ID);
         
         void save(const string& nazwa_zapisu );
         void UIrun();
@@ -41,10 +42,10 @@ class Game{
     private:
 
         //Tworzenie elementów:
-        Colony kolonia;
-        Graphics grafika;
-        BuildingFactory fabryka;
         map<string, BuildingInfo> bazaDanych;
+        Colony kolonia;
+        BuildingFactory fabryka;
+        Graphics grafika;
         vector <string> zapisy;
         
 

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include "enums.h"
+#include "utils.h"
 
 /**
  * @brief Główna klasa wszystkich budynków, posiada w sobie podstawowe parametry, oraz funkcje virtualne
@@ -27,10 +27,12 @@ class Building{
         int workers;
         int residents;
         
+        int X;
+        int Y;
     public:
         //KONSTRUKTORY
         Building();
-        Building(string n,TypBudynku t, int kE,int kK, int kT,int w);
+        Building(string n,TypBudynku t, int kE,int kK, int kT,int w,int X_, int Y_);
         virtual ~Building(){};
 
         //VIRTUAL
@@ -57,6 +59,9 @@ class Building{
         int getReqEnergy() const;
         int getKosztKamien() const;
         int getKosztTytan() const;
+        int getID() const;
+        int getX() const;
+        int getY() const;
         
 };
 

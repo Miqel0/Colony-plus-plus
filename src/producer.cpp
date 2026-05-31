@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTOR
 // ==========================================
 
-Producer:: Producer():Building("XXX",TypBudynku::PRODUCER,0,0,0,0),stoneGen(0),titanGen(0){}
-Producer::Producer(string n, int kE,int kK, int kT, int s,int w,int ti):Building(n,TypBudynku::PRODUCER,kE,kK,kT,w),stoneGen(s),titanGen(ti){}
+Producer:: Producer():Building("XXX",TypBudynku::PRODUCER,0,0,0,0,-1,-1),stoneGen(0),titanGen(0){}
+Producer::Producer(string n, int kE,int kK, int kT, int s,int w,int ti, int X_,int Y_):Building(n,TypBudynku::PRODUCER,kE,kK,kT,w,X_,Y_),stoneGen(s),titanGen(ti){}
 
 // ==========================================
 // OVERRIDE

@@ -143,8 +143,9 @@ void Game::loadGameData(){
     string n, type, opis;
     int kK, kT, kE, gk, gt, gi; 
     int w, x,lt;
+    int X,Y;
 
-    while(plik>>n>>type>>kK>>kT>>kE>>w>>gk>>gt>>gi>>x>>lt>>opis){
+    while(plik>>n>>type>>kK>>kT>>kE>>w>>gk>>gt>>gi>>x>>lt>>X>>Y>>opis){
         replace(opis.begin(), opis.end(), '_', ' ');
 
         BuildingInfo nowy;
@@ -159,6 +160,8 @@ void Game::loadGameData(){
         nowy.genInne=gi;
         nowy.x=x;
         nowy.lvlTerr=lt;
+        nowy.X=X;
+        nowy.Y=Y;
         nowy.opis=opis;
 
         string klucz =n;
@@ -183,12 +186,21 @@ void Game::loadGameData(){
 DestroyResult Game::UIZburz(string nazwa){return kolonia.UIzburzBudynek(nazwa);}
 
 /**
+ * @brief Przekazanie ID do zburzenia budynku.
+ * 
+ * @param ID  budynku do zburzenia.
+ * 
+ * @return DestroyResult paczka wynikowa.
+ */
+DestroyResult Game::UIZburzID(int ID){return kolonia.UIzburzBudynekID(ID);}
+
+/**
  * @brief Funckja budujaca budynek
  * 
  * @param info paczka z infromacja o danym budynku
  * @return BuildResult 
  */
-BuildResult Game::UIbuild(BuildingInfo info) {
+BuildResult Game::UIbuild(BuildingInfo info,pair<int,int> kliknietePole) {
     BuildResult wynik={false,0,0,0,info.nazwa,0,false};
     if(kolonia.getRuch()==3){ //Sprawdzanie warunku z iloscia ruchow w turze
             wynik.ruch=true;
@@ -200,7 +212,7 @@ BuildResult Game::UIbuild(BuildingInfo info) {
         return wynik;
     }
 
-    unique_ptr<Building> nowyBudynek = fabryka.stworzBudynek(info);
+    unique_ptr<Building> nowyBudynek = fabryka.stworzBudynek(info,kliknietePole);
 
     if (nowyBudynek != nullptr) {
         wynik =kolonia.UIbuduj(move(nowyBudynek));

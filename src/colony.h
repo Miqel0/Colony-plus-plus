@@ -30,13 +30,16 @@ class Colony{
 
         map<string,int> UIprntBuildingsSumm() const;
         void UIprntBuilding(string bud) const;
+        void UIprntBuildingID(int ID) const;
 
         //BUDOWANIE
         BuildResult UIczyStac(const unique_ptr<Building> &b)const;
         void addBuilding(unique_ptr<Building> b);
 
         BuildResult UIbuduj(unique_ptr<Building> b);
+        //do dywaalenia to bez ID
         DestroyResult UIzburzBudynek(string nazwa);
+        DestroyResult UIzburzBudynekID(int ID);
 
 
         //NEXT ROUND
@@ -78,6 +81,7 @@ class Colony{
         int getFood() const;
         int getStone() const;
         int getTitan() const;
+        vector<DaneKafelek> getBudynki()const;
 };
 
 #endif

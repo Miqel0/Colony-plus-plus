@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTOR
 // ==========================================
 
-Terr:: Terr():Building("XXX",TypBudynku::TERR,0,0,0,0),terrGen(0){}
-Terr::Terr(string n, int kE,int kK, int kT, int te,int w):Building(n,TypBudynku::TERR,kE,kK,kT,w),terrGen(te){}
+Terr:: Terr():Building("XXX",TypBudynku::TERR,0,0,0,0,-1,-1),terrGen(0){}
+Terr::Terr(string n, int kE,int kK, int kT, int te,int w, int X_,int Y_):Building(n,TypBudynku::TERR,kE,kK,kT,w,X_,Y_),terrGen(te){}
 
 // ==========================================
 // OVERRIDE

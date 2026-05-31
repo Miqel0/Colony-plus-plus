@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTORY
 // ==========================================
 
-Energy:: Energy():Building("XXX",TypBudynku::ENERGY,0,0,0,0),enGen(0){}
-Energy::Energy(string n, int kE,int kK, int kT, int e,int w):Building(n,TypBudynku::ENERGY,kE,kK,kT,w),enGen(e){}
+Energy:: Energy():Building("XXX",TypBudynku::ENERGY,0,0,0,0,-1,-1),enGen(0){}
+Energy::Energy(string n, int kE,int kK, int kT, int e,int w, int X_,int Y_):Building(n,TypBudynku::ENERGY,kE,kK,kT,w,X_,Y_),enGen(e){}
 
 // ==========================================
 // OVERRIDE

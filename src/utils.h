@@ -1,5 +1,5 @@
-#ifndef enums_h
-#define enums_h
+#ifndef utils_h
+#define utils_h
 
 #include <iostream>
 #include <sstream>
@@ -31,6 +31,27 @@ enum class TypBudynku {
 };
 
 /**
+ * @brief Typy kafelków.
+ * 
+ */
+enum class TypKafelka {PUSTY,ZAJETY,BRAK};
+
+/**
+ * @brief Dane o danym kafelku
+ * 
+ */
+struct DaneKafelek {
+    TypKafelka typ=TypKafelka::PUSTY;
+    string nazwa="pusty";
+    int id=-1;
+    int X=-1;
+    int Y=-1;
+
+};
+
+
+
+/**
  * @brief Typ ekranu.
  * 
  */
@@ -45,16 +66,20 @@ struct BuildingInfo {
     string type="";
     
     // Koszty
+
     int kKamien=0;
     int kTytan=0;
     int reqEnergy=0;
     int workers=0;      
     
     // Produkcja
+
     int genKamien=0;
     int genTytan=0;  
     int genInne=0;  
     int lvlTerr=0;
+    int X=-1;
+    int Y=-1;
     int x=0;     
     string opis="";
 };

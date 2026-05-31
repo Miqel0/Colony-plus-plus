@@ -3,14 +3,15 @@
 
 #include <fstream>
 #include <string>
+#include <map>
 #include <SFML/Graphics.hpp>
 #include "colony.h"
-
+#include "buildingsGrid.h"
 using namespace std;
 
 
 
-class Game; 
+class Game;
 //Żeby móc korzystać z funkcji klasy Game (i wpływać na różne rzeczy)
 
 /**
@@ -23,7 +24,9 @@ class Graphics{
         sf::RenderWindow window;
         unsigned int szer;
         unsigned int wys;
-        
+
+        //Siatka budynków
+        BuildingsGrid siatka;
         TypEkranu ekran;
         //Czcionki
         ImFont* fontDefault = nullptr;
@@ -40,16 +43,27 @@ class Graphics{
         bool czyNextRound1;
         bool czyWyburzanie;
         bool czyWyburzanie1;
+        bool czyWyburzanieKlick;
+
+        bool czyBudynekInfo;
+        
+        //Zamieszanie z budowaniem!
+        BuildingInfo trzymanyBudynek;
+        bool czyBudowa;
 
         bool czyLoad;
         bool czySave;
         
         bool czyGra;
 
+        pair <string,int> kafelek;
         string wybranaKategoriaBudowa;
         BuildResult ostatniWynik;
         NextResult nextWynik;
         DestroyResult destroyWynik;
+
+        float czasWyswietlaniaBledu ;
+        sf::Clock zegarBledu;
     public:
 
         Graphics();
@@ -72,11 +86,16 @@ class Graphics{
 
         void UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
-        void prntMenuGlowne(Game& gra);
+        void prntMenuGlowne(Game& gra,const Colony &kolonia);
         void prntMenuGra(Game& gra);
         void prntUstawienia();
         void prntCredits();
-        void prntLoad(Game& gra);
+        void prntLoad(Game& gra,const Colony &kolonia);
+        void prntBladBudowanie();
+        void prntBudynekInfo( const map<string, BuildingInfo>& bazaDanych,const Colony &kolonia,pair<string,int> inf);
+
+        bool getCzyBudowa();
+        BuildingInfo getTrzymanyBudynek();
     };
 
 #endif
