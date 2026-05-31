@@ -43,6 +43,9 @@ class Graphics{
         bool czyNextRound1;
         bool czyWyburzanie;
         bool czyWyburzanie1;
+        bool czyWyburzanieKlick;
+
+        bool czyBudynekInfo;
         
         //Zamieszanie z budowaniem!
         BuildingInfo trzymanyBudynek;
@@ -53,10 +56,14 @@ class Graphics{
         
         bool czyGra;
 
+        pair <string,int> kafelek;
         string wybranaKategoriaBudowa;
         BuildResult ostatniWynik;
         NextResult nextWynik;
         DestroyResult destroyWynik;
+
+        float czasWyswietlaniaBledu ;
+        sf::Clock zegarBledu;
     public:
 
         Graphics();
@@ -79,12 +86,13 @@ class Graphics{
 
         void UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
-        void prntMenuGlowne(Game& gra);
+        void prntMenuGlowne(Game& gra,const Colony &kolonia);
         void prntMenuGra(Game& gra);
         void prntUstawienia();
         void prntCredits();
-        void prntLoad(Game& gra);
-        void budowanie(BuildingInfo info,Game& gra);
+        void prntLoad(Game& gra,const Colony &kolonia);
+        void prntBladBudowanie();
+        void prntBudynekInfo( const map<string, BuildingInfo>& bazaDanych,const Colony &kolonia,pair<string,int> inf);
 
         bool getCzyBudowa();
         BuildingInfo getTrzymanyBudynek();

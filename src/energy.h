@@ -19,7 +19,7 @@ class Energy: public Building{
     public:
         //KONSTRUKTOR
         Energy();
-        Energy(string n, int kE,int kK, int kT, int e,int w);
+        Energy(string n, int kE,int kK, int kT, int e,int w, int X_,int Y_);
         ~Energy(){};
 
         //OVERRIDE

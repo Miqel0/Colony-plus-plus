@@ -49,9 +49,14 @@ class BuildingsGrid{
         void prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych,bool czyBudowanie, string nazwaTrzymanego);
         bool sprawdzMysz(ImVec2& poz);
         void czyNajechane(ImVec2& poz);
+
         bool wczytajTextury(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych);
         void wczytajSiatkaDane(const Colony& kolonia,const map<string,BuildingInfo>& bazaDanych);
+        void wczytajBudynki(const Colony& kolonia);
 
+        int getID(pair<int,int> n) const;
+        string getName(pair<int,int> n) const;
         pair<int,int> getPozMysz() const;
+        TypKafelka getTypKafelka() const;
     };
 #endif

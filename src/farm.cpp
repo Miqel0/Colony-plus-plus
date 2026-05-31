@@ -9,8 +9,8 @@ using namespace std;
 // KONSTRUKTOR
 // ==========================================
 
-Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0,0,0),foodGen(0),time(0),curr_time(0){}
-Farm::Farm(string n, int kE,int kK, int kT, int f,int w,int tim,int ct):Building(n,TypBudynku::FARM,kE,kK,kT,w),foodGen(f),time(tim),curr_time(ct){}
+Farm:: Farm():Building("XXX",TypBudynku::FARM,0,0,0,0,-1,-1),foodGen(0),time(0),curr_time(0){}
+Farm::Farm(string n, int kE,int kK, int kT, int f,int w,int tim,int ct, int X_,int Y_):Building(n,TypBudynku::FARM,kE,kK,kT,w,X_,Y_),foodGen(f),time(tim),curr_time(ct){}
 
 // ==========================================
 // OVERRIDE

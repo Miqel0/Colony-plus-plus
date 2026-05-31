@@ -64,6 +64,27 @@ void Colony::UIprntBuilding(string bud) const{
 }
 
 /**
+ * @brief Wyświetlanie parametrów budynku o danej nazwie @param 
+ * 
+ * @param nazwa budynku
+ */
+void Colony::UIprntBuildingID(int ID) const{
+    int nr=-1;
+    for(int i=0;i<buildings.size();i++){
+        if(buildings[i]->getID()==ID){
+            nr=i;
+        }
+    }
+    if(nr>=0 && nr <= buildings.size()){
+        buildings[nr]->UIprnt(getIlosc(buildings[nr]->getName()));
+    }else{
+        cout<<"Blad: Nie ma budynku o takim ID: "<<ID<<endl;
+        cout<<endl;
+    }
+}
+
+
+/**
  * @brief Funkcja budująca budynek - ostateczna
  * 
  * @param b budynek do zbudowania
@@ -171,6 +192,50 @@ DestroyResult Colony::UIzburzBudynek(string nazwa){
 }
 
 
+/**
+ * @brief Funckaj burząca budynek i sprawdzająca wymogi
+ * 
+ * @param nazwa nazwa budynku do zburzenia
+ * @return DestroyResult paczka wynikowa
+ */
+DestroyResult Colony::UIzburzBudynekID(int ID){
+    DestroyResult wynik= {false, 0, "BUDYNEK_Z_SIATKI",{0,0}};
+    string nam="X";
+    int nr=0;
+    for(int i=0;i<buildings.size();i++){
+        if(ID==buildings[i]->getID()){
+            nam=buildings[i]->getName();
+            nr=i;
+            wynik.nazwa=nam;
+        }
+    }
+
+    if(nam!="X"){//Czy udało się znaleźć jakis budynek?
+        if(buildings[nr]->getTyp()==TypBudynku::HOUSING){
+            if(f_logisyka.getAWorkers()-buildings[nr]->getResidents()<f_logisyka.getDWorkers()){ //Sprawdzenie czy aby na pewno mozna usunac dany budynek - nie moze brakowac pracownikow!
+                wynik.brakLudzi=f_logisyka.getDWorkers()-f_logisyka.getAWorkers()+buildings[nr]->getResidents();
+                return wynik;
+            }else{
+                wynik.czy=true;
+            }
+        } else{
+            wynik.czy=true;
+        }
+        if(wynik.czy){
+            if(static_cast<int>(buildings[nr]->getTyp())==static_cast<int>(TypBudynku::HOUSING)){
+                f_logisyka.setAWorkers(-buildings[nr]->getResidents());
+            }
+            wynik.sur=f_logisyka.UIupdateZburzBudynek(buildings[nr].get());
+            buildings.erase(buildings.begin()+nr);  
+        }
+    }else{
+        cout<<"Blad: Nie ma budynku o takiej nazwie: "<<nam<<endl;
+        cout<<endl;
+    }
+    return wynik;
+}
+
+
 // ==========================================
 // SAVE / LOAD
 // ==========================================
@@ -237,10 +302,10 @@ void Colony::loadBuildings(string nazwa_plik) {
         //Parametry
         int w_type, w_id, w, maxSaved = 0;
         string w_n;
-        int kE,kT,kK;
+        int kE,kT,kK,X,Y;
         //Format linii w pliku: TypBudynku Nazwa ID KosztEnergii KosztKamienia KosztTytanu Pracownicy ParametrySpecjalne
         //Przejscie przez plik, linijka po linijce
-        while (plik >> w_type >> w_n >> w_id >> kE>>kK>>kT >> w) {
+        while (plik >> w_type >> w_n >> w_id >> kE>>kK>>kT >> w>>X>>Y) {
             
             TypBudynku typ = static_cast<TypBudynku>(w_type);
             unique_ptr<Building> nowyBudynek = nullptr;
@@ -255,7 +320,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int e;
                     plik >> e;
                     
-                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, w);
+                    auto energia = make_unique<Energy>(w_n, kE,kK,kT, e, w, X, Y);
                     
                     energia->setId(w_id); //Ustawianie poprawnego ID (bo psuje sie podczas wczytywania
                     nowyBudynek = move(energia);
@@ -269,7 +334,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int tim,ct;
                     plik >> f>>tim>>ct;
                 
-                    auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, w,tim,ct);
+                    auto farm = make_unique<Farm>(w_n, kE,kK,kT, f, w,tim,ct, X, Y);
 
                     farm->setId(w_id); 
                     nowyBudynek = move(farm);
@@ -281,7 +346,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int r;
                     plik >> r;
     
-                    auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, w);
+                    auto housing = make_unique<Housing>(w_n, kE,kK,kT, r, w, X, Y);
                 
                     housing->setId(w_id);                
                     nowyBudynek = move(housing);
@@ -293,7 +358,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int s, ti;
                     plik >> s>>ti;
                 
-                    auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, w,ti);
+                    auto producer = make_unique<Producer>(w_n, kE,kK,kT, s, w,ti, X, Y);
 
                     producer->setId(w_id); 
                     nowyBudynek = move(producer);
@@ -305,7 +370,7 @@ void Colony::loadBuildings(string nazwa_plik) {
                     int te;
                     plik >> te;
                 
-                    auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, w);
+                    auto terr = make_unique<Terr>(w_n, kE,kK,kT, te, w, X, Y);
 
                     terr->setId(w_id); 
                     nowyBudynek = move(terr);
@@ -393,3 +458,15 @@ int Colony::getReqFood() const{return f_logisyka.getReqFood();}
 int Colony::getFood() const{return f_logisyka.getFood();}
 int Colony::getStone() const{return f_logisyka.getStone();}
 int Colony::getTitan() const{return f_logisyka.getTitan();}
+
+vector<DaneKafelek> Colony::getBudynki()const{
+    vector<DaneKafelek> budynki={};
+    DaneKafelek kafelek;
+    for(const auto &b:buildings){
+        string nazwa=b->getName();
+        for(auto &c:nazwa)c=tolower(c);
+        kafelek={TypKafelka::ZAJETY,nazwa,b->getID(),b->getX(),b->getY()};
+        budynki.push_back(kafelek);
+    }
+    return budynki;
+}

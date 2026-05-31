@@ -21,7 +21,7 @@ class Producer: public Building{
     public:
         //KONSTRUKTORY
         Producer();
-        Producer(string n, int kE,int kK, int kT, int s,int w,int ti);
+        Producer(string n, int kE,int kK, int kT, int s,int w,int ti, int X_,int Y_);
         ~Producer(){};
 
         //OVERRIDE

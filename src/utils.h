@@ -44,6 +44,8 @@ struct DaneKafelek {
     TypKafelka typ=TypKafelka::PUSTY;
     string nazwa="pusty";
     int id=-1;
+    int X=-1;
+    int Y=-1;
 
 };
 

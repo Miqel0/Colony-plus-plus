@@ -13,8 +13,8 @@ int Building::next_id=1;
 // KONSTRUKTORY
 // ==========================================
 
-Building:: Building():kosztEnergii(0),kosztKamien(0),kosztTytan(0),type(TypBudynku::NIEZNANY),name("Budynek"),id(next_id++),workers(0),residents(0){}
-Building:: Building(string n,TypBudynku t, int kE, int kK, int kT,int w):kosztEnergii(kE),kosztKamien(kK),kosztTytan(kT),type(t),name(n),id(next_id++),workers(w), residents(0){}
+Building:: Building():kosztEnergii(0),kosztKamien(0),kosztTytan(0),type(TypBudynku::NIEZNANY),name("Budynek"),id(next_id++),workers(0),residents(0),X(0),Y(0){}
+Building:: Building(string n,TypBudynku t, int kE, int kK, int kT,int w,int X_, int Y_):kosztEnergii(kE),kosztKamien(kK),kosztTytan(kT),type(t),name(n),id(next_id++),workers(w), residents(0),X(X_),Y(Y_){}
 
 // ==========================================
 // VIRTUALNE
@@ -41,7 +41,7 @@ int Building:: work(){return 0;}
  * @param plik plik
  */
 void Building::save(ofstream& plik)const{
-    plik<<static_cast<int>(type)<<" "<<name<<" "<<id<<" "<<kosztEnergii<<" "<<kosztKamien<<" "<<kosztTytan<<" "<<workers;
+    plik<<static_cast<int>(type)<<" "<<name<<" "<<id<<" "<<kosztEnergii<<" "<<kosztKamien<<" "<<kosztTytan<<" "<<workers<<" "<<X<<" "<<Y;
 }
 
 // ==========================================
@@ -76,3 +76,6 @@ int Building::getDemandWorkers()const {return workers;}
 int Building::getReqEnergy() const{return kosztEnergii;}
 int Building::getKosztKamien() const{return kosztKamien;}
 int Building::getKosztTytan() const{return kosztTytan;}
+int Building::getID() const{return id;}
+int Building::getX() const{return X;}
+int Building::getY() const{return Y;}

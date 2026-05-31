@@ -5,6 +5,7 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include <SFML/Graphics.hpp>
+#include "utils.h"
 
 #include <optional>
 #include <map>
@@ -65,6 +66,31 @@ void BuildingsGrid::wczytajSiatkaDane(const Colony& kolonia,const map<string,Bui
     }
 }
 
+/**
+ * @brief Wczytywanie budynków na początku gry na siatkę.!
+ * 
+ * @param kolonia 
+ */
+void BuildingsGrid::wczytajBudynki(const Colony& kolonia){
+    for (int x = 0; x < siatka_size_x; ++x) {
+        for (int y = 0; y < siatka_size_y; ++y) {
+            
+            if((x % 2 != 0 && y == siatka_size_y - 1)||x == siatka_size_x - 1){
+                siatka[x][y].typ = TypKafelka::BRAK;
+                siatka[x][y].nazwa="brak";
+            }else{
+                siatka[x][y].typ = TypKafelka::PUSTY;
+                siatka[x][y].nazwa="pusty";
+                siatka[x][y].X=-1;
+                siatka[x][y].Y=-1;
+            }
+        }
+    }
+    vector<DaneKafelek> budynki=kolonia.getBudynki();
+    for(const auto b:budynki){
+        siatka[b.X][b.Y]=b;
+    }
+}
 
 /**
  * @brief Konstruktor siatki budynków.
@@ -72,23 +98,18 @@ void BuildingsGrid::wczytajSiatkaDane(const Colony& kolonia,const map<string,Bui
  */
 BuildingsGrid::BuildingsGrid():siatka_x(1400),siatka_y(700),siatka_begin_x(400),siatka_begin_y(200),kafelek_x(200),kafelek_y(100),siatka_size_x(12),siatka_size_y(7),poz_mysz(-1,-1){
     siatka.resize(siatka_size_x,vector<DaneKafelek>(siatka_size_y));
-   
-    siatka[6][2].typ=TypKafelka::ZAJETY;
-    siatka[6][2].nazwa="Pole_Ziemniakow";
-    siatka[6][3].typ=TypKafelka::ZAJETY;
-    siatka[6][3].nazwa="Odkrywka_Kamienia";
-    siatka[6][4].typ=TypKafelka::ZAJETY;
-    siatka[6][4].nazwa="Maly_Wiatrak";
-    siatka[6][5].typ=TypKafelka::ZAJETY;
-    siatka[6][5].nazwa="Stacja_Badawcza";
-    siatka[6][1].typ=TypKafelka::ZAJETY;
-    siatka[6][1].nazwa="Barak_Robotniczy";
+
     for (int x = 0; x < siatka_size_x; ++x) {
         for (int y = 0; y < siatka_size_y; ++y) {
             
             if((x % 2 != 0 && y == siatka_size_y - 1)||x == siatka_size_x - 1){
                 siatka[x][y].typ = TypKafelka::BRAK;
                 siatka[x][y].nazwa="brak";
+            }else{
+                siatka[x][y].typ = TypKafelka::PUSTY;
+                siatka[x][y].nazwa="pusty";
+                siatka[x][y].X=-1;
+                siatka[x][y].Y=-1;
             }
         }
     }
@@ -164,9 +185,11 @@ void BuildingsGrid::czyNajechane(ImVec2& poz){
  * 
  * @param window okienko
  */
-void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych,bool czyBudowanie, string nazwaTrzymanego ){
+void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<string, BuildingInfo>& bazaDanych,bool czyBudowa, string nazwaTrzymanego ){
     sf::Sprite kafelek_budynek(atlas_budynkow);
     kafelek_budynek.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
+    string nazw=nazwaTrzymanego;
+    for(auto &a:nazw) a =tolower(a);
 
     sf::Vector2i pozycjaPix = sf::Mouse::getPosition(window);
     sf::Vector2f pozycjaSwiata = window.mapPixelToCoords(pozycjaPix);
@@ -219,15 +242,12 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<st
                 window.draw(kafelek_budynek);
 
                 //Rysowanie tego budowaniowego
-                if (czyBudowanie && i == poz_mysz.first && j == poz_mysz.second) {
-                    string nazw=nazwaTrzymanego;
-                    for(auto &a:nazw) a =tolower(a);
-
+                if (czyBudowa && i == poz_mysz.first && j == poz_mysz.second) {
                     sf::Sprite hologram(atlas_budynkow); 
                     hologram.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
                     hologram.setPosition(sf::Vector2f(X, Y));
     
-                    auto iterator_bazy = bazaDanych.find(nazwaTrzymanego);
+                    auto iterator_bazy = bazaDanych.find(nazw);
                     if (iterator_bazy != bazaDanych.end()) {
                         int h_X = iterator_bazy->second.X;
                         int h_Y = iterator_bazy->second.Y;
@@ -243,6 +263,7 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<st
                         }
             
                         window.draw(hologram);
+                    }else{
                     }
                 }
             }
@@ -250,5 +271,7 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<st
     }
 }
 
-
+TypKafelka BuildingsGrid::getTypKafelka() const{return siatka[poz_mysz.first][poz_mysz.second].typ;}
 pair<int,int> BuildingsGrid::getPozMysz() const { return poz_mysz; }
+int BuildingsGrid::getID(pair<int,int> n) const{return siatka[n.first][n.second].id;}
+string BuildingsGrid::getName(pair<int,int> n) const{return siatka[n.first][n.second].nazwa;}

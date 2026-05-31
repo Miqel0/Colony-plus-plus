@@ -23,9 +23,10 @@ class Game{
         
         //GRA
         vector<BuildingInfo> UIprntNewLvlTerr();
-        BuildResult UIbuild(BuildingInfo info);
+        BuildResult UIbuild(BuildingInfo info,pair<int,int> kliknietePole);
         NextResult UINextRound();
         DestroyResult UIZburz(string nazwa);
+        DestroyResult UIZburzID(int ID);
         
         void save(const string& nazwa_zapisu );
         void UIrun();

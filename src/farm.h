@@ -20,7 +20,7 @@ class Farm: public Building{
     public:
         //KONSTRUKTOR
         Farm();
-        Farm(string n, int kE,int kK, int kT, int f,int w,int tim,int ct);
+        Farm(string n, int kE,int kK, int kT, int f,int w,int tim,int ct, int X_,int Y_);
         ~Farm(){};
         
         //OVERRIDE
