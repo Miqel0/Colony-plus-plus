@@ -1432,9 +1432,9 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
             std::string idWczytaj = "Wczytaj##" + zapis; 
             if (ImGui::Button(idWczytaj.c_str(), ImVec2(100, 0))) {
                 gra.load(zapis);
-                siatka.wczytajBudynki(kolonia);
                 ekran = TypEkranu::GAME; 
                 gra.setZapisy();
+                siatka.wczytajBudynki(kolonia);
             }
 
             ImGui::TableNextColumn();
@@ -1517,7 +1517,7 @@ void Graphics::prntMenuGra(Game& gra) {
 
     ImGui::SetCursorPos(ImVec2(btn_x, 100));
     if (ImGui::Button("ZAPISY GRY", ImVec2(btn_w, btn_h))) {
-        gra.load("basic"); 
+        //gra.load("basic"); 
         ekran =TypEkranu::LOAD; 
     }
 
