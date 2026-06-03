@@ -421,7 +421,7 @@ bool Colony::sprawdzLvlTerr(){return f_logisyka.sprawdzLvlTerr();}
 // SETTERY
 // ==========================================
 
-void Colony::setNazwa(){f_logisyka.setNazwa();}
+void Colony::setNazwa(string nazwa){f_logisyka.setNazwa(nazwa);}
 
 void Colony::setRuch(int r){f_logisyka.setRuch(r);}
 

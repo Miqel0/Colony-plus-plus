@@ -88,7 +88,7 @@ class Graphics{
         void prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntMenuGlowne(Game& gra,const Colony &kolonia);
         void prntMenuGra(Game& gra);
-        void prntUstawienia();
+        void prntUstawienia(Game& gra);
         void prntCredits();
         void prntLoad(Game& gra,const Colony &kolonia);
         void prntBladBudowanie();

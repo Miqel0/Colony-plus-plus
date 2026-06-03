@@ -62,7 +62,7 @@ class Colony{
         void setSandbox();
         void setCustom();
         void setRuch(int r);
-        void setNazwa();
+        void setNazwa(string nazwa);
 
         //GETTERY
         int getRuch()const;

@@ -911,7 +911,6 @@ void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, Building
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     ImGui::SetNextWindowSize(ImVec2(375, 175)); 
     ImGui::Begin("Koniec Tury", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-    
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
      string pyt = "Czy na pewno chcesz zakonczyc ture?";
@@ -1188,8 +1187,9 @@ void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& ba
 /**
  * @brief Funckja wyświetlająca ustawienia
  * */
-void Graphics::prntUstawienia(){
+void Graphics::prntUstawienia(Game& gra){
     sf::Clock deltaClock;
+    static char nazwaNowejKolonii[64] = ""; 
     while (const  optional<sf::Event> event = window.pollEvent()) {
         
         ImGui::SFML::ProcessEvent(window, *event);
@@ -1205,6 +1205,7 @@ void Graphics::prntUstawienia(){
                 }else{
                     ekran=TypEkranu::MAIN_MENU;
                 }
+                nazwaNowejKolonii[0] = '\0';
             }
         }
         
@@ -1233,10 +1234,37 @@ void Graphics::prntUstawienia(){
     ImGui::SetCursorPosX((w - text_width) * 0.5f); 
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"USTAWIENIA");
     
-    
+    if(czyGra){
+        if (fontMENU != nullptr) {
+            ImGui::PopFont();
+        }
+        if (fontDefault != nullptr) {
+            ImGui::PushFont(fontDefault);
+        }
+        ImGui::Separator();
+        ImGui::Text("Zmień nazwę kolonii:");
+        ImGui::SetNextItemWidth(w - 150.0f); 
+        ImGui::InputText("##NowaNazwaKoloniii", nazwaNowejKolonii, sizeof(nazwaNowejKolonii));
+        
+        ImGui::SameLine();
+
+        if (ImGui::Button("ZMIEŃ", ImVec2(125, 0))) {
+            if (strlen(nazwaNowejKolonii) > 0) {
+                gra.setNazwa(nazwaNowejKolonii);
+                nazwaNowejKolonii[0] = '\0';
+            }
+        }
+        if (fontDefault != nullptr) {
+            ImGui::PopFont();
+        }
+        if (fontMENU != nullptr) {
+        ImGui::PushFont(fontMENU);
+    }
+    }
+    ImGui::Separator();
     
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
-    ImGui::Separator();
+    
 
    
     float btn_w = 320;
@@ -1249,11 +1277,13 @@ void Graphics::prntUstawienia(){
         }else{
             ekran =TypEkranu::MAIN_MENU; 
         }
+        nazwaNowejKolonii[0] = '\0';
     }
     
+    
     if (fontMENU != nullptr) {
-        ImGui::PopFont();
-    }
+            ImGui::PopFont();
+        }
     ImGui::End();
     ImGui::PopStyleVar(); // Koniec zaokrąglania
 }
@@ -1354,6 +1384,7 @@ void Graphics::prntBladBudowanie(){
  * */
 void Graphics::prntLoad(Game& gra,const Colony &kolonia){
     sf::Clock deltaClock;
+    static char nazwaNowegoZapisu[64] = ""; 
     while (const std::optional<sf::Event> event = window.pollEvent()) {
         
         ImGui::SFML::ProcessEvent(window, *event);
@@ -1365,6 +1396,7 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
         if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
             if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
                 ekran=TypEkranu::MENU_GAME;
+                nazwaNowegoZapisu[0] = '\0';
             }
         }
     } 
@@ -1393,7 +1425,7 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
     ImGui::Text("Utwórz nowy zapis:");
-    static char nazwaNowegoZapisu[64] = ""; 
+    
     
     ImGui::SetNextItemWidth(w - 150.0f); 
     ImGui::InputText("##NowyZapis", nazwaNowegoZapisu, sizeof(nazwaNowegoZapisu));
@@ -1403,7 +1435,9 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
     if (ImGui::Button("ZAPISZ", ImVec2(100, 0))) {
         if (strlen(nazwaNowegoZapisu) > 0) {
             gra.save(std::string(nazwaNowegoZapisu));
+            gra.setOstatniZapis(std::string(nazwaNowegoZapisu));
             gra.setZapisy();
+            nazwaNowegoZapisu[0] = '\0';
         }
     }
 
@@ -1432,15 +1466,18 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
             std::string idWczytaj = "Wczytaj##" + zapis; 
             if (ImGui::Button(idWczytaj.c_str(), ImVec2(100, 0))) {
                 gra.load(zapis);
-                ekran = TypEkranu::GAME; 
+                gra.setOstatniZapis(zapis);
                 gra.setZapisy();
                 siatka.wczytajBudynki(kolonia);
+                nazwaNowegoZapisu[0] = '\0';
+                ekran = TypEkranu::GAME; 
             }
 
             ImGui::TableNextColumn();
             std::string idZapisz = "Zapisz##" + zapis; 
             if (ImGui::Button(idZapisz.c_str(), ImVec2(90, 0))) {
                 gra.save(zapis);
+                gra.setOstatniZapis(zapis);
             }
         }
         ImGui::EndTable();
@@ -1450,6 +1487,7 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
     float btn_h = 60;
     ImGui::SetCursorPos(ImVec2((w - btn_w) * 0.5f, h - 80));
     if (ImGui::Button("WRÓĆ", ImVec2(btn_w, btn_h))) {
+        nazwaNowegoZapisu[0] = '\0';
         ekran = TypEkranu::MENU_GAME; 
     }
     
@@ -1597,7 +1635,7 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
 
     ImGui::SetCursorPos(ImVec2(btn_x, 140));
     if (ImGui::Button("Kontynuuj GRĘ", ImVec2(btn_w, btn_h))) {
-        gra.load("basic");
+        gra.load(gra.getOstatniZapis());
         siatka.wczytajBudynki(kolonia);
         ekran =TypEkranu::GAME; 
         czyGra=true;
@@ -1803,7 +1841,7 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
             prntMenuGra(gra);
         }
         else if(ekran==TypEkranu::SETTINGS){
-            prntUstawienia();
+            prntUstawienia(gra);
         }
         else if(ekran==TypEkranu::CREDITS){
             prntCredits();

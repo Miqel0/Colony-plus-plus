@@ -231,6 +231,7 @@ void Logistics::save(string nazwa_plik){
 
         plik.close();
         }
+        cout<<"zapisano:"<<nazwa_plik<<endl;
 }
 
 //WCZYTYWANIE ZAPISANYCH DANYCH
@@ -263,6 +264,7 @@ void Logistics::load(string nazwa_plik){
         plik.close();
         //cout<<"Kolonia zostala wczytana"<<endl;
     }
+    cout<<"Wczytano:"<<nazwa_plik<<endl;
 }
 
 // ==========================================
@@ -316,27 +318,10 @@ void Logistics::setCustom(){
 }
 
 //USTAWIANIE NAZWY - wywolywane komenda `rename`
-void Logistics::setNazwa(){
-    string nazwa;
-    if(nazwa_kolonii=="XX"){
-        cout<<"Jak chcesz nazwac swoja nowo powstawajaca kolonie na Marsie? (nie uzywaj polskich znakow, a spacje zastap '_'!! )\n";
-    }else{
-        cout<<"Na co chcesz zmienic nazwe swojej kolonii? (nie uzywaj polskich znakow, a spacje zastap '_'!!)\n";
-    }
-    cin>>nazwa;
+void Logistics::setNazwa(string nazwa){
     if(!nazwa.empty()){
         replace(nazwa.begin(), nazwa.end(), '_', ' ');
         nazwa_kolonii=nazwa;
-        cout<<"Ustawioe kolonii na "<<nazwa<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<endl;
-    }else{
-        cout<<"Niestety nie mozesz tak nazwac swojej kolonii! \n"<<endl;
-
-        if(nazwa_kolonii=="XX"){
-            cout<<"Ustawiono nazwe kolonii na "<<"Kolonia"<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<endl;
-            nazwa_kolonii="Kolonia";
-        }else{
-            cout<<"Zostawiono poprzednia nazwe kolonii:"<<nazwa_kolonii<<"!!\nNazwe zawsze mozesz pozniej zmienic w ustawieniach!!"<<endl;
-        }
     }
 }
 
