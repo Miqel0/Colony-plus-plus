@@ -1181,6 +1181,17 @@ void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& ba
     auto a=ImGui::SFML::UpdateFontTexture();
     siatka.wczytajSiatkaDane(kolonia,bazaDanych);
 
+    //Wczytanie tła
+    if (WczytajGrafike("assets/tlo_menu.png", tlo_menu_tekstura)) { 
+    tlo_menu_sprite.setTexture(tlo_menu_tekstura, true);
+    } else {
+    cout << "Nie udalo sie wczytac tla menu!" << endl;
+    }
+    if (WczytajGrafike("assets/tlo_gra.png", tlo_gra_tekstura)) { 
+    tlo_gra_sprite.setTexture(tlo_gra_tekstura, true);
+    } else {
+    cout << "Nie udalo sie wczytac gra menu!" << endl;
+    }
     prntAll(kolonia,bazaDanych,gra);
 }
 
@@ -1609,6 +1620,8 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
     ImGui::SFML::Update(window, deltaClock.restart());
     
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    center.x-=425;
+    center.y+=100;
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     
     float w = 450;
@@ -1621,19 +1634,19 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
         ImGui::PushFont(fontMENU);
     }
     
-    ImGui::Dummy(ImVec2(0.0f, 20.0f));
-    float text_width = ImGui::CalcTextSize("COLONY ++").x;
-    ImGui::SetCursorPosX((w - text_width) * 0.5f); 
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"COLONY ++");
+    // ImGui::Dummy(ImVec2(0.0f, 20.0f));
+    // float text_width = ImGui::CalcTextSize("COLONY ++").x;
+    // ImGui::SetCursorPosX((w - text_width) * 0.5f); 
+    // ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"COLONY ++");
     
-    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+    // ImGui::Dummy(ImVec2(0.0f, 15.0f));
     ImGui::Separator();
 
     float btn_w = 380;
     float btn_h = 80;
     float btn_x = (w - btn_w) * 0.5f;
 
-    ImGui::SetCursorPos(ImVec2(btn_x, 140));
+    ImGui::SetCursorPos(ImVec2(btn_x, 40));
     if (ImGui::Button("Kontynuuj GRĘ", ImVec2(btn_w, btn_h))) {
         gra.load(gra.getOstatniZapis());
         siatka.wczytajBudynki(kolonia);
@@ -1641,18 +1654,18 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
         czyGra=true;
     }
 
-    ImGui::SetCursorPos(ImVec2(btn_x, 240));
+    ImGui::SetCursorPos(ImVec2(btn_x, 140));
     if (ImGui::Button("NOWA GRA", ImVec2(btn_w, btn_h))) {
         ekran =TypEkranu::GAME;
         czyGra=true;
     }
 
-    ImGui::SetCursorPos(ImVec2(btn_x, 340));
+    ImGui::SetCursorPos(ImVec2(btn_x, 240));
     if (ImGui::Button("USTAWIENIA", ImVec2(btn_w, btn_h))) {
         ekran =TypEkranu::SETTINGS; 
     }
 
-    ImGui::SetCursorPos(ImVec2(btn_x, 440));
+    ImGui::SetCursorPos(ImVec2(btn_x, 340));
     if (ImGui::Button("CREDITS", ImVec2(btn_w, btn_h))) {
         ekran =TypEkranu::CREDITS; 
     }
@@ -1851,6 +1864,9 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         }
 
         window.clear();
+        
+        if(ekran==TypEkranu::MAIN_MENU){ window.draw(tlo_menu_sprite);}
+        if(ekran==TypEkranu::GAME){ window.draw(tlo_gra_sprite);}
         //rysowanie elementow (tla)
         // window.draw(siatka);
         // window.draw(menu);

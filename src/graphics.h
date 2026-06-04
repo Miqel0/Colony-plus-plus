@@ -25,6 +25,12 @@ class Graphics{
         unsigned int szer;
         unsigned int wys;
 
+        sf::Texture tlo_menu_tekstura;
+        sf::Sprite tlo_menu_sprite{tlo_menu_tekstura};
+
+        sf::Texture tlo_gra_tekstura;
+        sf::Sprite tlo_gra_sprite{tlo_gra_tekstura};
+
         //Siatka budynków
         BuildingsGrid siatka;
         TypEkranu ekran;

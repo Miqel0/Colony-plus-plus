@@ -15,9 +15,8 @@ Metropolia          HOUSING    800   400  200  0    0    0    100  0    7    600
 
 Odkrywka_Kamienia   PRODUCER   20    0    3    4    8    0    0    0    0    0      600    Proste_wydobycie_kamienia
 Kopalnia_Tytanu     PRODUCER   35    0    5    6    0    5    0    0    1    200    600    Genialne_wydobycie_tytanu!
-Wiertlo_Glebinowe   PRODUCER   50    20   10   6    10   5    0    0    2    400    600    Wydobywa_kamien_i_tytan
-Kombinat_Gorniczy   PRODUCER   200   100  40   15   30   15   0    0    3    600    600    Ciezki_przemysl_wydobywczy
-Automat_Wydobywczy  PRODUCER   600   300  150  2    80   40   0    0    5    800    600    Autonomiczna_kopalnia_bezzalogowa
+Kombinat_Gorniczy   PRODUCER   150   75   40   15   30   15   0    0    3    600    600    Ciezki_przemysl_wydobywczy
+Automat_Wydobywczy  PRODUCER   400   200  150  2    80   40   0    0    5    800    600    Autonomiczna_kopalnia_bezzalogowa
 
 Stacja_Badawcza     TERR       40    0    5    2    0    0    2    0    0    0      400    Badanie_atmosfery_Marsa
 Kominy_Cieplne      TERR       120   30   20   5    0    0    8    0    2    200    400    Uwalnianie_gazow_z_podziemi
