@@ -264,7 +264,7 @@ void Logistics::load(string nazwa_plik){
         plik.close();
         //cout<<"Kolonia zostala wczytana"<<endl;
     }
-    cout<<"Wczytano:"<<nazwa_plik<<endl;
+    //cout<<"Wczytano:"<<nazwa_plik<<endl;
 }
 
 // ==========================================

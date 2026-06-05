@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <optional>
 #include <SFML/Graphics.hpp>
 #include "colony.h"
 #include "buildingsGrid.h"
@@ -41,10 +42,14 @@ class Graphics{
         ImFont* fontDefault = nullptr;
         ImFont* fontHUD = nullptr;
         ImFont* fontMENU = nullptr;
-
+        //Kursory
+        std::optional<sf::Cursor> kursorDomyslny;
+        std::optional<sf::Cursor> kursorBudowanie;
+        std::optional<sf::Cursor> kursorBurzenie;
         //Wyswietlanie itp
         bool czyhelp;
         bool czyBudynki;
+        bool czyBudowa;
         bool czyBudowanie;
         bool czyBudowanieCategory;
         bool czyBudowanieWyniki;
@@ -53,12 +58,13 @@ class Graphics{
         bool czyWyburzanie;
         bool czyWyburzanie1;
         bool czyWyburzanieKlick;
+        bool czyPotwierdzicWyjscie;
+        bool czyDoMenu;
 
         bool czyBudynekInfo;
         
         //Zamieszanie z budowaniem!
         BuildingInfo trzymanyBudynek;
-        bool czyBudowa;
 
         bool czyLoad;
         bool czySave;
@@ -92,6 +98,7 @@ class Graphics{
         void prntCzyNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntWyburz();
+        void wychodzenie();
 
         void ustawStylUI();
         void UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);

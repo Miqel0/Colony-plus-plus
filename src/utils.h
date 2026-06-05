@@ -9,6 +9,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
@@ -16,6 +17,11 @@
 #include "imgui-SFML.h"
 
 using namespace std;
+
+
+//Potrzebne wskazniki do obiekotw z Graphics, bo inaczej nie da sie zrobic wyswietlania ikonek w tekscie
+inline std::map<std::string, sf::IntRect>* globalnaMapaIkonek = nullptr;
+inline sf::Texture* globalnaTeksturaIkonek = nullptr;
 
 /**
  * @brief Typy budynków, używany w różnych logikach.
@@ -174,29 +180,76 @@ inline void rysujWierszTooltip(const string& etykieta, const string& wartosc) {
  * @param dane wektor par danych do wyswietlenia w tabeli - vector<pair<string, string>>
  * @param opis opis dłuższy napis, pod tabelą
  */
-inline void prntTooltipTablica(const string& nazwa, const vector<pair<string, string>>& dane) {
+inline void prntTooltipTablica(const std::string& nazwa, const std::vector<std::pair<std::string, std::string>>& dane) {
     float window_width = ImGui::GetWindowWidth();
     float text_width = ImGui::CalcTextSize(nazwa.c_str()).x;
 
-    string nazwa_ = cleanString(nazwa);
+    std::string nazwa_ = cleanString(nazwa);
 
     ImGui::SetCursorPosX((window_width - text_width) * 0.5f);  
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%s", nazwa_.c_str());
     ImGui::Separator();
     
-   
     if (!dane.empty()) {
         if (ImGui::BeginTable("StatsTooltip", 2, ImGuiTableFlags_BordersInnerH)) {
-            
-
             for (const auto& para : dane) {
-                rysujWierszTooltip(para.first, para.second);
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+
+                std::string klucz = para.first;
+                
+                while (!klucz.empty() && klucz.back() == ' ') {
+                    klucz.pop_back();
+                }
+
+                char znak = '\0';
+                if (!klucz.empty() && (klucz.back() == '+' || klucz.back() == '-')) {
+                    znak = klucz.back();
+                    klucz.pop_back();
+                }
+
+                while (!klucz.empty() && klucz.back() == ' ') {
+                    klucz.pop_back();
+                }
+
+                for (auto& c : klucz) c = tolower(c);
+
+                bool narysowano_ikonke = false;
+
+                if (globalnaMapaIkonek != nullptr && globalnaTeksturaIkonek != nullptr) {
+                    auto it = globalnaMapaIkonek->find(klucz);
+                    if (it != globalnaMapaIkonek->end()) {
+                        
+                        sf::Sprite ikonka(*globalnaTeksturaIkonek);
+                        ikonka.setTextureRect(it->second);
+                        
+                        float offsetX = (ImGui::GetColumnWidth() - 16.0f) * 0.5f;
+                        if (offsetX > 0.0f) {
+                            ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetX);
+                        }
+                        ImGui::Image(ikonka, sf::Vector2f(25.0f, 25.0f));
+                        narysowano_ikonke = true;
+                    }
+                }
+
+                if (!narysowano_ikonke) {
+                    ImGui::Text("%s", para.first.c_str());
+                    ImGui::TableNextColumn();
+                    ImGui::Text("%s", para.second.c_str());
+                } else {
+                    ImGui::TableNextColumn();
+                    if (znak == '+') {
+                        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%s", para.second.c_str());
+                    } else if (znak == '-') {
+                        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%s", para.second.c_str());
+                    } else {
+                        ImGui::Text("%s", para.second.c_str());
+                    }
+                }
             }
-            
             ImGui::EndTable();
         }
     }
-    
 }
 
 /**

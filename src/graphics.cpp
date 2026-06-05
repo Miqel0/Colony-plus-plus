@@ -42,8 +42,8 @@ bool WczytajGrafike(const std::string& sciezka, T& obiektSFML) {
 }
 
 
-Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1){}
-Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyBudowanie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1){}
+Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyDoMenu(false),czyBudowanie(false),czyPotwierdzicWyjscie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyDoMenu(false),czyBudowanie(false),czyPotwierdzicWyjscie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1){}
 
 /**
  * @brief Tymczasowe wyświeltanie głównego menu z przyciskami.
@@ -51,17 +51,17 @@ Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenS
  */
 void Graphics::prntMenu(){
     ImGui::SetNextWindowPos(ImVec2(10, 70), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(240, 400), ImGuiCond_Once);
-    ImGui::Begin("Panel Sterowania",nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-    ImGui::Separator();
+    ImGui::SetNextWindowSize(ImVec2(240, 250), ImGuiCond_Once);
+    ImGui::Begin("###PanelSterowania",nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+    // ImGui::Separator();
 
     if(ImGui::Button("Pomoc")){
         czyhelp =!czyhelp;
     }
-    ImGui::Separator();
-    if(ImGui::Button("Zbudowane Budynki")){
-        czyBudynki =!czyBudynki;
-    }
+    // ImGui::Separator();
+    // if(ImGui::Button("Zbudowane Budynki")){
+    //     czyBudynki =!czyBudynki;
+    // }
     ImGui::Separator();
     if(ImGui::Button("Budowanie")){
         czyBudowanie =!czyBudowanie;
@@ -74,9 +74,9 @@ void Graphics::prntMenu(){
     if(czyWyburzanieKlick){
         ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "WYBURZANIE");
     }
-    ImGui::Separator();
-    ImVec2 pozycjaMyszy = ImGui::GetMousePos();
-    ImGui::TextWrapped("Pozycja myszy: X = %.0f, Y = %.0f", pozycjaMyszy.x, pozycjaMyszy.y);
+    // ImGui::Separator();
+    // ImVec2 pozycjaMyszy = ImGui::GetMousePos();
+    // ImGui::TextWrapped("Pozycja myszy: X = %.0f, Y = %.0f", pozycjaMyszy.x, pozycjaMyszy.y);
 
     //X=300
     //Y=100
@@ -95,8 +95,9 @@ void Graphics::ustawStylUI() {
     style.PopupRounding = 6.0f;
     style.WindowBorderSize = 3.0f; 
 
-    ImVec4 kolorTla = ImVec4(0.13f, 0.15f, 0.19f, 0.85f);     
-    ImVec4 kolorMiedzi = ImVec4(0.80f, 0.53f, 0.27f, 1.00f); 
+    ImVec4 kolorTla = ImVec4(0.13f, 0.15f, 0.19f, 0.875f);     
+    // ImVec4 kolorMiedzi = ImVec4(0.56f, 0.37f, 0.19f, 1.00f);
+    ImVec4 kolorMiedzi = ImVec4(0.65f, 0.28f, 0.08f, 1.00f);
     ImVec4 kolorMiedziHover = ImVec4(0.90f, 0.63f, 0.37f, 1.00f);
     ImVec4 kolorMiedziClick = ImVec4(0.70f, 0.43f, 0.17f, 1.00f);
     
@@ -394,12 +395,12 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         
         ImGui::SameLine(0.0f, 40.0f);
         
-        ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"Prad:");
+        ImGui::Image(getIkonka("prad"), sf::Vector2f(32.0f, 32.0f));
         if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"prad",bazaDanych);
         }
-        ImGui::SameLine();
         if (kolonia.getReqEnergy() > kolonia.getGenEnergy()) {
+            ImGui::SameLine();
             ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%d/%d", kolonia.getGenEnergy(), kolonia.getReqEnergy()); // Czerwony
         } else {
             ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%d/%d", kolonia.getGenEnergy(), kolonia.getReqEnergy()); // Zielony
@@ -407,14 +408,16 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
 
 
         ImGui::SameLine(0.0f, 25.0f);
-
-        ImGui::TextColored(ImVec4(1.0f, 0.6f, 0.2f, 1.0f),"Koloniści: %d/%d", kolonia.getDemandWorkers(), kolonia.getAllWorkers());
+        ImGui::Image(getIkonka("kolonisci"), sf::Vector2f(32.0f, 32.0f));
         if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"ludzie",bazaDanych);
         }
+        ImGui::SameLine();
+        ImGui::TextColored(ImVec4(1.0f, 0.6f, 0.2f, 1.0f),"%d/%d", kolonia.getDemandWorkers(), kolonia.getAllWorkers());
         ImGui::SameLine(0.0f, 25.0f);
 
-        ImGui::TextColored(ImVec4(0.6f, 1.0f, 0.2f, 1.0f),"Jedzenie:");
+        
+        ImGui::Image(getIkonka("jedzenie"), sf::Vector2f(32.0f, 32.0f));
          if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"jedzenie",bazaDanych);
         }
@@ -441,25 +444,27 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
             ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%d (%d)", kolonia.getFood(), suma); // Czerwony
         }
         ImGui::SameLine(0.0f, 40.0f); 
-
-        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Kamień: %d", kolonia.getStone());
-         if (ImGui::IsItemHovered()) {
+        ImGui::Image(getIkonka("kamien"), sf::Vector2f(32.0f, 32.0f));
+        if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"kamien",bazaDanych);
         }
+        ImGui::SameLine();
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "%d", kolonia.getStone());
         ImGui::SameLine(0.0f, 40.0f);
-
-        ImGui::TextColored(ImVec4(0.4f, 0.7f, 1.0f, 1.0f), "Tytan: %d", kolonia.getTitan());
-         if (ImGui::IsItemHovered()) {
+        ImGui::Image(getIkonka("tytan"), sf::Vector2f(32.0f, 32.0f));
+        if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"tytan",bazaDanych);
         }
+        ImGui::SameLine();
+        ImGui::TextColored(ImVec4(0.4f, 0.7f, 1.0f, 1.0f), "%d", kolonia.getTitan());
         ImGui::SameLine(0.0f, 40.0f);
 
-        ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "Terraformacja: %d", kolonia.getLvlTerr());
-        // ImGui::SameLine();
-        // ImGui::Text("(Do nast: %d)", kolonia.getToNextLvlTerr());
+        ImGui::Image(getIkonka("terr"), sf::Vector2f(32.0f, 32.0f));
         if (ImGui::IsItemHovered()) {
            prntStatystykiToolTop(kolonia,licznik,"terr",bazaDanych);
-       }
+        }
+        ImGui::SameLine();
+        ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "%d", kolonia.getLvlTerr());
 
         char tekstTury[128];
         snprintf(tekstTury, sizeof(tekstTury), "Tura: %d | Ruchy: %d/3", kolonia.getTura(), kolonia.getRuch());
@@ -489,7 +494,7 @@ void Graphics::prntBudynekInfo( const map<string, BuildingInfo>& bazaDanych,cons
     ImVec2 pozycjaMyszki = ImGui::GetMousePos();
     ImGui::SetNextWindowPos(pozycjaMyszki, ImGuiCond_Appearing);
     ImGui::SetNextWindowSizeConstraints(ImVec2(300, 0.0f), ImVec2(500, FLT_MAX));
-    ImGui::Begin(cleanString(inf.first).c_str(),&czyBudynekInfo,ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+    ImGui::Begin("###InfoBudynek",&czyBudynekInfo,ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
     kolonia.UIprntBuildingID(inf.second);
     prntOpis(inf.first,bazaDanych);
@@ -608,13 +613,17 @@ void Graphics::prntWyburz() {
             ImGui::Text("Odzyskano surowce z budowy:");
 
             if (destroyWynik.sur.first > 0) {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.6f, 0.6f, 0.6f, 1.0f)); 
-                ImGui::BulletText("Kamien: %d", destroyWynik.sur.first);
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.6f, 0.6f, 0.6f, 1.0f));
+                ImGui::Image(getIkonka("kamien"), sf::Vector2f(25.0f, 25.0f));
+                ImGui::SameLine();
+                ImGui::BulletText("%d", destroyWynik.sur.first);
                 ImGui::PopStyleColor();
             }
             if (destroyWynik.sur.second > 0) {
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 0.7f, 1.0f, 1.0f)); 
-                ImGui::BulletText("Tytan: %d", destroyWynik.sur.second);
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 0.7f, 1.0f, 1.0f));
+                ImGui::Image(getIkonka("tytan"), sf::Vector2f(25.0f, 25.0f));
+                ImGui::SameLine();
+                ImGui::BulletText("%d", destroyWynik.sur.second);
                 ImGui::PopStyleColor();
             }
             
@@ -642,7 +651,7 @@ void Graphics::prntWyburz() {
 
         // Środek dla przycisku
         float windowWidth = ImGui::GetWindowSize().x;
-        float buttonWidth = 100.0f;
+        float buttonWidth = 150.0f;
         ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f); 
         
         if (ImGui::Button("Zrozumiano", ImVec2(buttonWidth, 0))) {
@@ -788,111 +797,160 @@ void Graphics::prntBudowanieWyniki(Game& gra) {
  * @brief Funkcja wyswietlajaca informacje o dostepnych budynkach do zbudowania z danej kategorii.
  * 
  */
-void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych,Game& gra){//Wyswietlanie informacji o danej kategorii budynkow
-    string title = "Budynki z kategorii: "+ cat;
-    ImGui::SetNextWindowSizeConstraints(ImVec2(800, 0.0f), ImVec2(800, FLT_MAX));
-    ImGui::Begin(title.c_str(),&czyBudowanieCategory, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych, Game& gra) {
+    string title = "Budynki z kategorii: " + cat;
+    ImGui::SetNextWindowSizeConstraints(ImVec2(500, 0.0f), ImVec2(800, FLT_MAX));
+    ImGui::Begin(title.c_str(), &czyBudowanieCategory, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
     
-    int il_kolum=6;
-    if(cat=="FARM"||cat=="PRODUCER"){
-        il_kolum=7;
+    int il_kolum = 6;
+    if (cat == "FARM" || cat == "PRODUCER") {
+        il_kolum = 7;
     }
 
     if (ImGui::BeginTable("TabelaBudynkow", il_kolum, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
         
-        ImGui::TableSetupColumn("Nazwa Budynku", ImGuiTableColumnFlags_WidthFixed, 150.0f);
-        ImGui::TableSetupColumn("koszt: KAMIEN");
-        ImGui::TableSetupColumn("koszt: TYTAN");
-        ImGui::TableSetupColumn("req. WORKERS");
-        ImGui::TableSetupColumn("req. PRĄD");
-        if(cat=="ENERGY"){
-            ImGui::TableSetupColumn("gen. PRAD");
-        }else 
-        if(cat=="HOUSING"){
-            ImGui::TableSetupColumn("mieszkańcy");
-        }else 
-        if(cat=="FARM"){
-            ImGui::TableSetupColumn("gen. jedzenie");
-            ImGui::TableSetupColumn("czas");
-        }else 
-        if(cat=="PRODUCER"){
-            ImGui::TableSetupColumn("gen. STONE");
-            ImGui::TableSetupColumn("gen. TYTAN");
-        }else 
-        if(cat=="TERR"){
-            ImGui::TableSetupColumn("gen. terr");
+        ImGui::TableSetupColumn("Nazwa Budynku", ImGuiTableColumnFlags_WidthFixed, 200.0f);
+        ImGui::TableSetupColumn("Col1");
+        ImGui::TableSetupColumn("Col2");
+        ImGui::TableSetupColumn("Col3");
+        ImGui::TableSetupColumn("Col4");
+        
+        if (cat == "FARM" || cat == "PRODUCER") {
+            ImGui::TableSetupColumn("Col5");
+            ImGui::TableSetupColumn("Col6");
+        } else {
+            ImGui::TableSetupColumn("Col5");
         }
-        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.2f, 1.0f)); 
-        ImGui::TableHeadersRow();
-        ImGui::PopStyleColor();
-        for (const auto &[k,info]:bazaDanych) {
-            if(cat==info.type&&info.lvlTerr<=kolonia.getLvlTerr()){
+
+        ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
+        
+        sf::Vector2f hdrIcon(18.0f, 18.0f);
+        ImVec4 hdrKolor = ImVec4(1.0f, 0.8f, 0.2f, 1.0f);
+
+        auto wycentrujIkonke = [&](const std::string& nazwa, const char* tooltip) {
+            float offsetX = (ImGui::GetColumnWidth() - hdrIcon.x) * 0.5f;
+            if (offsetX > 0.0f) {
+                ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetX);
+            }
+            ImGui::Image(getIkonka(nazwa), hdrIcon);
+            if (ImGui::IsItemHovered()) {
+                ImGui::SetTooltip("%s", tooltip);
+            }
+        };
+
+        ImGui::TableNextColumn();
+        ImGui::TextColored(hdrKolor, "Nazwa Budynku");
+
+        ImGui::TableNextColumn();
+        wycentrujIkonke("kamien", "Koszt: Kamień");
+
+        ImGui::TableNextColumn();
+        wycentrujIkonke("tytan", "Koszt: Tytan");
+
+        ImGui::TableNextColumn();
+        wycentrujIkonke("kolonisci", "Wymagani pracownicy");
+
+        ImGui::TableNextColumn();
+        wycentrujIkonke("prad", "Zużycie prądu");
+
+        if (cat == "ENERGY") {
+            ImGui::TableNextColumn();
+            wycentrujIkonke("prad", "Produkcja Prądu");
+        } 
+        else if (cat == "HOUSING") {
+            ImGui::TableNextColumn();
+            wycentrujIkonke("kolonisci", "Pojemność mieszkalna");
+        } 
+        else if (cat == "FARM") {
+            ImGui::TableNextColumn();
+            wycentrujIkonke("jedzenie", "Produkcja Jedzenia");
+            
+            ImGui::TableNextColumn();
+            float offsetText = (ImGui::GetColumnWidth() - ImGui::CalcTextSize("Czas (Tury)").x) * 0.5f;
+            if (offsetText > 0.0f) {
+                ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetText);
+            }
+            ImGui::TextColored(hdrKolor, "Czas (Tury)");
+        } 
+        else if (cat == "PRODUCER") {
+            ImGui::TableNextColumn();
+            wycentrujIkonke("kamien", "Wydobycie Kamienia");
+            
+            ImGui::TableNextColumn();
+            wycentrujIkonke("tytan", "Wydobycie Tytanu");
+        } 
+        else if (cat == "TERR") {
+            ImGui::TableNextColumn();
+            wycentrujIkonke("terr", "Punkty Terraformacji");
+        }
+
+        sf::Vector2f iconSize(16.0f, 16.0f);
+
+        for (const auto &[k, info] : bazaDanych) {
+            if (cat == info.type && info.lvlTerr <= kolonia.getLvlTerr()) {
                 string nazwa_ = cleanString(info.nazwa);
-                string nazwa=info.nazwa;
-                for(auto &c:nazwa) c =tolower(c);
+                string nazwa = info.nazwa;
+                for (auto &c : nazwa) c = tolower(c);
                 
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn(); 
                 if (ImGui::Selectable(nazwa_.c_str())) {
-                    trzymanyBudynek=bazaDanych.at(nazwa);
-                    czyBudowa=true;
+                    trzymanyBudynek = bazaDanych.at(nazwa);
+                    czyBudowa = true;
                 }
+
                 if (ImGui::IsItemHovered()) {
                     ImGui::BeginTooltip(); 
-                    
                     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Kliknięcie spowoduje zbudowanie tego budynku!");
                     ImGui::Separator();
-                    ImGui::Text("Zbudowanie kosztuje:\n kamień: %d \n tytan: %d", info.kKamien,info.kTytan);
+                    
+                    ImGui::Text("Zbudowanie kosztuje:");
+                    ImGui::Image(getIkonka("kamien"), iconSize); ImGui::SameLine();
+                    ImGui::Text("%d", info.kKamien); ImGui::SameLine(0, 15.0f); 
+                    
+                    ImGui::Image(getIkonka("tytan"), iconSize); ImGui::SameLine();
+                    ImGui::Text("%d", info.kTytan);
+                    
                     ImGui::Separator();
-                    string opis =info.opis;
-                    prntOpis(opis);
-
+                    string opiss=info.opis;
+                    prntOpis(opiss);
                     ImGui::EndTooltip(); 
                 }
                 
                 ImGui::TableNextColumn();
-                if(info.kKamien==0){
-                    ImGui::Text("-"); 
-                }else{
-                    ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%d", info.kKamien); 
-                }
+                if (info.kKamien == 0) ImGui::Text("-"); 
+                else ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%d", info.kKamien); 
+
                 ImGui::TableNextColumn();
-                
-                if(info.kTytan==0){
-                    ImGui::Text("-"); 
-                }else{
-                    ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%d", info.kTytan); 
-                }
+                if (info.kTytan == 0) ImGui::Text("-"); 
+                else ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%d", info.kTytan); 
+
                 ImGui::TableNextColumn();
-                if(info.workers==0){
-                    ImGui::Text("-"); 
-                }else{
-                    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%d osób", info.workers); 
-                }
+                if (info.workers == 0) ImGui::Text("-"); 
+                else ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%d", info.workers); 
+
                 ImGui::TableNextColumn();
-                if(info.reqEnergy==0){
-                    ImGui::Text("-"); 
-                }else{
-                    ImGui::TextColored(ImVec4(0.2f, 0.8f, 1.0f, 1.0f), "-%d kW", info.reqEnergy);
-                }
+                if (info.reqEnergy == 0) ImGui::Text("-"); 
+                else ImGui::TextColored(ImVec4(0.2f, 0.8f, 1.0f, 1.0f), "-%d", info.reqEnergy);
+
                 ImGui::TableNextColumn();
-                if(cat=="ENERGY"){
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d kW", info.genInne); 
-                }else 
-                if(cat=="HOUSING"){
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d miejsc", info.genInne);
-                }else 
-                if(cat=="FARM"){
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d jedzenia", info.genInne);
+                if (cat == "ENERGY") {
+                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne); 
+                } 
+                else if (cat == "HOUSING") {
+                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne);
+                } 
+                else if (cat == "FARM") {
+                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne);
                     ImGui::TableNextColumn();
                     ImGui::Text("%d tur", info.x);
-                }else 
-                if(cat=="PRODUCER"){
+                } 
+                else if (cat == "PRODUCER") {
                     ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genKamien);
                     ImGui::TableNextColumn();
                     ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genTytan);
-                }else 
-                if(cat=="TERR"){
+                } 
+                else if (cat == "TERR") {
                     ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne);
                 }
             }
@@ -901,8 +959,8 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
     }
     ImGui::End();
 
-    if(!(cat=="ENERGY"||cat=="HOUSING"||cat=="FARM"||cat=="PRODUCER"||cat=="TERR")){
-        cout<<"Nie ma takiej kategorii!!"<<endl;
+    if (!(cat == "ENERGY" || cat == "HOUSING" || cat == "FARM" || cat == "PRODUCER" || cat == "TERR")) {
+        cout << "Nie ma takiej kategorii!!" << endl;
         return;
     }
 }
@@ -1116,76 +1174,85 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
  * @brief Wyświetlanie helpa i instrukcji
  * */
 void Graphics::prntPomoc() {
-    ImGui::SetNextWindowSize(ImVec2(800, 500), ImGuiCond_Appearing);
-    ImGui::Begin("PODRECZNIK KOLONIZATORA - ZASADY GRY", &czyhelp, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+    ImGui::SetNextWindowSize(ImVec2(800, 600), ImGuiCond_Appearing);
+    ImGui::Begin("PODRĘCZNIK KOLONIZATORA - ZASADY GRY", &czyhelp, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
 
-    // ==========================================
-    // 1. CEL GRY
-    // ==========================================
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "1. CEL GLOWNY: TERRAFORMACJA");
+    sf::Vector2f iconSize(16.0f, 16.0f);
+    ImVec4 naglowekKolor = ImVec4(1.0f, 0.8f, 0.2f, 1.0f);
+
+    ImGui::TextColored(naglowekKolor, "1. CEL GŁÓWNY: TERRAFORMACJA");
     ImGui::Separator();
     
     ImGui::Bullet(); 
-    ImGui::TextWrapped("Twoim zadaniem jest przystosowanie Marsa do zycia. Buduj budynki w nowej kolonii, aby przetrwac.");
+    ImGui::TextWrapped("Twoim zadaniem jest przystosowanie Marsa do życia. Buduj budynki w nowej kolonii, aby przetrwać.");
     
     ImGui::Bullet(); 
-    ImGui::TextWrapped("Budynki z kategorii TERR zwiekszaja Wskaznik Terraformacji. Odblokowuje to nowe technologie oraz daje dostep do tytanu.");
+    ImGui::AlignTextToFramePadding();
+    ImGui::Image(getIkonka("terr"), iconSize); ImGui::SameLine();
+    ImGui::TextWrapped("Budynki z kategorii TERR zwiększają Wskaźnik Terraformacji. Odblokowuje to nowe technologie oraz daje dostęp do tytanu.");
     
     ImGui::Dummy(ImVec2(0.0f, 10.0f)); 
 
-    // ==========================================
-    // 2. PRZETRWANIE
-    // ==========================================
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "2. EKONOMIA ZYCIA (WAZNE!)");
+    ImGui::TextColored(naglowekKolor, "2. EKONOMIA ŻYCIA I SUROWCE (WAŻNE!)");
     ImGui::Separator();
 
+    ImGui::AlignTextToFramePadding();
+    ImGui::Image(getIkonka("jedzenie"), iconSize); ImGui::SameLine();
     ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "[ JEDZENIE ]");
     ImGui::Indent(); 
-    ImGui::TextWrapped("Pobierane automatycznie na poczatku kazdej nowej tury. Kazdy mieszkaniec potrzebuje 2 jedzenia na ture.");
-    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "UWAGA: Jesli magazyn jedzenia bedzie pusty -> KOLONIA UMIERA (KONIEC GRY).");
+    ImGui::TextWrapped("Pobierane automatycznie na początku każdej nowej tury. Każdy mieszkaniec potrzebuje 2 jedzenia na turę.");
+    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "UWAGA: Jeśli magazyn jedzenia będzie pusty -> KOLONIA UMIERA (KONIEC GRY).");
     ImGui::Unindent();
-
     ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
+    ImGui::AlignTextToFramePadding();
+    ImGui::Image(getIkonka("prad"), iconSize); ImGui::SameLine();
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "[ ENERGIA ]");
     ImGui::Indent();
-    ImGui::TextWrapped("Musisz produkowac wiecej pradu niz zuzywasz (albo dokladnie tyle samo).");
-    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "UWAGA: Brak energii = STOP PRODUKCJI we wszystkich budynkach \n(farmy tez przestaja dzialac!).");
+    ImGui::TextWrapped("Musisz produkować więcej prądu niż zużywasz (albo dokładnie tyle samo).");
+    ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "UWAGA: Brak energii = STOP PRODUKCJI we wszystkich budynkach (farmy też przestają działać!).");
+    ImGui::Unindent();
+    ImGui::Dummy(ImVec2(0.0f, 5.0f));
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::Image(getIkonka("kolonisci"), iconSize); ImGui::SameLine();
+    ImGui::Text("[ PRACOWNICY ]"); ImGui::SameLine(0, 15.0f);
+    ImGui::Image(getIkonka("kamien"), iconSize); ImGui::SameLine();
+    ImGui::Text("[ KAMIEŃ ]"); ImGui::SameLine(0, 15.0f);
+    ImGui::Image(getIkonka("tytan"), iconSize); ImGui::SameLine();
+    ImGui::Text("[ TYTAN ]");
+    ImGui::Indent();
+    ImGui::TextWrapped("Aby zdobyć pracowników buduj domy. Kamień to podstawowy budulec, a tytan jest wymagany do zaawansowanych konstrukcji.");
     ImGui::Unindent();
 
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-    // ==========================================
-    // 3. SYSTEM TUR
-    // ==========================================
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "3. MECHANIKA TURY");
+    ImGui::TextColored(naglowekKolor, "3. MECHANIKA TURY");
     ImGui::Separator();
 
     ImGui::Bullet(); 
-    ImGui::TextWrapped("W kazdej turze masz do dyspozycji 3 PUNKTY RUCHU (1 Budynek = 1 Ruch).");
-    
+    ImGui::TextWrapped("W każdej turze masz do dyspozycji określoną liczbę PUNKTÓW RUCHU (1 Budynek = 1 Ruch).");
     ImGui::Bullet(); 
-    ImGui::TextWrapped("Gdy wykorzystasz ruchy (lub wczesniej, jesli chcesz), kliknij przycisk [NEXT], aby zakonczyc ture.");
-    
+    ImGui::TextWrapped("Gdy wykorzystasz ruchy (lub wcześniej, jeśli chcesz), kliknij przycisk [NEXT], aby zakończyć turę.");
     ImGui::Bullet(); 
-    ImGui::TextWrapped("Dopiero po przejsciu do nastepnej tury nastepuje produkcja surowcow i konsumpcja jedzenia.");
+    ImGui::TextWrapped("Dopiero po przejściu do następnej tury następuje produkcja surowców i konsumpcja jedzenia.");
 
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-    // ==========================================
-    // 4. ZARZADZANIE
-    // ==========================================
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "4. BUDOWANIE I NISZCZENIE");
+    ImGui::TextColored(naglowekKolor, "4. ZARZĄDZANIE I INTERFEJS");
     ImGui::Separator();
 
     ImGui::Bullet(); 
-    ImGui::TextWrapped("Uzywaj panelu budowania, aby sprawdzic wymagania i koszt budynkow.");
+    ImGui::TextWrapped("TOOLTIPY: Najechanie myszką na budynek w menu lub ikonę w tabeli wyświetli szczegółowe informacje.");
     
     ImGui::Bullet(); 
-    ImGui::TextWrapped("Aby zdobyc pracownikow, musisz budowac domy (Kategoria: Housing).");
+    ImGui::TextWrapped("KURSOR: Zwracaj uwagę na kursor myszy. Zmienia on swój wygląd, gdy jesteś w trybie budowania lub wyburzania.");
 
     ImGui::Bullet(); 
-    ImGui::TextWrapped("Mozesz zburzyc budynek, aby odzyskac polowe surowcow. Zburzenie zwalnia rowniez przypisanych pracownikow.");
+    ImGui::TextWrapped("WYBURZANIE: Możesz zburzyć budynek, aby odzyskać część surowców. Zburzenie zwalnia również przypisanych pracowników.");
+
+    ImGui::Bullet(); 
+    ImGui::TextWrapped("ZAPISY GRY: W dowolnym momencie możesz otworzyć Menu Pauzy, aby zapisać swój postęp lub zmienić ustawienia.");
 
     ImGui::End();
 }
@@ -1205,7 +1272,7 @@ void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& ba
     sf::Image icon;
     WczytajGrafike("assets/ikonka_test.png", icon);
     window.setIcon(icon);
-
+    wczytajIkonki();
     //Ustawianie czcionki!
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Clear();
@@ -1429,7 +1496,42 @@ void Graphics::prntBladBudowanie(){
  * 
  */
 void Graphics::wczytajIkonki(){
+    
+    if (WczytajGrafike("assets/ikonki.png", tekstura_ikonek)) {
+        
+        ikonki["prad"]       = sf::IntRect({0,   0}, {64, 64});
+        ikonki["jedzenie"]   = sf::IntRect({64,  0}, {64, 64});
+        ikonki["kolonisci"]  = sf::IntRect({128, 0}, {64, 64});
+        ikonki["tytan"]      = sf::IntRect({192, 0}, {64, 64});
+        ikonki["kamien"]     = sf::IntRect({256, 0}, {64, 64});
+        ikonki["terr"]       = sf::IntRect({320, 0}, {64, 64});
+        
+        globalnaMapaIkonek = &ikonki;
+        globalnaTeksturaIkonek = &tekstura_ikonek;
+    } else {
+        cout << "Nie udalo sie wczytac pliku ikonki.png!" << endl;
+    }
+    //Kursory!
+    sf::Image imgDomyslny;
+    if (WczytajGrafike("assets/cursor_none.png",imgDomyslny)) { 
+        kursorDomyslny= sf::Cursor::createFromPixels(imgDomyslny.getPixelsPtr(), imgDomyslny.getSize(), sf::Vector2u(0, 0));
+    } else {
 
+    }
+
+    sf::Image imgBudowanie;
+    if (WczytajGrafike("assets/tool_hammer.png",imgBudowanie)) { 
+        kursorBudowanie = sf::Cursor::createFromPixels(imgBudowanie.getPixelsPtr(), imgBudowanie.getSize(), sf::Vector2u(16, 16));
+    } else {
+
+    }
+
+    sf::Image imgBurzenie;
+    if (WczytajGrafike("assets/tool_bomb.png",imgBurzenie)) {
+        kursorBurzenie = sf::Cursor::createFromPixels(imgBurzenie.getPixelsPtr(), imgBurzenie.getSize(), sf::Vector2u(16, 16));
+    }else {
+
+    }
 }
 
 /**
@@ -1439,7 +1541,17 @@ void Graphics::wczytajIkonki(){
  * @return sf::Sprite 
  */
 sf::Sprite Graphics::getIkonka(const std::string& nazwa){
+    sf::Sprite sprite(tekstura_ikonek); //
 
+    auto iterator = ikonki.find(nazwa);
+    if (iterator != ikonki.end()) {
+        sprite.setTextureRect(iterator->second);
+    } else {
+        cout << "Ostrzezenie: Nie znaleziono ikonki o nazwie '" << nazwa << "'!" << endl;
+        sprite.setTextureRect(sf::IntRect({384, 0}, {64, 64}));
+    }
+    
+    return sprite;
 }
 
 
@@ -1614,7 +1726,6 @@ void Graphics::prntMenuGra(Game& gra) {
         ImGui::PushFont(fontHUD);
     }
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
-    ImGui::Separator();
     
     float btn_w = 260;
     float btn_h = 60;
@@ -1637,13 +1748,16 @@ void Graphics::prntMenuGra(Game& gra) {
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
     ImGui::SetCursorPos(ImVec2(btn_x, 260));
     if (ImGui::Button("WYJDŹ Z GRY", ImVec2(btn_w, btn_h))) {
-        window.close();
+        czyPotwierdzicWyjscie = true;
+        //window.close();
     }
     
     ImGui::SetCursorPos(ImVec2(btn_x, 340));
     if (ImGui::Button("WYJDŹ DO MENU", ImVec2(btn_w, btn_h))) {
-        ekran=TypEkranu::MAIN_MENU;
-        czyGra=false;
+        czyDoMenu=true;
+        czyPotwierdzicWyjscie = true;
+        //ekran=TypEkranu::MAIN_MENU;
+        //czyGra=false;
     }
     ImGui::PopStyleColor(3);
 
@@ -1670,6 +1784,7 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
         
         if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
             if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
+                //czyPotwierdzicWyjscie=true;
                 window.close(); 
             }
         }
@@ -1733,7 +1848,8 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.3f, 0.3f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
     if (ImGui::Button("WYJDŹ", ImVec2(btn_w, btn_h))) {
-        window.close();
+        czyPotwierdzicWyjscie = true;
+        // window.close();
     }
     ImGui::PopStyleColor(3);
 
@@ -1743,6 +1859,41 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
     ImGui::End();
     ImGui::PopStyleVar();
 
+}
+
+void Graphics::wychodzenie(){
+    if (czyPotwierdzicWyjscie) {
+        ImGui::OpenPopup("###PotwierdzenieWyjscia");
+    }
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+    if (ImGui::BeginPopupModal("###PotwierdzenieWyjscia", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove)) {
+    
+        ImGui::Text("Czy na pewno chcesz wyjsc z gry?");
+        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "Wszelkie niezapisane postepy zostana utracone!");
+        ImGui::Separator();
+
+    if (ImGui::Button("Tak, wyjdz", ImVec2(120, 0))) {
+        if(czyDoMenu){
+            ekran=TypEkranu::MAIN_MENU;
+            czyGra=false;
+        }
+        window.close();
+    }
+    
+    ImGui::SetItemDefaultFocus();
+    ImGui::SameLine();
+    
+    if (ImGui::Button("Anuluj", ImVec2(120, 0))) {
+        ImGui::CloseCurrentPopup();
+        czyPotwierdzicWyjscie = false;
+        czyDoMenu=false;
+    }
+    
+    ImGui::EndPopup();
+}
 }
 
 /**
@@ -1784,6 +1935,7 @@ void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& ba
         if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
             if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
                 ekran=TypEkranu::MENU_GAME;
+                if(czyPotwierdzicWyjscie){czyPotwierdzicWyjscie=!czyPotwierdzicWyjscie;}
             }
         }
             
@@ -1917,7 +2069,7 @@ void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& ba
  * @param bazaDanych wskaźnik do mapy z informacjami o wszystkich budynkach.
  */
 void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
-    
+    ImGuiIO& io = ImGui::GetIO();
     while (window.isOpen()) {
 
         if(ekran==TypEkranu::MAIN_MENU){
@@ -1939,6 +2091,10 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
             prntLoad(gra,kolonia);
         }
 
+        if(czyPotwierdzicWyjscie){
+            wychodzenie();
+        }
+
         window.clear();
         
         if(ekran==TypEkranu::MAIN_MENU){ window.draw(tlo_menu_sprite);}
@@ -1946,7 +2102,18 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         if(ekran==TypEkranu::MENU_GAME ||ekran==TypEkranu::SETTINGS ||ekran==TypEkranu::CREDITS ||ekran==TypEkranu::LOAD){ 
             prntMenuTlo(bazaDanych);
         }
-
+        if (czyBudowa && kursorBudowanie.has_value()) {
+            window.setMouseCursor(kursorBudowanie.value());
+            io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+        } 
+        else if (czyWyburzanieKlick && kursorBurzenie.has_value()) { 
+            window.setMouseCursor(kursorBurzenie.value());
+            io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+        } 
+        else if (kursorDomyslny.has_value()) {
+            window.setMouseCursor(kursorDomyslny.value());
+            io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
+        }
         //rysowanie elementow (tla)
         // window.draw(siatka);
         // window.draw(menu);

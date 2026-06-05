@@ -22,7 +22,7 @@ Farm::Farm(string n, int kE,int kK, int kT, int f,int w,int tim,int ct, int X_,i
  * @param il  ilość danego budynku
  */
 void Farm::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowane jedzenie: ",cleanNum(foodGen)},{"Czas potrzebny do urosniecia: ",cleanNum(time)}});
+    prntTooltipTablica(name,{{"prad-",cleanNum(kosztEnergii)},{"kolonisci-",cleanNum(workers)},{"jedzenie+",cleanNum(foodGen)},{"Czas: ",cleanNum(time)}});
 }
 
 /**

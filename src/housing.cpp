@@ -22,7 +22,7 @@ Housing::Housing(string n, int kE,int kK, int kT, int r,int w, int X_,int Y_):Bu
  * @param il  ilość danego budynku
  */
 void Housing::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Liczba mieszkancow: ",cleanNum(residents)}});
+    prntTooltipTablica(name,{{"prad-",cleanNum(kosztEnergii)},{"kolonisci+",cleanNum(residents)}});
 }
 
 /**

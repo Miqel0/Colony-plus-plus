@@ -119,7 +119,7 @@ void Game::loadConfig(){ //Sprawdzanie config
         plik>>plikk;
         plik.close();
         ostatni_zapis=plikk;
-        cout<<"Wczytano config z: "<<ostatni_zapis<<endl;
+        //cout<<"Wczytano config z: "<<ostatni_zapis<<endl;
     }    
 }
 
@@ -132,7 +132,7 @@ void Game::saveConfig(){ //Zapisywanie config
     if(plik.is_open()){
         plik<<ostatni_zapis;
         plik.close();
-        cout<<"zapisano config z: "<<ostatni_zapis<<endl;
+        //cout<<"zapisano config z: "<<ostatni_zapis<<endl;
         }
 }
 
