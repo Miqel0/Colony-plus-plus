@@ -96,7 +96,7 @@ void BuildingsGrid::wczytajBudynki(const Colony& kolonia){
  * @brief Konstruktor siatki budynków.
  * 
  */
-BuildingsGrid::BuildingsGrid():siatka_x(1400),siatka_y(700),siatka_begin_x(400),siatka_begin_y(200),kafelek_x(200),kafelek_y(100),siatka_size_x(12),siatka_size_y(7),poz_mysz(-1,-1){
+BuildingsGrid::BuildingsGrid():siatka_x(1400),siatka_y(700),siatka_begin_x(400),siatka_begin_y(450),kafelek_x(200),kafelek_y(100),siatka_size_x(12),siatka_size_y(7),poz_mysz(-1,-1){
     siatka.resize(siatka_size_x,vector<DaneKafelek>(siatka_size_y));
 
     for (int x = 0; x < siatka_size_x; ++x) {

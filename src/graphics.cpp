@@ -83,6 +83,42 @@ void Graphics::prntMenu(){
     ImGui::End();
 }
 
+
+/**
+ * @brief Globalne ustawianie parametrów ImGUI
+ * 
+ */
+void Graphics::ustawStylUI() {
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowRounding = 8.0f;
+    style.FrameRounding = 6.0f;  
+    style.PopupRounding = 6.0f;
+    style.WindowBorderSize = 3.0f; 
+
+    ImVec4 kolorTla = ImVec4(0.13f, 0.15f, 0.19f, 0.85f);     
+    ImVec4 kolorMiedzi = ImVec4(0.80f, 0.53f, 0.27f, 1.00f); 
+    ImVec4 kolorMiedziHover = ImVec4(0.90f, 0.63f, 0.37f, 1.00f);
+    ImVec4 kolorMiedziClick = ImVec4(0.70f, 0.43f, 0.17f, 1.00f);
+    
+    ImVec4 bialyTekst = ImVec4(0.94f, 0.94f, 0.94f, 1.00f);   
+
+    style.Colors[ImGuiCol_WindowBg] = kolorTla;
+    style.Colors[ImGuiCol_Border] = kolorMiedzi;
+    style.Colors[ImGuiCol_Text] = bialyTekst;
+
+    style.Colors[ImGuiCol_Button] = ImVec4(0.20f, 0.22f, 0.27f, 1.00f); 
+    style.Colors[ImGuiCol_ButtonHovered] = kolorMiedziHover;
+    style.Colors[ImGuiCol_ButtonActive] = kolorMiedziClick;
+    
+    style.Colors[ImGuiCol_Header] = kolorMiedzi;        
+    style.Colors[ImGuiCol_HeaderHovered] = kolorMiedziHover;
+    style.Colors[ImGuiCol_HeaderActive] = kolorMiedziClick;
+    
+    style.Colors[ImGuiCol_TitleBg] = kolorTla;       
+    style.Colors[ImGuiCol_TitleBgActive] = kolorMiedzi;  
+}
+
+
 /**
  * @brief 
  * 
@@ -1164,7 +1200,7 @@ void Graphics::prntPomoc() {
  */
 void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
     auto cos = ImGui::SFML::Init(window);
-
+    ustawStylUI();
     //Wczytywanie ikonki na pasku
     sf::Image icon;
     WczytajGrafike("assets/ikonka_test.png", icon);
@@ -1388,6 +1424,24 @@ void Graphics::prntBladBudowanie(){
     }
 }
 
+/**
+ * @brief Funkcja wczytująca ikonki
+ * 
+ */
+void Graphics::wczytajIkonki(){
+
+}
+
+/**
+ * @brief Funckja zwracajaca texturę ikonki
+ * 
+ * @param nazwa 
+ * @return sf::Sprite 
+ */
+sf::Sprite Graphics::getIkonka(const std::string& nazwa){
+
+}
+
 
 /**
  * @brief Funckja wyświetlająca load - pliki do wczytania i zapisywania
@@ -1515,6 +1569,9 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
  * * @param gra 
  */
 void Graphics::prntMenuGra(Game& gra) {
+
+
+
     sf::Clock deltaClock; 
     while (const  optional<sf::Event> event = window.pollEvent()) {
         
@@ -1686,6 +1743,25 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
     ImGui::End();
     ImGui::PopStyleVar();
 
+}
+
+/**
+ * @brief Ustwianie tla do menu
+ * 
+ */
+void Graphics::prntMenuTlo(const map<string, BuildingInfo>& bazaDanych){
+    if(ekran==TypEkranu::MENU_GAME||czyGra||ekran==TypEkranu::LOAD){
+        window.draw(tlo_gra_sprite);
+        siatka.prntSiatka(window,ImVec2(-1,-1),bazaDanych,false,"");
+    }else if(ekran==TypEkranu::CREDITS||(!czyGra)){
+        window.draw(tlo_menu_sprite);
+    }
+    sf::View staryWidok = window.getView(); 
+    window.setView(window.getDefaultView());
+    sf::RectangleShape przyciemnienie(sf::Vector2f(static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y)));
+    przyciemnienie.setFillColor(sf::Color(0, 0, 0, 180)); 
+    window.draw(przyciemnienie);
+    window.setView(staryWidok);
 }
 
 /**
@@ -1867,15 +1943,17 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         
         if(ekran==TypEkranu::MAIN_MENU){ window.draw(tlo_menu_sprite);}
         if(ekran==TypEkranu::GAME){ window.draw(tlo_gra_sprite);}
+        if(ekran==TypEkranu::MENU_GAME ||ekran==TypEkranu::SETTINGS ||ekran==TypEkranu::CREDITS ||ekran==TypEkranu::LOAD){ 
+            prntMenuTlo(bazaDanych);
+        }
+
         //rysowanie elementow (tla)
         // window.draw(siatka);
         // window.draw(menu);
         ImVec2 pozycjaMyszy = ImGui::GetMousePos();
-        if(ekran==TypEkranu::GAME){
-
+         if(ekran==TypEkranu::GAME){
             siatka.prntSiatka(window,pozycjaMyszy,bazaDanych,czyBudowa,trzymanyBudynek.nazwa);
         }
-        
         ImGui::SFML::Render(window);
         window.display();
     }

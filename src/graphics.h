@@ -31,6 +31,9 @@ class Graphics{
         sf::Texture tlo_gra_tekstura;
         sf::Sprite tlo_gra_sprite{tlo_gra_tekstura};
 
+        //Ikonki
+        sf::Texture tekstura_ikonek;
+        map <string,sf::IntRect> ikonki;
         //Siatka budynków
         BuildingsGrid siatka;
         TypEkranu ekran;
@@ -90,6 +93,7 @@ class Graphics{
         void prntNextRound(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra);
         void prntWyburz();
 
+        void ustawStylUI();
         void UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra);
         void prntMenuGlowne(Game& gra,const Colony &kolonia);
@@ -99,9 +103,12 @@ class Graphics{
         void prntLoad(Game& gra,const Colony &kolonia);
         void prntBladBudowanie();
         void prntBudynekInfo( const map<string, BuildingInfo>& bazaDanych,const Colony &kolonia,pair<string,int> inf);
-
+        void prntMenuTlo(const map<string, BuildingInfo>& bazaDanych);
         bool getCzyBudowa();
         BuildingInfo getTrzymanyBudynek();
+
+        void wczytajIkonki();
+        sf::Sprite getIkonka(const std::string& nazwa);
     };
 
 #endif
