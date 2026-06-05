@@ -22,7 +22,7 @@ Energy::Energy(string n, int kE,int kK, int kT, int e,int w, int X_,int Y_):Buil
  * @param il  ilość danego budynku
  */
 void Energy::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Generowana energia: ",cleanNum(enGen)}});
+    prntTooltipTablica(name,{{"kolonisci-",cleanNum(workers)},{"prad+",cleanNum(enGen)}});
 }
 
 /**

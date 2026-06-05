@@ -53,7 +53,7 @@ class Logistics{
         void load(string nazwa_plik);
 
         //SETTERY
-        void setNazwa();
+        void setNazwa(string nazwa);
         void setTura();
         void setRuch(int r);
         void setAWorkers(int aw);

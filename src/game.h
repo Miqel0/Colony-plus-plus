@@ -33,20 +33,25 @@ class Game{
         void load(const string& nazwa_zapisu );
         //PLIKI
         void loadGameData();
-        bool checkConfig();
+        void loadConfig();
         void saveConfig();
 
         vector<string> pobierzZapisy();
         vector<string>& getZapisy();
         void setZapisy();
+
+        string getOstatniZapis() const;
+        void setOstatniZapis(string naz);
+        void setNazwa(string nazwa);
     private:
 
-        //Tworzenie elementów:
         map<string, BuildingInfo> bazaDanych;
         Colony kolonia;
         BuildingFactory fabryka;
         Graphics grafika;
+
         vector <string> zapisy;
+        string ostatni_zapis;
         
 
 };

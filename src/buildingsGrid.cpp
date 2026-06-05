@@ -52,7 +52,7 @@ bool WczytajGrafike(const std::string& sciezka, T& obiektSFML) {
  * @return false nie dual osei wczytac
  */
 bool BuildingsGrid::wczytajTextury(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych){
-    if(WczytajGrafike("assets/grafiki_siatka.png",atlas_budynkow)){
+    if(WczytajGrafike("assets/grafiki_siatki_nowe.png",atlas_budynkow)){
         return true;
     }else{
         cout<<"Nie udało sie wczytac grafik budynków!"<<endl;
@@ -96,7 +96,7 @@ void BuildingsGrid::wczytajBudynki(const Colony& kolonia){
  * @brief Konstruktor siatki budynków.
  * 
  */
-BuildingsGrid::BuildingsGrid():siatka_x(1400),siatka_y(700),siatka_begin_x(400),siatka_begin_y(200),kafelek_x(200),kafelek_y(100),siatka_size_x(12),siatka_size_y(7),poz_mysz(-1,-1){
+BuildingsGrid::BuildingsGrid():siatka_x(1400),siatka_y(700),siatka_begin_x(400),siatka_begin_y(450),kafelek_x(200),kafelek_y(100),siatka_size_x(12),siatka_size_y(7),poz_mysz(-1,-1){
     siatka.resize(siatka_size_x,vector<DaneKafelek>(siatka_size_y));
 
     for (int x = 0; x < siatka_size_x; ++x) {
@@ -194,7 +194,7 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<st
     sf::Vector2i pozycjaPix = sf::Mouse::getPosition(window);
     sf::Vector2f pozycjaSwiata = window.mapPixelToCoords(pozycjaPix);
     ImVec2 Pozycja(pozycjaSwiata.x, pozycjaSwiata.y);
-
+    int budynek_wysokosc = 200;
     czyNajechane(Pozycja);
 
     for(int i=0;i<siatka_size_x;i++){
@@ -215,55 +215,71 @@ void BuildingsGrid::prntSiatka(sf::RenderWindow& window,ImVec2& poz,const map<st
                 }
                 float Y=siatka_begin_y+i*(kafelek_y/2.0f);
 
-                //koordynaty textury w atlasie
-                int t_X=0;
-                int t_Y=0;
-                //Czy najechane
-                if(i == poz_mysz.first && j == poz_mysz.second){
-                    t_Y+=100;
-                } 
+                //Robienie sprite do tła
+                sf::Sprite sprite_ziemi(atlas_budynkow);
+                sprite_ziemi.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
+                sprite_ziemi.setPosition(sf::Vector2f(X, Y));
+                
+                int ziemia_X = 800; 
+                int ziemia_Y = 100;
+                
+                sprite_ziemi.setTextureRect(sf::IntRect({ziemia_X, ziemia_Y}, {kafelek_x, kafelek_y}));
 
-                if(siatka[i][j].typ==TypKafelka::PUSTY){
-                    t_X=800;
-                } else{
-                    auto iterator_tekstury = bazaDanych.find(nazwa_kafelka);
+                if ((i == poz_mysz.first && j == poz_mysz.second) && !czyBudowa) {
                     
-                    if (iterator_tekstury != bazaDanych.end()){
+                    sprite_ziemi.setColor(sf::Color(200, 200, 255, 255)); 
+                }
+
+                window.draw(sprite_ziemi);
+
+                if (siatka[i][j].typ == TypKafelka::ZAJETY) {
+                    
+                    auto it_tekstury = bazaDanych.find(nazwa_kafelka);
+                    if (it_tekstury != bazaDanych.end()) {
                         
-                        t_X=bazaDanych.at(nazwa_kafelka).X;
-                        t_Y+=bazaDanych.at(nazwa_kafelka).Y;
-                    } else{
-                        cout<<"Brakuje "<<nazwa_kafelka<<"!"<<endl;
+                        sf::Sprite sprite_budynku(atlas_budynkow);
+                
+
+                        sprite_budynku.setOrigin(sf::Vector2f(kafelek_x / 2.0f, budynek_wysokosc - (kafelek_y / 2.0f)));
+                        sprite_budynku.setPosition(sf::Vector2f(X, Y));
+
+                        int b_X = it_tekstury->second.X;
+                        int b_Y = it_tekstury->second.Y;
+                        
+                        sprite_budynku.setTextureRect(sf::IntRect({b_X, b_Y}, {kafelek_x, budynek_wysokosc}));
+
+                        if ((i == poz_mysz.first && j == poz_mysz.second)  && !czyBudowa) {
+                            sprite_budynku.setColor(sf::Color(200, 200, 255, 255)); 
+                        } else {
+                            sprite_budynku.setColor(sf::Color::White);
+                        }
+
+                        window.draw(sprite_budynku);
                     }
                 }
 
-                kafelek_budynek.setTextureRect(sf::IntRect({t_X, t_Y}, {kafelek_x, kafelek_y}));
-                kafelek_budynek.setPosition(sf::Vector2f(X, Y));
-                window.draw(kafelek_budynek);
-
-                //Rysowanie tego budowaniowego
-                if (czyBudowa && i == poz_mysz.first && j == poz_mysz.second) {
-                    sf::Sprite hologram(atlas_budynkow); 
-                    hologram.setOrigin(sf::Vector2f(kafelek_x / 2.0f, kafelek_y / 2.0f));
-                    hologram.setPosition(sf::Vector2f(X, Y));
-    
-                    auto iterator_bazy = bazaDanych.find(nazw);
+                    if (czyBudowa && (i == poz_mysz.first && j == poz_mysz.second)) {
+                    
+                    auto iterator_bazy = bazaDanych.find(nazw); 
                     if (iterator_bazy != bazaDanych.end()) {
+                        
+                        sf::Sprite hologram(atlas_budynkow);
+                        
+                        
+                        hologram.setOrigin(sf::Vector2f(kafelek_x / 2.0f, budynek_wysokosc - (kafelek_y / 2.0f)));
+                        hologram.setPosition(sf::Vector2f(X, Y));
+
                         int h_X = iterator_bazy->second.X;
                         int h_Y = iterator_bazy->second.Y;
-            
-                        hologram.setTextureRect(sf::IntRect({h_X,h_Y},{kafelek_x, kafelek_y}));
+                        hologram.setTextureRect(sf::IntRect({h_X, h_Y}, {kafelek_x, budynek_wysokosc}));
 
                         if (siatka[i][j].typ == TypKafelka::PUSTY) {
-                            // Można budować: Niebieski i przezroczysty 
-                            hologram.setColor(sf::Color(100, 150, 255, 180)); 
+                            hologram.setColor(sf::Color(100, 150, 255, 180));
                         } else {
-                            // Zajęte lub niedostępne: Czerwony
-                            hologram.setColor(sf::Color(255, 100, 100, 180)); 
+                            hologram.setColor(sf::Color(255, 100, 100, 180)); //czerwone
                         }
-            
+
                         window.draw(hologram);
-                    }else{
                     }
                 }
             }

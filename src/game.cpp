@@ -22,10 +22,13 @@ using namespace std;
 // KONSTRUKTOR 
 // ==========================================
 
-Game::Game(){
-    //Wczytywanie parametrow budynkow
+Game::Game():ostatni_zapis(""){
+    //Wczytywanie dostępnych zapisów
     zapisy=pobierzZapisy();
+    //Wczytywanie parametrow budynkow
     loadGameData();
+    //Wczytywanie ustawień itp
+    loadConfig();
 }
 
 // ==========================================
@@ -44,18 +47,20 @@ void Game::UIrun(){
 
 void Game::load(const string& nazwa_zapisu ){
     kolonia.load(nazwa_zapisu);
+    ostatni_zapis=nazwa_zapisu;
+    saveConfig();
+    
 }
 
 void Game::save(const string& nazwa_zapisu ){
     kolonia.save(nazwa_zapisu);
+    saveConfig();
 }
 
 /*FIXME
 Do dodania z Commands:
-- zmiana nazwy wcześniej (kolonia.setNazwa();)
-- save/load (kolonia.save(), kolonia.load())
 - cheaty (kolonia.setSandbox)
-- też dodać tutorial
+- też dodać tutorial - chyba jednak nie xD
 */
 
 vector<string>& Game::getZapisy(){
@@ -73,10 +78,19 @@ NextResult Game::UINextRound(){return kolonia.UInextRound();}
 // ==========================================
 // RZECZY Z PLIKAMI (LOAD)
 // ==========================================
+
+/**
+ * @brief Zaktualizowanie listy zapisów
+ * 
+ */
 void Game::setZapisy(){
     zapisy=pobierzZapisy();
 }
-
+/**
+ * @brief Wczytywanie dostępnych zapisów z folderu z zapisami
+ * 
+ * @return vector<string> tablica z nazwami foledrów - czyli zapisów gry
+ */
 vector<string> Game::pobierzZapisy() {
     std::vector<std::string> znalezioneZapisy;
     filesystem::path sciezkaSaves = "data/saves";
@@ -95,26 +109,18 @@ vector<string> Game::pobierzZapisy() {
 /**
  * @brief Jakaś funkcja do wczytywania ustawień itp.
  * 
- * @return true idk
- * @return false idk
  */
-bool Game::checkConfig(){ //Sprawdzanie config
+void Game::loadConfig(){ //Sprawdzanie config
     ifstream plik("data/config.txt");
-    int czy;
+    string plikk;
     if (!plik.is_open()) {
         cout << "BLAD: Nie mozna otworzyc config.txt!" << endl;
-        return false;
     }else{
-        plik>>czy;
+        plik>>plikk;
         plik.close();
-    }
-    if(czy==1){
-        return true;
-    }else if(czy==0){
-        return false;
-    }else{
-        return false;
-    }
+        ostatni_zapis=plikk;
+        //cout<<"Wczytano config z: "<<ostatni_zapis<<endl;
+    }    
 }
 
 /**
@@ -122,10 +128,11 @@ bool Game::checkConfig(){ //Sprawdzanie config
  * 
  */
 void Game::saveConfig(){ //Zapisywanie config
-     ofstream plik("data/config.txt");
+    ofstream plik("data/config.txt");
     if(plik.is_open()){
-        plik<<1;
+        plik<<ostatni_zapis;
         plik.close();
+        //cout<<"zapisano config z: "<<ostatni_zapis<<endl;
         }
 }
 
@@ -242,3 +249,15 @@ vector<BuildingInfo> Game::UIprntNewLvlTerr(){
         }
     return pakiet;
 }
+
+/**
+ * @brief Zwracanie nazwy ostatniego zapisu.
+ * 
+ * @return string 
+ */
+string Game::getOstatniZapis() const{return ostatni_zapis;}
+void Game::setOstatniZapis(string naz){ostatni_zapis=naz;}
+
+
+
+void Game::setNazwa(string nazwa){kolonia.setNazwa(nazwa);}

@@ -29,7 +29,7 @@ int Terr::work(){return terrGen;}
  * @param il  ilość danego budynku
  */
 void Terr::UIprnt(int il)const{
-    prntTooltipTablica(name,{{"Ilosc: ",cleanNum(il)},{"Koszt energii: ",cleanNum(kosztEnergii)},{"Pracownicy: ",cleanNum(workers)},{"Wplywa na terraformacje: ",cleanNum(terrGen)}});
+    prntTooltipTablica(name,{{"prad-",cleanNum(kosztEnergii)},{"kolonisci-",cleanNum(workers)},{"terr+",cleanNum(terrGen)}});
 }
 
 /**
