@@ -41,8 +41,11 @@ class Game{
         void setZapisy();
 
         string getOstatniZapis() const;
+        int getCzyFirst() const;
         void setOstatniZapis(string naz);
         void setNazwa(string nazwa);
+        void setCzyFirst();
+
     private:
 
         map<string, BuildingInfo> bazaDanych;
@@ -52,6 +55,7 @@ class Game{
 
         vector <string> zapisy;
         string ostatni_zapis;
+        int czyFirst;
         
 
 };

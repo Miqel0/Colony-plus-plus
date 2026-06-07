@@ -42,44 +42,58 @@ bool WczytajGrafike(const std::string& sciezka, T& obiektSFML) {
 }
 
 
-Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyhelp(false),czyBudynki(false),czyDoMenu(false),czyBudowanie(false),czyPotwierdzicWyjscie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1){}
-Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyDoMenu(false),czyBudowanie(false),czyPotwierdzicWyjscie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1){}
+Graphics::Graphics(unsigned int szer_,unsigned int wys_):szer(szer_),wys(wys_),window(sf::VideoMode({szer_, wys_}), "Colony ++"),czyFistTime(true),czyhelp(false),czyBudynki(false),czyDoMenu(false),czyBudowanie(false),czyPotwierdzicWyjscie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1),czyPokazacPopupSaveLoad(false),wiadomoscPopupa(""),czyWczytanoGre(false){}
+Graphics::Graphics():screenSize(sf::VideoMode::getDesktopMode()), window(screenSize, "Colony ++",sf::State::Fullscreen),czyFistTime(true),szer(screenSize.size.x),wys(screenSize.size.y),czyhelp(false),czyBudynki(false),czyDoMenu(false),czyBudowanie(false),czyPotwierdzicWyjscie(false),wybranaKategoriaBudowa(""),czyBudowanieCategory(false),czyBudowanieWyniki(false),czyNextRound(false),czyNextRound1(false),czyWyburzanie(false),czyWyburzanie1(false),ekran(TypEkranu::MAIN_MENU),czyGra(false),czyLoad(false),czySave(false),czyBudowa(false),czasWyswietlaniaBledu(0.0f),czyWyburzanieKlick(false),czyBudynekInfo(false),kafelek("",-1),czyPokazacPopupSaveLoad(false),wiadomoscPopupa(""),czyWczytanoGre(false){}
 
 /**
- * @brief Tymczasowe wyświeltanie głównego menu z przyciskami.
- * 
- */
+ * @brief Wyswitlanie menu w grze - przysicki do budwania itp
+ * */
 void Graphics::prntMenu(){
+    if (fontHUD != nullptr) {
+            ImGui::PushFont(fontHUD);
+    }
     ImGui::SetNextWindowPos(ImVec2(10, 70), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(ImVec2(240, 250), ImGuiCond_Once);
-    ImGui::Begin("###PanelSterowania",nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-    // ImGui::Separator();
+    ImGui::SetNextWindowSize(ImVec2(240, 0), ImGuiCond_Once); 
 
-    if(ImGui::Button("Pomoc")){
-        czyhelp =!czyhelp;
-    }
-    // ImGui::Separator();
-    // if(ImGui::Button("Zbudowane Budynki")){
-    //     czyBudynki =!czyBudynki;
-    // }
-    ImGui::Separator();
-    if(ImGui::Button("Budowanie")){
-        czyBudowanie =!czyBudowanie;
-    }
-    ImGui::Separator();
     
-    if(ImGui::Button("Wyburzanie")){
-        czyWyburzanieKlick=!czyWyburzanieKlick;
-    }
-    if(czyWyburzanieKlick){
-        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "WYBURZANIE");
-    }
-    // ImGui::Separator();
-    // ImVec2 pozycjaMyszy = ImGui::GetMousePos();
-    // ImGui::TextWrapped("Pozycja myszy: X = %.0f, Y = %.0f", pozycjaMyszy.x, pozycjaMyszy.y);
+    ImGuiWindowFlags flagiOkna = ImGuiWindowFlags_NoDecoration | 
+                                 ImGuiWindowFlags_NoBackground | 
+                                 ImGuiWindowFlags_NoMove;
 
-    //X=300
-    //Y=100
+    ImGui::Begin("###PanelSterowania", nullptr, flagiOkna);
+
+    
+    ImVec2 wymiaryPrzycisku = ImVec2(-1.0f, 60.0f);
+
+    if (ImGui::Button("Pomoc", wymiaryPrzycisku)) {
+        czyhelp = !czyhelp;
+    }
+    
+    ImGui::Dummy(ImVec2(0.0f, 5.0f)); 
+
+    if (ImGui::Button("Budowanie", wymiaryPrzycisku)) {
+        czyBudowanie = !czyBudowanie;
+    }
+    
+    ImGui::Dummy(ImVec2(0.0f, 5.0f)); 
+    
+    if (ImGui::Button("Wyburzanie", wymiaryPrzycisku)) {
+        czyWyburzanieKlick = !czyWyburzanieKlick;
+    }
+
+    if (czyWyburzanieKlick) {
+        ImGui::Dummy(ImVec2(0.0f, 5.0f));
+        
+        const char* tekst = "WYBURZANIE";
+        float szerokoscOkna = ImGui::GetWindowWidth();
+        float szerokoscTekstu = ImGui::CalcTextSize(tekst).x;
+        ImGui::SetCursorPosX((szerokoscOkna - szerokoscTekstu) * 0.5f);
+        
+        ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%s", tekst);
+    }
+    if (fontHUD != nullptr) {
+            ImGui::PopFont();
+        }
     ImGui::End();
 }
 
@@ -96,7 +110,6 @@ void Graphics::ustawStylUI() {
     style.WindowBorderSize = 3.0f; 
 
     ImVec4 kolorTla = ImVec4(0.13f, 0.15f, 0.19f, 0.875f);     
-    // ImVec4 kolorMiedzi = ImVec4(0.56f, 0.37f, 0.19f, 1.00f);
     ImVec4 kolorMiedzi = ImVec4(0.65f, 0.28f, 0.08f, 1.00f);
     ImVec4 kolorMiedziHover = ImVec4(0.90f, 0.63f, 0.37f, 1.00f);
     ImVec4 kolorMiedziClick = ImVec4(0.70f, 0.43f, 0.17f, 1.00f);
@@ -157,7 +170,7 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
     vector<ResInfo> straty;
     int sumaDodatkowa = 0; 
 
-    // --- GŁÓWNA LOGIKA ---
+
     if (cat == "prad") {
         CenterTitle("Energia", ImVec4(1.0f, 0.8f, 0.0f, 1.0f)); 
 
@@ -169,7 +182,7 @@ void Graphics::prntStatystykiToolTop(const Colony& kolonia, map<string,int>& lic
             const auto& info = bazaDanych.at(nazwa_); 
 
             if (info.type == "ENERGY") {
-                // BEZPIECZNE PRZYPISYWANIE (rozwiązuje błędy z wektorem)
+                
                 ResInfo wynik;
                 wynik.nazwa = cleanString(info.nazwa);
                 wynik.gen = info.genInne * ilosc;
@@ -379,7 +392,16 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         float srodekY = (gruboscPaska - ImGui::GetTextLineHeight()) * 0.5f;
         ImGui::SetCursorPosY(srodekY);
 
-         string nazwa = (kolonia.getNazwa() == "XX") ? "Kolonia" : cleanString(kolonia.getNazwa());
+        string nazwa = "";
+        if(kolonia.getNazwa() == "XX"){
+            nazwa="Kolonia";
+        }else{
+            nazwa=cleanString(kolonia.getNazwa());
+        } 
+        if (nazwa.length() > 15) {
+            nazwa = nazwa.substr(0, 12) + "..."; 
+        }
+            
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.8f, 0.0f, 1.0f)); 
         ImGui::Text("%s", nazwa.c_str());
         ImGui::PopStyleColor();
@@ -388,7 +410,7 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
             ImVec2 pozycja = ImVec2(ImGui::GetItemRectMin().x, ImGui::GetItemRectMax().y + 12.0f);
             ImGui::SetNextWindowPos(pozycja);
             ImGui::BeginTooltip(); 
-            ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Nazwa twojej kolonii.");
+            ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "%s", cleanString(kolonia.getNazwa()).c_str());
             ImGui::EndTooltip(); 
             if (fontDefault != nullptr) ImGui::PopFont();
         }
@@ -399,8 +421,8 @@ void Graphics::prntStatystyki(const Colony& kolonia,  const map<string, Building
         if (ImGui::IsItemHovered()) {
             prntStatystykiToolTop(kolonia,licznik,"prad",bazaDanych);
         }
+        ImGui::SameLine();
         if (kolonia.getReqEnergy() > kolonia.getGenEnergy()) {
-            ImGui::SameLine();
             ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "%d/%d", kolonia.getGenEnergy(), kolonia.getReqEnergy()); // Czerwony
         } else {
             ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%d/%d", kolonia.getGenEnergy(), kolonia.getReqEnergy()); // Zielony
@@ -651,7 +673,7 @@ void Graphics::prntWyburz() {
 
         // Środek dla przycisku
         float windowWidth = ImGui::GetWindowSize().x;
-        float buttonWidth = 150.0f;
+        float buttonWidth = 175.0f;
         ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f); 
         
         if (ImGui::Button("Zrozumiano", ImVec2(buttonWidth, 0))) {
@@ -671,10 +693,12 @@ void Graphics::prntWyburz() {
  * @param gra wskaznik do klasy Game
  */
 void Graphics::prntBudowanie(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych,Game& gra){
-    ImGui::SetNextWindowSizeConstraints(ImVec2(350, 0.0f), ImVec2(300, FLT_MAX));
+    float pozycjaX = 10.0f;
+    float pozycjaY = 350.0f; 
+    ImGui::SetNextWindowPos(ImVec2(pozycjaX, pozycjaY), ImGuiCond_Always);
+    ImGui::SetNextWindowSizeConstraints(ImVec2(300, 0.0f), ImVec2(300, FLT_MAX));
     
-    ImGui::Begin("Dostępne kategorie budynków",&czyBudowanie, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
-    
+    ImGui::Begin("Dostępne kategorie", &czyBudowanie, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
     vector <string> kategorie={"ENERGY","FARM","HOUSING","PRODUCER","TERR"};
     vector <string> opisy = {"Budynki generujące prąd potrzebny w wszystkich innych budynkach", "Budynki generujące jedzenie, które potrzebują mieszkańcy do przeżycia. Niektóre rośliny potrzebują czasu, żeby wyrosnąć.", "Budynki te zapewniają mieszkania dla mieszkańców kolonii.", "Te budynki generują różnego rodzaju surowce potrzebne do budowania budynków.", "Te budynki odpowiadają za zwiększanie terraformacji planety, dzięki nim możesz odblokować nowe budynki."};//FIXME dodac sensowny spsoob opisów tych klas
     for (int i =0;i<kategorie.size();i++) {
@@ -682,7 +706,7 @@ void Graphics::prntBudowanie(const Colony& kolonia,const map<string, BuildingInf
         ImGui::Separator();
         if(ImGui::Button(kategorie[i].c_str())){
                     wybranaKategoriaBudowa=kategorie[i];
-                    czyBudowanieCategory=!czyBudowanieCategory;
+                    czyBudowanieCategory=true;
                 }
         if (ImGui::IsItemHovered()) {
                     ImGui::BeginTooltip(); 
@@ -780,7 +804,7 @@ void Graphics::prntBudowanieWyniki(Game& gra) {
         ImGui::Dummy(ImVec2(0.0f, 15.0f));
 
         float windowWidth = ImGui::GetWindowSize().x;
-        float buttonWidth = 100.0f;
+        float buttonWidth = 175.0f;
         ImGui::SetCursorPosX((windowWidth - buttonWidth) * 0.5f); 
         
         if (ImGui::Button("Zrozumiano", ImVec2(buttonWidth, 0))) {
@@ -795,31 +819,38 @@ void Graphics::prntBudowanieWyniki(Game& gra) {
 
 /**
  * @brief Funkcja wyswietlajaca informacje o dostepnych budynkach do zbudowania z danej kategorii.
- * 
  */
 void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const map<string, BuildingInfo>& bazaDanych, Game& gra) {
+    float pozycjaX = 10.0f;
+    float pozycjaY = 620.0f; 
+    ImGui::SetNextWindowPos(ImVec2(pozycjaX, pozycjaY), ImGuiCond_Always);
     string title = "Budynki z kategorii: " + cat;
-    ImGui::SetNextWindowSizeConstraints(ImVec2(500, 0.0f), ImVec2(800, FLT_MAX));
-    ImGui::Begin(title.c_str(), &czyBudowanieCategory, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize);
+   
+
+    ImGui::Begin(title.c_str(), &czyBudowanieCategory, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
     
     int il_kolum = 6;
     if (cat == "FARM" || cat == "PRODUCER") {
         il_kolum = 7;
     }
 
-    if (ImGui::BeginTable("TabelaBudynkow", il_kolum, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+  
+    if (ImGui::BeginTable("TabelaBudynkow", il_kolum, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_SizingFixedFit)) {
         
         ImGui::TableSetupColumn("Nazwa Budynku", ImGuiTableColumnFlags_WidthFixed, 200.0f);
-        ImGui::TableSetupColumn("Col1");
-        ImGui::TableSetupColumn("Col2");
-        ImGui::TableSetupColumn("Col3");
-        ImGui::TableSetupColumn("Col4");
+       
+        float colSzer = 60.0f; 
+        
+        ImGui::TableSetupColumn("Col1", ImGuiTableColumnFlags_WidthFixed, colSzer);
+        ImGui::TableSetupColumn("Col2", ImGuiTableColumnFlags_WidthFixed, colSzer);
+        ImGui::TableSetupColumn("Col3", ImGuiTableColumnFlags_WidthFixed, colSzer);
+        ImGui::TableSetupColumn("Col4", ImGuiTableColumnFlags_WidthFixed, colSzer);
         
         if (cat == "FARM" || cat == "PRODUCER") {
-            ImGui::TableSetupColumn("Col5");
-            ImGui::TableSetupColumn("Col6");
+            ImGui::TableSetupColumn("Col5", ImGuiTableColumnFlags_WidthFixed, colSzer);
+            ImGui::TableSetupColumn("Col6", ImGuiTableColumnFlags_WidthFixed, 80.0f); // Troszkę więcej miejsca na napis "Czas (Tury)"
         } else {
-            ImGui::TableSetupColumn("Col5");
+            ImGui::TableSetupColumn("Col5", ImGuiTableColumnFlags_WidthFixed, colSzer);
         }
 
         ImGui::TableNextRow(ImGuiTableRowFlags_Headers);
@@ -836,6 +867,21 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
             if (ImGui::IsItemHovered()) {
                 ImGui::SetTooltip("%s", tooltip);
             }
+        };
+
+        
+        auto wycentrujTekstTabela = [](ImVec4 kolor, const char* fmt, ...) {
+            va_list args;
+            va_start(args, fmt);
+            char buf[128];
+            vsnprintf(buf, sizeof(buf), fmt, args);
+            va_end(args);
+            
+            float offsetX = (ImGui::GetColumnWidth() - ImGui::CalcTextSize(buf).x) * 0.5f;
+            if (offsetX > 0.0f) {
+                ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetX);
+            }
+            ImGui::TextColored(kolor, "%s", buf);
         };
 
         ImGui::TableNextColumn();
@@ -866,11 +912,7 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
             wycentrujIkonke("jedzenie", "Produkcja Jedzenia");
             
             ImGui::TableNextColumn();
-            float offsetText = (ImGui::GetColumnWidth() - ImGui::CalcTextSize("Czas (Tury)").x) * 0.5f;
-            if (offsetText > 0.0f) {
-                ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offsetText);
-            }
-            ImGui::TextColored(hdrKolor, "Czas (Tury)");
+            wycentrujTekstTabela(hdrKolor, "Czas (Tury)");
         } 
         else if (cat == "PRODUCER") {
             ImGui::TableNextColumn();
@@ -885,6 +927,11 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
         }
 
         sf::Vector2f iconSize(16.0f, 16.0f);
+        ImVec4 kolorBialy = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+        ImVec4 kolorCzerwony = ImVec4(1.0f, 0.4f, 0.4f, 1.0f);
+        ImVec4 kolorZielony = ImVec4(0.2f, 1.0f, 0.2f, 1.0f);
+        ImVec4 kolorNiebieski = ImVec4(0.2f, 0.8f, 1.0f, 1.0f);
+        ImVec4 kolorZolty = ImVec4(1.0f, 0.8f, 0.2f, 1.0f);
 
         for (const auto &[k, info] : bazaDanych) {
             if (cat == info.type && info.lvlTerr <= kolonia.getLvlTerr()) {
@@ -901,7 +948,7 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
 
                 if (ImGui::IsItemHovered()) {
                     ImGui::BeginTooltip(); 
-                    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "Kliknięcie spowoduje zbudowanie tego budynku!");
+                    ImGui::TextColored(kolorZolty, "Kliknięcie spowoduje zbudowanie tego budynku!");
                     ImGui::Separator();
                     
                     ImGui::Text("Zbudowanie kosztuje:");
@@ -912,46 +959,47 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
                     ImGui::Text("%d", info.kTytan);
                     
                     ImGui::Separator();
-                    string opiss=info.opis;
+                    string opiss = info.opis;
                     prntOpis(opiss);
                     ImGui::EndTooltip(); 
                 }
                 
+                
                 ImGui::TableNextColumn();
-                if (info.kKamien == 0) ImGui::Text("-"); 
-                else ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%d", info.kKamien); 
+                if (info.kKamien == 0) wycentrujTekstTabela(kolorBialy, "-"); 
+                else wycentrujTekstTabela(kolorCzerwony, "-%d", info.kKamien); 
 
                 ImGui::TableNextColumn();
-                if (info.kTytan == 0) ImGui::Text("-"); 
-                else ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%d", info.kTytan); 
+                if (info.kTytan == 0) wycentrujTekstTabela(kolorBialy, "-"); 
+                else wycentrujTekstTabela(kolorCzerwony, "-%d", info.kTytan); 
 
                 ImGui::TableNextColumn();
-                if (info.workers == 0) ImGui::Text("-"); 
-                else ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.2f, 1.0f), "%d", info.workers); 
+                if (info.workers == 0) wycentrujTekstTabela(kolorBialy, "-"); 
+                else wycentrujTekstTabela(kolorZolty, "%d", info.workers); 
 
                 ImGui::TableNextColumn();
-                if (info.reqEnergy == 0) ImGui::Text("-"); 
-                else ImGui::TextColored(ImVec4(0.2f, 0.8f, 1.0f, 1.0f), "-%d", info.reqEnergy);
+                if (info.reqEnergy == 0) wycentrujTekstTabela(kolorBialy, "-"); 
+                else wycentrujTekstTabela(kolorNiebieski, "-%d", info.reqEnergy);
 
                 ImGui::TableNextColumn();
                 if (cat == "ENERGY") {
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne); 
+                    wycentrujTekstTabela(kolorZielony, "+%d", info.genInne); 
                 } 
                 else if (cat == "HOUSING") {
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne);
+                    wycentrujTekstTabela(kolorZielony, "+%d", info.genInne);
                 } 
                 else if (cat == "FARM") {
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne);
+                    wycentrujTekstTabela(kolorZielony, "+%d", info.genInne);
                     ImGui::TableNextColumn();
-                    ImGui::Text("%d tur", info.x);
+                    wycentrujTekstTabela(kolorBialy, "%d tur", info.x);
                 } 
                 else if (cat == "PRODUCER") {
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genKamien);
+                    wycentrujTekstTabela(kolorZielony, "+%d", info.genKamien);
                     ImGui::TableNextColumn();
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genTytan);
+                    wycentrujTekstTabela(kolorZielony, "+%d", info.genTytan);
                 } 
                 else if (cat == "TERR") {
-                    ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", info.genInne);
+                    wycentrujTekstTabela(kolorZielony, "+%d", info.genInne);
                 }
             }
         }
@@ -964,7 +1012,6 @@ void Graphics::prntBuildCategory(const string& cat, const Colony& kolonia, const
         return;
     }
 }
-
 /**
  * @brief Wyświetlanie przycisku przejscia do kolejnej rundy
  * 
@@ -1049,8 +1096,7 @@ void Graphics::prntCzyNextRound(const Colony& kolonia,const map<string, Building
 
 /**
  * @brief Funkcja wyświetlająca okno z wynikiem kolejnej rundy
- * 
- * @param kolonia wskaźnik do koloniii
+ * * @param kolonia wskaźnik do koloniii
  * @param bazaDanych wskaźnik do bazy danych 
  * @param gra wskaznik do klasy Game
  */
@@ -1060,7 +1106,6 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
     } else {
         ImGui::PushStyleColor(ImGuiCol_TitleBgActive, ImVec4(0.8f, 0.2f, 0.2f, 1.0f));
     }
-    
 
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
@@ -1068,17 +1113,23 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
 
     // Brak jedzenia!
     if (!nextWynik.food) {
+        ImGui::AlignTextToFramePadding();
+        ImGui::Image(getIkonka("jedzenie"), sf::Vector2f(25.0f, 25.0f));
+        ImGui::SameLine();
         ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "KATASTROFA: KOLONIA UMARŁA Z GŁODU!");
         ImGui::Separator();
         ImGui::Text("Zabrakło jedzenia dla Twoich mieszkańców.");
         
         ImGui::Dummy(ImVec2(0.0f, 10.0f));
-        if (ImGui::Button("Zakończ grę", ImVec2(120, 30))) {
+        if (ImGui::Button("Zakończ grę", ImVec2(120, 40))) {
             window.close(); 
         }
     } 
     else {  
         if (!nextWynik.energy) {
+            ImGui::AlignTextToFramePadding();
+            ImGui::Image(getIkonka("prad"), sf::Vector2f(25.0f, 25.0f));
+            ImGui::SameLine();
             ImGui::TextColored(ImVec4(1.0f, 0.6f, 0.0f, 1.0f), "OSTRZEŻENIE: BLACKOUT!");
             ImGui::Separator();
             ImGui::TextWrapped("Z powodu braku prądu produkcja stanęła w miejscu! Maszyny nie pracują.");
@@ -1093,54 +1144,60 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
 
         ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.8f, 1.0f), "Gospodarka żywnościowa:");
         
-        
-        ImGui::Bullet(); ImGui::Text("Wyprodukowano:");
+        ImGui::AlignTextToFramePadding();
+        ImGui::Image(getIkonka("jedzenie"), sf::Vector2f(25.0f, 25.0f));
+        ImGui::SameLine(); 
+        ImGui::Text("Wyprodukowano:");
         ImGui::SameLine(); ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "+%d", nextWynik.c_food);
         
         
-        ImGui::Bullet(); ImGui::Text("Zjedzono:");
+        float wciecie = ImGui::GetCursorPosX() + 25.0f + ImGui::GetStyle().ItemSpacing.x;
+        ImGui::SetCursorPosX(wciecie);
+        ImGui::Text("Zjedzono:");
         ImGui::SameLine(); ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-%d", zjedzone);
         
-       
+        ImGui::SetCursorPosX(wciecie);
         if (bilansJedzenia >= 0) {
-            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "  -> Bilans: +%d", bilansJedzenia);
+            ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "-> Bilans: +%d", bilansJedzenia);
         } else {
-            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "  -> Bilans: %d (Zapasy maleją!)", bilansJedzenia);
+            ImGui::TextColored(ImVec4(1.0f, 0.4f, 0.4f, 1.0f), "-> Bilans: %d (Zapasy maleją!)", bilansJedzenia);
         }
 
-        ImGui::Dummy(ImVec2(0.0f, 5.0f));
+        ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
         ImGui::TextColored(ImVec4(0.8f, 0.8f, 0.8f, 1.0f), "Wydobycie i nauka:");
+
+        ImGui::AlignTextToFramePadding();
+        ImGui::Image(getIkonka("kamien"), sf::Vector2f(25.0f, 25.0f));
+        ImGui::SameLine(); 
+        ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "+%d Kamienia", nextWynik.c_stone);
         
+ 
+        ImGui::AlignTextToFramePadding();
+        ImGui::Image(getIkonka("tytan"), sf::Vector2f(25.0f, 25.0f));
+        ImGui::SameLine(); 
+        ImGui::TextColored(ImVec4(0.4f, 0.8f, 1.0f, 1.0f), "+%d Tytanu", nextWynik.c_titan);
         
-        ImGui::Bullet(); ImGui::Text("Kamień:");
-        ImGui::SameLine(); ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "+%d", nextWynik.c_stone);
-        
-       
-        ImGui::Bullet(); ImGui::Text("Tytan:");
-        ImGui::SameLine(); ImGui::TextColored(ImVec4(0.4f, 0.8f, 1.0f, 1.0f), "+%d", nextWynik.c_titan);
-        
-        ImGui::Bullet(); ImGui::Text("Terraformacja:");
-        ImGui::SameLine(); ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "+%d", nextWynik.c_terr);
+
+        ImGui::AlignTextToFramePadding();
+        ImGui::Image(getIkonka("terr"), sf::Vector2f(25.0f, 25.0f));
+        ImGui::SameLine(); 
+        ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "+%d Pkt Terraformacji", nextWynik.c_terr);
 
         if (nextWynik.terr) {
             ImGui::Dummy(ImVec2(0.0f, 10.0f));
             
-        
             ImGui::TextColored(ImVec4(0.9f, 0.3f, 1.0f, 1.0f), "AWANS TERRAFORMACJI!");
             ImGui::Separator();
             ImGui::Text("Odblokowano nowe technologie:");
             ImGui::Dummy(ImVec2(0.0f, 5.0f));
 
-            
             vector<BuildingInfo> wynik = gra.UIprntNewLvlTerr();
 
-        
             if (wynik.empty()) {
                 ImGui::TextColored(ImVec4(0.7f, 0.7f, 0.7f, 1.0f), "Brak nowych schematow na tym poziomie.");
             } else {
                 for (const auto& info : wynik) {
-                    
                     string czystaNazwa = cleanString(info.nazwa);
                     
                     ImGui::Bullet();
@@ -1149,9 +1206,7 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
 
                     if (ImGui::IsItemHovered()) {
                         ImGui::BeginTooltip();
-                        
                         prntOpis(info.nazwa, bazaDanych); 
-                        
                         ImGui::EndTooltip();
                     }
                 }
@@ -1159,12 +1214,15 @@ void Graphics::prntNextRound(const Colony& kolonia, const map<string, BuildingIn
         }
         ImGui::Dummy(ImVec2(0.0f, 15.0f));
         ImGui::Separator();
+        
         float buttonWidth = 120.0f;
         ImGui::SetCursorPosX((ImGui::GetWindowWidth() - buttonWidth) * 0.5f);
-        if (ImGui::Button("Dalej", ImVec2(buttonWidth, 30))) {
+        
+        if (ImGui::Button("Dalej", ImVec2(buttonWidth, 40.0f))) {
             czyNextRound1 = false; 
         }
     }
+
 
     ImGui::End();
     ImGui::PopStyleColor();
@@ -1268,21 +1326,30 @@ void Graphics::prntPomoc() {
 void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& bazaDanych, Game& gra){
     auto cos = ImGui::SFML::Init(window);
     ustawStylUI();
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->Clear();
+    //Ustawianie czcionek
+    static const ImWchar ranges[] ={0x0020, 0x00FF, 0x0100, 0x017F,0,};//Polskie znaki
+    io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Regular.ttf", 25.0f,NULL,ranges);
+    fontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Regular.ttf", 25.0f, NULL, ranges);
+    //Ustawianie czcionki!
+    fontHUD = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 32.0f, NULL, ranges);
+    fontMENU = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 48.0f, NULL, ranges);
+    auto a=ImGui::SFML::UpdateFontTexture();
     //Wczytywanie ikonki na pasku
     sf::Image icon;
     WczytajGrafike("assets/ikonka_test.png", icon);
     window.setIcon(icon);
+
     wczytajIkonki();
-    //Ustawianie czcionki!
-    ImGuiIO& io = ImGui::GetIO();
-    io.Fonts->Clear();
-    static const ImWchar ranges[] ={0x0020, 0x00FF, 0x0100, 0x017F,0,};//Polskie znaki
-    io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Regular.ttf", 25.0f,NULL,ranges);
-    fontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Regular.ttf", 25.0f, NULL, ranges);
-    fontHUD = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 32.0f, NULL, ranges);
-    fontMENU = io.Fonts->AddFontFromFileTTF("assets/fonts/ChakraPetch-Bold.ttf", 48.0f, NULL, ranges);
-    auto a=ImGui::SFML::UpdateFontTexture();
+
     siatka.wczytajSiatkaDane(kolonia,bazaDanych);
+    if(gra.getCzyFirst()==0){
+        czyFistTime=true;
+    }else{
+        czyFistTime=false;
+    }
 
     //Wczytanie tła
     if (WczytajGrafike("assets/tlo_menu.png", tlo_menu_tekstura)) { 
@@ -1295,6 +1362,7 @@ void Graphics::UIBegin(const Colony& kolonia,const map<string, BuildingInfo>& ba
     } else {
     cout << "Nie udalo sie wczytac gra menu!" << endl;
     }
+
     prntAll(kolonia,bazaDanych,gra);
 }
 
@@ -1364,7 +1432,7 @@ void Graphics::prntUstawienia(Game& gra){
 
         if (ImGui::Button("ZMIEŃ", ImVec2(125, 0))) {
             if (strlen(nazwaNowejKolonii) > 0) {
-                gra.setNazwa(nazwaNowejKolonii);
+                gra.setNazwa(wyczyscNazwe((string)nazwaNowejKolonii));
                 nazwaNowejKolonii[0] = '\0';
             }
         }
@@ -1407,7 +1475,7 @@ void Graphics::prntUstawienia(Game& gra){
  * */
 void Graphics::prntCredits(){
     sf::Clock deltaClock;
-    while (const  optional<sf::Event> event = window.pollEvent()) {
+    while (const std::optional<sf::Event> event = window.pollEvent()) {
         
         ImGui::SFML::ProcessEvent(window, *event);
         
@@ -1426,25 +1494,82 @@ void Graphics::prntCredits(){
     ImVec2 center = ImGui::GetMainViewport()->GetCenter();
     ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
     
-    float w = 400;
-    float h = 600;
+    
+    float w = 600;
+    float h = 750;
     ImGui::SetNextWindowSize(ImVec2(w,h)); 
     
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 8.0f);
     ImGui::Begin("CREDITS", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
-    if (fontHUD != nullptr) {
+    
+   
+    if (fontMENU != nullptr) {
         ImGui::PushFont(fontMENU);
     }
-    
    
     ImGui::Dummy(ImVec2(0.0f, 20.0f));
     float text_width = ImGui::CalcTextSize("CREDITS").x;
     ImGui::SetCursorPosX((w - text_width) * 0.5f); 
     ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"CREDITS");
     
+    if (fontMENU != nullptr) {
+        ImGui::PopFont(); 
+    }
     
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
     ImGui::Separator();
+
+    if (fontDefault != nullptr) {
+        ImGui::PushFont(fontDefault);
+    }
+
+    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+
+    auto wycentruj = [&](const char* tekst, ImVec4 kolor) {
+        float szerokosc = ImGui::CalcTextSize(tekst).x;
+        ImGui::SetCursorPosX((w - szerokosc) * 0.5f);
+        ImGui::TextColored(kolor, "%s", tekst);
+    };
+
+    ImVec4 kolorNaglowka = ImVec4(0.6f, 0.6f, 0.6f, 1.0f); 
+    ImVec4 kolorZasoby = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);  
+    ImVec4 kolorZwykly = ImVec4(0.4f, 0.8f, 1.0f, 1.0f);
+    ImVec4 kolorZloty    = ImVec4(1.0f, 0.85f, 0.2f, 1.0f);
+
+    wycentruj("GŁÓWNY TWÓRCA GRY", kolorNaglowka);
+    wycentruj("Michał Pawlica / Miquel", kolorZloty);
+
+    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+
+    wycentruj("TESTERZY", kolorNaglowka);
+    wycentruj("Macieeg", kolorZwykly);
+    wycentruj("Pirs", kolorZwykly);
+    wycentruj("Natan", kolorZwykly);
+    wycentruj("Nero", kolorZwykly);
+
+    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+
+    wycentruj("ZASOBY ZEWNĘTRZNE", kolorNaglowka);
+    wycentruj("Textury kursorów: Kenney (CC0)", kolorZasoby);
+    wycentruj("Pozostałe tektury: Google Gemini", kolorZasoby);
+
+    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+    wycentruj("WYKORZYSTANE BIBLIOTEKI", kolorNaglowka);
+    wycentruj("ImGUI", kolorZasoby);
+    wycentruj("SFML 3.0.2", kolorZasoby);
+    
+
+    ImGui::Dummy(ImVec2(0.0f, 15.0f));
+
+
+
+    if (fontDefault != nullptr) {
+        ImGui::PopFont(); 
+    }
+
+    if (fontMENU != nullptr) {
+        ImGui::PushFont(fontMENU);
+    }
 
     float btn_w = 320;
     float btn_h = 75;
@@ -1456,10 +1581,10 @@ void Graphics::prntCredits(){
     if (fontMENU != nullptr) {
         ImGui::PopFont();
     }
+    
     ImGui::End();
     ImGui::PopStyleVar();
 }
-
 
 void Graphics::prntBladBudowanie(){
     if (czasWyswietlaniaBledu > 0.0f) {
@@ -1555,13 +1680,18 @@ sf::Sprite Graphics::getIkonka(const std::string& nazwa){
 }
 
 
+
 /**
- * @brief Funckja wyświetlająca load - pliki do wczytania i zapisywania
+ * @brief  Funckja wyświetlająca load - pliki do wczytania i zapisywania
+ * 
  * @param gra Referencja do obiektu gry 
- * */
-void Graphics::prntLoad(Game& gra,const Colony &kolonia){
+ * @param kolonia ref do kolonii
+ * @param czyMenu czy menu czy gra
+ */
+void Graphics::prntLoad(Game& gra, const Colony& kolonia, bool czyMenu) {
     sf::Clock deltaClock;
     static char nazwaNowegoZapisu[64] = ""; 
+    
     while (const std::optional<sf::Event> event = window.pollEvent()) {
         
         ImGui::SFML::ProcessEvent(window, *event);
@@ -1571,9 +1701,13 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
         }
         
         if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
-            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
-                ekran=TypEkranu::MENU_GAME;
-                nazwaNowegoZapisu[0] = '\0';
+            if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape && !czyPokazacPopupSaveLoad) {
+                if(czyMenu){
+                    ekran=TypEkranu::MAIN_MENU;
+                }else{  
+                    nazwaNowegoZapisu[0] = '\0';
+                    ekran=TypEkranu::MENU_GAME;
+                }
             }
         }
     } 
@@ -1587,7 +1721,9 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
     ImGui::SetNextWindowSize(ImVec2(w,h)); 
     
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 8.0f);
+    
     ImGui::Begin("ZAPISY GRY", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove);
+    
     if (fontHUD != nullptr) {
         ImGui::PushFont(fontHUD);
     }
@@ -1595,42 +1731,55 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
     float text_width = ImGui::CalcTextSize("ZAPISY GRY").x;
     ImGui::SetCursorPosX((w - text_width) * 0.5f); 
-    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"ZAPISY GRY");
+    ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f), "%s", "ZAPISY GRY");
     
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
     ImGui::Separator();
     ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-    ImGui::Text("Utwórz nowy zapis:");
-    
-    
-    ImGui::SetNextItemWidth(w - 150.0f); 
-    ImGui::InputText("##NowyZapis", nazwaNowegoZapisu, sizeof(nazwaNowegoZapisu));
-    
-    ImGui::SameLine();
-    
-    if (ImGui::Button("ZAPISZ", ImVec2(100, 0))) {
-        if (strlen(nazwaNowegoZapisu) > 0) {
-            gra.save(std::string(nazwaNowegoZapisu));
-            gra.setOstatniZapis(std::string(nazwaNowegoZapisu));
-            gra.setZapisy();
-            nazwaNowegoZapisu[0] = '\0';
+    if (!czyMenu) {
+        ImGui::Text("Utwórz nowy zapis:");
+        
+        ImGui::SetNextItemWidth(w - 150.0f); 
+        ImGui::InputText("##NowyZapis", nazwaNowegoZapisu, sizeof(nazwaNowegoZapisu));
+        
+        ImGui::SameLine();
+        
+        if (ImGui::Button("ZAPISZ", ImVec2(100, 0))) {
+            if (strlen(nazwaNowegoZapisu) > 0) {
+                string ladnaNazwa = wyczyscNazwe((string)nazwaNowegoZapisu); 
+                gra.save(ladnaNazwa);
+                gra.setOstatniZapis(ladnaNazwa);
+                gra.setZapisy();
+                nazwaNowegoZapisu[0] = '\0';
+
+                wiadomoscPopupa = "Pomyslnie utworzono nowy zapis:\n" + ladnaNazwa;
+                czyWczytanoGre = false;
+                czyPokazacPopupSaveLoad = true;
+            }
         }
-    }
 
-    ImGui::Dummy(ImVec2(0.0f, 10.0f));
-    ImGui::Separator();
-    ImGui::Dummy(ImVec2(0.0f, 10.0f));
+        ImGui::Dummy(ImVec2(0.0f, 10.0f));
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(0.0f, 10.0f));
+    }
 
     ImGui::Text("Dostępne zapisy:");
     
     std::vector<std::string> dostepneZapisy = gra.getZapisy();
 
-    if (ImGui::BeginTable("TabelaZapisow", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY, ImVec2(0, h - 320))) {
+    int iloscKolumn = czyMenu ? 2 : 3;
+    float wysokoscTabeli = czyMenu ? (h - 220) : (h - 320);
+
+    if (ImGui::BeginTable("TabelaZapisow", iloscKolumn, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY, ImVec2(0, wysokoscTabeli))) {
         
         ImGui::TableSetupColumn("Nazwa", ImGuiTableColumnFlags_WidthStretch);
         ImGui::TableSetupColumn("Wczytaj", ImGuiTableColumnFlags_WidthFixed, 100.0f);
-        ImGui::TableSetupColumn("Zapisz", ImGuiTableColumnFlags_WidthFixed, 90.0f);
+
+        if (!czyMenu) {
+            ImGui::TableSetupColumn("Zapisz", ImGuiTableColumnFlags_WidthFixed, 90.0f);
+        }
+        
         ImGui::TableHeadersRow();
 
         for (const auto& zapis : dostepneZapisy) {
@@ -1638,8 +1787,8 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
             
             ImGui::TableNextColumn();
             ImGui::Text("%s", zapis.c_str());
-
             ImGui::TableNextColumn();
+            
             std::string idWczytaj = "Wczytaj##" + zapis; 
             if (ImGui::Button(idWczytaj.c_str(), ImVec2(100, 0))) {
                 gra.load(zapis);
@@ -1647,25 +1796,34 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
                 gra.setZapisy();
                 siatka.wczytajBudynki(kolonia);
                 nazwaNowegoZapisu[0] = '\0';
-                ekran = TypEkranu::GAME; 
+                
+                wiadomoscPopupa = "Pomyslnie wczytano gre:\n" + zapis;
+                czyWczytanoGre = true; 
+                czyPokazacPopupSaveLoad = true;
             }
 
-            ImGui::TableNextColumn();
-            std::string idZapisz = "Zapisz##" + zapis; 
-            if (ImGui::Button(idZapisz.c_str(), ImVec2(90, 0))) {
-                gra.save(zapis);
-                gra.setOstatniZapis(zapis);
+            if (!czyMenu) {
+                ImGui::TableNextColumn();
+                std::string idZapisz = "Zapisz##" + zapis; 
+                if (ImGui::Button(idZapisz.c_str(), ImVec2(90, 0))) {
+                    gra.save(zapis);
+                    gra.setOstatniZapis(zapis);
+
+                    wiadomoscPopupa = "Pomyslnie nadpisano zapis:\n" + zapis;
+                    czyWczytanoGre = false;
+                    czyPokazacPopupSaveLoad = true;
+                }
             }
         }
         ImGui::EndTable();
     }
-
     float btn_w = 320;
     float btn_h = 60;
     ImGui::SetCursorPos(ImVec2((w - btn_w) * 0.5f, h - 80));
+    
     if (ImGui::Button("WRÓĆ", ImVec2(btn_w, btn_h))) {
         nazwaNowegoZapisu[0] = '\0';
-        ekran = TypEkranu::MENU_GAME; 
+        ekran = czyMenu ? TypEkranu::MAIN_MENU : TypEkranu::MENU_GAME; 
     }
     
     if (fontHUD != nullptr) {
@@ -1681,8 +1839,6 @@ void Graphics::prntLoad(Game& gra,const Colony &kolonia){
  * * @param gra 
  */
 void Graphics::prntMenuGra(Game& gra) {
-
-
 
     sf::Clock deltaClock; 
     while (const  optional<sf::Event> event = window.pollEvent()) {
@@ -1734,8 +1890,7 @@ void Graphics::prntMenuGra(Game& gra) {
 
     ImGui::SetCursorPos(ImVec2(btn_x, 100));
     if (ImGui::Button("ZAPISY GRY", ImVec2(btn_w, btn_h))) {
-        //gra.load("basic"); 
-        ekran =TypEkranu::LOAD; 
+        ekran =TypEkranu::LOAD_GAME; 
     }
 
     ImGui::SetCursorPos(ImVec2(btn_x, 180));
@@ -1746,19 +1901,19 @@ void Graphics::prntMenuGra(Game& gra) {
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.0f)); 
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.3f, 0.3f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
-    ImGui::SetCursorPos(ImVec2(btn_x, 260));
-    if (ImGui::Button("WYJDŹ Z GRY", ImVec2(btn_w, btn_h))) {
-        czyPotwierdzicWyjscie = true;
-        //window.close();
-    }
     
-    ImGui::SetCursorPos(ImVec2(btn_x, 340));
+    ImGui::SetCursorPos(ImVec2(btn_x, 260));
     if (ImGui::Button("WYJDŹ DO MENU", ImVec2(btn_w, btn_h))) {
         czyDoMenu=true;
         czyPotwierdzicWyjscie = true;
-        //ekran=TypEkranu::MAIN_MENU;
-        //czyGra=false;
+
+    }    
+    ImGui::SetCursorPos(ImVec2(btn_x, 340));
+    if (ImGui::Button("WYJDŹ Z GRY", ImVec2(btn_w, btn_h))) {
+        czyPotwierdzicWyjscie = true;
     }
+    
+    
     ImGui::PopStyleColor(3);
 
     if (fontHUD != nullptr) {
@@ -1784,7 +1939,6 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
         
         if (const auto* wcisnietyKlawisz = event->getIf<sf::Event::KeyPressed>()) {
             if (wcisnietyKlawisz->scancode == sf::Keyboard::Scancode::Escape) {
-                //czyPotwierdzicWyjscie=true;
                 window.close(); 
             }
         }
@@ -1805,51 +1959,59 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
     if (fontMENU != nullptr) {
         ImGui::PushFont(fontMENU);
     }
-    
-    // ImGui::Dummy(ImVec2(0.0f, 20.0f));
-    // float text_width = ImGui::CalcTextSize("COLONY ++").x;
-    // ImGui::SetCursorPosX((w - text_width) * 0.5f); 
-    // ImGui::TextColored(ImVec4(1.0f, 0.8f, 0.0f, 1.0f),"COLONY ++");
-    
-    // ImGui::Dummy(ImVec2(0.0f, 15.0f));
     ImGui::Separator();
 
     float btn_w = 380;
     float btn_h = 80;
     float btn_x = (w - btn_w) * 0.5f;
+    float y_begin=40;
+    
+    ImGui::SetCursorPos(ImVec2(btn_x, y_begin));
+    if(czyFistTime){
 
-    ImGui::SetCursorPos(ImVec2(btn_x, 40));
-    if (ImGui::Button("Kontynuuj GRĘ", ImVec2(btn_w, btn_h))) {
-        gra.load(gra.getOstatniZapis());
-        siatka.wczytajBudynki(kolonia);
-        ekran =TypEkranu::GAME; 
-        czyGra=true;
+    }else{
+        if (ImGui::Button("Kontynuuj GRĘ", ImVec2(btn_w, btn_h))) {
+            gra.load(gra.getOstatniZapis());
+            siatka.wczytajBudynki(kolonia);
+            ekran =TypEkranu::GAME; 
+            czyGra=true;
+        }
+        y_begin+=100;
     }
+    
 
-    ImGui::SetCursorPos(ImVec2(btn_x, 140));
+    ImGui::SetCursorPos(ImVec2(btn_x, y_begin));
     if (ImGui::Button("NOWA GRA", ImVec2(btn_w, btn_h))) {
         ekran =TypEkranu::GAME;
         czyGra=true;
+        czyFistTime=false;
+        gra.setCzyFirst();
     }
+    y_begin+=100;
+    ImGui::SetCursorPos(ImVec2(btn_x, y_begin));
+    if (ImGui::Button("ZAPISY GRY", ImVec2(btn_w, btn_h))) {
+        ekran =TypEkranu::LOAD_MENU; 
+        //do poprawy
 
-    ImGui::SetCursorPos(ImVec2(btn_x, 240));
+    }
+    y_begin+=100;
+    ImGui::SetCursorPos(ImVec2(btn_x, y_begin));
     if (ImGui::Button("USTAWIENIA", ImVec2(btn_w, btn_h))) {
         ekran =TypEkranu::SETTINGS; 
     }
-
-    ImGui::SetCursorPos(ImVec2(btn_x, 340));
+    y_begin+=100;
+    ImGui::SetCursorPos(ImVec2(btn_x, y_begin));
     if (ImGui::Button("CREDITS", ImVec2(btn_w, btn_h))) {
         ekran =TypEkranu::CREDITS; 
     }
-    
-    ImGui::SetCursorPos(ImVec2(btn_x, 540));
+    y_begin+=100;
+    ImGui::SetCursorPos(ImVec2(btn_x, y_begin));
 
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.2f, 0.2f, 1.0f)); 
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.3f, 0.3f, 1.0f));
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(1.0f, 0.4f, 0.4f, 1.0f));
     if (ImGui::Button("WYJDŹ", ImVec2(btn_w, btn_h))) {
-        czyPotwierdzicWyjscie = true;
-        // window.close();
+        window.close();
     }
     ImGui::PopStyleColor(3);
 
@@ -1861,6 +2023,56 @@ void Graphics::prntMenuGlowne(Game& gra,const Colony &kolonia) {
 
 }
 
+/**
+* @brief Okno z informacją o pomyślnym zapisie/odczycie gry
+ */
+void Graphics::popupSaveLoad() {
+
+    if (czyPokazacPopupSaveLoad) {
+        ImGui::OpenPopup("Informacja##SaveLoad");
+    }
+
+    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+    
+    if (ImGui::BeginPopupModal("Informacja##SaveLoad", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove)) {
+        
+        
+        float szerokoscPopupa = ImGui::GetWindowWidth();
+        float szerokoscTekstuPop = ImGui::CalcTextSize(wiadomoscPopupa.c_str()).x;
+        float posX = (szerokoscPopupa - szerokoscTekstuPop) * 0.5f;
+        if (posX > 0) ImGui::SetCursorPosX(posX);
+        
+        ImGui::TextColored(ImVec4(0.2f, 1.0f, 0.2f, 1.0f), "%s", wiadomoscPopupa.c_str());
+        
+        ImGui::Dummy(ImVec2(0.0f, 15.0f));
+        ImGui::Separator();
+        ImGui::Dummy(ImVec2(0.0f, 10.0f));
+        
+        
+        float ok_w = 120.0f;
+        ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ok_w) * 0.5f);
+        
+        if (ImGui::Button("OK", ImVec2(ok_w, 0))) {
+            ImGui::CloseCurrentPopup();
+            czyPokazacPopupSaveLoad = false; 
+    
+            if (czyWczytanoGre) {
+                ekran = TypEkranu::GAME;
+                czyWczytanoGre = false;
+                czyGra=true;
+            }
+        }
+        ImGui::EndPopup();
+    }
+}
+
+
+/**
+ * @brief Okno z logiką potwiedznia wyjścia z gry
+ * 
+ */
 void Graphics::wychodzenie(){
     if (czyPotwierdzicWyjscie) {
         ImGui::OpenPopup("###PotwierdzenieWyjscia");
@@ -1879,8 +2091,11 @@ void Graphics::wychodzenie(){
         if(czyDoMenu){
             ekran=TypEkranu::MAIN_MENU;
             czyGra=false;
+            czyDoMenu=false;
+            czyPotwierdzicWyjscie=false;
+        }else{
+            window.close();
         }
-        window.close();
     }
     
     ImGui::SetItemDefaultFocus();
@@ -1901,10 +2116,10 @@ void Graphics::wychodzenie(){
  * 
  */
 void Graphics::prntMenuTlo(const map<string, BuildingInfo>& bazaDanych){
-    if(ekran==TypEkranu::MENU_GAME||czyGra||ekran==TypEkranu::LOAD){
+    if(ekran==TypEkranu::MENU_GAME||czyGra||ekran==TypEkranu::LOAD_GAME){
         window.draw(tlo_gra_sprite);
         siatka.prntSiatka(window,ImVec2(-1,-1),bazaDanych,false,"");
-    }else if(ekran==TypEkranu::CREDITS||(!czyGra)){
+    }else if(ekran==TypEkranu::CREDITS||(!czyGra)||ekran==TypEkranu::LOAD_MENU){
         window.draw(tlo_menu_sprite);
     }
     sf::View staryWidok = window.getView(); 
@@ -2030,6 +2245,9 @@ void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& ba
             if(czyhelp){
                 prntPomoc();
             }
+            if(czyPokazacPopupSaveLoad){
+                popupSaveLoad();
+            }
     
             if(czyBudynki){
                 prntBudynki(kolonia, bazaDanych,gra);
@@ -2056,6 +2274,7 @@ void Graphics::prntGRA(const Colony& kolonia,const map<string, BuildingInfo>& ba
             if(czyBudynekInfo){
                 prntBudynekInfo(bazaDanych,kolonia,kafelek);
             }
+
         }
         else{
             prntBladBudowanie();
@@ -2087,19 +2306,23 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
         else if(ekran==TypEkranu::CREDITS){
             prntCredits();
         }
-        else if(ekran==TypEkranu::LOAD){
-            prntLoad(gra,kolonia);
+        else if(ekran==TypEkranu::LOAD_GAME){
+            prntLoad(gra,kolonia,false);
         }
-
+        else if(ekran==TypEkranu::LOAD_MENU){
+            prntLoad(gra,kolonia,true);
+        }
         if(czyPotwierdzicWyjscie){
             wychodzenie();
         }
-
+        if(czyPokazacPopupSaveLoad){
+                popupSaveLoad();
+        }
         window.clear();
         
         if(ekran==TypEkranu::MAIN_MENU){ window.draw(tlo_menu_sprite);}
         if(ekran==TypEkranu::GAME){ window.draw(tlo_gra_sprite);}
-        if(ekran==TypEkranu::MENU_GAME ||ekran==TypEkranu::SETTINGS ||ekran==TypEkranu::CREDITS ||ekran==TypEkranu::LOAD){ 
+        if(ekran==TypEkranu::MENU_GAME ||ekran==TypEkranu::SETTINGS ||ekran==TypEkranu::CREDITS ||ekran==TypEkranu::LOAD_GAME||ekran==TypEkranu::LOAD_MENU){ 
             prntMenuTlo(bazaDanych);
         }
         if (czyBudowa && kursorBudowanie.has_value()) {
@@ -2114,9 +2337,6 @@ void Graphics::prntAll(const Colony& kolonia,const map<string, BuildingInfo>& ba
             window.setMouseCursor(kursorDomyslny.value());
             io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
         }
-        //rysowanie elementow (tla)
-        // window.draw(siatka);
-        // window.draw(menu);
         ImVec2 pozycjaMyszy = ImGui::GetMousePos();
          if(ekran==TypEkranu::GAME){
             siatka.prntSiatka(window,pozycjaMyszy,bazaDanych,czyBudowa,trzymanyBudynek.nazwa);
