@@ -10,6 +10,7 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
+#include <cctype>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
@@ -61,7 +62,7 @@ struct DaneKafelek {
  * @brief Typ ekranu.
  * 
  */
-enum class TypEkranu {MAIN_MENU,GAME,MENU_GAME,SETTINGS,CREDITS,LOAD};
+enum class TypEkranu {MAIN_MENU,GAME,MENU_GAME,SETTINGS,CREDITS,LOAD_MENU,LOAD_GAME};
 
 /**
  * @brief Zawiera w sobie wszystkie parametry danego budynku wczytane z gamedata.txt
@@ -309,4 +310,22 @@ inline void prntOpis(string &tekst){
         ImGui::PopTextWrapPos();    
 }
 
+
+/**
+ * @brief Czyszczenie nazwy, tak aby pasowała do zapisu albo i nazwy gry
+ *  Dodawanie "_" albo i usuwanie dziwnych znaków specjalnych
+ * @param text 
+ * @return string 
+ */
+inline string wyczyscNazwe(const string& text) {
+    string wynik = "";
+    for (char c : text) {
+        if (std::isalnum(c)) {
+            wynik += c;
+        } else if (c == ' ') {
+            wynik += '_'; 
+        }
+    }
+    return wynik;
+}
 #endif

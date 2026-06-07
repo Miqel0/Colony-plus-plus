@@ -22,7 +22,7 @@ using namespace std;
 // KONSTRUKTOR 
 // ==========================================
 
-Game::Game():ostatni_zapis(""){
+Game::Game():ostatni_zapis(""),czyFirst(0){
     //Wczytywanie dostępnych zapisów
     zapisy=pobierzZapisy();
     //Wczytywanie parametrow budynkow
@@ -40,7 +40,6 @@ Game::Game():ostatni_zapis(""){
  * 
  */
 void Game::UIrun(){
-    //kolonia.load();
     grafika.UIBegin(kolonia, bazaDanych,*this);
 }
 
@@ -113,13 +112,14 @@ vector<string> Game::pobierzZapisy() {
 void Game::loadConfig(){ //Sprawdzanie config
     ifstream plik("data/config.txt");
     string plikk;
+    int czyFirst_;
     if (!plik.is_open()) {
         cout << "BLAD: Nie mozna otworzyc config.txt!" << endl;
     }else{
-        plik>>plikk;
+        plik>>plikk>>czyFirst_;
         plik.close();
         ostatni_zapis=plikk;
-        //cout<<"Wczytano config z: "<<ostatni_zapis<<endl;
+        czyFirst=czyFirst_;
     }    
 }
 
@@ -130,7 +130,7 @@ void Game::loadConfig(){ //Sprawdzanie config
 void Game::saveConfig(){ //Zapisywanie config
     ofstream plik("data/config.txt");
     if(plik.is_open()){
-        plik<<ostatni_zapis;
+        plik<<ostatni_zapis<<" "<<czyFirst;
         plik.close();
         //cout<<"zapisano config z: "<<ostatni_zapis<<endl;
         }
@@ -257,7 +257,8 @@ vector<BuildingInfo> Game::UIprntNewLvlTerr(){
  */
 string Game::getOstatniZapis() const{return ostatni_zapis;}
 void Game::setOstatniZapis(string naz){ostatni_zapis=naz;}
-
+int Game::getCzyFirst() const{return czyFirst;}
+void Game::setCzyFirst(){czyFirst=1;}
 
 
 void Game::setNazwa(string nazwa){kolonia.setNazwa(nazwa);}

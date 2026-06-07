@@ -60,10 +60,10 @@ class Graphics{
         bool czyWyburzanieKlick;
         bool czyPotwierdzicWyjscie;
         bool czyDoMenu;
+        bool czyFistTime;
 
         bool czyBudynekInfo;
         
-        //Zamieszanie z budowaniem!
         BuildingInfo trzymanyBudynek;
 
         bool czyLoad;
@@ -76,6 +76,10 @@ class Graphics{
         BuildResult ostatniWynik;
         NextResult nextWynik;
         DestroyResult destroyWynik;
+
+        bool czyPokazacPopupSaveLoad;
+        string wiadomoscPopupa;
+        bool czyWczytanoGre;
 
         float czasWyswietlaniaBledu ;
         sf::Clock zegarBledu;
@@ -107,10 +111,12 @@ class Graphics{
         void prntMenuGra(Game& gra);
         void prntUstawienia(Game& gra);
         void prntCredits();
-        void prntLoad(Game& gra,const Colony &kolonia);
+        void prntLoad(Game& gra,const Colony &kolonia,bool zMenuGlownego);
         void prntBladBudowanie();
         void prntBudynekInfo( const map<string, BuildingInfo>& bazaDanych,const Colony &kolonia,pair<string,int> inf);
         void prntMenuTlo(const map<string, BuildingInfo>& bazaDanych);
+        void popupSaveLoad();
+
         bool getCzyBudowa();
         BuildingInfo getTrzymanyBudynek();
 

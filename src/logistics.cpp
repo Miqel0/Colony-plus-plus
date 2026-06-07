@@ -231,7 +231,7 @@ void Logistics::save(string nazwa_plik){
 
         plik.close();
         }
-        cout<<"zapisano:"<<nazwa_plik<<endl;
+        // cout<<"zapisano:"<<nazwa_plik<<endl;
 }
 
 //WCZYTYWANIE ZAPISANYCH DANYCH
@@ -320,7 +320,7 @@ void Logistics::setCustom(){
 //USTAWIANIE NAZWY - wywolywane komenda `rename`
 void Logistics::setNazwa(string nazwa){
     if(!nazwa.empty()){
-        replace(nazwa.begin(), nazwa.end(), '_', ' ');
+        replace(nazwa.begin(), nazwa.end(), ' ', '_');
         nazwa_kolonii=nazwa;
     }
 }
