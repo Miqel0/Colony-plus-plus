@@ -28,29 +28,38 @@ set(IMGUI_SOURCES
 
 
 if(WIN32)
-
     add_executable(Colony++ ${SOURCES} ${IMGUI_SOURCES} src/resources.rc)
 else()
-
     add_executable(Colony++ ${SOURCES} ${IMGUI_SOURCES})
 endif()
 
-target_include_directories(Colony++ PRIVATE 
+target_include_directories(Colony++ BEFORE PRIVATE 
     ${CMAKE_SOURCE_DIR}/src
     ${SFML_DIR_CUSTOM}/include
     ${IMGUI_DIR}
 )
 
-target_link_directories(Colony++ PRIVATE 
+target_link_directories(Colony++ BEFORE PRIVATE 
     ${SFML_DIR_CUSTOM}/lib
 )
 
-target_link_libraries(Colony++ PRIVATE
-    sfml-graphics
-    sfml-window
-    sfml-system
-    ${OPENGL_LIB} 
-)
+if(WIN32)
+    target_link_libraries(Colony++ PRIVATE
+        sfml-graphics
+        sfml-window
+        sfml-system
+        ${OPENGL_LIB} 
+    )
+elseif(UNIX)
+    target_link_libraries(Colony++ PRIVATE
+        "${SFML_DIR_CUSTOM}/lib/libsfml-graphics.so"
+        "${SFML_DIR_CUSTOM}/lib/libsfml-window.so"
+        "${SFML_DIR_CUSTOM}/lib/libsfml-system.so"
+        ${OPENGL_LIB}
+    )
+    
+    set_target_properties(Colony++ PROPERTIES BUILD_RPATH "${SFML_DIR_CUSTOM}/lib")
+endif()
 
 if(MSVC)
     target_compile_options(Colony++ PRIVATE /EHsc /W3)
