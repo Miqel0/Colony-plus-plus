@@ -5,6 +5,8 @@
 ![CMake](https://img.shields.io/badge/CMake-3.15+-red.svg)
 ![SFML](https://img.shields.io/badge/Graphics-SFML_3.0.2-8CC445.svg)
 ![ImGui](https://img.shields.io/badge/GUI-Dear_ImGui-purple.svg)
+
+
 Strategiczno-survivalowa gra napisana w C++, polegająca na zarządzaniu kolonią na Marsie, wydobywaniu surowców i terraformacji planety. 
 
 Projekt początkowo powstał jako w pełni tekstowa gra konsolowa. Obecnie został zaktualizowany do wersji z pełnoprawnym interfejsem graficznym. Cała oryginalna logika, statystyki i mechaniki pozostały nienaruszone, jednak wpisywanie komend w terminalu zostało całkowicie zastąpione przez nowoczesny system okienkowy i sterowanie myszą.
