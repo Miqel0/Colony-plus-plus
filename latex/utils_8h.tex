@@ -1,0 +1,382 @@
+\doxysection{src/\+utils.h File Reference}
+\hypertarget{utils_8h}{}\label{utils_8h}\index{src/utils.h@{src/utils.h}}
+{\ttfamily \+\#include $<$iostream$>$}\newline
+{\ttfamily \+\#include $<$sstream$>$}\newline
+{\ttfamily \+\#include $<$map$>$}\newline
+{\ttfamily \+\#include $<$string$>$}\newline
+{\ttfamily \+\#include $<$iomanip$>$}\newline
+{\ttfamily \+\#include $<$vector$>$}\newline
+{\ttfamily \+\#include $<$utility$>$}\newline
+{\ttfamily \+\#include $<$algorithm$>$}\newline
+{\ttfamily \+\#include $<$functional$>$}\newline
+{\ttfamily \+\#include $<$cctype$>$}\newline
+{\ttfamily \+\#include $<$SFML/\+\+Graphics.\+hpp$>$}\newline
+{\ttfamily \+\#include $<$SFML/\+\+System/\+\+Clock.\+hpp$>$}\newline
+{\ttfamily \+\#include "{}imgui.\+h"{}}\newline
+{\ttfamily \+\#include "{}imgui-\/\+SFML.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{struct_dane_kafelek}{Dane\+Kafelek}}
+\begin{DoxyCompactList}\small\item\em Dane o danym kafelku. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_building_info}{Building\+Info}}
+\begin{DoxyCompactList}\small\item\em Zawiera w sobie wszystkie parametry danego budynku wczytane z gamedata.\+txt. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_build_result}{Build\+Result}}
+\begin{DoxyCompactList}\small\item\em Struct do przekazywania wyników budowania /\+ a może i wszystkich błędów itp. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}}
+\begin{DoxyCompactList}\small\item\em Struct do przekazywania wyników burzenia. \end{DoxyCompactList}\item 
+struct \doxymbox{\hyperlink{struct_next_result}{Next\+Result}}
+\begin{DoxyCompactList}\small\item\em Struct do przekazywania wyników przejscia do kolejnej rundy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} \{ \newline
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa8d23e023eb2d1428ebf6f28e986b0324}{NIEZNANY}} = 0
+, \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa93e0e13277e4354c72e2b033514037a5}{ENERGY}} = 1
+, \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa631d8b0a35e854f3b99495078809a6ae}{FARM}} = 2
+, \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa3ee552c33e91246a43a900ca62fcfdd6}{HOUSING}} = 3
+, \newline
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa523178c529429c02cbf9cce92eb47a14}{PRODUCER}} = 4
+, \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa010b6816cdb0ae6f57fcf7d2b77525f1}{TERR}} = 5
+ \}
+\begin{DoxyCompactList}\small\item\em Typy budynków, używany w różnych logikach. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}{Typ\+Kafelka}} \{ \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2aea35bf4c433ce458623299bce103f945}{PUSTY}}
+, \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8af38c3ed7a345181d69344d948f634a}{ZAJETY}}
+, \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8a75c667bb321812473daf0ecb149391}{BRAK}}
+ \}
+\begin{DoxyCompactList}\small\item\em Typy kafelków. \end{DoxyCompactList}\item 
+enum class \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52}{Typ\+Ekranu}} \{ \newline
+\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52aa16d505f03a4b6f35486f65f6a61317e}{MAIN\+\_\+\+MENU}}
+, \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52a4504e1ed59cd9732b8a844e5424e6f13}{GAME}}
+, \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52a01d439bfccd33aa06491f04a46dbafbc}{MENU\+\_\+\+GAME}}
+, \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52aed6f7aca7887a927b9ed3d62aa347a86}{SETTINGS}}
+, \newline
+\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52ae5f53fee4717a20069da09aa7a0f614d}{CREDITS}}
+, \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52aab328416de059c8c7191b547079d7b49}{LOAD\+\_\+\+MENU}}
+, \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52a55dffae67e249616c391f74966a3c282}{LOAD\+\_\+\+GAME}}
+ \}
+\begin{DoxyCompactList}\small\item\em Typ ekranu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \doxymbox{\hyperlink{utils_8h_a25a303e72275ac72d85d7cfa478b6232}{clean\+Num}} (int liczba)
+\begin{DoxyCompactList}\small\item\em Stara funkcja do czyszczenia liczb -\/ można zamienić na to\+\_\+string czy cos /\+/\+\+FIXME. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{utils_8h_ac089e062b4a706adc928ca56151be0cc}{clean\+String}} (string tekst)
+\begin{DoxyCompactList}\small\item\em Funkcja do usuwania \textquotesingle{}\+\_\+\textquotesingle{} z tekstu. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{utils_8h_a951ee0329fdebb9d137fe6c9572f7772}{rysuj\+Wiersz\+Tooltip}} (const string \&etykieta, const string \&wartosc)
+\begin{DoxyCompactList}\small\item\em Funkcja wyswietlajaca jeden wiersz tabeli -\/ Im\+GUI. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{utils_8h_a956da311c2fd388d8b1b11a356dc81cf}{prnt\+Tooltip\+Tablica}} (const std::\+string \&nazwa, const std::\+vector$<$ std::\+pair$<$ std::\+string, std::\+string $>$ $>$ \&dane)
+\begin{DoxyCompactList}\small\item\em Funkcja rysująca tabelę (uniwersalna). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{utils_8h_ac42e1796098b72650331481bbe10225e}{prnt\+Opis}} (const std::\+string \&nazwa, const map$<$ std::\+string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych)
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca opis danego budynku. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{utils_8h_a9c4ce36d084d3fb25b7b807b5f4be3b7}{prnt\+Opis}} (const std::\+string \&nazwa, string \&tekst)
+\begin{DoxyCompactList}\small\item\em Funckja rysująca tekst i nazwe. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{utils_8h_a4c17ee35ab98eee737b7e7e3c8103791}{prnt\+Opis}} (string \&tekst)
+\begin{DoxyCompactList}\small\item\em Funckja rysująca tekst. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{utils_8h_ad2ba521e705d159b08ba6e4423040e92}{wyczysc\+Nazwe}} (const string \&text)
+\begin{DoxyCompactList}\small\item\em Czyszczenie nazwy, tak aby pasowała do zapisu albo i nazwy gry Dodawanie "{}\+\_\+"{} albo i usuwanie dziwnych znaków specjalnych. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+std::\+map$<$ std::\+string, sf::\+\+Int\+Rect $>$ \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{utils_8h_a13317a043358a0fb03a7b0efdfdeedfc}{globalna\+Mapa\+Ikonek}} = nullptr
+\item 
+sf::\+\+Texture \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{utils_8h_af3f660cd93abd2bc4e9a311da3c7ce2d}{globalna\+Tekstura\+Ikonek}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\label{utils_8h_doc-enum-members}
+\Hypertarget{utils_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}\index{utils.h@{utils.h}!TypBudynku@{TypBudynku}}
+\index{TypBudynku@{TypBudynku}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{TypBudynku}{TypBudynku}}
+{\footnotesize\ttfamily \label{utils_8h_a47bd7d8a576a7146b54f8856ac09490f} 
+enum class \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Typy budynków, używany w różnych logikach. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NIEZNANY@{NIEZNANY}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!NIEZNANY@{NIEZNANY}}
+}\Hypertarget{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa8d23e023eb2d1428ebf6f28e986b0324}\label{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa8d23e023eb2d1428ebf6f28e986b0324} 
+NIEZNANY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ENERGY@{ENERGY}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!ENERGY@{ENERGY}}
+}\Hypertarget{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa93e0e13277e4354c72e2b033514037a5}\label{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa93e0e13277e4354c72e2b033514037a5} 
+ENERGY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FARM@{FARM}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!FARM@{FARM}}
+}\Hypertarget{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa631d8b0a35e854f3b99495078809a6ae}\label{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa631d8b0a35e854f3b99495078809a6ae} 
+FARM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{HOUSING@{HOUSING}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!HOUSING@{HOUSING}}
+}\Hypertarget{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa3ee552c33e91246a43a900ca62fcfdd6}\label{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa3ee552c33e91246a43a900ca62fcfdd6} 
+HOUSING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PRODUCER@{PRODUCER}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!PRODUCER@{PRODUCER}}
+}\Hypertarget{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa523178c529429c02cbf9cce92eb47a14}\label{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa523178c529429c02cbf9cce92eb47a14} 
+PRODUCER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{TERR@{TERR}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!TERR@{TERR}}
+}\Hypertarget{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa010b6816cdb0ae6f57fcf7d2b77525f1}\label{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa010b6816cdb0ae6f57fcf7d2b77525f1} 
+TERR&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52}\index{utils.h@{utils.h}!TypEkranu@{TypEkranu}}
+\index{TypEkranu@{TypEkranu}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{TypEkranu}{TypEkranu}}
+{\footnotesize\ttfamily \label{utils_8h_afc59ee227cec3def02a5813060562e52} 
+enum class \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52}{Typ\+Ekranu}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Typ ekranu. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MAIN\_MENU@{MAIN\_MENU}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!MAIN\_MENU@{MAIN\_MENU}}
+}\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52aa16d505f03a4b6f35486f65f6a61317e}\label{utils_8h_afc59ee227cec3def02a5813060562e52aa16d505f03a4b6f35486f65f6a61317e} 
+MAIN\+\_\+\+MENU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{GAME@{GAME}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!GAME@{GAME}}
+}\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52a4504e1ed59cd9732b8a844e5424e6f13}\label{utils_8h_afc59ee227cec3def02a5813060562e52a4504e1ed59cd9732b8a844e5424e6f13} 
+GAME&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{MENU\_GAME@{MENU\_GAME}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!MENU\_GAME@{MENU\_GAME}}
+}\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52a01d439bfccd33aa06491f04a46dbafbc}\label{utils_8h_afc59ee227cec3def02a5813060562e52a01d439bfccd33aa06491f04a46dbafbc} 
+MENU\+\_\+\+GAME&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SETTINGS@{SETTINGS}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!SETTINGS@{SETTINGS}}
+}\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52aed6f7aca7887a927b9ed3d62aa347a86}\label{utils_8h_afc59ee227cec3def02a5813060562e52aed6f7aca7887a927b9ed3d62aa347a86} 
+SETTINGS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CREDITS@{CREDITS}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!CREDITS@{CREDITS}}
+}\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52ae5f53fee4717a20069da09aa7a0f614d}\label{utils_8h_afc59ee227cec3def02a5813060562e52ae5f53fee4717a20069da09aa7a0f614d} 
+CREDITS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOAD\_MENU@{LOAD\_MENU}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!LOAD\_MENU@{LOAD\_MENU}}
+}\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52aab328416de059c8c7191b547079d7b49}\label{utils_8h_afc59ee227cec3def02a5813060562e52aab328416de059c8c7191b547079d7b49} 
+LOAD\+\_\+\+MENU&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LOAD\_GAME@{LOAD\_GAME}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!LOAD\_GAME@{LOAD\_GAME}}
+}\Hypertarget{utils_8h_afc59ee227cec3def02a5813060562e52a55dffae67e249616c391f74966a3c282}\label{utils_8h_afc59ee227cec3def02a5813060562e52a55dffae67e249616c391f74966a3c282} 
+LOAD\+\_\+\+GAME&\\
+\hline
+
+\end{DoxyEnumFields}
+\Hypertarget{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}\index{utils.h@{utils.h}!TypKafelka@{TypKafelka}}
+\index{TypKafelka@{TypKafelka}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{TypKafelka}{TypKafelka}}
+{\footnotesize\ttfamily \label{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2} 
+enum class \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}{Typ\+Kafelka}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Typy kafelków. 
+
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PUSTY@{PUSTY}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!PUSTY@{PUSTY}}
+}\Hypertarget{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2aea35bf4c433ce458623299bce103f945}\label{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2aea35bf4c433ce458623299bce103f945} 
+PUSTY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ZAJETY@{ZAJETY}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!ZAJETY@{ZAJETY}}
+}\Hypertarget{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8af38c3ed7a345181d69344d948f634a}\label{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8af38c3ed7a345181d69344d948f634a} 
+ZAJETY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BRAK@{BRAK}!utils.h@{utils.h}}
+\index{utils.h@{utils.h}!BRAK@{BRAK}}
+}\Hypertarget{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8a75c667bb321812473daf0ecb149391}\label{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8a75c667bb321812473daf0ecb149391} 
+BRAK&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{utils_8h_doc-func-members}
+\Hypertarget{utils_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{utils_8h_a25a303e72275ac72d85d7cfa478b6232}\index{utils.h@{utils.h}!cleanNum@{cleanNum}}
+\index{cleanNum@{cleanNum}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{cleanNum()}{cleanNum()}}
+{\footnotesize\ttfamily \label{utils_8h_a25a303e72275ac72d85d7cfa478b6232} 
+string clean\+Num (\begin{DoxyParamCaption}\item[{int}]{liczba}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Stara funkcja do czyszczenia liczb -\/ można zamienić na to\+\_\+string czy cos /\+/\+\+FIXME. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liczba} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string 
+\end{DoxyReturn}
+\Hypertarget{utils_8h_ac089e062b4a706adc928ca56151be0cc}\index{utils.h@{utils.h}!cleanString@{cleanString}}
+\index{cleanString@{cleanString}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{cleanString()}{cleanString()}}
+{\footnotesize\ttfamily \label{utils_8h_ac089e062b4a706adc928ca56151be0cc} 
+string clean\+String (\begin{DoxyParamCaption}\item[{string}]{tekst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Funkcja do usuwania \textquotesingle{}\+\_\+\textquotesingle{} z tekstu. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tekst} & string do usuniecia \textquotesingle{}\+\_\+\textquotesingle{} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string tekst bez \textquotesingle{}\+\_\+\textquotesingle{} 
+\end{DoxyReturn}
+\Hypertarget{utils_8h_ac42e1796098b72650331481bbe10225e}\index{utils.h@{utils.h}!prntOpis@{prntOpis}}
+\index{prntOpis@{prntOpis}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{prntOpis()}{prntOpis()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{utils_8h_ac42e1796098b72650331481bbe10225e} 
+void prnt\+Opis (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{nazwa}{, }\item[{const map$<$ std::\+string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Funkcja wyświetlająca opis danego budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa} & wskaznik do nazwy budynku z \textquotesingle{}\+\_\+\textquotesingle{} i z różnymi literami \\
+\hline
+{\em baza\+Danych} & wskaznik do bazy danych budynków map$<$std::\+string, Building\+Info$>$ \\
+\hline
+\end{DoxyParams}
+\Hypertarget{utils_8h_a9c4ce36d084d3fb25b7b807b5f4be3b7}\index{utils.h@{utils.h}!prntOpis@{prntOpis}}
+\index{prntOpis@{prntOpis}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{prntOpis()}{prntOpis()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{utils_8h_a9c4ce36d084d3fb25b7b807b5f4be3b7} 
+void prnt\+Opis (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{nazwa}{, }\item[{string \&}]{tekst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Funckja rysująca tekst i nazwe. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa} & tytuł nagłówka \\
+\hline
+{\em tekst} & tekst zawijany \\
+\hline
+\end{DoxyParams}
+\Hypertarget{utils_8h_a4c17ee35ab98eee737b7e7e3c8103791}\index{utils.h@{utils.h}!prntOpis@{prntOpis}}
+\index{prntOpis@{prntOpis}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{prntOpis()}{prntOpis()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{utils_8h_a4c17ee35ab98eee737b7e7e3c8103791} 
+void prnt\+Opis (\begin{DoxyParamCaption}\item[{string \&}]{tekst}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Funckja rysująca tekst. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tekst} & tekst zawijany \\
+\hline
+\end{DoxyParams}
+\Hypertarget{utils_8h_a956da311c2fd388d8b1b11a356dc81cf}\index{utils.h@{utils.h}!prntTooltipTablica@{prntTooltipTablica}}
+\index{prntTooltipTablica@{prntTooltipTablica}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{prntTooltipTablica()}{prntTooltipTablica()}}
+{\footnotesize\ttfamily \label{utils_8h_a956da311c2fd388d8b1b11a356dc81cf} 
+void prnt\+Tooltip\+Tablica (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{nazwa}{, }\item[{const std::\+vector$<$ std::\+pair$<$ std::\+string, std::\+string $>$ $>$ \&}]{dane}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Funkcja rysująca tabelę (uniwersalna). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa} & nazwa nagłówka \\
+\hline
+{\em dane} & wektor par danych do wyswietlenia w tabeli -\/ vector$<$pair$<$string, string$>$$>$ \\
+\hline
+{\em opis} & opis dłuższy napis, pod tabelą \\
+\hline
+\end{DoxyParams}
+\Hypertarget{utils_8h_a951ee0329fdebb9d137fe6c9572f7772}\index{utils.h@{utils.h}!rysujWierszTooltip@{rysujWierszTooltip}}
+\index{rysujWierszTooltip@{rysujWierszTooltip}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{rysujWierszTooltip()}{rysujWierszTooltip()}}
+{\footnotesize\ttfamily \label{utils_8h_a951ee0329fdebb9d137fe6c9572f7772} 
+void rysuj\+Wiersz\+Tooltip (\begin{DoxyParamCaption}\item[{const string \&}]{etykieta}{, }\item[{const string \&}]{wartosc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Funkcja wyswietlajaca jeden wiersz tabeli -\/ Im\+GUI. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em etykieta} & nazwa danego parametru \\
+\hline
+{\em wartosc} & wartosc parametru \\
+\hline
+\end{DoxyParams}
+\Hypertarget{utils_8h_ad2ba521e705d159b08ba6e4423040e92}\index{utils.h@{utils.h}!wyczyscNazwe@{wyczyscNazwe}}
+\index{wyczyscNazwe@{wyczyscNazwe}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{wyczyscNazwe()}{wyczyscNazwe()}}
+{\footnotesize\ttfamily \label{utils_8h_ad2ba521e705d159b08ba6e4423040e92} 
+string wyczysc\+Nazwe (\begin{DoxyParamCaption}\item[{const string \&}]{text}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Czyszczenie nazwy, tak aby pasowała do zapisu albo i nazwy gry Dodawanie "{}\+\_\+"{} albo i usuwanie dziwnych znaków specjalnych. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string 
+\end{DoxyReturn}
+
+
+\label{utils_8h_doc-var-members}
+\Hypertarget{utils_8h_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{utils_8h_a13317a043358a0fb03a7b0efdfdeedfc}\index{utils.h@{utils.h}!globalnaMapaIkonek@{globalnaMapaIkonek}}
+\index{globalnaMapaIkonek@{globalnaMapaIkonek}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{globalnaMapaIkonek}{globalnaMapaIkonek}}
+{\footnotesize\ttfamily \label{utils_8h_a13317a043358a0fb03a7b0efdfdeedfc} 
+std::\+map$<$std::\+string, sf::\+\+Int\+Rect$>$\texorpdfstring{$\ast$}{*} globalna\+Mapa\+Ikonek = nullptr\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{utils_8h_af3f660cd93abd2bc4e9a311da3c7ce2d}\index{utils.h@{utils.h}!globalnaTeksturaIkonek@{globalnaTeksturaIkonek}}
+\index{globalnaTeksturaIkonek@{globalnaTeksturaIkonek}!utils.h@{utils.h}}
+\doxysubsubsection{\texorpdfstring{globalnaTeksturaIkonek}{globalnaTeksturaIkonek}}
+{\footnotesize\ttfamily \label{utils_8h_af3f660cd93abd2bc4e9a311da3c7ce2d} 
+sf::\+\+Texture\texorpdfstring{$\ast$}{*} globalna\+Tekstura\+Ikonek = nullptr\hspace{0.3cm}{\ttfamily [inline]}}
+

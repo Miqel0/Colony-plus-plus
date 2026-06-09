@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['save_0',['save',['../class_building.html#a8de28ebdbaebb914385c4487acf279b3',1,'Building::save()'],['../class_colony.html#a038edf69aab455b720f22b9d271a8e93',1,'Colony::save()'],['../class_energy.html#a2aa959dcb37544dd135367fed7cfdb42',1,'Energy::save()'],['../class_farm.html#a33fec8cf84fad4ccdd6aaaa3072eb1d5',1,'Farm::save()'],['../class_game.html#ab1822918fc2d83932dfc16ee857b92d7',1,'Game::save()'],['../class_housing.html#af69f060aa453a2cbfa945e96a98d0143',1,'Housing::save()'],['../class_logistics.html#a15d3c5baebfb9afdf75b166287aeefa9',1,'Logistics::save()'],['../class_producer.html#af7ebbe4f5fa6b6f6605144b80023143e',1,'Producer::save()'],['../class_terr.html#a0793582363ea32ba72b36307bda8b804',1,'Terr::save()']]],
+  ['savebuildings_1',['saveBuildings',['../class_colony.html#a539b09d597446afb2b3f504cada20f77',1,'Colony']]],
+  ['savecolony_2',['saveColony',['../class_colony.html#a299d755e5709402cf3df7527f9a0d443',1,'Colony']]],
+  ['saveconfig_3',['saveConfig',['../class_game.html#a92addbf8742c1c1293fb1094846ac99d',1,'Game']]],
+  ['setaworkers_4',['setAWorkers',['../class_logistics.html#a66b390faa35762b2309b558d114f98df',1,'Logistics']]],
+  ['setcustom_5',['setCustom',['../class_colony.html#a78ad839ea911704155bf97be715c481e',1,'Colony::setCustom()'],['../class_logistics.html#aad1a38223becbf54409b0d0eec8dc25d',1,'Logistics::setCustom()']]],
+  ['setczyfirst_6',['setCzyFirst',['../class_game.html#a8487b24764dc628afcaa4736fea587b9',1,'Game']]],
+  ['setdworkers_7',['setDWorkers',['../class_logistics.html#a2ed3b4256c4e6e2dbb6fdbaf6f4d995d',1,'Logistics']]],
+  ['setid_8',['setId',['../class_building.html#a3ab0e2edff659165d11946c3cfda98e4',1,'Building']]],
+  ['setnazwa_9',['setNazwa',['../class_colony.html#a75f72fcd0fec02eafa5adbf6c659853f',1,'Colony::setNazwa()'],['../class_game.html#a3909744cb8253655e5be5abc899b94b3',1,'Game::setNazwa()'],['../class_logistics.html#aceadd442886867a106dd07d34741517c',1,'Logistics::setNazwa()']]],
+  ['setostatnizapis_10',['setOstatniZapis',['../class_game.html#ac22fc4b1745cde81d8907a221d0b1240',1,'Game']]],
+  ['setruch_11',['setRuch',['../class_colony.html#a833a41994e92c6dfe5d23b8ffd3a7cf0',1,'Colony::setRuch()'],['../class_logistics.html#a96d16c8ad7141361a11e62076bb09442',1,'Logistics::setRuch()']]],
+  ['setsandbox_12',['setSandbox',['../class_colony.html#afd50ae0f0ddec0e62379eaabf4c86f02',1,'Colony::setSandbox()'],['../class_logistics.html#afe12c8da4bde241536b140e71215d763',1,'Logistics::setSandbox()']]],
+  ['setstone_13',['setStone',['../class_logistics.html#a54fe4c376a3225663cc09ae1076f2e69',1,'Logistics']]],
+  ['settings_14',['SETTINGS',['../utils_8h.html#afc59ee227cec3def02a5813060562e52aed6f7aca7887a927b9ed3d62aa347a86',1,'utils.h']]],
+  ['settitan_15',['setTitan',['../class_logistics.html#a14defbfa1816fd877dcb98cfe1ab9966',1,'Logistics']]],
+  ['settura_16',['setTura',['../class_logistics.html#aa0858b824fde64f369240dcd5316498b',1,'Logistics']]],
+  ['setzapisy_17',['setZapisy',['../class_game.html#aca43e97b79770427546bd4b72839e6aa',1,'Game']]],
+  ['sfml_20imgui_18',['3. Nowy Interfejs Użytkownika (SFML + ImGui)',['../index.html#autotoc_md6',1,'']]],
+  ['sprawdzlvlterr_19',['sprawdzLvlTerr',['../class_colony.html#acddd514a0f30bbba148d05ab09495f16',1,'Colony::sprawdzLvlTerr()'],['../class_logistics.html#a7d35a9a54077e536fd78d74affa80a65',1,'Logistics::sprawdzLvlTerr()']]],
+  ['sprawdzmysz_20',['sprawdzMysz',['../class_buildings_grid.html#a29289a3af96e6161a2feb620487fe379',1,'BuildingsGrid']]],
+  ['struktura_20projektu_21',['4. Struktura Projektu',['../index.html#autotoc_md7',1,'']]],
+  ['stworzbudynek_22',['stworzBudynek',['../class_building_factory.html#a4497f16c0a7581364cbd660388d7b71c',1,'BuildingFactory']]],
+  ['sur_23',['sur',['../struct_destroy_result.html#a384487ba2d8deba45716ac74e30a6d8a',1,'DestroyResult']]],
+  ['system_20windows_24',['Kompilacja Ręczna (System Windows)',['../index.html#autotoc_md11',1,'']]]
+];

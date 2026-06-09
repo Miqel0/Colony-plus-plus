@@ -1,0 +1,129 @@
+\doxysection{graphics.\+h}
+\hypertarget{graphics_8h_source}{}\label{graphics_8h_source}\index{src/graphics.h@{src/graphics.h}}
+\doxymbox{\hyperlink{graphics_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ graphics\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ graphics\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{colony_8h}{colony.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{buildings_grid_8h}{buildingsGrid.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game}{Game}};}
+\DoxyCodeLine{00016\ \textcolor{comment}{//Żeby\ móc\ korzystać\ z\ funkcji\ klasy\ Game\ (i\ wpływać\ na\ różne\ rzeczy)}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c}{Graphics}}\{}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ sf::VideoMode\ screenSize;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ sf::RenderWindow\ window;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ szer;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ wys;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ sf::Texture\ tlo\_menu\_tekstura;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ sf::Sprite\ tlo\_menu\_sprite\{tlo\_menu\_tekstura\};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ sf::Texture\ tlo\_gra\_tekstura;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ sf::Sprite\ tlo\_gra\_sprite\{tlo\_gra\_tekstura\};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Ikonki}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ sf::Texture\ tekstura\_ikonek;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ map\ <string,sf::IntRect>\ ikonki;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Siatka\ budynków}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_buildings_grid}{BuildingsGrid}}\ siatka;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52}{TypEkranu}}\ ekran;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Czcionki}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ ImFont*\ fontDefault\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ ImFont*\ fontHUD\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ ImFont*\ fontMENU\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Kursory}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ std::optional<sf::Cursor>\ kursorDomyslny;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ std::optional<sf::Cursor>\ kursorBudowanie;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ std::optional<sf::Cursor>\ kursorBurzenie;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Wyswietlanie\ itp}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyhelp;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyBudynki;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyBudowa;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyBudowanie;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyBudowanieCategory;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyBudowanieWyniki;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyNextRound;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyNextRound1;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyWyburzanie;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyWyburzanie1;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyWyburzanieKlick;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyPotwierdzicWyjscie;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyDoMenu;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyFistTime;}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyBudynekInfo;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_building_info}{BuildingInfo}}\ trzymanyBudynek;}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyLoad;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czySave;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyGra;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ pair\ <string,int>\ kafelek;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ wybranaKategoriaBudowa;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_build_result}{BuildResult}}\ ostatniWynik;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_next_result}{NextResult}}\ nextWynik;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_destroy_result}{DestroyResult}}\ destroyWynik;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyPokazacPopupSaveLoad;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ wiadomoscPopupa;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ czyWczytanoGre;}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ czasWyswietlaniaBledu\ ;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ sf::Clock\ zegarBledu;}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c}{Graphics}}();}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c}{Graphics}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ szer\_,\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ wys\_);}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_graphics_a7841c9a961ac9bca33bd30ddf8066cdb}{\string~Graphics}}()\{\};}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_ac92cb31e073aa35119e5f358f0584c78}{prntAll}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\ \doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_aa6292cf904bd90b2cdf2d161d67174f4}{prntMenu}}();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a9588e95d002740d48454b539fc753fee}{prntStatystyki}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\ \textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_ae449b4b02baf021fc022e949e214cd00}{prntStatystykiToolTop}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\ map<string,int>\&\ licznik,\ \textcolor{keywordtype}{string}\ cat,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_acab7aefef8703d67370633a4b66aa7f6}{prntPomoc}}();}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_add7e9a64ce673aaba5d4d3af521f174a}{prntBudynki}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\ \textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a926967641054cce1a2375edb3ae1d107}{prntBudowanie}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a80ef4c7cfb0baaf7be1512e6159584b3}{prntBudowanieWyniki}}(\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a73435c15fec4c25506b7324a327da07b}{prntBuildCategory}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ cat,\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\ \textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_aef47399d1b38cbe3ac635502a00212d8}{prntNextRoundButton}}();}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a69f0137210787b578262efdbe77eea4c}{prntCzyNextRound}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a71d519b8e49342a3506a5de87df349e2}{prntNextRound}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_abdde86869c102b06249274c3ec555df7}{prntWyburz}}();}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a2bbe09039b82bccf1ffe10b226ea51f1}{wychodzenie}}();}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a2d621afbe5015b077065d74aa4223864}{ustawStylUI}}();}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a1f479b737d985cc1665eecca28f6f24b}{UIBegin}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\ \doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a7b2a3125eda6a0b3b5805d885aa6b737}{prntGRA}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\ \doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a16e7567b7421b63e322692f9bcc179d2}{prntMenuGlowne}}(\doxymbox{\hyperlink{class_game}{Game}}\&\ gra,\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\ \&kolonia);}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a99d5719f77bb1649a0c1a9718c6fc4ad}{prntMenuGra}}(\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a6e268383abe34b4ad6a1872751d129f4}{prntUstawienia}}(\doxymbox{\hyperlink{class_game}{Game}}\&\ gra);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_accacf1ab98d87737a96d623038050e84}{prntCredits}}();}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a5972346dfbcb3e9d68fbdaf63cc116b1}{prntLoad}}(\doxymbox{\hyperlink{class_game}{Game}}\&\ gra,\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\ \&kolonia,\textcolor{keywordtype}{bool}\ zMenuGlownego);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a262052e081116125ab9257a19063befc}{prntBladBudowanie}}();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_af054c5778faa50bb48e1e03df59e2c3c}{prntBudynekInfo}}(\ \textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\ \&kolonia,pair<string,int>\ inf);}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_ab24f2e1f4563835568648d6a102a1a08}{prntMenuTlo}}(\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych);}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_ae63351bc39470f47333b861df6a40695}{popupSaveLoad}}();}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_graphics_a82f0c77cfd927389b7d408f34e133304}{getCzyBudowa}}();}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_building_info}{BuildingInfo}}\ \doxymbox{\hyperlink{class_graphics_a42208c01b1d8efab994023f7c6ea23d0}{getTrzymanyBudynek}}();}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_graphics_a46d7daefc44d3f7913bda76dd611c0d4}{wczytajIkonki}}();}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ sf::Sprite\ \doxymbox{\hyperlink{class_graphics_a9c2bfeda812388e206df0cad90da02f5}{getIkonka}}(\textcolor{keyword}{const}\ std::string\&\ nazwa);}
+\DoxyCodeLine{00125\ \ \ \ \ \};}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

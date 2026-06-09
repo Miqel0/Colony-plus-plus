@@ -1,0 +1,65 @@
+\doxysection{game.\+h}
+\hypertarget{game_8h_source}{}\label{game_8h_source}\index{src/game.h@{src/game.h}}
+\doxymbox{\hyperlink{game_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ game\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ game\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{colony_8h}{colony.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{graphics_8h}{graphics.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_factory_8h}{buildingFactory.h}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game_ad59df6562a58a614fda24622d3715b65}{Game}}\{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_ad59df6562a58a614fda24622d3715b65}{Game}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_game_ae3d112ca6e0e55150d2fdbc704474530}{\string~Game}}()\{\};}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{comment}{//GRA}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ vector<BuildingInfo>\ \doxymbox{\hyperlink{class_game_a949ef76e4267778d693a0e08603e98b1}{UIprntNewLvlTerr}}();}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_build_result}{BuildResult}}\ \doxymbox{\hyperlink{class_game_a24a9696ffa04c7277be2340e77b3d64a}{UIbuild}}(\doxymbox{\hyperlink{struct_building_info}{BuildingInfo}}\ info,pair<int,int>\ kliknietePole);}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_next_result}{NextResult}}\ \doxymbox{\hyperlink{class_game_acfa2cb2d1cd9940cd173e9fe6e70e9f8}{UINextRound}}();}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_destroy_result}{DestroyResult}}\ \doxymbox{\hyperlink{class_game_a59d62115d609d75ffe636d55616c6145}{UIZburz}}(\textcolor{keywordtype}{string}\ nazwa);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_destroy_result}{DestroyResult}}\ \doxymbox{\hyperlink{class_game_a63c4a1f2fdd0493d323edd7a49913714}{UIZburzID}}(\textcolor{keywordtype}{int}\ ID);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_ab1822918fc2d83932dfc16ee857b92d7}{save}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ nazwa\_zapisu\ );}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_a44daa4affb6d6fff74491be348b8a649}{UIrun}}();}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_a22aa333ee4dc513b84c8bbf707ebb984}{load}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ nazwa\_zapisu\ );}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{comment}{//PLIKI}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_a090a05d18166dadbc05e2aadbbfca6ad}{loadGameData}}();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_ab9a0fb3d98098fb9a7aec8080083a685}{loadConfig}}();}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_a92addbf8742c1c1293fb1094846ac99d}{saveConfig}}();}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ vector<string>\ \doxymbox{\hyperlink{class_game_a61b7df2ed7890d4b90b8172bf8e99a06}{pobierzZapisy}}();}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ vector<string>\&\ \doxymbox{\hyperlink{class_game_a824fdc451a6e033e63be3e0ad9164f73}{getZapisy}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_aca43e97b79770427546bd4b72839e6aa}{setZapisy}}();}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{class_game_a43f4d03e02ce1db3b5e8fd9adf313b61}{getOstatniZapis}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_game_a9071ca2ec519c84708e03b85e8e4e99f}{getCzyFirst}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_ac22fc4b1745cde81d8907a221d0b1240}{setOstatniZapis}}(\textcolor{keywordtype}{string}\ naz);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_a3909744cb8253655e5be5abc899b94b3}{setNazwa}}(\textcolor{keywordtype}{string}\ nazwa);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_game_a8487b24764dc628afcaa4736fea587b9}{setCzyFirst}}();}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ map<string,\ BuildingInfo>\ bazaDanych;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_colony}{Colony}}\ kolonia;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_building_factory}{BuildingFactory}}\ fabryka;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_graphics}{Graphics}}\ grafika;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ vector\ <string>\ zapisy;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ ostatni\_zapis;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ czyFirst;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

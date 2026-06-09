@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['użytkownika_20sfml_20imgui_0',['3. Nowy Interfejs Użytkownika (SFML + ImGui)',['../index.html#autotoc_md6',1,'']]],
+  ['uibegin_1',['UIBegin',['../class_graphics.html#a1f479b737d985cc1665eecca28f6f24b',1,'Graphics']]],
+  ['uibuduj_2',['UIbuduj',['../class_colony.html#a2c1d78a0606ed1ac6867f2c935004178',1,'Colony']]],
+  ['uibuild_3',['UIbuild',['../class_game.html#a24a9696ffa04c7277be2340e77b3d64a',1,'Game']]],
+  ['uiczynextround_4',['UIczyNextRound',['../class_logistics.html#a21d13c008ba4d48b6f0ab3d32e089c9d',1,'Logistics']]],
+  ['uiczystac_5',['UIczyStac',['../class_colony.html#af851582579e863769c438e5ce7936aa1',1,'Colony']]],
+  ['uinextround_6',['UINextRound',['../class_game.html#acfa2cb2d1cd9940cd173e9fe6e70e9f8',1,'Game']]],
+  ['uinextround_7',['UInextRound',['../class_colony.html#a4ff329d878f858b5e2d3b91572aabcef',1,'Colony::UInextRound()'],['../class_logistics.html#a8c7aa4bc9660346c4c59d935022831ef',1,'Logistics::UInextRound()']]],
+  ['uiprnt_8',['UIprnt',['../class_building.html#a7193e4231b0e44fe84f8b98ed04e3bad',1,'Building::UIprnt()'],['../class_energy.html#a8a714fe3a5709a76b9a6bbef0146bccc',1,'Energy::UIprnt()'],['../class_farm.html#aee737bcbfd1e7259b943c2f4b02e7970',1,'Farm::UIprnt()'],['../class_housing.html#ae6960474c95634587f56dea4323efc63',1,'Housing::UIprnt()'],['../class_producer.html#a729bdd4c18d745e5ce7d3fa09851e10e',1,'Producer::UIprnt()'],['../class_terr.html#aacd45760eca6be0ff9c3f9d7ca39ca38',1,'Terr::UIprnt()']]],
+  ['uiprntbuilding_9',['UIprntBuilding',['../class_colony.html#a7d35b0928b6a45ccc03f60baeb36a7d3',1,'Colony']]],
+  ['uiprntbuildingid_10',['UIprntBuildingID',['../class_colony.html#a1fb4ab4beea4f6ccd78f03e83ba8962e',1,'Colony']]],
+  ['uiprntbuildingssumm_11',['UIprntBuildingsSumm',['../class_colony.html#ae3cc3f0ca519474cd3e87105bed03889',1,'Colony']]],
+  ['uiprntnewlvlterr_12',['UIprntNewLvlTerr',['../class_game.html#a949ef76e4267778d693a0e08603e98b1',1,'Game']]],
+  ['uirun_13',['UIrun',['../class_game.html#a44daa4affb6d6fff74491be348b8a649',1,'Game']]],
+  ['uiupdatezburzbudynek_14',['UIupdateZburzBudynek',['../class_logistics.html#ad2babde05a09658619df7afb8785139b',1,'Logistics']]],
+  ['uizburz_15',['UIZburz',['../class_game.html#a59d62115d609d75ffe636d55616c6145',1,'Game']]],
+  ['uizburzbudynek_16',['UIzburzBudynek',['../class_colony.html#aa47d17e97ec896b3d27b14da447e665e',1,'Colony']]],
+  ['uizburzbudynekid_17',['UIzburzBudynekID',['../class_colony.html#a4ff67a364653f2e114720c4458862145',1,'Colony']]],
+  ['uizburzid_18',['UIZburzID',['../class_game.html#a63c4a1f2fdd0493d323edd7a49913714',1,'Game']]],
+  ['updatebudynek_19',['updateBudynek',['../class_logistics.html#a340939a9a5b1664849cd760e67dc8a17',1,'Logistics']]],
+  ['updatelicznik_20',['updateLicznik',['../class_building.html#accc095b3990388741ae69650e4ae1022',1,'Building']]],
+  ['uruchomienie_21',['Instalacja i Uruchomienie',['../index.html#autotoc_md10',1,'']]],
+  ['ustawstylui_22',['ustawStylUI',['../class_graphics.html#a2d621afbe5015b077065d74aa4223864',1,'Graphics']]],
+  ['utils_2eh_23',['utils.h',['../utils_8h.html',1,'']]]
+];

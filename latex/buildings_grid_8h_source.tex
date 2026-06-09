@@ -1,0 +1,64 @@
+\doxysection{buildings\+Grid.\+h}
+\hypertarget{buildings_grid_8h_source}{}\label{buildings_grid_8h_source}\index{src/buildingsGrid.h@{src/buildingsGrid.h}}
+\doxymbox{\hyperlink{buildings_grid_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ buildingsgrid\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ buildingsgrid\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{colony_8h}{colony.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_game}{Game}};\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_buildings_grid_a9f3328c4718f2a97a78c27f4dae09aa4}{BuildingsGrid}}\{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ vector<vector<DaneKafelek>>\ siatka;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//puste\ kafelki\ -\/\ do\ usunieca}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ map<string,sf::Texture>\ texturyBudynki;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ sf::Texture\ kafelek\_tex;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ sf::Texture\ kafelek\_najechany\_tex;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Textury\ kafelkow\ budynków}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ sf::Texture\ atlas\_budynkow;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ kafelek\_x;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ kafelek\_y;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ siatka\_size\_x;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ siatka\_size\_y;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ siatka\_x;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ siatka\_y;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ siatka\_begin\_x;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ siatka\_begin\_y;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ pair<int,int>\ poz\_mysz;\textcolor{comment}{//koordynaty\ na\ siatce}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_buildings_grid_a9f3328c4718f2a97a78c27f4dae09aa4}{BuildingsGrid}}();}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_buildings_grid_a87b8c0181d7008a4a7089093d7028eb5}{\string~BuildingsGrid}}()\{\};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_buildings_grid_a9849f61ee4978affc6a72e6a7e2ba406}{prntSiatka}}(sf::RenderWindow\&\ window,ImVec2\&\ poz,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych,\textcolor{keywordtype}{bool}\ czyBudowanie,\ \textcolor{keywordtype}{string}\ nazwaTrzymanego);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_buildings_grid_a29289a3af96e6161a2feb620487fe379}{sprawdzMysz}}(ImVec2\&\ poz);}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_buildings_grid_a509e46a48523977882947d5272ba19ed}{czyNajechane}}(ImVec2\&\ poz);}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_buildings_grid_a6a6804d19427fdbceecf4c679178af2f}{wczytajTextury}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,\ BuildingInfo>\&\ bazaDanych);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_buildings_grid_ae022c1dcea22cb539a8bd47558662999}{wczytajSiatkaDane}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia,\textcolor{keyword}{const}\ map<string,BuildingInfo>\&\ bazaDanych);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_buildings_grid_a5b488130513bc462da0763750bf78ca5}{wczytajBudynki}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_colony}{Colony}}\&\ kolonia);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_buildings_grid_a1158aefa1921574f544eb8adf9658681}{getID}}(pair<int,int>\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{class_buildings_grid_a6e26cef44061f905dca2a9cfe6993e4f}{getName}}(pair<int,int>\ n)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ pair<int,int>\ \doxymbox{\hyperlink{class_buildings_grid_a73d381fdaade94d76a7b58fd414f4ef2}{getPozMysz}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}{TypKafelka}}\ \doxymbox{\hyperlink{class_buildings_grid_a885437ff77e94280739f1bb80f1546ee}{getTypKafelka}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00061\ \ \ \ \ \};}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

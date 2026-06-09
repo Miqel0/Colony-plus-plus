@@ -1,0 +1,36 @@
+\doxysection{farm.\+h}
+\hypertarget{farm_8h_source}{}\label{farm_8h_source}\index{src/farm.h@{src/farm.h}}
+\doxymbox{\hyperlink{farm_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ farm\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ farm\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_8h}{building.h}}"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_farm_a515288a04c6a229b1751e6ca283d136b}{Farm}}:\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}}\{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ foodGen;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ time;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ curr\_time;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{comment}{//KONSTRUKTOR}}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_farm_a515288a04c6a229b1751e6ca283d136b}{Farm}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_farm_a515288a04c6a229b1751e6ca283d136b}{Farm}}(\textcolor{keywordtype}{string}\ n,\ \textcolor{keywordtype}{int}\ kE,\textcolor{keywordtype}{int}\ kK,\ \textcolor{keywordtype}{int}\ kT,\ \textcolor{keywordtype}{int}\ f,\textcolor{keywordtype}{int}\ w,\textcolor{keywordtype}{int}\ tim,\textcolor{keywordtype}{int}\ ct,\ \textcolor{keywordtype}{int}\ X\_,\textcolor{keywordtype}{int}\ Y\_);}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_farm_a551fad409c44962866226b3eb4d4b518}{\string~Farm}}()\{\};}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{comment}{//OVERRIDE}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_farm_a888adf57ed0a9b355db90541e9a68b76}{work}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_farm_aee737bcbfd1e7259b943c2f4b02e7970}{UIprnt}}(\textcolor{keywordtype}{int}\ il)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_farm_a33fec8cf84fad4ccdd6aaaa3072eb1d5}{save}}(ofstream\&\ plik)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

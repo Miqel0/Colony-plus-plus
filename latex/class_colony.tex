@@ -1,0 +1,475 @@
+\doxysection{Colony Class Reference}
+\hypertarget{class_colony}{}\label{class_colony}\index{Colony@{Colony}}
+
+
+Klasa zarządzająca budynkami, zawiera w sobie:\+ \doxylink{class_logistics}{Logistics} f\+\_\+logisyka.  
+
+
+
+
+{\ttfamily \+\#include $<$colony.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_colony_aaf760edad97dee7263b86913d3bb4f98}{Colony}} ()
+\item 
+\doxymbox{\hyperlink{class_colony_a9cebe4a25260c8da7c99d10b0dab5a4e}{\texorpdfstring{$\sim$}{\string~}\+Colony}} ()
+\item 
+map$<$ string, int $>$ \doxymbox{\hyperlink{class_colony_ae3cc3f0ca519474cd3e87105bed03889}{UIprnt\+Buildings\+Summ}} () const
+\begin{DoxyCompactList}\small\item\em Funkcja tworząca mapę z vectora zbudowanych budynków. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_a7d35b0928b6a45ccc03f60baeb36a7d3}{UIprnt\+Building}} (string bud) const
+\begin{DoxyCompactList}\small\item\em Wyświetlanie parametrów budynku o danej nazwie. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_a1fb4ab4beea4f6ccd78f03e83ba8962e}{UIprnt\+Building\+ID}} (int ID) const
+\begin{DoxyCompactList}\small\item\em Wyświetlanie parametrów budynku o danej nazwie. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_build_result}{Build\+Result}} \doxymbox{\hyperlink{class_colony_af851582579e863769c438e5ce7936aa1}{UIczy\+Stac}} (const unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ \&b) const
+\begin{DoxyCompactList}\small\item\em Sprawdzanie wymaganych parametrow do zbudowania. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_a1d1ee653fd8d89792ff72966c7ac2a78}{add\+Building}} (unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ b)
+\begin{DoxyCompactList}\small\item\em Funkcja pomocniczna do budowania. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_build_result}{Build\+Result}} \doxymbox{\hyperlink{class_colony_a2c1d78a0606ed1ac6867f2c935004178}{UIbuduj}} (unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ b)
+\begin{DoxyCompactList}\small\item\em Funkcja budująca budynek -\/ ostateczna. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} \doxymbox{\hyperlink{class_colony_aa47d17e97ec896b3d27b14da447e665e}{UIzburz\+Budynek}} (string nazwa)
+\begin{DoxyCompactList}\small\item\em Funckaj burząca budynek i sprawdzająca wymogi. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} \doxymbox{\hyperlink{class_colony_a4ff67a364653f2e114720c4458862145}{UIzburz\+Budynek\+ID}} (int ID)
+\begin{DoxyCompactList}\small\item\em Funckaj burząca budynek i sprawdzająca wymogi. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} \doxymbox{\hyperlink{class_colony_a4ff329d878f858b5e2d3b91572aabcef}{UInext\+Round}} ()
+\begin{DoxyCompactList}\small\item\em Funkcja wywoływująca funkcję UIczy\+Next\+Round z \doxylink{class_logistics}{Logistics}. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_colony_acddd514a0f30bbba148d05ab09495f16}{sprawdz\+Lvl\+Terr}} ()
+\begin{DoxyCompactList}\small\item\em Sprawdzanie czy nie nastąpiło przejście na kolejny poziom. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_a539b09d597446afb2b3f504cada20f77}{save\+Buildings}} (string nazwa\+\_\+plik)
+\begin{DoxyCompactList}\small\item\em Zapisywanie wszystkich budynków. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_adfb58da26816edbe09d92ca831bfe44f}{load\+Buildings}} (string nazwa\+\_\+plik)
+\begin{DoxyCompactList}\small\item\em Wczytywanie wszystkich budynków. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_a299d755e5709402cf3df7527f9a0d443}{save\+Colony}} (string nazwa\+\_\+plik)
+\begin{DoxyCompactList}\small\item\em Zapisywanie danych z \doxylink{class_logistics}{Logistics} -\/ parametry. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_a223ec55bce5770c3aa1cee78839bc047}{load\+Colony}} (string nazwa\+\_\+plik)
+\item 
+void \doxymbox{\hyperlink{class_colony_a038edf69aab455b720f22b9d271a8e93}{save}} (const string \&nazwa\+\_\+zapisu)
+\begin{DoxyCompactList}\small\item\em Zapisywanie wszystkiego -\/ save. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_a4a411469e5999cd2371d6aaea7e519f2}{load}} (const string \&nazwa\+\_\+zapisu)
+\begin{DoxyCompactList}\small\item\em Wczytywanie wszystkiego. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_colony_afd50ae0f0ddec0e62379eaabf4c86f02}{set\+Sandbox}} ()
+\item 
+void \doxymbox{\hyperlink{class_colony_a78ad839ea911704155bf97be715c481e}{set\+Custom}} ()
+\item 
+void \doxymbox{\hyperlink{class_colony_a833a41994e92c6dfe5d23b8ffd3a7cf0}{set\+Ruch}} (int r)
+\item 
+void \doxymbox{\hyperlink{class_colony_a75f72fcd0fec02eafa5adbf6c659853f}{set\+Nazwa}} (string nazwa)
+\item 
+int \doxymbox{\hyperlink{class_colony_a035a2542ba8a353b790320dd8de629fa}{get\+Ruch}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a1b06443f8e1f427f8a29d7b8b8888c58}{get\+Ilosc\+Budynkow}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a576245c0f4748fa978a11da4413368d6}{get\+All\+Workers}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_adb550ab69701ec1cd3d7827de66938cb}{get\+Demand\+Workers}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a241bbbd9fc72de306e8e705e2c07bede}{get\+Ilosc}} (string name) const
+\item 
+int \doxymbox{\hyperlink{class_colony_aacf24c92b8e11d87090629f59525d2a6}{get\+To\+Next\+Lvl\+Terr}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a79dd595c65828a92be4e2862d2e57afb}{get\+Lvl\+Terr}} () const
+\item 
+string \doxymbox{\hyperlink{class_colony_af368070ca3cdd252e0178e6fc74964d9}{get\+Nazwa}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a77c1ee2e927e2d70b74f9855e75f8245}{get\+Tura}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a12e79f9b71e5fcbb7919ee91f9207487}{get\+Req\+Energy}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_aa41389d84c117bae78a7d8175f3d4b10}{get\+Gen\+Energy}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_afd82e54582d9dc53896fb24e9af1b8e1}{get\+Req\+Food}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a8a8f7d15af752b931e08d7b58cbe05a1}{get\+Food}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_a1dfc4574ce36ea5b580f83c881c4362b}{get\+Stone}} () const
+\item 
+int \doxymbox{\hyperlink{class_colony_ad6795974fdf9fee16b93db7a120a7c9f}{get\+Titan}} () const
+\item 
+vector$<$ \doxymbox{\hyperlink{struct_dane_kafelek}{Dane\+Kafelek}} $>$ \doxymbox{\hyperlink{class_colony_a2f889087de2b39470605f9ec613247ba}{get\+Budynki}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa zarządzająca budynkami, zawiera w sobie:\+ \doxylink{class_logistics}{Logistics} f\+\_\+logisyka. 
+
+\label{class_colony_doc-constructors}
+\Hypertarget{class_colony_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_colony_aaf760edad97dee7263b86913d3bb4f98}\index{Colony@{Colony}!Colony@{Colony}}
+\index{Colony@{Colony}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{Colony()}{Colony()}}
+{\footnotesize\ttfamily \label{class_colony_aaf760edad97dee7263b86913d3bb4f98} 
+Colony::\+\+Colony (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_colony_a9cebe4a25260c8da7c99d10b0dab5a4e}\index{Colony@{Colony}!````~Colony@{\texorpdfstring{$\sim$}{\string~}Colony}}
+\index{````~Colony@{\texorpdfstring{$\sim$}{\string~}Colony}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Colony()}{\string~Colony()}}
+{\footnotesize\ttfamily \label{class_colony_a9cebe4a25260c8da7c99d10b0dab5a4e} 
+Colony::\+\texorpdfstring{$\sim$}{\string~}\+Colony (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{class_colony_doc-func-members}
+\Hypertarget{class_colony_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_colony_a1d1ee653fd8d89792ff72966c7ac2a78}\index{Colony@{Colony}!addBuilding@{addBuilding}}
+\index{addBuilding@{addBuilding}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{addBuilding()}{addBuilding()}}
+{\footnotesize\ttfamily \label{class_colony_a1d1ee653fd8d89792ff72966c7ac2a78} 
+void Colony::\+add\+Building (\begin{DoxyParamCaption}\item[{unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja pomocniczna do budowania. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & Budynek do zbudowania \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_colony_a576245c0f4748fa978a11da4413368d6}\index{Colony@{Colony}!getAllWorkers@{getAllWorkers}}
+\index{getAllWorkers@{getAllWorkers}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getAllWorkers()}{getAllWorkers()}}
+{\footnotesize\ttfamily \label{class_colony_a576245c0f4748fa978a11da4413368d6} 
+int Colony::\+get\+All\+Workers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a2f889087de2b39470605f9ec613247ba}\index{Colony@{Colony}!getBudynki@{getBudynki}}
+\index{getBudynki@{getBudynki}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getBudynki()}{getBudynki()}}
+{\footnotesize\ttfamily \label{class_colony_a2f889087de2b39470605f9ec613247ba} 
+vector$<$ \doxymbox{\hyperlink{struct_dane_kafelek}{Dane\+Kafelek}} $>$ Colony::\+get\+Budynki (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_adb550ab69701ec1cd3d7827de66938cb}\index{Colony@{Colony}!getDemandWorkers@{getDemandWorkers}}
+\index{getDemandWorkers@{getDemandWorkers}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getDemandWorkers()}{getDemandWorkers()}}
+{\footnotesize\ttfamily \label{class_colony_adb550ab69701ec1cd3d7827de66938cb} 
+int Colony::\+get\+Demand\+Workers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a8a8f7d15af752b931e08d7b58cbe05a1}\index{Colony@{Colony}!getFood@{getFood}}
+\index{getFood@{getFood}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getFood()}{getFood()}}
+{\footnotesize\ttfamily \label{class_colony_a8a8f7d15af752b931e08d7b58cbe05a1} 
+int Colony::\+get\+Food (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_aa41389d84c117bae78a7d8175f3d4b10}\index{Colony@{Colony}!getGenEnergy@{getGenEnergy}}
+\index{getGenEnergy@{getGenEnergy}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getGenEnergy()}{getGenEnergy()}}
+{\footnotesize\ttfamily \label{class_colony_aa41389d84c117bae78a7d8175f3d4b10} 
+int Colony::\+get\+Gen\+Energy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a241bbbd9fc72de306e8e705e2c07bede}\index{Colony@{Colony}!getIlosc@{getIlosc}}
+\index{getIlosc@{getIlosc}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getIlosc()}{getIlosc()}}
+{\footnotesize\ttfamily \label{class_colony_a241bbbd9fc72de306e8e705e2c07bede} 
+int Colony::\+get\+Ilosc (\begin{DoxyParamCaption}\item[{string}]{name}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a1b06443f8e1f427f8a29d7b8b8888c58}\index{Colony@{Colony}!getIloscBudynkow@{getIloscBudynkow}}
+\index{getIloscBudynkow@{getIloscBudynkow}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getIloscBudynkow()}{getIloscBudynkow()}}
+{\footnotesize\ttfamily \label{class_colony_a1b06443f8e1f427f8a29d7b8b8888c58} 
+int Colony::\+get\+Ilosc\+Budynkow (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a79dd595c65828a92be4e2862d2e57afb}\index{Colony@{Colony}!getLvlTerr@{getLvlTerr}}
+\index{getLvlTerr@{getLvlTerr}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getLvlTerr()}{getLvlTerr()}}
+{\footnotesize\ttfamily \label{class_colony_a79dd595c65828a92be4e2862d2e57afb} 
+int Colony::\+get\+Lvl\+Terr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_af368070ca3cdd252e0178e6fc74964d9}\index{Colony@{Colony}!getNazwa@{getNazwa}}
+\index{getNazwa@{getNazwa}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getNazwa()}{getNazwa()}}
+{\footnotesize\ttfamily \label{class_colony_af368070ca3cdd252e0178e6fc74964d9} 
+string Colony::\+get\+Nazwa (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a12e79f9b71e5fcbb7919ee91f9207487}\index{Colony@{Colony}!getReqEnergy@{getReqEnergy}}
+\index{getReqEnergy@{getReqEnergy}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getReqEnergy()}{getReqEnergy()}}
+{\footnotesize\ttfamily \label{class_colony_a12e79f9b71e5fcbb7919ee91f9207487} 
+int Colony::\+get\+Req\+Energy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_afd82e54582d9dc53896fb24e9af1b8e1}\index{Colony@{Colony}!getReqFood@{getReqFood}}
+\index{getReqFood@{getReqFood}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getReqFood()}{getReqFood()}}
+{\footnotesize\ttfamily \label{class_colony_afd82e54582d9dc53896fb24e9af1b8e1} 
+int Colony::\+get\+Req\+Food (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a035a2542ba8a353b790320dd8de629fa}\index{Colony@{Colony}!getRuch@{getRuch}}
+\index{getRuch@{getRuch}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getRuch()}{getRuch()}}
+{\footnotesize\ttfamily \label{class_colony_a035a2542ba8a353b790320dd8de629fa} 
+int Colony::\+get\+Ruch (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a1dfc4574ce36ea5b580f83c881c4362b}\index{Colony@{Colony}!getStone@{getStone}}
+\index{getStone@{getStone}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getStone()}{getStone()}}
+{\footnotesize\ttfamily \label{class_colony_a1dfc4574ce36ea5b580f83c881c4362b} 
+int Colony::\+get\+Stone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_ad6795974fdf9fee16b93db7a120a7c9f}\index{Colony@{Colony}!getTitan@{getTitan}}
+\index{getTitan@{getTitan}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getTitan()}{getTitan()}}
+{\footnotesize\ttfamily \label{class_colony_ad6795974fdf9fee16b93db7a120a7c9f} 
+int Colony::\+get\+Titan (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_aacf24c92b8e11d87090629f59525d2a6}\index{Colony@{Colony}!getToNextLvlTerr@{getToNextLvlTerr}}
+\index{getToNextLvlTerr@{getToNextLvlTerr}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getToNextLvlTerr()}{getToNextLvlTerr()}}
+{\footnotesize\ttfamily \label{class_colony_aacf24c92b8e11d87090629f59525d2a6} 
+int Colony::\+get\+To\+Next\+Lvl\+Terr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a77c1ee2e927e2d70b74f9855e75f8245}\index{Colony@{Colony}!getTura@{getTura}}
+\index{getTura@{getTura}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{getTura()}{getTura()}}
+{\footnotesize\ttfamily \label{class_colony_a77c1ee2e927e2d70b74f9855e75f8245} 
+int Colony::\+get\+Tura (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_colony_a4a411469e5999cd2371d6aaea7e519f2}\index{Colony@{Colony}!load@{load}}
+\index{load@{load}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{class_colony_a4a411469e5999cd2371d6aaea7e519f2} 
+void Colony::\+load (\begin{DoxyParamCaption}\item[{const string \&}]{nazwa\+\_\+zapisu}{}\end{DoxyParamCaption})}
+
+
+
+Wczytywanie wszystkiego. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa\+\_\+plik} & plik do zapisu parametrów kolonii \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_colony_adfb58da26816edbe09d92ca831bfe44f}\index{Colony@{Colony}!loadBuildings@{loadBuildings}}
+\index{loadBuildings@{loadBuildings}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{loadBuildings()}{loadBuildings()}}
+{\footnotesize\ttfamily \label{class_colony_adfb58da26816edbe09d92ca831bfe44f} 
+void Colony::\+load\+Buildings (\begin{DoxyParamCaption}\item[{string}]{nazwa\+\_\+plik}{}\end{DoxyParamCaption})}
+
+
+
+Wczytywanie wszystkich budynków. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa\+\_\+plik} & plik do zapisu budynków \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_colony_a223ec55bce5770c3aa1cee78839bc047}\index{Colony@{Colony}!loadColony@{loadColony}}
+\index{loadColony@{loadColony}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{loadColony()}{loadColony()}}
+{\footnotesize\ttfamily \label{class_colony_a223ec55bce5770c3aa1cee78839bc047} 
+void Colony::\+load\+Colony (\begin{DoxyParamCaption}\item[{string}]{nazwa\+\_\+plik}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_colony_a038edf69aab455b720f22b9d271a8e93}\index{Colony@{Colony}!save@{save}}
+\index{save@{save}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_colony_a038edf69aab455b720f22b9d271a8e93} 
+void Colony::\+save (\begin{DoxyParamCaption}\item[{const string \&}]{nazwa\+\_\+zapisu}{}\end{DoxyParamCaption})}
+
+
+
+Zapisywanie wszystkiego -\/ save. 
+
+\Hypertarget{class_colony_a539b09d597446afb2b3f504cada20f77}\index{Colony@{Colony}!saveBuildings@{saveBuildings}}
+\index{saveBuildings@{saveBuildings}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{saveBuildings()}{saveBuildings()}}
+{\footnotesize\ttfamily \label{class_colony_a539b09d597446afb2b3f504cada20f77} 
+void Colony::\+save\+Buildings (\begin{DoxyParamCaption}\item[{string}]{nazwa\+\_\+plik}{}\end{DoxyParamCaption})}
+
+
+
+Zapisywanie wszystkich budynków. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa\+\_\+plik} & plik do zapisu budynków \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_colony_a299d755e5709402cf3df7527f9a0d443}\index{Colony@{Colony}!saveColony@{saveColony}}
+\index{saveColony@{saveColony}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{saveColony()}{saveColony()}}
+{\footnotesize\ttfamily \label{class_colony_a299d755e5709402cf3df7527f9a0d443} 
+void Colony::\+save\+Colony (\begin{DoxyParamCaption}\item[{string}]{nazwa\+\_\+plik}{}\end{DoxyParamCaption})}
+
+
+
+Zapisywanie danych z \doxylink{class_logistics}{Logistics} -\/ parametry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa\+\_\+plik} & plik do zapisu parametrów kolonii \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_colony_a78ad839ea911704155bf97be715c481e}\index{Colony@{Colony}!setCustom@{setCustom}}
+\index{setCustom@{setCustom}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{setCustom()}{setCustom()}}
+{\footnotesize\ttfamily \label{class_colony_a78ad839ea911704155bf97be715c481e} 
+void Colony::\+set\+Custom (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_colony_a75f72fcd0fec02eafa5adbf6c659853f}\index{Colony@{Colony}!setNazwa@{setNazwa}}
+\index{setNazwa@{setNazwa}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{setNazwa()}{setNazwa()}}
+{\footnotesize\ttfamily \label{class_colony_a75f72fcd0fec02eafa5adbf6c659853f} 
+void Colony::\+set\+Nazwa (\begin{DoxyParamCaption}\item[{string}]{nazwa}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_colony_a833a41994e92c6dfe5d23b8ffd3a7cf0}\index{Colony@{Colony}!setRuch@{setRuch}}
+\index{setRuch@{setRuch}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{setRuch()}{setRuch()}}
+{\footnotesize\ttfamily \label{class_colony_a833a41994e92c6dfe5d23b8ffd3a7cf0} 
+void Colony::\+set\+Ruch (\begin{DoxyParamCaption}\item[{int}]{r}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_colony_afd50ae0f0ddec0e62379eaabf4c86f02}\index{Colony@{Colony}!setSandbox@{setSandbox}}
+\index{setSandbox@{setSandbox}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{setSandbox()}{setSandbox()}}
+{\footnotesize\ttfamily \label{class_colony_afd50ae0f0ddec0e62379eaabf4c86f02} 
+void Colony::\+set\+Sandbox (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_colony_acddd514a0f30bbba148d05ab09495f16}\index{Colony@{Colony}!sprawdzLvlTerr@{sprawdzLvlTerr}}
+\index{sprawdzLvlTerr@{sprawdzLvlTerr}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{sprawdzLvlTerr()}{sprawdzLvlTerr()}}
+{\footnotesize\ttfamily \label{class_colony_acddd514a0f30bbba148d05ab09495f16} 
+bool Colony::\+sprawdz\+Lvl\+Terr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Sprawdzanie czy nie nastąpiło przejście na kolejny poziom. 
+
+\begin{DoxyReturn}{Returns}
+true tak 
+
+false nie 
+\end{DoxyReturn}
+\Hypertarget{class_colony_a2c1d78a0606ed1ac6867f2c935004178}\index{Colony@{Colony}!UIbuduj@{UIbuduj}}
+\index{UIbuduj@{UIbuduj}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UIbuduj()}{UIbuduj()}}
+{\footnotesize\ttfamily \label{class_colony_a2c1d78a0606ed1ac6867f2c935004178} 
+\doxymbox{\hyperlink{struct_build_result}{Build\+Result}} Colony::\+\+UIbuduj (\begin{DoxyParamCaption}\item[{unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$}]{b}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja budująca budynek -\/ ostateczna. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & budynek do zbudowania \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_build_result}{Build\+Result} wynik budowy 
+\end{DoxyReturn}
+\Hypertarget{class_colony_af851582579e863769c438e5ce7936aa1}\index{Colony@{Colony}!UIczyStac@{UIczyStac}}
+\index{UIczyStac@{UIczyStac}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UIczyStac()}{UIczyStac()}}
+{\footnotesize\ttfamily \label{class_colony_af851582579e863769c438e5ce7936aa1} 
+\doxymbox{\hyperlink{struct_build_result}{Build\+Result}} Colony::\+\+UIczy\+Stac (\begin{DoxyParamCaption}\item[{const unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ \&}]{b}{}\end{DoxyParamCaption}) const}
+
+
+
+Sprawdzanie wymaganych parametrow do zbudowania. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em b} & wskaznik na budowany budynek \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_build_result}{Build\+Result} paczka wynikow budowania 
+\end{DoxyReturn}
+\Hypertarget{class_colony_a4ff329d878f858b5e2d3b91572aabcef}\index{Colony@{Colony}!UInextRound@{UInextRound}}
+\index{UInextRound@{UInextRound}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UInextRound()}{UInextRound()}}
+{\footnotesize\ttfamily \label{class_colony_a4ff329d878f858b5e2d3b91572aabcef} 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} Colony::\+\+UInext\+Round (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wywoływująca funkcję UIczy\+Next\+Round z \doxylink{class_logistics}{Logistics}. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_next_result}{Next\+Result} pakiet wyników z Next\+Round 
+\end{DoxyReturn}
+\Hypertarget{class_colony_a7d35b0928b6a45ccc03f60baeb36a7d3}\index{Colony@{Colony}!UIprntBuilding@{UIprntBuilding}}
+\index{UIprntBuilding@{UIprntBuilding}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UIprntBuilding()}{UIprntBuilding()}}
+{\footnotesize\ttfamily \label{class_colony_a7d35b0928b6a45ccc03f60baeb36a7d3} 
+void Colony::\+\+UIprnt\+Building (\begin{DoxyParamCaption}\item[{string}]{bud}{}\end{DoxyParamCaption}) const}
+
+
+
+Wyświetlanie parametrów budynku o danej nazwie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+param nazwa budynku \Hypertarget{class_colony_a1fb4ab4beea4f6ccd78f03e83ba8962e}\index{Colony@{Colony}!UIprntBuildingID@{UIprntBuildingID}}
+\index{UIprntBuildingID@{UIprntBuildingID}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UIprntBuildingID()}{UIprntBuildingID()}}
+{\footnotesize\ttfamily \label{class_colony_a1fb4ab4beea4f6ccd78f03e83ba8962e} 
+void Colony::\+\+UIprnt\+Building\+ID (\begin{DoxyParamCaption}\item[{int}]{ID}{}\end{DoxyParamCaption}) const}
+
+
+
+Wyświetlanie parametrów budynku o danej nazwie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+param nazwa budynku \Hypertarget{class_colony_ae3cc3f0ca519474cd3e87105bed03889}\index{Colony@{Colony}!UIprntBuildingsSumm@{UIprntBuildingsSumm}}
+\index{UIprntBuildingsSumm@{UIprntBuildingsSumm}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UIprntBuildingsSumm()}{UIprntBuildingsSumm()}}
+{\footnotesize\ttfamily \label{class_colony_ae3cc3f0ca519474cd3e87105bed03889} 
+map$<$ string, int $>$ Colony::\+\+UIprnt\+Buildings\+Summ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Funkcja tworząca mapę z vectora zbudowanych budynków. 
+
+\begin{DoxyReturn}{Returns}
+map$<$string,int$>$ zawiera liczbę zbudowanych kolejnych budynków. 
+\end{DoxyReturn}
+\Hypertarget{class_colony_aa47d17e97ec896b3d27b14da447e665e}\index{Colony@{Colony}!UIzburzBudynek@{UIzburzBudynek}}
+\index{UIzburzBudynek@{UIzburzBudynek}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UIzburzBudynek()}{UIzburzBudynek()}}
+{\footnotesize\ttfamily \label{class_colony_aa47d17e97ec896b3d27b14da447e665e} 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} Colony::\+\+UIzburz\+Budynek (\begin{DoxyParamCaption}\item[{string}]{nazwa}{}\end{DoxyParamCaption})}
+
+
+
+Funckaj burząca budynek i sprawdzająca wymogi. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa} & nazwa budynku do zburzenia \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_destroy_result}{Destroy\+Result} paczka wynikowa 
+\end{DoxyReturn}
+\Hypertarget{class_colony_a4ff67a364653f2e114720c4458862145}\index{Colony@{Colony}!UIzburzBudynekID@{UIzburzBudynekID}}
+\index{UIzburzBudynekID@{UIzburzBudynekID}!Colony@{Colony}}
+\doxysubsubsection{\texorpdfstring{UIzburzBudynekID()}{UIzburzBudynekID()}}
+{\footnotesize\ttfamily \label{class_colony_a4ff67a364653f2e114720c4458862145} 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} Colony::\+\+UIzburz\+Budynek\+ID (\begin{DoxyParamCaption}\item[{int}]{ID}{}\end{DoxyParamCaption})}
+
+
+
+Funckaj burząca budynek i sprawdzająca wymogi. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa} & nazwa budynku do zburzenia \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_destroy_result}{Destroy\+Result} paczka wynikowa 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{colony_8h}{colony.\+h}}\item 
+src/\+\doxymbox{\hyperlink{colony_8cpp}{colony.\+cpp}}\end{DoxyCompactItemize}

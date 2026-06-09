@@ -1,0 +1,41 @@
+\doxysection{producer.\+h}
+\hypertarget{producer_8h_source}{}\label{producer_8h_source}\index{src/producer.h@{src/producer.h}}
+\doxymbox{\hyperlink{producer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ producer\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ producer\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_8h}{building.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_producer_ab79ff8b19e682d144e40044485cb81b8}{Producer}}:\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}}\{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ stoneGen;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ titanGen;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{//KONSTRUKTORY}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_producer_ab79ff8b19e682d144e40044485cb81b8}{Producer}}();}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_producer_ab79ff8b19e682d144e40044485cb81b8}{Producer}}(\textcolor{keywordtype}{string}\ n,\ \textcolor{keywordtype}{int}\ kE,\textcolor{keywordtype}{int}\ kK,\ \textcolor{keywordtype}{int}\ kT,\ \textcolor{keywordtype}{int}\ s,\textcolor{keywordtype}{int}\ w,\textcolor{keywordtype}{int}\ ti,\ \textcolor{keywordtype}{int}\ X\_,\textcolor{keywordtype}{int}\ Y\_);}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_producer_a7afd4d7517a4ff646d6faae2a5e0a201}{\string~Producer}}()\{\};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{//OVERRIDE}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_producer_ae01ec0389bf84d9356d659acf3d0c961}{work}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_producer_a729bdd4c18d745e5ce7d3fa09851e10e}{UIprnt}}(\textcolor{keywordtype}{int}\ il)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_producer_af7ebbe4f5fa6b6f6605144b80023143e}{save}}(ofstream\&\ plik)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//GETTERY}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_producer_a02cc62187323440c868f8a92b87b0db5}{getGenTitan}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ }
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

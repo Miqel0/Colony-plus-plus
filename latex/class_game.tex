@@ -1,0 +1,282 @@
+\doxysection{Game Class Reference}
+\hypertarget{class_game}{}\label{class_game}\index{Game@{Game}}
+
+
+Klasa zawierająca w sobie ogólną logikę gry, ma w sobie:\+ \doxylink{class_colony}{Colony} kolonia, \doxylink{class_graphics}{Graphics} grafika, \doxylink{class_building_factory}{Building\+Factory} fabryka, map$<$string, Building\+Info$>$ baza\+Danych.  
+
+
+
+
+{\ttfamily \+\#include $<$game.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_game_ad59df6562a58a614fda24622d3715b65}{Game}} ()
+\item 
+\doxymbox{\hyperlink{class_game_ae3d112ca6e0e55150d2fdbc704474530}{\texorpdfstring{$\sim$}{\string~}\+Game}} ()
+\item 
+vector$<$ \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \doxymbox{\hyperlink{class_game_a949ef76e4267778d693a0e08603e98b1}{UIprnt\+New\+Lvl\+Terr}} ()
+\begin{DoxyCompactList}\small\item\em Przekazywanie danych do wyświetlenia nowych budynków przy osiagnieciu nowego poziomu. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_build_result}{Build\+Result}} \doxymbox{\hyperlink{class_game_a24a9696ffa04c7277be2340e77b3d64a}{UIbuild}} (\doxymbox{\hyperlink{struct_building_info}{Building\+Info}} info, pair$<$ int, int $>$ klikniete\+Pole)
+\begin{DoxyCompactList}\small\item\em Funckja budujaca budynek. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} \doxymbox{\hyperlink{class_game_acfa2cb2d1cd9940cd173e9fe6e70e9f8}{UINext\+Round}} ()
+\begin{DoxyCompactList}\small\item\em Funkcja wywoływująca funkcję Next\+Round z \doxylink{class_colony}{Colony}. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} \doxymbox{\hyperlink{class_game_a59d62115d609d75ffe636d55616c6145}{UIZburz}} (string nazwa)
+\begin{DoxyCompactList}\small\item\em Przekazanie nazwy do zburzenia budynku. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} \doxymbox{\hyperlink{class_game_a63c4a1f2fdd0493d323edd7a49913714}{UIZburz\+ID}} (int ID)
+\begin{DoxyCompactList}\small\item\em Przekazanie ID do zburzenia budynku. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_ab1822918fc2d83932dfc16ee857b92d7}{save}} (const string \&nazwa\+\_\+zapisu)
+\item 
+void \doxymbox{\hyperlink{class_game_a44daa4affb6d6fff74491be348b8a649}{UIrun}} ()
+\begin{DoxyCompactList}\small\item\em Funkcja wczytująca grę z plików oraz zaczynająca pętlę graficzną \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_a22aa333ee4dc513b84c8bbf707ebb984}{load}} (const string \&nazwa\+\_\+zapisu)
+\item 
+void \doxymbox{\hyperlink{class_game_a090a05d18166dadbc05e2aadbbfca6ad}{load\+Game\+Data}} ()
+\begin{DoxyCompactList}\small\item\em Wczytywanie parametrów budynków z pliku gamedata.\+txt -\/ tylko na poczatku gry. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_ab9a0fb3d98098fb9a7aec8080083a685}{load\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Jakaś funkcja do wczytywania ustawień itp. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_game_a92addbf8742c1c1293fb1094846ac99d}{save\+Config}} ()
+\begin{DoxyCompactList}\small\item\em Zapisywanie ustawień do pliku config.\+txt. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \doxymbox{\hyperlink{class_game_a61b7df2ed7890d4b90b8172bf8e99a06}{pobierz\+Zapisy}} ()
+\begin{DoxyCompactList}\small\item\em Wczytywanie dostępnych zapisów z folderu z zapisami. \end{DoxyCompactList}\item 
+vector$<$ string $>$ \& \doxymbox{\hyperlink{class_game_a824fdc451a6e033e63be3e0ad9164f73}{get\+Zapisy}} ()
+\item 
+void \doxymbox{\hyperlink{class_game_aca43e97b79770427546bd4b72839e6aa}{set\+Zapisy}} ()
+\begin{DoxyCompactList}\small\item\em Zaktualizowanie listy zapisów. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{class_game_a43f4d03e02ce1db3b5e8fd9adf313b61}{get\+Ostatni\+Zapis}} () const
+\begin{DoxyCompactList}\small\item\em Zwracanie nazwy ostatniego zapisu. \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_game_a9071ca2ec519c84708e03b85e8e4e99f}{get\+Czy\+First}} () const
+\item 
+void \doxymbox{\hyperlink{class_game_ac22fc4b1745cde81d8907a221d0b1240}{set\+Ostatni\+Zapis}} (string naz)
+\item 
+void \doxymbox{\hyperlink{class_game_a3909744cb8253655e5be5abc899b94b3}{set\+Nazwa}} (string nazwa)
+\item 
+void \doxymbox{\hyperlink{class_game_a8487b24764dc628afcaa4736fea587b9}{set\+Czy\+First}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa zawierająca w sobie ogólną logikę gry, ma w sobie:\+ \doxylink{class_colony}{Colony} kolonia, \doxylink{class_graphics}{Graphics} grafika, \doxylink{class_building_factory}{Building\+Factory} fabryka, map$<$string, Building\+Info$>$ baza\+Danych. 
+
+\label{class_game_doc-constructors}
+\Hypertarget{class_game_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_game_ad59df6562a58a614fda24622d3715b65}\index{Game@{Game}!Game@{Game}}
+\index{Game@{Game}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{Game()}{Game()}}
+{\footnotesize\ttfamily \label{class_game_ad59df6562a58a614fda24622d3715b65} 
+Game::\+\+Game (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_ae3d112ca6e0e55150d2fdbc704474530}\index{Game@{Game}!````~Game@{\texorpdfstring{$\sim$}{\string~}Game}}
+\index{````~Game@{\texorpdfstring{$\sim$}{\string~}Game}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Game()}{\string~Game()}}
+{\footnotesize\ttfamily \label{class_game_ae3d112ca6e0e55150d2fdbc704474530} 
+Game::\+\texorpdfstring{$\sim$}{\string~}\+Game (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{class_game_doc-func-members}
+\Hypertarget{class_game_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_game_a9071ca2ec519c84708e03b85e8e4e99f}\index{Game@{Game}!getCzyFirst@{getCzyFirst}}
+\index{getCzyFirst@{getCzyFirst}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{getCzyFirst()}{getCzyFirst()}}
+{\footnotesize\ttfamily \label{class_game_a9071ca2ec519c84708e03b85e8e4e99f} 
+int Game::\+get\+Czy\+First (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_game_a43f4d03e02ce1db3b5e8fd9adf313b61}\index{Game@{Game}!getOstatniZapis@{getOstatniZapis}}
+\index{getOstatniZapis@{getOstatniZapis}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{getOstatniZapis()}{getOstatniZapis()}}
+{\footnotesize\ttfamily \label{class_game_a43f4d03e02ce1db3b5e8fd9adf313b61} 
+string Game::\+get\+Ostatni\+Zapis (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+
+
+Zwracanie nazwy ostatniego zapisu. 
+
+\begin{DoxyReturn}{Returns}
+string 
+\end{DoxyReturn}
+\Hypertarget{class_game_a824fdc451a6e033e63be3e0ad9164f73}\index{Game@{Game}!getZapisy@{getZapisy}}
+\index{getZapisy@{getZapisy}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{getZapisy()}{getZapisy()}}
+{\footnotesize\ttfamily \label{class_game_a824fdc451a6e033e63be3e0ad9164f73} 
+vector$<$ string $>$ \& Game::\+get\+Zapisy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_a22aa333ee4dc513b84c8bbf707ebb984}\index{Game@{Game}!load@{load}}
+\index{load@{load}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{class_game_a22aa333ee4dc513b84c8bbf707ebb984} 
+void Game::\+load (\begin{DoxyParamCaption}\item[{const string \&}]{nazwa\+\_\+zapisu}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_ab9a0fb3d98098fb9a7aec8080083a685}\index{Game@{Game}!loadConfig@{loadConfig}}
+\index{loadConfig@{loadConfig}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{loadConfig()}{loadConfig()}}
+{\footnotesize\ttfamily \label{class_game_ab9a0fb3d98098fb9a7aec8080083a685} 
+void Game::\+load\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Jakaś funkcja do wczytywania ustawień itp. 
+
+\Hypertarget{class_game_a090a05d18166dadbc05e2aadbbfca6ad}\index{Game@{Game}!loadGameData@{loadGameData}}
+\index{loadGameData@{loadGameData}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{loadGameData()}{loadGameData()}}
+{\footnotesize\ttfamily \label{class_game_a090a05d18166dadbc05e2aadbbfca6ad} 
+void Game::\+load\+Game\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Wczytywanie parametrów budynków z pliku gamedata.\+txt -\/ tylko na poczatku gry. 
+
+\Hypertarget{class_game_a61b7df2ed7890d4b90b8172bf8e99a06}\index{Game@{Game}!pobierzZapisy@{pobierzZapisy}}
+\index{pobierzZapisy@{pobierzZapisy}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{pobierzZapisy()}{pobierzZapisy()}}
+{\footnotesize\ttfamily \label{class_game_a61b7df2ed7890d4b90b8172bf8e99a06} 
+vector$<$ string $>$ Game::\+pobierz\+Zapisy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Wczytywanie dostępnych zapisów z folderu z zapisami. 
+
+\begin{DoxyReturn}{Returns}
+vector$<$string$>$ tablica z nazwami foledrów -\/ czyli zapisów gry 
+\end{DoxyReturn}
+\Hypertarget{class_game_ab1822918fc2d83932dfc16ee857b92d7}\index{Game@{Game}!save@{save}}
+\index{save@{save}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_game_ab1822918fc2d83932dfc16ee857b92d7} 
+void Game::\+save (\begin{DoxyParamCaption}\item[{const string \&}]{nazwa\+\_\+zapisu}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_a92addbf8742c1c1293fb1094846ac99d}\index{Game@{Game}!saveConfig@{saveConfig}}
+\index{saveConfig@{saveConfig}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{saveConfig()}{saveConfig()}}
+{\footnotesize\ttfamily \label{class_game_a92addbf8742c1c1293fb1094846ac99d} 
+void Game::\+save\+Config (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Zapisywanie ustawień do pliku config.\+txt. 
+
+\Hypertarget{class_game_a8487b24764dc628afcaa4736fea587b9}\index{Game@{Game}!setCzyFirst@{setCzyFirst}}
+\index{setCzyFirst@{setCzyFirst}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{setCzyFirst()}{setCzyFirst()}}
+{\footnotesize\ttfamily \label{class_game_a8487b24764dc628afcaa4736fea587b9} 
+void Game::\+set\+Czy\+First (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_a3909744cb8253655e5be5abc899b94b3}\index{Game@{Game}!setNazwa@{setNazwa}}
+\index{setNazwa@{setNazwa}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{setNazwa()}{setNazwa()}}
+{\footnotesize\ttfamily \label{class_game_a3909744cb8253655e5be5abc899b94b3} 
+void Game::\+set\+Nazwa (\begin{DoxyParamCaption}\item[{string}]{nazwa}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_ac22fc4b1745cde81d8907a221d0b1240}\index{Game@{Game}!setOstatniZapis@{setOstatniZapis}}
+\index{setOstatniZapis@{setOstatniZapis}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{setOstatniZapis()}{setOstatniZapis()}}
+{\footnotesize\ttfamily \label{class_game_ac22fc4b1745cde81d8907a221d0b1240} 
+void Game::\+set\+Ostatni\+Zapis (\begin{DoxyParamCaption}\item[{string}]{naz}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_game_aca43e97b79770427546bd4b72839e6aa}\index{Game@{Game}!setZapisy@{setZapisy}}
+\index{setZapisy@{setZapisy}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{setZapisy()}{setZapisy()}}
+{\footnotesize\ttfamily \label{class_game_aca43e97b79770427546bd4b72839e6aa} 
+void Game::\+set\+Zapisy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Zaktualizowanie listy zapisów. 
+
+\Hypertarget{class_game_a24a9696ffa04c7277be2340e77b3d64a}\index{Game@{Game}!UIbuild@{UIbuild}}
+\index{UIbuild@{UIbuild}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{UIbuild()}{UIbuild()}}
+{\footnotesize\ttfamily \label{class_game_a24a9696ffa04c7277be2340e77b3d64a} 
+\doxymbox{\hyperlink{struct_build_result}{Build\+Result}} Game::\+\+UIbuild (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{struct_building_info}{Building\+Info}}}]{info}{, }\item[{pair$<$ int, int $>$}]{klikniete\+Pole}{}\end{DoxyParamCaption})}
+
+
+
+Funckja budujaca budynek. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em info} & paczka z infromacja o danym budynku \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_build_result}{Build\+Result} 
+\end{DoxyReturn}
+\Hypertarget{class_game_acfa2cb2d1cd9940cd173e9fe6e70e9f8}\index{Game@{Game}!UINextRound@{UINextRound}}
+\index{UINextRound@{UINextRound}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{UINextRound()}{UINextRound()}}
+{\footnotesize\ttfamily \label{class_game_acfa2cb2d1cd9940cd173e9fe6e70e9f8} 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} Game::\+\+UINext\+Round (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wywoływująca funkcję Next\+Round z \doxylink{class_colony}{Colony}. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_next_result}{Next\+Result} pakiet wyników z Next\+Round 
+\end{DoxyReturn}
+\Hypertarget{class_game_a949ef76e4267778d693a0e08603e98b1}\index{Game@{Game}!UIprntNewLvlTerr@{UIprntNewLvlTerr}}
+\index{UIprntNewLvlTerr@{UIprntNewLvlTerr}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{UIprntNewLvlTerr()}{UIprntNewLvlTerr()}}
+{\footnotesize\ttfamily \label{class_game_a949ef76e4267778d693a0e08603e98b1} 
+vector$<$ \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ Game::\+\+UIprnt\+New\+Lvl\+Terr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Przekazywanie danych do wyświetlenia nowych budynków przy osiagnieciu nowego poziomu. 
+
+\Hypertarget{class_game_a44daa4affb6d6fff74491be348b8a649}\index{Game@{Game}!UIrun@{UIrun}}
+\index{UIrun@{UIrun}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{UIrun()}{UIrun()}}
+{\footnotesize\ttfamily \label{class_game_a44daa4affb6d6fff74491be348b8a649} 
+void Game::\+\+UIrun (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wczytująca grę z plików oraz zaczynająca pętlę graficzną 
+
+\Hypertarget{class_game_a59d62115d609d75ffe636d55616c6145}\index{Game@{Game}!UIZburz@{UIZburz}}
+\index{UIZburz@{UIZburz}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{UIZburz()}{UIZburz()}}
+{\footnotesize\ttfamily \label{class_game_a59d62115d609d75ffe636d55616c6145} 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} Game::\+\+UIZburz (\begin{DoxyParamCaption}\item[{string}]{nazwa}{}\end{DoxyParamCaption})}
+
+
+
+Przekazanie nazwy do zburzenia budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa} & nazwa budynku do zburzenia.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_destroy_result}{Destroy\+Result} paczka wynikowa. 
+\end{DoxyReturn}
+\Hypertarget{class_game_a63c4a1f2fdd0493d323edd7a49913714}\index{Game@{Game}!UIZburzID@{UIZburzID}}
+\index{UIZburzID@{UIZburzID}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{UIZburzID()}{UIZburzID()}}
+{\footnotesize\ttfamily \label{class_game_a63c4a1f2fdd0493d323edd7a49913714} 
+\doxymbox{\hyperlink{struct_destroy_result}{Destroy\+Result}} Game::\+\+UIZburz\+ID (\begin{DoxyParamCaption}\item[{int}]{ID}{}\end{DoxyParamCaption})}
+
+
+
+Przekazanie ID do zburzenia budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ID} & budynku do zburzenia.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_destroy_result}{Destroy\+Result} paczka wynikowa. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{game_8h}{game.\+h}}\item 
+src/\+\doxymbox{\hyperlink{game_8cpp}{game.\+cpp}}\end{DoxyCompactItemize}
