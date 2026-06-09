@@ -1,0 +1,38 @@
+\doxysection{terr.\+h}
+\hypertarget{terr_8h_source}{}\label{terr_8h_source}\index{src/terr.h@{src/terr.h}}
+\doxymbox{\hyperlink{terr_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ terr\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ terr\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_8h}{building.h}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_terr_ab59eaa98a66adbc2f89276ed0900c786}{Terr}}:\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}}\{}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ terrGen;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{//KONSTRUKTOR}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_terr_ab59eaa98a66adbc2f89276ed0900c786}{Terr}}();}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_terr_ab59eaa98a66adbc2f89276ed0900c786}{Terr}}(\textcolor{keywordtype}{string}\ n,\ \textcolor{keywordtype}{int}\ kE,\textcolor{keywordtype}{int}\ kK,\ \textcolor{keywordtype}{int}\ kT,\ \textcolor{keywordtype}{int}\ te,\textcolor{keywordtype}{int}\ w,\ \textcolor{keywordtype}{int}\ X\_,\textcolor{keywordtype}{int}\ Y\_);}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_terr_a8b68000bbfdc821e364bdb89f4465c17}{\string~Terr}}()\{\};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{comment}{//OVERRIDE}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_terr_aacd45760eca6be0ff9c3f9d7ca39ca38}{UIprnt}}(\textcolor{keywordtype}{int}\ il)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_terr_a0793582363ea32ba72b36307bda8b804}{save}}(ofstream\&\ plik)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_terr_a388ad4678370e5e322a045aa731f53f1}{work}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//GETTERY}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_terr_af64a55f0f0652fdeecbe83fec5fca04f}{getTerr}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,36 @@
+\doxysection{energy.\+h}
+\hypertarget{energy_8h_source}{}\label{energy_8h_source}\index{src/energy.h@{src/energy.h}}
+\doxymbox{\hyperlink{energy_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ energy\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ energy\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_8h}{building.h}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_energy_ace7d4d30b4d89e661e169c299d65cad9}{Energy}}:\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}}\{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ enGen;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{comment}{//KONSTRUKTOR}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_energy_ace7d4d30b4d89e661e169c299d65cad9}{Energy}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_energy_ace7d4d30b4d89e661e169c299d65cad9}{Energy}}(\textcolor{keywordtype}{string}\ n,\ \textcolor{keywordtype}{int}\ kE,\textcolor{keywordtype}{int}\ kK,\ \textcolor{keywordtype}{int}\ kT,\ \textcolor{keywordtype}{int}\ e,\textcolor{keywordtype}{int}\ w,\ \textcolor{keywordtype}{int}\ X\_,\textcolor{keywordtype}{int}\ Y\_);}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_energy_a10f998bc491603f258e71d1bb9ed4442}{\string~Energy}}()\{\};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{comment}{//OVERRIDE}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_energy_a8a714fe3a5709a76b9a6bbef0146bccc}{UIprnt}}(\textcolor{keywordtype}{int}\ il)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_energy_a2aa959dcb37544dd135367fed7cfdb42}{save}}(ofstream\&\ plik)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//GETTERY}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_energy_aeb221bc21f15ce1869290b837efb4509}{getEnergy}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

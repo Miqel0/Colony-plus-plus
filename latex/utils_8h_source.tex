@@ -1,0 +1,257 @@
+\doxysection{utils.\+h}
+\hypertarget{utils_8h_source}{}\label{utils_8h_source}\index{src/utils.h@{src/utils.h}}
+\doxymbox{\hyperlink{utils_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ utils\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ utils\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <cctype>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <SFML/Graphics.hpp>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <SFML/System/Clock.hpp>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}imgui.h"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}imgui-\/SFML.h"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//Potrzebne\ wskazniki\ do\ obiekotw\ z\ Graphics,\ bo\ inaczej\ nie\ da\ sie\ zrobic\ wyswietlania\ ikonek\ w\ tekscie}}
+\DoxyCodeLine{00024\ \textcolor{keyword}{inline}\ std::map<std::string,\ sf::IntRect>*\ \doxymbox{\hyperlink{utils_8h_a13317a043358a0fb03a7b0efdfdeedfc}{globalnaMapaIkonek}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00025\ \textcolor{keyword}{inline}\ sf::Texture*\ \doxymbox{\hyperlink{utils_8h_af3f660cd93abd2bc4e9a311da3c7ce2d}{globalnaTeksturaIkonek}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{TypBudynku}}\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa8d23e023eb2d1428ebf6f28e986b0324}{NIEZNANY}}\ =\ 0,}
+\DoxyCodeLine{00033\ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa93e0e13277e4354c72e2b033514037a5}{ENERGY}}\ =\ 1,}
+\DoxyCodeLine{00034\ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa631d8b0a35e854f3b99495078809a6ae}{FARM}}\ =\ 2,}
+\DoxyCodeLine{00035\ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa3ee552c33e91246a43a900ca62fcfdd6}{HOUSING}}\ =\ 3,}
+\DoxyCodeLine{00036\ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa523178c529429c02cbf9cce92eb47a14}{PRODUCER}}\ =\ 4,}
+\DoxyCodeLine{00037\ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490fa010b6816cdb0ae6f57fcf7d2b77525f1}{TERR}}\ =\ 5,}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00044\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}{TypKafelka}}\ \{\doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2aea35bf4c433ce458623299bce103f945}{PUSTY}},\doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8af38c3ed7a345181d69344d948f634a}{ZAJETY}},\doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2a8a75c667bb321812473daf0ecb149391}{BRAK}}\};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_dane_kafelek}{DaneKafelek}}\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}{TypKafelka}}\ \doxymbox{\hyperlink{struct_dane_kafelek_ad5e7aaedff2252619ecedebee5538819}{typ}}=\doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2aea35bf4c433ce458623299bce103f945}{TypKafelka::PUSTY}};}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_dane_kafelek_a404c1b569fe66ca37561099280c8b77e}{nazwa}}=\textcolor{stringliteral}{"{}pusty"{}};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id}=-\/1;}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_dane_kafelek_a128a6a953edb7757320bd8b64de0def4}{X}}=-\/1;}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_dane_kafelek_ac377bd023ccfad1d00977b4e89424bcd}{Y}}=-\/1;}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{enum\ class}\ \doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52}{TypEkranu}}\ \{\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52aa16d505f03a4b6f35486f65f6a61317e}{MAIN\_MENU}},\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52a4504e1ed59cd9732b8a844e5424e6f13}{GAME}},\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52a01d439bfccd33aa06491f04a46dbafbc}{MENU\_GAME}},\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52aed6f7aca7887a927b9ed3d62aa347a86}{SETTINGS}},\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52ae5f53fee4717a20069da09aa7a0f614d}{CREDITS}},\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52aab328416de059c8c7191b547079d7b49}{LOAD\_MENU}},\doxymbox{\hyperlink{utils_8h_afc59ee227cec3def02a5813060562e52a55dffae67e249616c391f74966a3c282}{LOAD\_GAME}}\};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_building_info}{BuildingInfo}}\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_building_info_a89d4c751883b78ff4e18b85ec979b525}{nazwa}}=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_building_info_a6db9b27956c93e01cfcc53127a7da7d4}{type}}=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00074\ \ \ \ \ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ Koszty}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_aaaa4272cc0ce4febc847e67818c0ca37}{kKamien}}=0;}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_a13b9cc7f1eb2bed80e810f7ab5480cde}{kTytan}}=0;}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_a7bc727f4a5abe469d6777a79003a3b84}{reqEnergy}}=0;}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_ad6664c9dd8f63e783dc53b49b2998dee}{workers}}=0;\ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{comment}{//\ Produkcja}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_a959d241093c7e5d3e48eb423aaa537f9}{genKamien}}=0;}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_a6e964b8abeb35587ff09fd1263983961}{genTytan}}=0;\ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_ad6854c714c3231792ddcb8d14d8bef26}{genInne}}=0;\ \ }
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_a0f89fb151abfc243e217a41ea72dfe8b}{lvlTerr}}=0;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_ae6e846d9f653a90ee61d4658e0aebe49}{X}}=-\/1;}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_a5cdd5b00642fa97940cef37b4d07e793}{Y}}=-\/1;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_building_info_a9c80a62523c2259254fd6c4488f63ed9}{x}}=0;\ \ \ \ \ }
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_building_info_af9b208c33ba17b0e6852bdc538685389}{opis}}=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00092\ \};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00098\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_build_result}{BuildResult}}\{}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_build_result_a500740dd74333187cc118f2fe9b489fe}{czy}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_build_result_a74086a2c501ae5802f7f26ed2e2b22ff}{kamien}}=0;}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_build_result_a304cbdd293414ee05c764502c978083f}{tytan}}=0;}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_build_result_a6fe6268c9491327e68eb35fd55730cb9}{workers}}=0;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_build_result_aef218c0c8c852cc2fa2354086de05b37}{nazwa}};}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_build_result_a72e1c24f39cf546698f29af1ed7860cc}{act\_ruch}}=0;}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_build_result_a34726c205835cac9f5680a584cfd6806}{ruch}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{00106\ \};}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00112\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_destroy_result}{DestroyResult}}\{}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_destroy_result_a70fc2cbbc5d1d4f9fc723e46b779b4d6}{czy}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_destroy_result_a85c728a152f868ed400ec0c8bc1c65b1}{brakLudzi}}=0;}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_destroy_result_a4a4833cf879914ece37a98c5f5fea4fa}{nazwa}}=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00116\ \ \ \ \ pair\ <int,int>\ \doxymbox{\hyperlink{struct_destroy_result_a384487ba2d8deba45716ac74e30a6d8a}{sur}}=\{0,0\};}
+\DoxyCodeLine{00117\ \};}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{struct_next_result}{NextResult}}\{}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_next_result_a4105539c180fc9359762d051de1f3151}{czy}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_next_result_a71676a356828153a83e1fb5a3eb52fb3}{food}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_next_result_a3a4a56ed83b0491bb8a0483018db66ee}{energy}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{struct_next_result_afb00ec28addc548361779f5085766cf5}{terr}}=\textcolor{keyword}{false};}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{struct_next_result_aa1356a3faa513eae5b8ce035498649cf}{tekst}}=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_next_result_a75a419bba958466240d41648a3b7a6ad}{c\_food}}=0;}
+\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_next_result_a0d51c3507e78b34a31e1506ec72c759d}{c\_stone}}=0;}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_next_result_af0c492fa84cc911ff949c62c406965d0}{c\_titan}}=0;}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{struct_next_result_aa81a0fd30eefcdbd9fcb730a18231302}{c\_terr}}=0;}
+\DoxyCodeLine{00133\ \};}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{comment}{//\ ==========================================}}
+\DoxyCodeLine{00137\ \textcolor{comment}{//\ FUNKCJE\ POMOCNICZE\ -\/\ UNIWERSALNE}}
+\DoxyCodeLine{00138\ \textcolor{comment}{//\ ==========================================}}
+\DoxyCodeLine{00139\ }
+\DoxyCodeLine{00146\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{utils_8h_a25a303e72275ac72d85d7cfa478b6232}{cleanNum}}(\textcolor{keywordtype}{int}\ liczba)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ stringstream\ ss;}
+\DoxyCodeLine{00148\ \ \ \ \ ss\ <<\ liczba;}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{return}\ ss.str();}
+\DoxyCodeLine{00150\ \}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00158\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{utils_8h_ac089e062b4a706adc928ca56151be0cc}{cleanString}}(\textcolor{keywordtype}{string}\ tekst)\{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ tekst\_\ =\ tekst;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ std::replace(tekst\_.begin(),tekst\_.end(),\textcolor{charliteral}{'\_'},\textcolor{charliteral}{'\ '});}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tekst\_;}
+\DoxyCodeLine{00162\ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00171\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{utils_8h_a951ee0329fdebb9d137fe6c9572f7772}{rysujWierszTooltip}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ etykieta,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ wartosc)\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ ImGui::TableNextRow();}
+\DoxyCodeLine{00173\ \ \ \ \ ImGui::TableNextColumn();\ ImGui::Text(\textcolor{stringliteral}{"{}\%s"{}},\ etykieta.c\_str());}
+\DoxyCodeLine{00174\ \ \ \ \ ImGui::TableNextColumn();\ ImGui::TextColored(ImVec4(1.0f,\ 1.0f,\ 0.0f,\ 1.0f),\ \textcolor{stringliteral}{"{}\%s"{}},\ wartosc.c\_str());}
+\DoxyCodeLine{00175\ \}}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00184\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{utils_8h_a956da311c2fd388d8b1b11a356dc81cf}{prntTooltipTablica}}(\textcolor{keyword}{const}\ std::string\&\ nazwa,\ \textcolor{keyword}{const}\ std::vector<std::pair<std::string,\ std::string>>\&\ dane)\ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{float}\ window\_width\ =\ ImGui::GetWindowWidth();}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{float}\ text\_width\ =\ ImGui::CalcTextSize(nazwa.c\_str()).x;}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ std::string\ nazwa\_\ =\ \doxymbox{\hyperlink{utils_8h_ac089e062b4a706adc928ca56151be0cc}{cleanString}}(nazwa);}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ ImGui::SetCursorPosX((window\_width\ -\/\ text\_width)\ *\ 0.5f);\ \ }
+\DoxyCodeLine{00191\ \ \ \ \ ImGui::TextColored(ImVec4(1.0f,\ 0.8f,\ 0.2f,\ 1.0f),\ \textcolor{stringliteral}{"{}\%s"{}},\ nazwa\_.c\_str());}
+\DoxyCodeLine{00192\ \ \ \ \ ImGui::Separator();}
+\DoxyCodeLine{00193\ \ \ \ \ }
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordflow}{if}\ (!dane.empty())\ \{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ImGui::BeginTable(\textcolor{stringliteral}{"{}StatsTooltip"{}},\ 2,\ ImGuiTableFlags\_BordersInnerH))\ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ para\ :\ dane)\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TableNextRow();}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TableNextColumn();}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ klucz\ =\ para.first;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!klucz.empty()\ \&\&\ klucz.back()\ ==\ \textcolor{charliteral}{'\ '})\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ klucz.pop\_back();}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ znak\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!klucz.empty()\ \&\&\ (klucz.back()\ ==\ \textcolor{charliteral}{'+'}\ ||\ klucz.back()\ ==\ \textcolor{charliteral}{'-\/'}))\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ znak\ =\ klucz.back();}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ klucz.pop\_back();}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!klucz.empty()\ \&\&\ klucz.back()\ ==\ \textcolor{charliteral}{'\ '})\ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ klucz.pop\_back();}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ c\ :\ klucz)\ c\ =\ tolower(c);}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ narysowano\_ikonke\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{utils_8h_a13317a043358a0fb03a7b0efdfdeedfc}{globalnaMapaIkonek}}\ !=\ \textcolor{keyword}{nullptr}\ \&\&\ \doxymbox{\hyperlink{utils_8h_af3f660cd93abd2bc4e9a311da3c7ce2d}{globalnaTeksturaIkonek}}\ !=\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ \doxymbox{\hyperlink{utils_8h_a13317a043358a0fb03a7b0efdfdeedfc}{globalnaMapaIkonek}}-\/>find(klucz);}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it\ !=\ \doxymbox{\hyperlink{utils_8h_a13317a043358a0fb03a7b0efdfdeedfc}{globalnaMapaIkonek}}-\/>end())\ \{}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sf::Sprite\ ikonka(*\doxymbox{\hyperlink{utils_8h_af3f660cd93abd2bc4e9a311da3c7ce2d}{globalnaTeksturaIkonek}});}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ikonka.setTextureRect(it-\/>second);}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ offsetX\ =\ (ImGui::GetColumnWidth()\ -\/\ 16.0f)\ *\ 0.5f;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (offsetX\ >\ 0.0f)\ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::SetCursorPosX(ImGui::GetCursorPosX()\ +\ offsetX);}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Image(ikonka,\ sf::Vector2f(25.0f,\ 25.0f));}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ narysowano\_ikonke\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!narysowano\_ikonke)\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Text(\textcolor{stringliteral}{"{}\%s"{}},\ para.first.c\_str());}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TableNextColumn();}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Text(\textcolor{stringliteral}{"{}\%s"{}},\ para.second.c\_str());}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TableNextColumn();}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (znak\ ==\ \textcolor{charliteral}{'+'})\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TextColored(ImVec4(0.2f,\ 1.0f,\ 0.2f,\ 1.0f),\ \textcolor{stringliteral}{"{}+\%s"{}},\ para.second.c\_str());}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (znak\ ==\ \textcolor{charliteral}{'-\/'})\ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TextColored(ImVec4(1.0f,\ 0.4f,\ 0.4f,\ 1.0f),\ \textcolor{stringliteral}{"{}-\/\%s"{}},\ para.second.c\_str());}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Text(\textcolor{stringliteral}{"{}\%s"{}},\ para.second.c\_str());}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::EndTable();}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00253\ \ \ \ \ \}}
+\DoxyCodeLine{00254\ \}}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00262\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{utils_8h_ac42e1796098b72650331481bbe10225e}{prntOpis}}(\textcolor{keyword}{const}\ std::string\ \&nazwa,\ \textcolor{keyword}{const}\ \ map<std::string,\ BuildingInfo>\&\ bazaDanych)\{}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ nazwa\_=nazwa;}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ \&c\ :\ nazwa\_)\ c\ =\ tolower(c);}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ ImGui::Separator();}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ ImGui::PushTextWrapPos(300.0f);\ }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bazaDanych.count(nazwa\_))\ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Text(\textcolor{stringliteral}{"{}\%s"{}},\ bazaDanych.at(nazwa\_).opis.c\_str());}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TextColored(ImVec4(1.0f,\ 0.0f,\ 0.0f,\ 1.0f),\ \textcolor{stringliteral}{"{}Brak\ opisu."{}});}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ ImGui::PopTextWrapPos();\ \ \ \ }
+\DoxyCodeLine{00274\ \}}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00282\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{utils_8h_ac42e1796098b72650331481bbe10225e}{prntOpis}}(\textcolor{keyword}{const}\ std::string\ \&nazwa,\ \textcolor{keywordtype}{string}\ \&tekst)\{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ nazwa\_=nazwa;}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ \&c\ :\ nazwa\_)\ c\ =\ tolower(c);}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ ImGui::Separator();}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ ImGui::PushTextWrapPos(300.0f);\ }
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!tekst.empty())\ \{}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Text(\textcolor{stringliteral}{"{}\%s"{}},\ tekst.c\_str());}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TextColored(ImVec4(1.0f,\ 0.0f,\ 0.0f,\ 1.0f),\ \textcolor{stringliteral}{"{}Brak\ opisu."{}});}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ ImGui::PopTextWrapPos();\ \ \ \ }
+\DoxyCodeLine{00294\ \}}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00301\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{utils_8h_ac42e1796098b72650331481bbe10225e}{prntOpis}}(\textcolor{keywordtype}{string}\ \&tekst)\{}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ ImGui::PushTextWrapPos(300.0f);\ }
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!tekst.empty())\ \{}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::Text(\textcolor{stringliteral}{"{}\%s"{}},\ tekst.c\_str());}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ ImGui::TextColored(ImVec4(1.0f,\ 0.0f,\ 0.0f,\ 1.0f),\ \textcolor{stringliteral}{"{}Brak\ opisu."{}});}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ ImGui::PopTextWrapPos();\ \ \ \ }
+\DoxyCodeLine{00311\ \}}
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00320\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{utils_8h_ad2ba521e705d159b08ba6e4423040e92}{wyczyscNazwe}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ text)\ \{}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordtype}{string}\ wynik\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}\ c\ :\ text)\ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (std::isalnum(c))\ \{}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ wynik\ +=\ c;}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{'\ '})\ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ wynik\ +=\ \textcolor{charliteral}{'\_'};\ }
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00328\ \ \ \ \ \}}
+\DoxyCodeLine{00329\ \ \ \ \ \textcolor{keywordflow}{return}\ wynik;}
+\DoxyCodeLine{00330\ \}}
+\DoxyCodeLine{00331\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

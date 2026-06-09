@@ -1,139 +1,92 @@
-# Projekt: **Colony ++**
+# Projekt: Colony++
+![C++](https://img.shields.io/badge/C++-17-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![CMake](https://img.shields.io/badge/CMake-3.15+-red.svg)
+![SFML](https://img.shields.io/badge/Graphics-SFML_3.0.2-8CC445.svg)
+![ImGui](https://img.shields.io/badge/GUI-Dear_ImGui-purple.svg)
+Strategiczno-survivalowa gra napisana w C++, polegająca na zarządzaniu kolonią na Marsie, wydobywaniu surowców i terraformacji planety. 
 
-Tekstowa gra strategiczno-survivalowa napisana w C++, polegająca na zarządzaniu kolonią na Marsie, wydobywaniu surowców i terraformacji planety.
+Projekt początkowo powstał jako w pełni tekstowa gra konsolowa. Obecnie został zaktualizowany do wersji z pełnoprawnym interfejsem graficznym. Cała oryginalna logika, statystyki i mechaniki pozostały nienaruszone, jednak wpisywanie komend w terminalu zostało całkowicie zastąpione przez nowoczesny system okienkowy i sterowanie myszą.
 
 ## O Projekcie
 
 Celem gracza jest przetrwanie w trudnych warunkach marsjańskich oraz osiągnięcie pełnej terraformacji planety. Gra działa w systemie turowym, gdzie każda decyzja wpływa na zasoby (Energia, Jedzenie, Tytan, Kamień) oraz losy kolonistów.
 
 **Kluczowe wyzwania:**
-* **Pożywienie:** Każdy mieszkaniec kolonii potrzebuje jedzenia, a przy jego braku skutkuje śmiercią kolonistów i końcem gry.
-* **Energia:** Jest potrzebna do funkcjonowania budynków, bez niej żaden z budynków nie będzie działać (alee gra się nie kończy).
+* **Pożywienie:** Każdy mieszkaniec kolonii potrzebuje jedzenia, a jego brak skutkuje śmiercią kolonistów i końcem gry.
+* **Energia:** Jest potrzebna do funkcjonowania budynków. Bez niej żaden z budynków produkcyjnych nie będzie działać (brak energii nie kończy jednak gry od razu).
 
 ## Funkcjonalności
 
+* **Rozbudowane GUI:** Gra wykorzystuje bibliotekę SFML oraz ImGui do renderowania paneli bocznych, interaktywnych tabel i przycisków, eliminując potrzebę znajomości komend tekstowych.
+* **Wizualna Siatka Budowania:** Możliwość stawiania budynków bezpośrednio na dwuwymiarowej mapie za pomocą kliknięć myszką oraz prostej obsługi klawiszami.
 * **Ekonomia i Zarządzanie:** Złożony system zależności między surowcami (np. brak prądu zatrzymuje wydobycie w kopalniach).
-* **System Budowania:** Możliwość wznoszenia i burzenia budynków różnych kategorii (`Energy`, `Farm`, `Housing`, `Producer`, `Terr`). Są one reprezentowane jako klasy pochodne klasy bazowej `Building`, posiadające unikalne parametry i metody.
+* **System Budowania:** Możliwość wznoszenia i burzenia budynków różnych kategorii (`Energy`, `Farm`, `Housing`, `Producer`, `Terr`). Są one reprezentowane jako klasy pochodne klasy bazowej `Building`.
 * **Progresja (Terraformacja):** Dynamiczne odblokowywanie nowych technologii (lepszych i wydajniejszych budynków) wraz ze wzrostem poziomu terraformacji planety.
-* **Tryby Gry:**
-    * *Normalny* (standardowy balans, z samouczkiem).
-    * *Sandbox* (nieskończone surowce – **tryb testowy**).
-    * *Custom* (własna konfiguracja startowa zasobów – **tryb testowy**).
-* **Zapis i Odczyt:** Pełna serializacja stanu gry do plików tekstowych (`.txt`), pozwalająca na kontynuowanie rozgrywki.
-* **Interaktywny Samouczek:** Wprowadzenie fabularne, które krok po kroku tłumaczy nowym graczom podstawowe mechaniki i komendy.
+* **Zaawansowany Zapis i Odczyt:** Pełna serializacja stanu gry do plików tekstowych (`.txt`). Wprowadzono system niestandardowych (customowych) nazw zapisów, co pozwala graczowi na tworzenie i zarządzanie wieloma niezależnymi stanami gry jednocześnie bez nadpisywania poprzednich postępów.
+* **Niestandardowe Zasoby Graficzne:** Gra korzysta z własnej czcionki oraz unikalnej ikony aplikacji. Wykorzystano również dedykowane kursory pobrane z zewnętrznego serwisu. Tekstury obiektów zostały wygenerowane przy pomocy modelu sztucznej inteligencji Gemini, a następnie zoptymalizowane do postaci jednego wspólnego pliku graficznego (spritesheet/atlas), z którego wczytywane są wszystkie elementy.
 
 ## Technologie i Rozwiązania (Code Perspective)
 
-Projekt demonstruje praktyczne zastosowanie kluczowych paradygmatów języka C++:
+Projekt demonstruje praktyczne zastosowanie kluczowych paradygmatów języka C++ (Standard C++17):
 
 ### 1. Programowanie Obiektowe
-* **Dziedziczenie i Polimorfizm:** Fundamentem jest klasa bazowa `Building`. Klasy pochodne (`Farm`, `Energy`, `Producer`, `Housing`, `Terr`) implementują wirtualne metody takie jak `work()` (logika pracy budynku pod koniec tury), `prnt()` (wyświetlanie parametrów budynków) czy `save()` (zapis do pliku).
+* **Dziedziczenie i Polimorfizm:** Fundamentem jest klasa bazowa `Building`. Klasy pochodne implementują wirtualne metody takie jak `work()` (logika pracy budynku pod koniec tury), czy `save()` (zapis do pliku). Funkcja `prnt()`, która wcześniej wypisywała dane w konsoli, została zaadaptowana pod system renderowania w nowym interfejsie.
 * **Enkapsulacja:** Klasa `Logistics` przechowuje wszystkie statystyki i zasoby jako pola prywatne, udostępniając je klasie `Colony` oraz budynkom jedynie poprzez gettery i settery.
 
-### 2. Zarządzanie Pamięcią
-* **Smart Pointers:** Wykorzystanie `std::unique_ptr` do zarządzania obiektami budynków w kontenerze `vector<unique_ptr<Building>>`. Gwarantuje to bezpieczne zarządzanie pamięcią i automatyczne usuwanie obiektów przy niszczeniu budynków lub zamykaniu gry.
+### 2. Zarządzanie Pamięcią i Typy
+* **Smart Pointers:** Wykorzystanie `std::unique_ptr` do zarządzania obiektami budynków w wektorze. Gwarantuje to bezpieczne zarządzanie pamięcią i automatyczne zwalnianie zasobów.
+* **Typy Wyliczeniowe:** Użycie `enum class` do identyfikacji kategorii budynków, co zapobiega błędom logicznym w kodzie i ułatwia czytelność.
 
-### 3. Typy Wyliczeniowe (Enumy)
-* Zamiast używać "magicznych liczb" (np. 1, 2, 3), projekt wykorzystuje enumy (`enum class`) do identyfikacji:
-    * Kategorii budynków: `TypBudynku` (np. `TypBudynku::ENERGY`, `TypBudynku::FARM`).
-    * Konkretnych typów wewnątrz kategorii: `TypEnergy`, `TypProducer` itp.
-* Zwiększa to czytelność kodu i zapobiega błędom logicznym przy tworzeniu nowych obiektów.
+### 3. Nowy Interfejs Użytkownika (SFML + ImGui)
+* Dawne formatowanie oparte na kolorach ANSI i ręcznie pisanych funkcjach (`prntHeader`, `prntTablica`) zostało całkowicie zastąpione przez biblioteki graficzne - SFML i ImGui.
+* **SFML (Simple and Fast Multimedia Library):** Odpowiada za tworzenie głównego okna gry, renderowanie tła, siatki budynków, wczytywanie scalonych tekstur, obsługę własnych czcionek i kursorów oraz zdarzeń systemowych na platformie Windows.
+* **Dear ImGui:** Obsługuje całą warstwę interaktywną (okna statystyk, przyciski tur, ostrzeżenia o brakach zasobów, dynamiczne tooltipy po najechaniu kursorem).
 
-### 4. Interfejs Użytkownika (UI) i Formatowanie
-* **Kolory ANSI:** Zdefiniowane w pliku nagłówkowym stałe (np. `RED`, `GREEN`, `BOLD`, `RESET`) pozwalają na odpowiednie formatowanie tekstu (zmiana kolorów, tła, grubość itp.) w terminalu, co znacznie poprawia czytelność (np. błędy na czerwono, zasoby na zielono).
-* **Funkcje Pomocnicze UI:**
-    * `prntHeader(string)`: Wyświetla w taki sam sposób wszelkiego rodzaju nagłówki.
-    * `prntTablica(...)`: Przeciążona funkcja, pozwalająca na elastyczne wyświetlanie danych w tabelach o różnej liczbie wierszy.
+### 4. Struktura Projektu
+Logika gry jest ściśle odseparowana od warstwy wizualnej. Główne moduły to m.in. `Game` (kontroler), `Colony` (zarządzanie obiektami na mapie), `Logistics` ("mózg" ekonomiczny) oraz poszczególne klasy budynków.
 
-### 5. Struktura Projektu i Organizacja Plików
-Projekt został podzielony na logiczne moduły. Każda główna klasa posiada własny plik nagłówkowy (`.h`) z deklaracjami oraz plik źródłowy (`.cpp`) z implementacją logiczną.
+## Przejście z Konsoli na Interfejs Graficzny
 
-* **`Game` (`game.h` / `game.cpp`)**
-    * Główny kontroler aplikacji. Odpowiada za pętlę gry (`run()`), obsługę wejścia użytkownika (`commands()`) oraz interakcję z graczem (wyświetlanie menu, samouczka, komunikatów).
-* **`Colony` (`colony.h` / `colony.cpp`)**
-    * Klasa zarządzająca kolekcją budynków. Przechowuje wektor wskaźników na obiekty `Building`, odpowiada za ich dodawanie (`zbudujBudynek()`), usuwanie (`zburzBudynek()`) oraz wyszukiwanie. Pełni rolę łącznika między interfejsem gry a logiką budynków.
-* **`Logistics` (`logistics.h` / `logistics.cpp`)**
-    * "Mózg" ekonomiczny gry. Przechowuje wszystkie prywatne statystyki kolonii (ilość surowców, energii, populację, poziom terraformacji) i wykonuje na nich obliczenia. Odpowiada za logikę przejścia do następnej rundy (`nextRound()`) oraz sprawdzanie warunków przegranej.
-* **`Building` (`building.h` / `building.cpp`)**
-    * Klasa bazowa dla wszystkich budynków w grze. Definiuje wspólne atrybuty (nazwa, koszty utrzymania, wymagania przy budowaniu) oraz interfejs metod wirtualnych, które są nadpisywane przez klasy pochodne.
-* **Klasy Pochodne (`farm.h/cpp`, `energy.h/cpp` itd.)**
-    * Specjalistyczne implementacje klasy `Building`. Każda posiada unikalne właściwości:
-        * `Energy`: Zarządzanie produkcją prądu.
-        * `Farm`: Logika produkcji żywności (cykle wzrostu).
-        * `Housing`: Zwiększanie limitu populacji (dostępni pracownicy).
-        * `Producer`: Wydobycie surowców (Kamień/Tytan) w zależności od typu kopalni.
-        * `Terr`: Generowanie punktów terraformacji odblokowujących nowe technologie.
-* **`utils`**
-    * Zawiera definicje `enum class` oraz stałe kolorów ANSI używane w całym projekcie, oraz kilka uniwersalnych funkcji przydatnych do wyświetlania danych w konsoli (jak np. `prntHeader(...)` czy `prntTablica(...)`).
- 
-  
-## Pliki Danych
+Gra nadal opiera się na oryginalnych założeniach mechanicznych, jednak sposób interakcji uległ zmianie. Dawne komendy tekstowe mają teraz swoje bezpośrednie odpowiedniki w interfejsie graficznym:
 
-Gra korzysta z zewnętrznych plików tekstowych, w których są zapisywane informaacje podczas zapisywania gry, albo są trzymane parametry samych budynków (w celu ułatwienia zmiany parametrów budynków):
+* **Komenda info / show:** Przeniesione do dynamicznych okien i tooltipów. Najechanie na budynek na mapie lub w menu budowania automatycznie wyświetla wszystkie jego parametry i koszty w panelu ImGui.
+* **Komenda build:** Wykonywana poprzez wybranie budynku z panelu bocznego i kliknięcie Lewym Przyciskiem Myszy na wolne pole na siatce głównej.
+* **Komenda destroy:** Zastąpiona trybem niszczenia (lub dedykowanym przyciskiem w GUI), pozwalającym na kliknięcie istniejącego budynku w celu odzyskania zasobów i pracowników.
+* **Komenda colony:** Zastąpiona stałym, widocznym przez cały czas panelem górnym/bocznym, który na bieżąco aktualizuje stan populacji, prądu i zasobów.
+* **Komenda next:** Zastąpiona głównym przyciskiem "Kolejna Tura" na ekranie.
+* **Komendy save, load, exit:** Dostępne w postaci przycisków w głównym menu pauzy wywoływanym klawiszem ESC.
 
-* **`gamedata.txt`**: "Baza danych" używanych budynków w grze. Zawiera statystyki wszystkich dostępnych budynków (koszty, produkcja, wymagany poziom, opis). Dzięki temu balansowanie gry nie wymaga wprowadzania licznych zmian w kodzie.
-* **`config.txt`**: Przechowuje ustawienia początkowe (jeśli dotyczy).
-* **Pliki zapisu (`*_buildings.txt`, `*_colony.txt`)**:
-    * Jeden plik przechowuje stan globalny kolonii (surowce, tura, liczba pracowników, nazwa, itp.).
-    * Drugi plik przechowuje listę zbudowanych obiektów wraz z ich unikalnym stanem (ID, typ budynku i jego wszystkie parametry).
+## Pliki Danych i Zasoby
 
-## Jak uruchomić - Instalacja
+Gra korzysta z zewnętrznych plików do przechowywania stanu i konfiguracji:
 
-1.  Przejdź do zakładki **[Releases](../../releases)** po prawej stronie.
-2.  Pobierz najnowszą pełną wersję `.zip` ([`v0.1.1`](https://github.com/Miqel0/Projekt_Kolonizacja_Marsa/releases/tag/v0.1.1)) albo i dowolną wersję testową `Pre-release`.
-3.  **Wypakuj cały folder** do dowolnego folderu.
-4.  **Ważne:** Nie zmieniaj żadnego położenia plików, jakakolwiek zmiana będzie skutkować zepsciem programu.
-5.  Uruchom plik `.exe` w terminalu obsługującym kolory (np. Windows Terminal - na Win 11, PowerShell, VS Code terminal).
+* **Zasoby Graficzne (Assets):** Skonsolidowany plik tekstur, zdefiniowana ikona aplikacji oraz plik z własną czcionką wczytywaną przy starcie. Do gry dodano również niestandardowe pliki graficzne, które całkowicie modyfikują wygląd i zachowanie kursora myszy podczas rozgrywki.
+* **gamedata.txt**: "Baza danych" statystyk wszystkich dostępnych budynków (koszty, produkcja, wymagania). Edycja tego pliku pozwala na łatwe balansowanie rozgrywki bez ingerencji w kod źródłowy.
+* **config.txt**: Przechowuje różnego rodzaju ustawienia konfiguracyjne gry, w tym między innymi zapamiętuje nazwę ostatnio tworzonego lub wczytywanego zapisu.
+* **Pliki zapisu (Foldery z nazwami zapisów)**: System zapisów opiera się na tworzeniu nowych folderów o niestandardowych nazwach wybranych przez gracza. Wewnątrz każdego takiego folderu generowane są pliki tekstowe o stałych nazwach (np. `buildings.txt`, `colony.txt`), które przechowują szczegółową listę postawionych budynków oraz stan globalny kolonii.
 
-## Pobieranie Kodu Źródłowego - Kompilacja ręczna
+## Instalacja i Uruchomienie
 
-Jeśli chcesz zobaczyć kod, edytować go lub skompilować grę samodzielnie:
+Najprostszym sposobem na uruchomienie gry jest pobranie gotowej, skompilowanej wersji:
+1. Przejdź do zakładki **Releases** na stronie głównej repozytorium GitHub.
+2. Pobierz najnowszą wersję `.zip`.
+3. Wypakuj archiwum w dowolne miejsce na dysku.
+4. Uruchom plik `.exe`. Wszystkie niezbędne biblioteki oraz zasoby graficzne znajdują się już w paczce.
 
-1. Przejdź do zakładki **[Releases](../../releases)** (znajduje się po prawej stronie na GitHubie).
-2. Znajdź najnowszą wersję (oznaczoną zieloną etykietą **Latest**).
-3. Przewiń do sekcji **Assets** (na dole opisu tej wersji) i kliknij **Source code (zip)**.
-4. Wypakuj pobrane archiwum w dowolne miejsce.
-5. Otwórz wypakowany folder w **Visual Studio Code**.
-6. Wciśnij **`Ctrl + Shift + B`**, aby zbudować projekt (gra skorzysta ze skonfigurowanego `buildtask-a` dla Windowsa).
+## Kompilacja Ręczna (System Windows)
 
-**Ważna informacja:**
-Projekt został napisany w **czystym C++**.
-Nie używam **żadnych zewnętrznych, niestandardowych bibliotek**, które trzeba by doinstalowywać. Jeśli masz działający kompilator C++ (np. MSVC w Visual Studio), gra skompiluje się od razu po pobraniu, bez błędów o brakujących plikach.
+Projekt korzysta z systemu budowania CMake. Wszystkie zależności zostały dołączone bezpośrednio do repozytorium, co maksymalnie upraszcza proces kompilacji.
 
-
-## Szybki Start - zapis podstawowej kolonii
-
-Nie musisz budować kolonii od zera, aby sprawdzić jak działają mechaniki gry!
-W plikach gry znajduje się **przykładowy zapis** z gotową, funkcjonującą kolonią.
-
-Aby go uruchomić:
-1. Włącz grę.
-2. Po wybraniu rodzaju gry możesz wybrać opcję wczytania gry, albo zawsze później możesz wpisać komendę **`load`**.
-To pozwoli Ci od razu przetestować produkcję surowców, działanie farm i zużycie energii w podstawowej bazie.
-
-## Lista Komend
-
-W trakcie gry mozliwe jest wpisywanie poniższych komend:
-
-| Komenda | Argumenty | Opis |
-| :--- | :--- | :--- |
-| **`info`** | *-brak-* | Wyświetla listę dostępnych kategorii budynków. |
-| **`info`** | `[kategoria]` | Pokazuje szczegóły i koszty budynków z danej kategorii (np. `info ENERGY`). |
-| **`build`** | `[nazwa]` | Buduje budynek, jeśli masz surowce i wystarczającą liczbę pracowników (np. `build wiatrak`). |
-| **`destroy`** | `[nazwa]` | Niszczy budynek i odzyskuje część zasobów, oraz wszytkich ludzi. |
-| **`show`** | *-brak-* | Wyświetla podsumowanie ilości zbudowanych budynków. |
-| **`show`** | `[nazwa]` | Pokazuje szczegóły konkretnego zbudowanego budynku. (wszystkie jego parametry oraz ilość tego budynku w kolonii) |
-| **`colony`** | *-brak-* | Wyświetla główny panel statystyk kolonii (surowce, energia, pracownicy). |
-| **`next`** | *-brak-* | Kończy turę. Następuje sprawdzenie czy wystarcza prądu i jedzenie, a następnie zachodzi produkcja wszystkich zasobów. |
-| **`rename`** | *-brak-* | Pozwala zmienić nazwę kolonii (uwzględniając użycie `_`, co następnie jest zastępowane spacją np. `rename New_Vegas` -> `New Vegas`. |
-| **`rules`** | *-brak-* | Wyświetla informacje o celu gry i wszelkiego rodzaju zasadach, przydatne jak nie rozumie się jakiejś mechaniki. |
-| **`help`** | *-brak-* | Wyświetla listę dostępnych komend, wraz z ich opisami i zastosowaniami. |
-| **`save`** | *-brak-* | Zapisuje stan gry do pliku (wszystkie parametry które wpływają na grę!). |
-| **`load`** | *-brak-* | Wczytuje stan gry z pliku. |
-| **`exit`** | *-brak-* | Wyjście z gry. |
-
----
+1. Sklonuj lub pobierz kod źródłowy projektu.
+2. Otwórz folder w programie **Visual Studio Code**.
+3. Upewnij się, że posiadasz zainstalowane rozszerzenia C/C++ oraz CMake Tools. Wymagany jest również kompilator działający na Windowsie (rekomendowany MSVC wbudowany w Visual Studio Build Tools).
+4. Biblioteki (SFML oraz ImGui) znajdują się bezpośrednio w folderze `/libs`, co zwalnia z konieczności ich zewnętrznego pobierania i konfigurowania ścieżek systemowych.
+5. Zbuduj projekt, korzystając z paska dolnego w VS Code (przycisk *Build*) lub z terminala, uruchamiając komendy CMake.
+6. Uruchom wygenerowany plik `.exe` (skrypt CMake został skonfigurowany tak, aby automatycznie skopiować niezbędne zasoby graficzne, czcionki i pliki tekstowe do folderu wyjściowego).
 
 ## Autor
 
-**Michał Pawlica / @Miqel0** - Projekt wykonany na zaliczenie przedmiotu *Języki Programowania*.
+* Michał Pawlica / Miquel/ @Miqel0
+* Projekt wykonany początkowo na zaliczenie przedmiotu *Języki Programowania*, a następnie niezależnie zmodernizowany do pełnej aplikacji okienkowej w ramach zaliczenia przedmiotu *Zaawansowane Programowanie w C++*.

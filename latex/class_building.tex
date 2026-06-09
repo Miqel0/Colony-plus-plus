@@ -1,0 +1,342 @@
+\doxysection{Building Class Reference}
+\hypertarget{class_building}{}\label{class_building}\index{Building@{Building}}
+
+
+Główna klasa wszystkich budynków, posiada w sobie podstawowe parametry, oraz funkcje virtualne.  
+
+
+
+
+{\ttfamily \+\#include $<$building.\+h$>$}
+
+Inheritance diagram for Building:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_building}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}} ()
+\item 
+\doxymbox{\hyperlink{class_building_a235aad77062507b216de58d8818ac813}{Building}} (string n, \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} t, int kE, int kK, int kT, int w, int X\+\_\+, int Y\+\_\+)
+\item 
+virtual \doxymbox{\hyperlink{class_building_ab9ff99f3c9aabd5bf5f9e9658b718c19}{\texorpdfstring{$\sim$}{\string~}\+Building}} ()
+\item 
+virtual void \doxymbox{\hyperlink{class_building_a8de28ebdbaebb914385c4487acf279b3}{save}} (ofstream \&plik) const
+\begin{DoxyCompactList}\small\item\em Zapisywanie danych budynku do pliku. \end{DoxyCompactList}\item 
+virtual int \doxymbox{\hyperlink{class_building_a599b3367b7417585a6acda635f0342ef}{work}} ()
+\begin{DoxyCompactList}\small\item\em WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS next\+Round, f. virtualna. \end{DoxyCompactList}\item 
+virtual void \doxymbox{\hyperlink{class_building_a7193e4231b0e44fe84f8b98ed04e3bad}{UIprnt}} (int il) const
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca dane o budynku. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_building_a3ab0e2edff659165d11946c3cfda98e4}{set\+Id}} (int i)
+\begin{DoxyCompactList}\small\item\em Ustawianie unikatowy ID budowanego budynku. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{class_building_a88c6c92d80ca9fde112e42d1e68b3b0a}{get\+Name}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_ac19d4a4bdfa9b3111af0e749a723ea7a}{get\+Demand\+Workers}} () const
+\item 
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} \doxymbox{\hyperlink{class_building_a1054fecd4ee2d5601133ae79203fcb5a}{get\+Typ}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a0dd32dd54cd314a6994ec82ac93cda1e}{get\+Residents}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a8ce506399dcb87f2921addfd4eab3a03}{get\+Req\+Energy}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a0bf5bbfaf7c7ade3c6927f50530d5736}{get\+Koszt\+Kamien}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a562ea481a4df8bd5f518b8dceb833284}{get\+Koszt\+Tytan}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_addd6e908d832ad9c55c3d5ec51ca81e0}{get\+ID}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a8438209771806c04e21ddc5039f65c72}{getX}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a1eb709fdb52627dfc7cca36d2ffda989}{getY}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_building_accc095b3990388741ae69650e4ae1022}{update\+Licznik}} (int wczytane\+Max\+Id)
+\begin{DoxyCompactList}\small\item\em zwięksanie licznika o 1 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} \doxymbox{\hyperlink{class_building_ac25488cf638fea7a6a725710a0f9cec6}{type}}
+\item 
+string \doxymbox{\hyperlink{class_building_a20eadaa6a940a4b9f9841305ee84d62f}{name}}
+\item 
+int \doxymbox{\hyperlink{class_building_af9581adc0ff79e571cafe0bc3df17a45}{id}}
+\item 
+int \doxymbox{\hyperlink{class_building_ada512d64cb45253a2887929ae7742163}{koszt\+Energii}}
+\item 
+int \doxymbox{\hyperlink{class_building_a4634e1040bc8ce55065b43551e2ad7e3}{koszt\+Kamien}}
+\item 
+int \doxymbox{\hyperlink{class_building_a78eff8e0a97c85cbaa2f550e8fc5f57b}{koszt\+Tytan}}
+\item 
+int \doxymbox{\hyperlink{class_building_a8b32d010d561f7e2234c6bc8c95fe239}{workers}}
+\item 
+int \doxymbox{\hyperlink{class_building_ac71e1b7b919fc042ad8532113e806a8a}{residents}}
+\item 
+int \doxymbox{\hyperlink{class_building_ab1fa63089c2733c82431fed62225a2b9}{X}}
+\item 
+int \doxymbox{\hyperlink{class_building_a4e0a286daff974620c47279362f49a6b}{Y}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static int \doxymbox{\hyperlink{class_building_a568da9a3259d3e74742aa1cf3ac1a9a2}{next\+\_\+id}} =1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Główna klasa wszystkich budynków, posiada w sobie podstawowe parametry, oraz funkcje virtualne. 
+
+\label{class_building_doc-constructors}
+\Hypertarget{class_building_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_building_ab570ec0a203ee621f9f522c678a147d9}\index{Building@{Building}!Building@{Building}}
+\index{Building@{Building}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{Building()}{Building()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_building_ab570ec0a203ee621f9f522c678a147d9} 
+Building::\+\+Building (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_building_a235aad77062507b216de58d8818ac813}\index{Building@{Building}!Building@{Building}}
+\index{Building@{Building}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{Building()}{Building()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_building_a235aad77062507b216de58d8818ac813} 
+Building::\+\+Building (\begin{DoxyParamCaption}\item[{string}]{n}{, }\item[{\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}}}]{t}{, }\item[{int}]{kE}{, }\item[{int}]{kK}{, }\item[{int}]{kT}{, }\item[{int}]{w}{, }\item[{int}]{X\+\_\+}{, }\item[{int}]{Y\+\_\+}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_building_ab9ff99f3c9aabd5bf5f9e9658b718c19}\index{Building@{Building}!````~Building@{\texorpdfstring{$\sim$}{\string~}Building}}
+\index{````~Building@{\texorpdfstring{$\sim$}{\string~}Building}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Building()}{\string~Building()}}
+{\footnotesize\ttfamily \label{class_building_ab9ff99f3c9aabd5bf5f9e9658b718c19} 
+virtual Building::\+\texorpdfstring{$\sim$}{\string~}\+Building (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\label{class_building_doc-func-members}
+\Hypertarget{class_building_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_building_ac19d4a4bdfa9b3111af0e749a723ea7a}\index{Building@{Building}!getDemandWorkers@{getDemandWorkers}}
+\index{getDemandWorkers@{getDemandWorkers}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getDemandWorkers()}{getDemandWorkers()}}
+{\footnotesize\ttfamily \label{class_building_ac19d4a4bdfa9b3111af0e749a723ea7a} 
+int Building::\+get\+Demand\+Workers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_addd6e908d832ad9c55c3d5ec51ca81e0}\index{Building@{Building}!getID@{getID}}
+\index{getID@{getID}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getID()}{getID()}}
+{\footnotesize\ttfamily \label{class_building_addd6e908d832ad9c55c3d5ec51ca81e0} 
+int Building::\+get\+ID (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a0bf5bbfaf7c7ade3c6927f50530d5736}\index{Building@{Building}!getKosztKamien@{getKosztKamien}}
+\index{getKosztKamien@{getKosztKamien}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getKosztKamien()}{getKosztKamien()}}
+{\footnotesize\ttfamily \label{class_building_a0bf5bbfaf7c7ade3c6927f50530d5736} 
+int Building::\+get\+Koszt\+Kamien (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a562ea481a4df8bd5f518b8dceb833284}\index{Building@{Building}!getKosztTytan@{getKosztTytan}}
+\index{getKosztTytan@{getKosztTytan}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getKosztTytan()}{getKosztTytan()}}
+{\footnotesize\ttfamily \label{class_building_a562ea481a4df8bd5f518b8dceb833284} 
+int Building::\+get\+Koszt\+Tytan (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a88c6c92d80ca9fde112e42d1e68b3b0a}\index{Building@{Building}!getName@{getName}}
+\index{getName@{getName}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{class_building_a88c6c92d80ca9fde112e42d1e68b3b0a} 
+string Building::\+get\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a8ce506399dcb87f2921addfd4eab3a03}\index{Building@{Building}!getReqEnergy@{getReqEnergy}}
+\index{getReqEnergy@{getReqEnergy}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getReqEnergy()}{getReqEnergy()}}
+{\footnotesize\ttfamily \label{class_building_a8ce506399dcb87f2921addfd4eab3a03} 
+int Building::\+get\+Req\+Energy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a0dd32dd54cd314a6994ec82ac93cda1e}\index{Building@{Building}!getResidents@{getResidents}}
+\index{getResidents@{getResidents}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getResidents()}{getResidents()}}
+{\footnotesize\ttfamily \label{class_building_a0dd32dd54cd314a6994ec82ac93cda1e} 
+int Building::\+get\+Residents (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a1054fecd4ee2d5601133ae79203fcb5a}\index{Building@{Building}!getTyp@{getTyp}}
+\index{getTyp@{getTyp}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getTyp()}{getTyp()}}
+{\footnotesize\ttfamily \label{class_building_a1054fecd4ee2d5601133ae79203fcb5a} 
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} Building::\+get\+Typ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a8438209771806c04e21ddc5039f65c72}\index{Building@{Building}!getX@{getX}}
+\index{getX@{getX}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getX()}{getX()}}
+{\footnotesize\ttfamily \label{class_building_a8438209771806c04e21ddc5039f65c72} 
+int Building::\+getX (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a1eb709fdb52627dfc7cca36d2ffda989}\index{Building@{Building}!getY@{getY}}
+\index{getY@{getY}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{getY()}{getY()}}
+{\footnotesize\ttfamily \label{class_building_a1eb709fdb52627dfc7cca36d2ffda989} 
+int Building::\+getY (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_building_a8de28ebdbaebb914385c4487acf279b3}\index{Building@{Building}!save@{save}}
+\index{save@{save}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_building_a8de28ebdbaebb914385c4487acf279b3} 
+void Building::\+save (\begin{DoxyParamCaption}\item[{ofstream \&}]{plik}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Zapisywanie danych budynku do pliku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em plik} & plik \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \doxymbox{\hyperlink{class_energy_a2aa959dcb37544dd135367fed7cfdb42}{Energy}}, \doxymbox{\hyperlink{class_farm_a33fec8cf84fad4ccdd6aaaa3072eb1d5}{Farm}}, \doxymbox{\hyperlink{class_housing_af69f060aa453a2cbfa945e96a98d0143}{Housing}}, \doxymbox{\hyperlink{class_producer_af7ebbe4f5fa6b6f6605144b80023143e}{Producer}}, and \doxymbox{\hyperlink{class_terr_a0793582363ea32ba72b36307bda8b804}{Terr}}.
+
+\Hypertarget{class_building_a3ab0e2edff659165d11946c3cfda98e4}\index{Building@{Building}!setId@{setId}}
+\index{setId@{setId}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily \label{class_building_a3ab0e2edff659165d11946c3cfda98e4} 
+void Building::\+set\+Id (\begin{DoxyParamCaption}\item[{int}]{i}{}\end{DoxyParamCaption})}
+
+
+
+Ustawianie unikatowy ID budowanego budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_building_a7193e4231b0e44fe84f8b98ed04e3bad}\index{Building@{Building}!UIprnt@{UIprnt}}
+\index{UIprnt@{UIprnt}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{UIprnt()}{UIprnt()}}
+{\footnotesize\ttfamily \label{class_building_a7193e4231b0e44fe84f8b98ed04e3bad} 
+void Building::\+\+UIprnt (\begin{DoxyParamCaption}\item[{int}]{il}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Funkcja wyświetlająca dane o budynku. 
+
+Funkcja virtualna wyświetlająca parametry danego budynku.
+
+
+\begin{DoxyParams}{Parameters}
+{\em il} & ilość danego budynku \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \doxymbox{\hyperlink{class_energy_a8a714fe3a5709a76b9a6bbef0146bccc}{Energy}}, \doxymbox{\hyperlink{class_farm_aee737bcbfd1e7259b943c2f4b02e7970}{Farm}}, \doxymbox{\hyperlink{class_housing_ae6960474c95634587f56dea4323efc63}{Housing}}, \doxymbox{\hyperlink{class_producer_a729bdd4c18d745e5ce7d3fa09851e10e}{Producer}}, and \doxymbox{\hyperlink{class_terr_aacd45760eca6be0ff9c3f9d7ca39ca38}{Terr}}.
+
+\Hypertarget{class_building_accc095b3990388741ae69650e4ae1022}\index{Building@{Building}!updateLicznik@{updateLicznik}}
+\index{updateLicznik@{updateLicznik}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{updateLicznik()}{updateLicznik()}}
+{\footnotesize\ttfamily \label{class_building_accc095b3990388741ae69650e4ae1022} 
+void Building::\+update\+Licznik (\begin{DoxyParamCaption}\item[{int}]{wczytane\+Max\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+zwięksanie licznika o 1 
+
+
+\begin{DoxyParams}{Parameters}
+{\em wczytane\+Max\+Id} & aktualny licznik \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_building_a599b3367b7417585a6acda635f0342ef}\index{Building@{Building}!work@{work}}
+\index{work@{work}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{work()}{work()}}
+{\footnotesize\ttfamily \label{class_building_a599b3367b7417585a6acda635f0342ef} 
+int Building::\+work (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS next\+Round, f. virtualna. 
+
+\begin{DoxyReturn}{Returns}
+int zwracana wartość podczas pracy 
+\end{DoxyReturn}
+
+
+Reimplemented in \doxymbox{\hyperlink{class_farm_a888adf57ed0a9b355db90541e9a68b76}{Farm}}, \doxymbox{\hyperlink{class_producer_ae01ec0389bf84d9356d659acf3d0c961}{Producer}}, and \doxymbox{\hyperlink{class_terr_a388ad4678370e5e322a045aa731f53f1}{Terr}}.
+
+
+
+\label{class_building_doc-variable-members}
+\Hypertarget{class_building_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_building_af9581adc0ff79e571cafe0bc3df17a45}\index{Building@{Building}!id@{id}}
+\index{id@{id}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily \label{class_building_af9581adc0ff79e571cafe0bc3df17a45} 
+int Building::\+id\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_ada512d64cb45253a2887929ae7742163}\index{Building@{Building}!kosztEnergii@{kosztEnergii}}
+\index{kosztEnergii@{kosztEnergii}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{kosztEnergii}{kosztEnergii}}
+{\footnotesize\ttfamily \label{class_building_ada512d64cb45253a2887929ae7742163} 
+int Building::\+koszt\+Energii\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_a4634e1040bc8ce55065b43551e2ad7e3}\index{Building@{Building}!kosztKamien@{kosztKamien}}
+\index{kosztKamien@{kosztKamien}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{kosztKamien}{kosztKamien}}
+{\footnotesize\ttfamily \label{class_building_a4634e1040bc8ce55065b43551e2ad7e3} 
+int Building::\+koszt\+Kamien\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_a78eff8e0a97c85cbaa2f550e8fc5f57b}\index{Building@{Building}!kosztTytan@{kosztTytan}}
+\index{kosztTytan@{kosztTytan}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{kosztTytan}{kosztTytan}}
+{\footnotesize\ttfamily \label{class_building_a78eff8e0a97c85cbaa2f550e8fc5f57b} 
+int Building::\+koszt\+Tytan\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_a20eadaa6a940a4b9f9841305ee84d62f}\index{Building@{Building}!name@{name}}
+\index{name@{name}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily \label{class_building_a20eadaa6a940a4b9f9841305ee84d62f} 
+string Building::\+name\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_a568da9a3259d3e74742aa1cf3ac1a9a2}\index{Building@{Building}!next\_id@{next\_id}}
+\index{next\_id@{next\_id}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{next\_id}{next\_id}}
+{\footnotesize\ttfamily \label{class_building_a568da9a3259d3e74742aa1cf3ac1a9a2} 
+int Building::\+next\+\_\+id =1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}
+
+\Hypertarget{class_building_ac71e1b7b919fc042ad8532113e806a8a}\index{Building@{Building}!residents@{residents}}
+\index{residents@{residents}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{residents}{residents}}
+{\footnotesize\ttfamily \label{class_building_ac71e1b7b919fc042ad8532113e806a8a} 
+int Building::\+residents\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_ac25488cf638fea7a6a725710a0f9cec6}\index{Building@{Building}!type@{type}}
+\index{type@{type}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily \label{class_building_ac25488cf638fea7a6a725710a0f9cec6} 
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} Building::\+type\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_a8b32d010d561f7e2234c6bc8c95fe239}\index{Building@{Building}!workers@{workers}}
+\index{workers@{workers}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{workers}{workers}}
+{\footnotesize\ttfamily \label{class_building_a8b32d010d561f7e2234c6bc8c95fe239} 
+int Building::\+workers\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_ab1fa63089c2733c82431fed62225a2b9}\index{Building@{Building}!X@{X}}
+\index{X@{X}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{X}{X}}
+{\footnotesize\ttfamily \label{class_building_ab1fa63089c2733c82431fed62225a2b9} 
+int Building::\+X\hspace{0.3cm}{\ttfamily [protected]}}
+
+\Hypertarget{class_building_a4e0a286daff974620c47279362f49a6b}\index{Building@{Building}!Y@{Y}}
+\index{Y@{Y}!Building@{Building}}
+\doxysubsubsection{\texorpdfstring{Y}{Y}}
+{\footnotesize\ttfamily \label{class_building_a4e0a286daff974620c47279362f49a6b} 
+int Building::\+Y\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{building_8h}{building.\+h}}\item 
+src/\+\doxymbox{\hyperlink{building_8cpp}{building.\+cpp}}\end{DoxyCompactItemize}

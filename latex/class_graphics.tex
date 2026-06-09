@@ -1,0 +1,526 @@
+\doxysection{Graphics Class Reference}
+\hypertarget{class_graphics}{}\label{class_graphics}\index{Graphics@{Graphics}}
+
+
+Klasa odpowiadająca za wyświetlaniem wszystkich rzeczy.  
+
+
+
+
+{\ttfamily \+\#include $<$graphics.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c}{Graphics}} ()
+\item 
+\doxymbox{\hyperlink{class_graphics_a93a6af6ef5375fe88cd92f35eca511e9}{Graphics}} (unsigned int szer\+\_\+, unsigned int wys\+\_\+)
+\item 
+\doxymbox{\hyperlink{class_graphics_a7841c9a961ac9bca33bd30ddf8066cdb}{\texorpdfstring{$\sim$}{\string~}\+Graphics}} ()
+\item 
+void \doxymbox{\hyperlink{class_graphics_ac92cb31e073aa35119e5f358f0584c78}{prnt\+All}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Ogólna funkcja, która wyświetla wszystkie rzeczy na ekran, sprawdzajac różne warunki. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_aa6292cf904bd90b2cdf2d161d67174f4}{prnt\+Menu}} ()
+\begin{DoxyCompactList}\small\item\em Wyswitlanie menu w grze -\/ przysicki do budwania itp. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a9588e95d002740d48454b539fc753fee}{prnt\+Statystyki}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych)
+\begin{DoxyCompactList}\small\item\em Wyświetlanie parametrów kolonii. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_ae449b4b02baf021fc022e949e214cd00}{prnt\+Statystyki\+Tool\+Top}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, map$<$ string, int $>$ \&licznik, string cat, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych)
+\item 
+void \doxymbox{\hyperlink{class_graphics_acab7aefef8703d67370633a4b66aa7f6}{prnt\+Pomoc}} ()
+\begin{DoxyCompactList}\small\item\em Wyświetlanie helpa i instrukcji. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_add7e9a64ce673aaba5d4d3af521f174a}{prnt\+Budynki}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Wyświetlanie listy zbudowanych budynków jako podsumowanie ilości danego budynku. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a926967641054cce1a2375edb3ae1d107}{prnt\+Budowanie}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Wyświetlanie listy dostępnych budynków, oraz budowanie budynków. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a80ef4c7cfb0baaf7be1512e6159584b3}{prnt\+Budowanie\+Wyniki}} (\doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca wyniki budowania budynku. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a73435c15fec4c25506b7324a327da07b}{prnt\+Build\+Category}} (const string \&cat, const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Funkcja wyswietlajaca informacje o dostepnych budynkach do zbudowania z danej kategorii. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_aef47399d1b38cbe3ac635502a00212d8}{prnt\+Next\+Round\+Button}} ()
+\begin{DoxyCompactList}\small\item\em Wyświetlanie przycisku przejscia do kolejnej rundy. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a69f0137210787b578262efdbe77eea4c}{prnt\+Czy\+Next\+Round}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca okno z w. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a71d519b8e49342a3506a5de87df349e2}{prnt\+Next\+Round}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca okno z wynikiem kolejnej rundy. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_abdde86869c102b06249274c3ec555df7}{prnt\+Wyburz}} ()
+\begin{DoxyCompactList}\small\item\em Funckja wyswietlajaca wynik wyburzenia budynku. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a2bbe09039b82bccf1ffe10b226ea51f1}{wychodzenie}} ()
+\begin{DoxyCompactList}\small\item\em Okno z logiką potwiedznia wyjścia z gry. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a2d621afbe5015b077065d74aa4223864}{ustaw\+Styl\+UI}} ()
+\begin{DoxyCompactList}\small\item\em Globalne ustawianie parametrów Im\+GUI. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a1f479b737d985cc1665eecca28f6f24b}{UIBegin}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Funkcja przy starcie gry. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a7b2a3125eda6a0b3b5805d885aa6b737}{prnt\+GRA}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, \doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em WYswietlanie gry okien itp. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a16e7567b7421b63e322692f9bcc179d2}{prnt\+Menu\+Glowne}} (\doxymbox{\hyperlink{class_game}{Game}} \&gra, const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia)
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca menu główne. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a99d5719f77bb1649a0c1a9718c6fc4ad}{prnt\+Menu\+Gra}} (\doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca menu gry. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a6e268383abe34b4ad6a1872751d129f4}{prnt\+Ustawienia}} (\doxymbox{\hyperlink{class_game}{Game}} \&gra)
+\begin{DoxyCompactList}\small\item\em Funckja wyświetlająca ustawienia. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_accacf1ab98d87737a96d623038050e84}{prnt\+Credits}} ()
+\begin{DoxyCompactList}\small\item\em Funckja wyświetlająca credits. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a5972346dfbcb3e9d68fbdaf63cc116b1}{prnt\+Load}} (\doxymbox{\hyperlink{class_game}{Game}} \&gra, const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, bool z\+Menu\+Glownego)
+\begin{DoxyCompactList}\small\item\em Funckja wyświetlająca load -\/ pliki do wczytania i zapisywania. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_a262052e081116125ab9257a19063befc}{prnt\+Blad\+Budowanie}} ()
+\item 
+void \doxymbox{\hyperlink{class_graphics_af054c5778faa50bb48e1e03df59e2c3c}{prnt\+Budynek\+Info}} (const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, pair$<$ string, int $>$ inf)
+\begin{DoxyCompactList}\small\item\em Wyswietlanie ifnoramcji o kliknietym budynku. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_ab24f2e1f4563835568648d6a102a1a08}{prnt\+Menu\+Tlo}} (const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych)
+\begin{DoxyCompactList}\small\item\em Ustwianie tla do menu. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_graphics_ae63351bc39470f47333b861df6a40695}{popup\+Save\+Load}} ()
+\begin{DoxyCompactList}\small\item\em Okno z informacją o pomyślnym zapisie/\+odczycie gry. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_graphics_a82f0c77cfd927389b7d408f34e133304}{get\+Czy\+Budowa}} ()
+\item 
+\doxymbox{\hyperlink{struct_building_info}{Building\+Info}} \doxymbox{\hyperlink{class_graphics_a42208c01b1d8efab994023f7c6ea23d0}{get\+Trzymany\+Budynek}} ()
+\item 
+void \doxymbox{\hyperlink{class_graphics_a46d7daefc44d3f7913bda76dd611c0d4}{wczytaj\+Ikonki}} ()
+\begin{DoxyCompactList}\small\item\em Funkcja wczytująca ikonki. \end{DoxyCompactList}\item 
+sf::\+\+Sprite \doxymbox{\hyperlink{class_graphics_a9c2bfeda812388e206df0cad90da02f5}{get\+Ikonka}} (const std::\+string \&nazwa)
+\begin{DoxyCompactList}\small\item\em Funckja zwracajaca texturę ikonki. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa odpowiadająca za wyświetlaniem wszystkich rzeczy. 
+
+\label{class_graphics_doc-constructors}
+\Hypertarget{class_graphics_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c}\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Graphics()}{Graphics()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_graphics_af2e8fe67fd31ec263c843a6e28b29d3c} 
+Graphics::\+\+Graphics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graphics_a93a6af6ef5375fe88cd92f35eca511e9}\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\index{Graphics@{Graphics}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{Graphics()}{Graphics()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_graphics_a93a6af6ef5375fe88cd92f35eca511e9} 
+Graphics::\+\+Graphics (\begin{DoxyParamCaption}\item[{unsigned int}]{szer\+\_\+}{, }\item[{unsigned int}]{wys\+\_\+}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graphics_a7841c9a961ac9bca33bd30ddf8066cdb}\index{Graphics@{Graphics}!````~Graphics@{\texorpdfstring{$\sim$}{\string~}Graphics}}
+\index{````~Graphics@{\texorpdfstring{$\sim$}{\string~}Graphics}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Graphics()}{\string~Graphics()}}
+{\footnotesize\ttfamily \label{class_graphics_a7841c9a961ac9bca33bd30ddf8066cdb} 
+Graphics::\+\texorpdfstring{$\sim$}{\string~}\+Graphics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{class_graphics_doc-func-members}
+\Hypertarget{class_graphics_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_graphics_a82f0c77cfd927389b7d408f34e133304}\index{Graphics@{Graphics}!getCzyBudowa@{getCzyBudowa}}
+\index{getCzyBudowa@{getCzyBudowa}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{getCzyBudowa()}{getCzyBudowa()}}
+{\footnotesize\ttfamily \label{class_graphics_a82f0c77cfd927389b7d408f34e133304} 
+bool Graphics::\+get\+Czy\+Budowa (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graphics_a9c2bfeda812388e206df0cad90da02f5}\index{Graphics@{Graphics}!getIkonka@{getIkonka}}
+\index{getIkonka@{getIkonka}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{getIkonka()}{getIkonka()}}
+{\footnotesize\ttfamily \label{class_graphics_a9c2bfeda812388e206df0cad90da02f5} 
+sf::\+\+Sprite Graphics::\+get\+Ikonka (\begin{DoxyParamCaption}\item[{const std::\+string \&}]{nazwa}{}\end{DoxyParamCaption})}
+
+
+
+Funckja zwracajaca texturę ikonki. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nazwa} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+sf::\+\+Sprite 
+\end{DoxyReturn}
+\Hypertarget{class_graphics_a42208c01b1d8efab994023f7c6ea23d0}\index{Graphics@{Graphics}!getTrzymanyBudynek@{getTrzymanyBudynek}}
+\index{getTrzymanyBudynek@{getTrzymanyBudynek}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{getTrzymanyBudynek()}{getTrzymanyBudynek()}}
+{\footnotesize\ttfamily \label{class_graphics_a42208c01b1d8efab994023f7c6ea23d0} 
+\doxymbox{\hyperlink{struct_building_info}{Building\+Info}} Graphics::\+get\+Trzymany\+Budynek (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graphics_ae63351bc39470f47333b861df6a40695}\index{Graphics@{Graphics}!popupSaveLoad@{popupSaveLoad}}
+\index{popupSaveLoad@{popupSaveLoad}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{popupSaveLoad()}{popupSaveLoad()}}
+{\footnotesize\ttfamily \label{class_graphics_ae63351bc39470f47333b861df6a40695} 
+void Graphics::\+popup\+Save\+Load (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Okno z informacją o pomyślnym zapisie/\+odczycie gry. 
+
+\Hypertarget{class_graphics_ac92cb31e073aa35119e5f358f0584c78}\index{Graphics@{Graphics}!prntAll@{prntAll}}
+\index{prntAll@{prntAll}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntAll()}{prntAll()}}
+{\footnotesize\ttfamily \label{class_graphics_ac92cb31e073aa35119e5f358f0584c78} 
+void Graphics::\+prnt\+All (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Ogólna funkcja, która wyświetla wszystkie rzeczy na ekran, sprawdzajac różne warunki. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & wskaźnik do kolonii \\
+\hline
+{\em baza\+Danych} & wskaźnik do mapy z informacjami o wszystkich budynkach. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_a262052e081116125ab9257a19063befc}\index{Graphics@{Graphics}!prntBladBudowanie@{prntBladBudowanie}}
+\index{prntBladBudowanie@{prntBladBudowanie}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntBladBudowanie()}{prntBladBudowanie()}}
+{\footnotesize\ttfamily \label{class_graphics_a262052e081116125ab9257a19063befc} 
+void Graphics::\+prnt\+Blad\+Budowanie (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_graphics_a926967641054cce1a2375edb3ae1d107}\index{Graphics@{Graphics}!prntBudowanie@{prntBudowanie}}
+\index{prntBudowanie@{prntBudowanie}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntBudowanie()}{prntBudowanie()}}
+{\footnotesize\ttfamily \label{class_graphics_a926967641054cce1a2375edb3ae1d107} 
+void Graphics::\+prnt\+Budowanie (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Wyświetlanie listy dostępnych budynków, oraz budowanie budynków. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & wskaźnik do koloniii \\
+\hline
+{\em baza\+Danych} & wskaźnik do bazy danych \\
+\hline
+{\em gra} & wskaznik do klasy \doxylink{class_game}{Game} \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_a80ef4c7cfb0baaf7be1512e6159584b3}\index{Graphics@{Graphics}!prntBudowanieWyniki@{prntBudowanieWyniki}}
+\index{prntBudowanieWyniki@{prntBudowanieWyniki}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntBudowanieWyniki()}{prntBudowanieWyniki()}}
+{\footnotesize\ttfamily \label{class_graphics_a80ef4c7cfb0baaf7be1512e6159584b3} 
+void Graphics::\+prnt\+Budowanie\+Wyniki (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wyświetlająca wyniki budowania budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gra} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_af054c5778faa50bb48e1e03df59e2c3c}\index{Graphics@{Graphics}!prntBudynekInfo@{prntBudynekInfo}}
+\index{prntBudynekInfo@{prntBudynekInfo}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntBudynekInfo()}{prntBudynekInfo()}}
+{\footnotesize\ttfamily \label{class_graphics_af054c5778faa50bb48e1e03df59e2c3c} 
+void Graphics::\+prnt\+Budynek\+Info (\begin{DoxyParamCaption}\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{pair$<$ string, int $>$}]{inf}{}\end{DoxyParamCaption})}
+
+
+
+Wyswietlanie ifnoramcji o kliknietym budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em baza\+Danych} & \\
+\hline
+{\em kolonia} & \\
+\hline
+{\em inf} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_add7e9a64ce673aaba5d4d3af521f174a}\index{Graphics@{Graphics}!prntBudynki@{prntBudynki}}
+\index{prntBudynki@{prntBudynki}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntBudynki()}{prntBudynki()}}
+{\footnotesize\ttfamily \label{class_graphics_add7e9a64ce673aaba5d4d3af521f174a} 
+void Graphics::\+prnt\+Budynki (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Wyświetlanie listy zbudowanych budynków jako podsumowanie ilości danego budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & wskaźnik do koloniii \\
+\hline
+{\em baza\+Danych} & wskaźnik do bazy danych \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_a73435c15fec4c25506b7324a327da07b}\index{Graphics@{Graphics}!prntBuildCategory@{prntBuildCategory}}
+\index{prntBuildCategory@{prntBuildCategory}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntBuildCategory()}{prntBuildCategory()}}
+{\footnotesize\ttfamily \label{class_graphics_a73435c15fec4c25506b7324a327da07b} 
+void Graphics::\+prnt\+Build\+Category (\begin{DoxyParamCaption}\item[{const string \&}]{cat}{, }\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wyswietlajaca informacje o dostepnych budynkach do zbudowania z danej kategorii. 
+
+\Hypertarget{class_graphics_accacf1ab98d87737a96d623038050e84}\index{Graphics@{Graphics}!prntCredits@{prntCredits}}
+\index{prntCredits@{prntCredits}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntCredits()}{prntCredits()}}
+{\footnotesize\ttfamily \label{class_graphics_accacf1ab98d87737a96d623038050e84} 
+void Graphics::\+prnt\+Credits (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Funckja wyświetlająca credits. 
+
+\Hypertarget{class_graphics_a69f0137210787b578262efdbe77eea4c}\index{Graphics@{Graphics}!prntCzyNextRound@{prntCzyNextRound}}
+\index{prntCzyNextRound@{prntCzyNextRound}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntCzyNextRound()}{prntCzyNextRound()}}
+{\footnotesize\ttfamily \label{class_graphics_a69f0137210787b578262efdbe77eea4c} 
+void Graphics::\+prnt\+Czy\+Next\+Round (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wyświetlająca okno z w. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & wskaźnik do koloniii \\
+\hline
+{\em baza\+Danych} & wskaźnik do bazy danych \\
+\hline
+{\em gra} & wskaznik do klasy \doxylink{class_game}{Game} \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_a7b2a3125eda6a0b3b5805d885aa6b737}\index{Graphics@{Graphics}!prntGRA@{prntGRA}}
+\index{prntGRA@{prntGRA}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntGRA()}{prntGRA()}}
+{\footnotesize\ttfamily \label{class_graphics_a7b2a3125eda6a0b3b5805d885aa6b737} 
+void Graphics::\+prnt\+GRA (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+WYswietlanie gry okien itp. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & \\
+\hline
+{\em baza\+Danych} & \\
+\hline
+{\em gra} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_a5972346dfbcb3e9d68fbdaf63cc116b1}\index{Graphics@{Graphics}!prntLoad@{prntLoad}}
+\index{prntLoad@{prntLoad}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntLoad()}{prntLoad()}}
+{\footnotesize\ttfamily \label{class_graphics_a5972346dfbcb3e9d68fbdaf63cc116b1} 
+void Graphics::\+prnt\+Load (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{, }\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{bool}]{czy\+Menu}{}\end{DoxyParamCaption})}
+
+
+
+Funckja wyświetlająca load -\/ pliki do wczytania i zapisywania. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gra} & Referencja do obiektu gry \\
+\hline
+{\em kolonia} & ref do kolonii \\
+\hline
+{\em czy\+Menu} & czy menu czy gra \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_aa6292cf904bd90b2cdf2d161d67174f4}\index{Graphics@{Graphics}!prntMenu@{prntMenu}}
+\index{prntMenu@{prntMenu}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntMenu()}{prntMenu()}}
+{\footnotesize\ttfamily \label{class_graphics_aa6292cf904bd90b2cdf2d161d67174f4} 
+void Graphics::\+prnt\+Menu (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Wyswitlanie menu w grze -\/ przysicki do budwania itp. 
+
+\Hypertarget{class_graphics_a16e7567b7421b63e322692f9bcc179d2}\index{Graphics@{Graphics}!prntMenuGlowne@{prntMenuGlowne}}
+\index{prntMenuGlowne@{prntMenuGlowne}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntMenuGlowne()}{prntMenuGlowne()}}
+{\footnotesize\ttfamily \label{class_graphics_a16e7567b7421b63e322692f9bcc179d2} 
+void Graphics::\+prnt\+Menu\+Glowne (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{, }\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wyświetlająca menu główne. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em gra} & \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{class_graphics_a99d5719f77bb1649a0c1a9718c6fc4ad}\index{Graphics@{Graphics}!prntMenuGra@{prntMenuGra}}
+\index{prntMenuGra@{prntMenuGra}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntMenuGra()}{prntMenuGra()}}
+{\footnotesize\ttfamily \label{class_graphics_a99d5719f77bb1649a0c1a9718c6fc4ad} 
+void Graphics::\+prnt\+Menu\+Gra (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wyświetlająca menu gry. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em gra} & \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{class_graphics_ab24f2e1f4563835568648d6a102a1a08}\index{Graphics@{Graphics}!prntMenuTlo@{prntMenuTlo}}
+\index{prntMenuTlo@{prntMenuTlo}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntMenuTlo()}{prntMenuTlo()}}
+{\footnotesize\ttfamily \label{class_graphics_ab24f2e1f4563835568648d6a102a1a08} 
+void Graphics::\+prnt\+Menu\+Tlo (\begin{DoxyParamCaption}\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{}\end{DoxyParamCaption})}
+
+
+
+Ustwianie tla do menu. 
+
+\Hypertarget{class_graphics_a71d519b8e49342a3506a5de87df349e2}\index{Graphics@{Graphics}!prntNextRound@{prntNextRound}}
+\index{prntNextRound@{prntNextRound}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntNextRound()}{prntNextRound()}}
+{\footnotesize\ttfamily \label{class_graphics_a71d519b8e49342a3506a5de87df349e2} 
+void Graphics::\+prnt\+Next\+Round (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wyświetlająca okno z wynikiem kolejnej rundy. 
+
+
+\begin{DoxyItemize}
+\item 
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & wskaźnik do koloniii \\
+\hline
+{\em baza\+Danych} & wskaźnik do bazy danych \\
+\hline
+{\em gra} & wskaznik do klasy \doxylink{class_game}{Game} \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}\Hypertarget{class_graphics_aef47399d1b38cbe3ac635502a00212d8}\index{Graphics@{Graphics}!prntNextRoundButton@{prntNextRoundButton}}
+\index{prntNextRoundButton@{prntNextRoundButton}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntNextRoundButton()}{prntNextRoundButton()}}
+{\footnotesize\ttfamily \label{class_graphics_aef47399d1b38cbe3ac635502a00212d8} 
+void Graphics::\+prnt\+Next\+Round\+Button (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Wyświetlanie przycisku przejscia do kolejnej rundy. 
+
+\Hypertarget{class_graphics_acab7aefef8703d67370633a4b66aa7f6}\index{Graphics@{Graphics}!prntPomoc@{prntPomoc}}
+\index{prntPomoc@{prntPomoc}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntPomoc()}{prntPomoc()}}
+{\footnotesize\ttfamily \label{class_graphics_acab7aefef8703d67370633a4b66aa7f6} 
+void Graphics::\+prnt\+Pomoc (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Wyświetlanie helpa i instrukcji. 
+
+\Hypertarget{class_graphics_a9588e95d002740d48454b539fc753fee}\index{Graphics@{Graphics}!prntStatystyki@{prntStatystyki}}
+\index{prntStatystyki@{prntStatystyki}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntStatystyki()}{prntStatystyki()}}
+{\footnotesize\ttfamily \label{class_graphics_a9588e95d002740d48454b539fc753fee} 
+void Graphics::\+prnt\+Statystyki (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{}\end{DoxyParamCaption})}
+
+
+
+Wyświetlanie parametrów kolonii. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & wskaźnik do kolonii \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_ae449b4b02baf021fc022e949e214cd00}\index{Graphics@{Graphics}!prntStatystykiToolTop@{prntStatystykiToolTop}}
+\index{prntStatystykiToolTop@{prntStatystykiToolTop}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntStatystykiToolTop()}{prntStatystykiToolTop()}}
+{\footnotesize\ttfamily \label{class_graphics_ae449b4b02baf021fc022e949e214cd00} 
+void Graphics::\+prnt\+Statystyki\+Tool\+Top (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{map$<$ string, int $>$ \&}]{licznik}{, }\item[{string}]{cat}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & \\
+\hline
+{\em licznik} & mapa z iloscia zbudowanych budynkow \\
+\hline
+{\em cat} & nazwa kategorii do wyświetlenia \\
+\hline
+{\em baza\+Danych} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_a6e268383abe34b4ad6a1872751d129f4}\index{Graphics@{Graphics}!prntUstawienia@{prntUstawienia}}
+\index{prntUstawienia@{prntUstawienia}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntUstawienia()}{prntUstawienia()}}
+{\footnotesize\ttfamily \label{class_graphics_a6e268383abe34b4ad6a1872751d129f4} 
+void Graphics::\+prnt\+Ustawienia (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Funckja wyświetlająca ustawienia. 
+
+\Hypertarget{class_graphics_abdde86869c102b06249274c3ec555df7}\index{Graphics@{Graphics}!prntWyburz@{prntWyburz}}
+\index{prntWyburz@{prntWyburz}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{prntWyburz()}{prntWyburz()}}
+{\footnotesize\ttfamily \label{class_graphics_abdde86869c102b06249274c3ec555df7} 
+void Graphics::\+prnt\+Wyburz (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Funckja wyswietlajaca wynik wyburzenia budynku. 
+
+\Hypertarget{class_graphics_a1f479b737d985cc1665eecca28f6f24b}\index{Graphics@{Graphics}!UIBegin@{UIBegin}}
+\index{UIBegin@{UIBegin}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{UIBegin()}{UIBegin()}}
+{\footnotesize\ttfamily \label{class_graphics_a1f479b737d985cc1665eecca28f6f24b} 
+void Graphics::\+\+UIBegin (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{\doxymbox{\hyperlink{class_game}{Game}} \&}]{gra}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja przy starcie gry. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & \\
+\hline
+{\em baza\+Danych} & \\
+\hline
+{\em gra} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_graphics_a2d621afbe5015b077065d74aa4223864}\index{Graphics@{Graphics}!ustawStylUI@{ustawStylUI}}
+\index{ustawStylUI@{ustawStylUI}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{ustawStylUI()}{ustawStylUI()}}
+{\footnotesize\ttfamily \label{class_graphics_a2d621afbe5015b077065d74aa4223864} 
+void Graphics::\+ustaw\+Styl\+UI (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Globalne ustawianie parametrów Im\+GUI. 
+
+\Hypertarget{class_graphics_a46d7daefc44d3f7913bda76dd611c0d4}\index{Graphics@{Graphics}!wczytajIkonki@{wczytajIkonki}}
+\index{wczytajIkonki@{wczytajIkonki}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{wczytajIkonki()}{wczytajIkonki()}}
+{\footnotesize\ttfamily \label{class_graphics_a46d7daefc44d3f7913bda76dd611c0d4} 
+void Graphics::\+wczytaj\+Ikonki (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wczytująca ikonki. 
+
+\Hypertarget{class_graphics_a2bbe09039b82bccf1ffe10b226ea51f1}\index{Graphics@{Graphics}!wychodzenie@{wychodzenie}}
+\index{wychodzenie@{wychodzenie}!Graphics@{Graphics}}
+\doxysubsubsection{\texorpdfstring{wychodzenie()}{wychodzenie()}}
+{\footnotesize\ttfamily \label{class_graphics_a2bbe09039b82bccf1ffe10b226ea51f1} 
+void Graphics::\+wychodzenie (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Okno z logiką potwiedznia wyjścia z gry. 
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{graphics_8h}{graphics.\+h}}\item 
+src/\+\doxymbox{\hyperlink{graphics_8cpp}{graphics.\+cpp}}\end{DoxyCompactItemize}

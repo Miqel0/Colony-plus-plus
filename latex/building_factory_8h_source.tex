@@ -1,0 +1,45 @@
+\doxysection{building\+Factory.\+h}
+\hypertarget{building_factory_8h_source}{}\label{building_factory_8h_source}\index{src/buildingFactory.h@{src/buildingFactory.h}}
+\doxymbox{\hyperlink{building_factory_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ buildingfactory\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ buildingfactory\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_8h}{building.h}}"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{farm_8h}{farm.h}}"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{energy_8h}{energy.h}}"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{housing_8h}{housing.h}}"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{terr_8h}{terr.h}}"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{producer_8h}{producer.h}}"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_building_factory}{BuildingFactory}}\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ std::unique\_ptr<Building>\ \doxymbox{\hyperlink{class_building_factory_a4497f16c0a7581364cbd660388d7b71c}{stworzBudynek}}(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{struct_building_info}{BuildingInfo}}\&\ info,pair<int,int>\ kliknietePole)\ \{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ std::string\ typ\ =\ info.\doxymbox{\hyperlink{struct_building_info_a6db9b27956c93e01cfcc53127a7da7d4}{type}};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (typ\ ==\ \textcolor{stringliteral}{"{}FARM"{}})\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<Farm>(info.\doxymbox{\hyperlink{struct_building_info_a89d4c751883b78ff4e18b85ec979b525}{nazwa}},\ info.\doxymbox{\hyperlink{struct_building_info_a7bc727f4a5abe469d6777a79003a3b84}{reqEnergy}},\ info.\doxymbox{\hyperlink{struct_building_info_aaaa4272cc0ce4febc847e67818c0ca37}{kKamien}},\ info.\doxymbox{\hyperlink{struct_building_info_a13b9cc7f1eb2bed80e810f7ab5480cde}{kTytan}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6854c714c3231792ddcb8d14d8bef26}{genInne}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6664c9dd8f63e783dc53b49b2998dee}{workers}},\ info.\doxymbox{\hyperlink{struct_building_info_a9c80a62523c2259254fd6c4488f63ed9}{x}},\ 0,kliknietePole.first,kliknietePole.second);}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (typ\ ==\ \textcolor{stringliteral}{"{}ENERGY"{}})\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<Energy>(info.\doxymbox{\hyperlink{struct_building_info_a89d4c751883b78ff4e18b85ec979b525}{nazwa}},\ info.\doxymbox{\hyperlink{struct_building_info_a7bc727f4a5abe469d6777a79003a3b84}{reqEnergy}},\ info.\doxymbox{\hyperlink{struct_building_info_aaaa4272cc0ce4febc847e67818c0ca37}{kKamien}},\ info.\doxymbox{\hyperlink{struct_building_info_a13b9cc7f1eb2bed80e810f7ab5480cde}{kTytan}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6854c714c3231792ddcb8d14d8bef26}{genInne}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6664c9dd8f63e783dc53b49b2998dee}{workers}},\ kliknietePole.first,kliknietePole.second);}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (typ\ ==\ \textcolor{stringliteral}{"{}HOUSING"{}})\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<Housing>(info.\doxymbox{\hyperlink{struct_building_info_a89d4c751883b78ff4e18b85ec979b525}{nazwa}},\ info.\doxymbox{\hyperlink{struct_building_info_a7bc727f4a5abe469d6777a79003a3b84}{reqEnergy}},\ info.\doxymbox{\hyperlink{struct_building_info_aaaa4272cc0ce4febc847e67818c0ca37}{kKamien}},\ info.\doxymbox{\hyperlink{struct_building_info_a13b9cc7f1eb2bed80e810f7ab5480cde}{kTytan}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6854c714c3231792ddcb8d14d8bef26}{genInne}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6664c9dd8f63e783dc53b49b2998dee}{workers}},\ kliknietePole.first,kliknietePole.second);}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (typ\ ==\ \textcolor{stringliteral}{"{}PRODUCER"{}})\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<Producer>(info.\doxymbox{\hyperlink{struct_building_info_a89d4c751883b78ff4e18b85ec979b525}{nazwa}},\ info.\doxymbox{\hyperlink{struct_building_info_a7bc727f4a5abe469d6777a79003a3b84}{reqEnergy}},\ info.\doxymbox{\hyperlink{struct_building_info_aaaa4272cc0ce4febc847e67818c0ca37}{kKamien}},\ info.\doxymbox{\hyperlink{struct_building_info_a13b9cc7f1eb2bed80e810f7ab5480cde}{kTytan}},\ info.\doxymbox{\hyperlink{struct_building_info_a959d241093c7e5d3e48eb423aaa537f9}{genKamien}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6664c9dd8f63e783dc53b49b2998dee}{workers}},\ info.\doxymbox{\hyperlink{struct_building_info_a6e964b8abeb35587ff09fd1263983961}{genTytan}},\ kliknietePole.first,kliknietePole.second);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (typ\ ==\ \textcolor{stringliteral}{"{}TERR"{}})\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<Terr>(info.\doxymbox{\hyperlink{struct_building_info_a89d4c751883b78ff4e18b85ec979b525}{nazwa}},\ info.\doxymbox{\hyperlink{struct_building_info_a7bc727f4a5abe469d6777a79003a3b84}{reqEnergy}},\ info.\doxymbox{\hyperlink{struct_building_info_aaaa4272cc0ce4febc847e67818c0ca37}{kKamien}},\ info.\doxymbox{\hyperlink{struct_building_info_a13b9cc7f1eb2bed80e810f7ab5480cde}{kTytan}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6854c714c3231792ddcb8d14d8bef26}{genInne}},\ info.\doxymbox{\hyperlink{struct_building_info_ad6664c9dd8f63e783dc53b49b2998dee}{workers}},\ kliknietePole.first,\ kliknietePole.second);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

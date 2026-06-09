@@ -1,0 +1,65 @@
+\doxysection{building.\+h}
+\hypertarget{building_8h_source}{}\label{building_8h_source}\index{src/building.h@{src/building.h}}
+\doxymbox{\hyperlink{building_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ building\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ building\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{utils_8h}{utils.h}}"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}}\{}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{TypBudynku}}\ \doxymbox{\hyperlink{class_building_ac25488cf638fea7a6a725710a0f9cec6}{type}};}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{class_building_a20eadaa6a940a4b9f9841305ee84d62f}{name}};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_af9581adc0ff79e571cafe0bc3df17a45}{id}};}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a568da9a3259d3e74742aa1cf3ac1a9a2}{next\_id}};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_ada512d64cb45253a2887929ae7742163}{kosztEnergii}};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a4634e1040bc8ce55065b43551e2ad7e3}{kosztKamien}};}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a78eff8e0a97c85cbaa2f550e8fc5f57b}{kosztTytan}};}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a8b32d010d561f7e2234c6bc8c95fe239}{workers}};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_ac71e1b7b919fc042ad8532113e806a8a}{residents}};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_ab1fa63089c2733c82431fed62225a2b9}{X}};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a4e0a286daff974620c47279362f49a6b}{Y}};}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//KONSTRUKTORY}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}}();}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}}(\textcolor{keywordtype}{string}\ n,\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{TypBudynku}}\ t,\ \textcolor{keywordtype}{int}\ kE,\textcolor{keywordtype}{int}\ kK,\ \textcolor{keywordtype}{int}\ kT,\textcolor{keywordtype}{int}\ w,\textcolor{keywordtype}{int}\ X\_,\ \textcolor{keywordtype}{int}\ Y\_);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \doxymbox{\hyperlink{class_building_ab9ff99f3c9aabd5bf5f9e9658b718c19}{\string~Building}}()\{\};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//VIRTUAL}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_building_a8de28ebdbaebb914385c4487acf279b3}{save}}(ofstream\&\ plik)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a599b3367b7417585a6acda635f0342ef}{work}}();}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_building_a7193e4231b0e44fe84f8b98ed04e3bad}{UIprnt}}(\textcolor{keywordtype}{int}\ il)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{comment}{//PRZY\ LOAD}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_building_a3ab0e2edff659165d11946c3cfda98e4}{setId}}(\textcolor{keywordtype}{int}\ i);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//LICZENIE\ ILOSCI\ ZBUDOWANYCH\ BUDYNKOW}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_building_accc095b3990388741ae69650e4ae1022}{updateLicznik}}(\textcolor{keywordtype}{int}\ wczytaneMaxId);\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{comment}{//GETTERY}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{class_building_a88c6c92d80ca9fde112e42d1e68b3b0a}{getName}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_ac19d4a4bdfa9b3111af0e749a723ea7a}{getDemandWorkers}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{TypBudynku}}\ \doxymbox{\hyperlink{class_building_a1054fecd4ee2d5601133ae79203fcb5a}{getTyp}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a0dd32dd54cd314a6994ec82ac93cda1e}{getResidents}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a8ce506399dcb87f2921addfd4eab3a03}{getReqEnergy}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a0bf5bbfaf7c7ade3c6927f50530d5736}{getKosztKamien}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a562ea481a4df8bd5f518b8dceb833284}{getKosztTytan}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_addd6e908d832ad9c55c3d5ec51ca81e0}{getID}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a8438209771806c04e21ddc5039f65c72}{getX}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_building_a1eb709fdb52627dfc7cca36d2ffda989}{getY}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00066\ \};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

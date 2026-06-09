@@ -1,0 +1,189 @@
+\doxysection{Farm Class Reference}
+\hypertarget{class_farm}{}\label{class_farm}\index{Farm@{Farm}}
+
+
+Klasa pochodna \doxylink{class_building}{Building}, odpowiada za produkcje jedzenia.  
+
+
+
+
+{\ttfamily \+\#include $<$farm.\+h$>$}
+
+Inheritance diagram for Farm:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_farm}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_farm_a515288a04c6a229b1751e6ca283d136b}{Farm}} ()
+\item 
+\doxymbox{\hyperlink{class_farm_a40e05a8c8804b09fbd365a23e2bf852e}{Farm}} (string n, int kE, int kK, int kT, int f, int w, int tim, int ct, int X\+\_\+, int Y\+\_\+)
+\item 
+\doxymbox{\hyperlink{class_farm_a551fad409c44962866226b3eb4d4b518}{\texorpdfstring{$\sim$}{\string~}\+Farm}} ()
+\item 
+int \doxymbox{\hyperlink{class_farm_a888adf57ed0a9b355db90541e9a68b76}{work}} () override
+\begin{DoxyCompactList}\small\item\em WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS next\+Round, f. virtualna Dla farmy jest dodatkowy warunek na czekanie odpowiedniego czasu na wyrośnięcie. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_farm_aee737bcbfd1e7259b943c2f4b02e7970}{UIprnt}} (int il) const override
+\begin{DoxyCompactList}\small\item\em Funckja wyświetlająca dane danego budynku do tooltipa f.\+przeciążona. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_farm_a33fec8cf84fad4ccdd6aaaa3072eb1d5}{save}} (ofstream \&plik) const override
+\begin{DoxyCompactList}\small\item\em Zapisywanie danych budynku do pliku. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{class_building}{Building}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_building_ab570ec0a203ee621f9f522c678a147d9}{Building}} ()
+\item 
+\doxymbox{\hyperlink{class_building_a235aad77062507b216de58d8818ac813}{Building}} (string n, \doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} t, int kE, int kK, int kT, int w, int X\+\_\+, int Y\+\_\+)
+\item 
+virtual \doxymbox{\hyperlink{class_building_ab9ff99f3c9aabd5bf5f9e9658b718c19}{\texorpdfstring{$\sim$}{\string~}\+Building}} ()
+\item 
+void \doxymbox{\hyperlink{class_building_a3ab0e2edff659165d11946c3cfda98e4}{set\+Id}} (int i)
+\begin{DoxyCompactList}\small\item\em Ustawianie unikatowy ID budowanego budynku. \end{DoxyCompactList}\item 
+string \doxymbox{\hyperlink{class_building_a88c6c92d80ca9fde112e42d1e68b3b0a}{get\+Name}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_ac19d4a4bdfa9b3111af0e749a723ea7a}{get\+Demand\+Workers}} () const
+\item 
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} \doxymbox{\hyperlink{class_building_a1054fecd4ee2d5601133ae79203fcb5a}{get\+Typ}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a0dd32dd54cd314a6994ec82ac93cda1e}{get\+Residents}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a8ce506399dcb87f2921addfd4eab3a03}{get\+Req\+Energy}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a0bf5bbfaf7c7ade3c6927f50530d5736}{get\+Koszt\+Kamien}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a562ea481a4df8bd5f518b8dceb833284}{get\+Koszt\+Tytan}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_addd6e908d832ad9c55c3d5ec51ca81e0}{get\+ID}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a8438209771806c04e21ddc5039f65c72}{getX}} () const
+\item 
+int \doxymbox{\hyperlink{class_building_a1eb709fdb52627dfc7cca36d2ffda989}{getY}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \doxymbox{\hyperlink{class_building}{Building}}}
+\begin{DoxyCompactItemize}
+\item 
+static void \doxymbox{\hyperlink{class_building_accc095b3990388741ae69650e4ae1022}{update\+Licznik}} (int wczytane\+Max\+Id)
+\begin{DoxyCompactList}\small\item\em zwięksanie licznika o 1 \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \doxymbox{\hyperlink{class_building}{Building}}}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{utils_8h_a47bd7d8a576a7146b54f8856ac09490f}{Typ\+Budynku}} \doxymbox{\hyperlink{class_building_ac25488cf638fea7a6a725710a0f9cec6}{type}}
+\item 
+string \doxymbox{\hyperlink{class_building_a20eadaa6a940a4b9f9841305ee84d62f}{name}}
+\item 
+int \doxymbox{\hyperlink{class_building_af9581adc0ff79e571cafe0bc3df17a45}{id}}
+\item 
+int \doxymbox{\hyperlink{class_building_ada512d64cb45253a2887929ae7742163}{koszt\+Energii}}
+\item 
+int \doxymbox{\hyperlink{class_building_a4634e1040bc8ce55065b43551e2ad7e3}{koszt\+Kamien}}
+\item 
+int \doxymbox{\hyperlink{class_building_a78eff8e0a97c85cbaa2f550e8fc5f57b}{koszt\+Tytan}}
+\item 
+int \doxymbox{\hyperlink{class_building_a8b32d010d561f7e2234c6bc8c95fe239}{workers}}
+\item 
+int \doxymbox{\hyperlink{class_building_ac71e1b7b919fc042ad8532113e806a8a}{residents}}
+\item 
+int \doxymbox{\hyperlink{class_building_ab1fa63089c2733c82431fed62225a2b9}{X}}
+\item 
+int \doxymbox{\hyperlink{class_building_a4e0a286daff974620c47279362f49a6b}{Y}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Attributes inherited from \doxymbox{\hyperlink{class_building}{Building}}}
+\begin{DoxyCompactItemize}
+\item 
+static int \doxymbox{\hyperlink{class_building_a568da9a3259d3e74742aa1cf3ac1a9a2}{next\+\_\+id}} =1
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa pochodna \doxylink{class_building}{Building}, odpowiada za produkcje jedzenia. 
+
+\label{class_farm_doc-constructors}
+\Hypertarget{class_farm_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_farm_a515288a04c6a229b1751e6ca283d136b}\index{Farm@{Farm}!Farm@{Farm}}
+\index{Farm@{Farm}!Farm@{Farm}}
+\doxysubsubsection{\texorpdfstring{Farm()}{Farm()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_farm_a515288a04c6a229b1751e6ca283d136b} 
+Farm::\+\+Farm (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_farm_a40e05a8c8804b09fbd365a23e2bf852e}\index{Farm@{Farm}!Farm@{Farm}}
+\index{Farm@{Farm}!Farm@{Farm}}
+\doxysubsubsection{\texorpdfstring{Farm()}{Farm()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_farm_a40e05a8c8804b09fbd365a23e2bf852e} 
+Farm::\+\+Farm (\begin{DoxyParamCaption}\item[{string}]{n}{, }\item[{int}]{kE}{, }\item[{int}]{kK}{, }\item[{int}]{kT}{, }\item[{int}]{f}{, }\item[{int}]{w}{, }\item[{int}]{tim}{, }\item[{int}]{ct}{, }\item[{int}]{X\+\_\+}{, }\item[{int}]{Y\+\_\+}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_farm_a551fad409c44962866226b3eb4d4b518}\index{Farm@{Farm}!````~Farm@{\texorpdfstring{$\sim$}{\string~}Farm}}
+\index{````~Farm@{\texorpdfstring{$\sim$}{\string~}Farm}!Farm@{Farm}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Farm()}{\string~Farm()}}
+{\footnotesize\ttfamily \label{class_farm_a551fad409c44962866226b3eb4d4b518} 
+Farm::\+\texorpdfstring{$\sim$}{\string~}\+Farm (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{class_farm_doc-func-members}
+\Hypertarget{class_farm_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_farm_a33fec8cf84fad4ccdd6aaaa3072eb1d5}\index{Farm@{Farm}!save@{save}}
+\index{save@{save}!Farm@{Farm}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_farm_a33fec8cf84fad4ccdd6aaaa3072eb1d5} 
+void Farm::\+save (\begin{DoxyParamCaption}\item[{ofstream \&}]{plik}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Zapisywanie danych budynku do pliku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em plik} & plik \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \doxymbox{\hyperlink{class_building_a8de28ebdbaebb914385c4487acf279b3}{Building}}.
+
+\Hypertarget{class_farm_aee737bcbfd1e7259b943c2f4b02e7970}\index{Farm@{Farm}!UIprnt@{UIprnt}}
+\index{UIprnt@{UIprnt}!Farm@{Farm}}
+\doxysubsubsection{\texorpdfstring{UIprnt()}{UIprnt()}}
+{\footnotesize\ttfamily \label{class_farm_aee737bcbfd1e7259b943c2f4b02e7970} 
+void Farm::\+\+UIprnt (\begin{DoxyParamCaption}\item[{int}]{il}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Funckja wyświetlająca dane danego budynku do tooltipa f.\+przeciążona. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em il} & ilość danego budynku \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \doxymbox{\hyperlink{class_building_a7193e4231b0e44fe84f8b98ed04e3bad}{Building}}.
+
+\Hypertarget{class_farm_a888adf57ed0a9b355db90541e9a68b76}\index{Farm@{Farm}!work@{work}}
+\index{work@{work}!Farm@{Farm}}
+\doxysubsubsection{\texorpdfstring{work()}{work()}}
+{\footnotesize\ttfamily \label{class_farm_a888adf57ed0a9b355db90541e9a68b76} 
+int Farm::\+work (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+WYKONYWANIE PRACY PRZEZ DANY BUDYNEK PODCZAS next\+Round, f. virtualna Dla farmy jest dodatkowy warunek na czekanie odpowiedniego czasu na wyrośnięcie. 
+
+\begin{DoxyReturn}{Returns}
+int zwracana wartość podczas pracy 
+\end{DoxyReturn}
+
+
+Reimplemented from \doxymbox{\hyperlink{class_building_a599b3367b7417585a6acda635f0342ef}{Building}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{farm_8h}{farm.\+h}}\item 
+src/\+\doxymbox{\hyperlink{farm_8cpp}{farm.\+cpp}}\end{DoxyCompactItemize}

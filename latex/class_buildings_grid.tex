@@ -1,0 +1,178 @@
+\doxysection{Buildings\+Grid Class Reference}
+\hypertarget{class_buildings_grid}{}\label{class_buildings_grid}\index{BuildingsGrid@{BuildingsGrid}}
+
+
+Siatka budynków -\/ graficznie przedstawienie planszy gry.  
+
+
+
+
+{\ttfamily \+\#include $<$buildings\+Grid.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_buildings_grid_a9f3328c4718f2a97a78c27f4dae09aa4}{Buildings\+Grid}} ()
+\begin{DoxyCompactList}\small\item\em Konstruktor siatki budynków. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{class_buildings_grid_a87b8c0181d7008a4a7089093d7028eb5}{\texorpdfstring{$\sim$}{\string~}\+Buildings\+Grid}} ()
+\item 
+void \doxymbox{\hyperlink{class_buildings_grid_a9849f61ee4978affc6a72e6a7e2ba406}{prnt\+Siatka}} (sf::\+\+Render\+Window \&window, Im\+Vec2 \&poz, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych, bool czy\+Budowanie, string nazwa\+Trzymanego)
+\begin{DoxyCompactList}\small\item\em Funkcja wyświetlająca siatkę budynków! \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_buildings_grid_a29289a3af96e6161a2feb620487fe379}{sprawdz\+Mysz}} (Im\+Vec2 \&poz)
+\begin{DoxyCompactList}\small\item\em Funkcja tłumacząca coordynaty myszki. (zamienia na kwadraty i odległość od środka). \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_buildings_grid_a509e46a48523977882947d5272ba19ed}{czy\+Najechane}} (Im\+Vec2 \&poz)
+\begin{DoxyCompactList}\small\item\em Funkcja sprawdzajaca czy najechane i zmieniająca texturę \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{class_buildings_grid_a6a6804d19427fdbceecf4c679178af2f}{wczytaj\+Textury}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych)
+\begin{DoxyCompactList}\small\item\em Wczytywanie textur przy starcie gry. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_buildings_grid_ae022c1dcea22cb539a8bd47558662999}{wczytaj\+Siatka\+Dane}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia, const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&baza\+Danych)
+\item 
+void \doxymbox{\hyperlink{class_buildings_grid_a5b488130513bc462da0763750bf78ca5}{wczytaj\+Budynki}} (const \doxymbox{\hyperlink{class_colony}{Colony}} \&kolonia)
+\begin{DoxyCompactList}\small\item\em Wczytywanie budynków na początku gry na siatkę.! \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{class_buildings_grid_a1158aefa1921574f544eb8adf9658681}{get\+ID}} (pair$<$ int, int $>$ n) const
+\item 
+string \doxymbox{\hyperlink{class_buildings_grid_a6e26cef44061f905dca2a9cfe6993e4f}{get\+Name}} (pair$<$ int, int $>$ n) const
+\item 
+pair$<$ int, int $>$ \doxymbox{\hyperlink{class_buildings_grid_a73d381fdaade94d76a7b58fd414f4ef2}{get\+Poz\+Mysz}} () const
+\item 
+\doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}{Typ\+Kafelka}} \doxymbox{\hyperlink{class_buildings_grid_a885437ff77e94280739f1bb80f1546ee}{get\+Typ\+Kafelka}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Siatka budynków -\/ graficznie przedstawienie planszy gry. 
+
+\label{class_buildings_grid_doc-constructors}
+\Hypertarget{class_buildings_grid_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_buildings_grid_a9f3328c4718f2a97a78c27f4dae09aa4}\index{BuildingsGrid@{BuildingsGrid}!BuildingsGrid@{BuildingsGrid}}
+\index{BuildingsGrid@{BuildingsGrid}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{BuildingsGrid()}{BuildingsGrid()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a9f3328c4718f2a97a78c27f4dae09aa4} 
+Buildings\+Grid::\+\+Buildings\+Grid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Konstruktor siatki budynków. 
+
+\Hypertarget{class_buildings_grid_a87b8c0181d7008a4a7089093d7028eb5}\index{BuildingsGrid@{BuildingsGrid}!````~BuildingsGrid@{\texorpdfstring{$\sim$}{\string~}BuildingsGrid}}
+\index{````~BuildingsGrid@{\texorpdfstring{$\sim$}{\string~}BuildingsGrid}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}BuildingsGrid()}{\string~BuildingsGrid()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a87b8c0181d7008a4a7089093d7028eb5} 
+Buildings\+Grid::\+\texorpdfstring{$\sim$}{\string~}\+Buildings\+Grid (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{class_buildings_grid_doc-func-members}
+\Hypertarget{class_buildings_grid_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_buildings_grid_a509e46a48523977882947d5272ba19ed}\index{BuildingsGrid@{BuildingsGrid}!czyNajechane@{czyNajechane}}
+\index{czyNajechane@{czyNajechane}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{czyNajechane()}{czyNajechane()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a509e46a48523977882947d5272ba19ed} 
+void Buildings\+Grid::\+czy\+Najechane (\begin{DoxyParamCaption}\item[{Im\+Vec2 \&}]{poz}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja sprawdzajaca czy najechane i zmieniająca texturę 
+
+
+\begin{DoxyParams}{Parameters}
+{\em poz} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_buildings_grid_a1158aefa1921574f544eb8adf9658681}\index{BuildingsGrid@{BuildingsGrid}!getID@{getID}}
+\index{getID@{getID}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{getID()}{getID()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a1158aefa1921574f544eb8adf9658681} 
+int Buildings\+Grid::\+get\+ID (\begin{DoxyParamCaption}\item[{pair$<$ int, int $>$}]{n}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_buildings_grid_a6e26cef44061f905dca2a9cfe6993e4f}\index{BuildingsGrid@{BuildingsGrid}!getName@{getName}}
+\index{getName@{getName}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{getName()}{getName()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a6e26cef44061f905dca2a9cfe6993e4f} 
+string Buildings\+Grid::\+get\+Name (\begin{DoxyParamCaption}\item[{pair$<$ int, int $>$}]{n}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_buildings_grid_a73d381fdaade94d76a7b58fd414f4ef2}\index{BuildingsGrid@{BuildingsGrid}!getPozMysz@{getPozMysz}}
+\index{getPozMysz@{getPozMysz}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{getPozMysz()}{getPozMysz()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a73d381fdaade94d76a7b58fd414f4ef2} 
+pair$<$ int, int $>$ Buildings\+Grid::\+get\+Poz\+Mysz (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_buildings_grid_a885437ff77e94280739f1bb80f1546ee}\index{BuildingsGrid@{BuildingsGrid}!getTypKafelka@{getTypKafelka}}
+\index{getTypKafelka@{getTypKafelka}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{getTypKafelka()}{getTypKafelka()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a885437ff77e94280739f1bb80f1546ee} 
+\doxymbox{\hyperlink{utils_8h_a6b6a040376436a3297f1b713d1f1d2d2}{Typ\+Kafelka}} Buildings\+Grid::\+get\+Typ\+Kafelka (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_buildings_grid_a9849f61ee4978affc6a72e6a7e2ba406}\index{BuildingsGrid@{BuildingsGrid}!prntSiatka@{prntSiatka}}
+\index{prntSiatka@{prntSiatka}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{prntSiatka()}{prntSiatka()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a9849f61ee4978affc6a72e6a7e2ba406} 
+void Buildings\+Grid::\+prnt\+Siatka (\begin{DoxyParamCaption}\item[{sf::\+\+Render\+Window \&}]{window}{, }\item[{Im\+Vec2 \&}]{poz}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{, }\item[{bool}]{czy\+Budowa}{, }\item[{string}]{nazwa\+Trzymanego}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja wyświetlająca siatkę budynków! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em window} & okienko \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_buildings_grid_a29289a3af96e6161a2feb620487fe379}\index{BuildingsGrid@{BuildingsGrid}!sprawdzMysz@{sprawdzMysz}}
+\index{sprawdzMysz@{sprawdzMysz}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{sprawdzMysz()}{sprawdzMysz()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a29289a3af96e6161a2feb620487fe379} 
+bool Buildings\+Grid::\+sprawdz\+Mysz (\begin{DoxyParamCaption}\item[{Im\+Vec2 \&}]{poz}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja tłumacząca coordynaty myszki. (zamienia na kwadraty i odległość od środka). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em poz} & Im\+Vec2 myszki \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_buildings_grid_a5b488130513bc462da0763750bf78ca5}\index{BuildingsGrid@{BuildingsGrid}!wczytajBudynki@{wczytajBudynki}}
+\index{wczytajBudynki@{wczytajBudynki}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{wczytajBudynki()}{wczytajBudynki()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a5b488130513bc462da0763750bf78ca5} 
+void Buildings\+Grid::\+wczytaj\+Budynki (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{}\end{DoxyParamCaption})}
+
+
+
+Wczytywanie budynków na początku gry na siatkę.! 
+
+
+\begin{DoxyParams}{Parameters}
+{\em kolonia} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_buildings_grid_ae022c1dcea22cb539a8bd47558662999}\index{BuildingsGrid@{BuildingsGrid}!wczytajSiatkaDane@{wczytajSiatkaDane}}
+\index{wczytajSiatkaDane@{wczytajSiatkaDane}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{wczytajSiatkaDane()}{wczytajSiatkaDane()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_ae022c1dcea22cb539a8bd47558662999} 
+void Buildings\+Grid::\+wczytaj\+Siatka\+Dane (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_buildings_grid_a6a6804d19427fdbceecf4c679178af2f}\index{BuildingsGrid@{BuildingsGrid}!wczytajTextury@{wczytajTextury}}
+\index{wczytajTextury@{wczytajTextury}!BuildingsGrid@{BuildingsGrid}}
+\doxysubsubsection{\texorpdfstring{wczytajTextury()}{wczytajTextury()}}
+{\footnotesize\ttfamily \label{class_buildings_grid_a6a6804d19427fdbceecf4c679178af2f} 
+bool Buildings\+Grid::\+wczytaj\+Textury (\begin{DoxyParamCaption}\item[{const \doxymbox{\hyperlink{class_colony}{Colony}} \&}]{kolonia}{, }\item[{const map$<$ string, \doxymbox{\hyperlink{struct_building_info}{Building\+Info}} $>$ \&}]{baza\+Danych}{}\end{DoxyParamCaption})}
+
+
+
+Wczytywanie textur przy starcie gry. 
+
+\begin{DoxyReturn}{Returns}
+true udało sie wczytac wszystkie 
+
+false nie dual osei wczytac 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{buildings_grid_8h}{buildings\+Grid.\+h}}\item 
+src/\+\doxymbox{\hyperlink{buildings_grid_8cpp}{buildings\+Grid.\+cpp}}\end{DoxyCompactItemize}

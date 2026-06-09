@@ -1,0 +1,319 @@
+\doxysection{Logistics Class Reference}
+\hypertarget{class_logistics}{}\label{class_logistics}\index{Logistics@{Logistics}}
+
+
+Klasa zarządzająca całą logiką kolonii -\/ wszystkie parametry itp.  
+
+
+
+
+{\ttfamily \+\#include $<$logistics.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{class_logistics_a27fbf390aa292ab7fcff08df7756a21e}{Logistics}} ()
+\item 
+\doxymbox{\hyperlink{class_logistics_acad6724f2662969db28a95f8d7490fbf}{\texorpdfstring{$\sim$}{\string~}\+Logistics}} ()
+\item 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} \doxymbox{\hyperlink{class_logistics_a21d13c008ba4d48b6f0ab3d32e089c9d}{UIczy\+Next\+Round}} (const vector$<$ unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ $>$ \&budynki)
+\begin{DoxyCompactList}\small\item\em Funkcja sprawdzajaca czy sie udalo przejsc do kolejnej rundy. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} \doxymbox{\hyperlink{class_logistics_a8c7aa4bc9660346c4c59d935022831ef}{UInext\+Round}} (const vector$<$ unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ $>$ \&budynki)
+\item 
+bool \doxymbox{\hyperlink{class_logistics_a7d35a9a54077e536fd78d74affa80a65}{sprawdz\+Lvl\+Terr}} ()
+\begin{DoxyCompactList}\small\item\em Sprawdzanie poziomu terraformacji. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{class_logistics_a340939a9a5b1664849cd760e67dc8a17}{update\+Budynek}} (\doxymbox{\hyperlink{class_building}{Building}} \texorpdfstring{$\ast$}{*}budynek)
+\begin{DoxyCompactList}\small\item\em Aktualizowanie parametrów po zbudowaniu budynku. \end{DoxyCompactList}\item 
+pair$<$ int, int $>$ \doxymbox{\hyperlink{class_logistics_ad2babde05a09658619df7afb8785139b}{UIupdate\+Zburz\+Budynek}} (\doxymbox{\hyperlink{class_building}{Building}} \texorpdfstring{$\ast$}{*}budynek)
+\item 
+void \doxymbox{\hyperlink{class_logistics_a15d3c5baebfb9afdf75b166287aeefa9}{save}} (string nazwa\+\_\+plik)
+\item 
+void \doxymbox{\hyperlink{class_logistics_a08cda3195a441c7faab2c1a6b7fdace8}{load}} (string nazwa\+\_\+plik)
+\item 
+void \doxymbox{\hyperlink{class_logistics_aceadd442886867a106dd07d34741517c}{set\+Nazwa}} (string nazwa)
+\item 
+void \doxymbox{\hyperlink{class_logistics_aa0858b824fde64f369240dcd5316498b}{set\+Tura}} ()
+\item 
+void \doxymbox{\hyperlink{class_logistics_a96d16c8ad7141361a11e62076bb09442}{set\+Ruch}} (int r)
+\item 
+void \doxymbox{\hyperlink{class_logistics_a66b390faa35762b2309b558d114f98df}{set\+AWorkers}} (int aw)
+\item 
+void \doxymbox{\hyperlink{class_logistics_a2ed3b4256c4e6e2dbb6fdbaf6f4d995d}{set\+DWorkers}} (int dw)
+\item 
+void \doxymbox{\hyperlink{class_logistics_a54fe4c376a3225663cc09ae1076f2e69}{set\+Stone}} (int s)
+\item 
+void \doxymbox{\hyperlink{class_logistics_a14defbfa1816fd877dcb98cfe1ab9966}{set\+Titan}} (int t)
+\item 
+void \doxymbox{\hyperlink{class_logistics_afe12c8da4bde241536b140e71215d763}{set\+Sandbox}} ()
+\item 
+void \doxymbox{\hyperlink{class_logistics_aad1a38223becbf54409b0d0eec8dc25d}{set\+Custom}} ()
+\item 
+string \doxymbox{\hyperlink{class_logistics_a2f0e414f0cb0b2f3f768e1f870f361ef}{get\+Nazwa}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_aa5a4b50f53300a6a4ca8a57b3c4e8847}{get\+Tura}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_aa77ab42277b1f0f0400ec162cef2773e}{get\+Ruch}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_a77704ed228511eee8db6411b945e149e}{get\+AWorkers}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_af5d2460550f661961e68b348b19782eb}{get\+DWorkers}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_a0bc82368f8e60a1916225117f6b8e9f7}{get\+Req\+Energy}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_a6052767f609b01825f20d8c2c43ba1a5}{get\+Gen\+Energy}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_ab2a0d7d74735ad3176204944aaad6bef}{get\+Req\+Food}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_ae933b74c6972ecc20af3c09b81385859}{get\+Food}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_aa1a532116b04be9be12977dde7140229}{get\+Stone}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_a186294adb5df1a3d594284cda38eee7f}{get\+Titan}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_ab9115238d9074b6905f5971d3d83e06c}{get\+Lvl\+Terr}} () const
+\item 
+int \doxymbox{\hyperlink{class_logistics_a8e8f61ca781e84f960e6cdfa657606e9}{get\+To\+Next\+Lvl\+Terr}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Klasa zarządzająca całą logiką kolonii -\/ wszystkie parametry itp. 
+
+\label{class_logistics_doc-constructors}
+\Hypertarget{class_logistics_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_logistics_a27fbf390aa292ab7fcff08df7756a21e}\index{Logistics@{Logistics}!Logistics@{Logistics}}
+\index{Logistics@{Logistics}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{Logistics()}{Logistics()}}
+{\footnotesize\ttfamily \label{class_logistics_a27fbf390aa292ab7fcff08df7756a21e} 
+Logistics::\+\+Logistics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_acad6724f2662969db28a95f8d7490fbf}\index{Logistics@{Logistics}!````~Logistics@{\texorpdfstring{$\sim$}{\string~}Logistics}}
+\index{````~Logistics@{\texorpdfstring{$\sim$}{\string~}Logistics}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}Logistics()}{\string~Logistics()}}
+{\footnotesize\ttfamily \label{class_logistics_acad6724f2662969db28a95f8d7490fbf} 
+Logistics::\+\texorpdfstring{$\sim$}{\string~}\+Logistics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+\label{class_logistics_doc-func-members}
+\Hypertarget{class_logistics_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_logistics_a77704ed228511eee8db6411b945e149e}\index{Logistics@{Logistics}!getAWorkers@{getAWorkers}}
+\index{getAWorkers@{getAWorkers}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getAWorkers()}{getAWorkers()}}
+{\footnotesize\ttfamily \label{class_logistics_a77704ed228511eee8db6411b945e149e} 
+int Logistics::\+get\+AWorkers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_af5d2460550f661961e68b348b19782eb}\index{Logistics@{Logistics}!getDWorkers@{getDWorkers}}
+\index{getDWorkers@{getDWorkers}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getDWorkers()}{getDWorkers()}}
+{\footnotesize\ttfamily \label{class_logistics_af5d2460550f661961e68b348b19782eb} 
+int Logistics::\+get\+DWorkers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_ae933b74c6972ecc20af3c09b81385859}\index{Logistics@{Logistics}!getFood@{getFood}}
+\index{getFood@{getFood}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getFood()}{getFood()}}
+{\footnotesize\ttfamily \label{class_logistics_ae933b74c6972ecc20af3c09b81385859} 
+int Logistics::\+get\+Food (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_a6052767f609b01825f20d8c2c43ba1a5}\index{Logistics@{Logistics}!getGenEnergy@{getGenEnergy}}
+\index{getGenEnergy@{getGenEnergy}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getGenEnergy()}{getGenEnergy()}}
+{\footnotesize\ttfamily \label{class_logistics_a6052767f609b01825f20d8c2c43ba1a5} 
+int Logistics::\+get\+Gen\+Energy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_ab9115238d9074b6905f5971d3d83e06c}\index{Logistics@{Logistics}!getLvlTerr@{getLvlTerr}}
+\index{getLvlTerr@{getLvlTerr}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getLvlTerr()}{getLvlTerr()}}
+{\footnotesize\ttfamily \label{class_logistics_ab9115238d9074b6905f5971d3d83e06c} 
+int Logistics::\+get\+Lvl\+Terr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_a2f0e414f0cb0b2f3f768e1f870f361ef}\index{Logistics@{Logistics}!getNazwa@{getNazwa}}
+\index{getNazwa@{getNazwa}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getNazwa()}{getNazwa()}}
+{\footnotesize\ttfamily \label{class_logistics_a2f0e414f0cb0b2f3f768e1f870f361ef} 
+string Logistics::\+get\+Nazwa (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_a0bc82368f8e60a1916225117f6b8e9f7}\index{Logistics@{Logistics}!getReqEnergy@{getReqEnergy}}
+\index{getReqEnergy@{getReqEnergy}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getReqEnergy()}{getReqEnergy()}}
+{\footnotesize\ttfamily \label{class_logistics_a0bc82368f8e60a1916225117f6b8e9f7} 
+int Logistics::\+get\+Req\+Energy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_ab2a0d7d74735ad3176204944aaad6bef}\index{Logistics@{Logistics}!getReqFood@{getReqFood}}
+\index{getReqFood@{getReqFood}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getReqFood()}{getReqFood()}}
+{\footnotesize\ttfamily \label{class_logistics_ab2a0d7d74735ad3176204944aaad6bef} 
+int Logistics::\+get\+Req\+Food (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_aa77ab42277b1f0f0400ec162cef2773e}\index{Logistics@{Logistics}!getRuch@{getRuch}}
+\index{getRuch@{getRuch}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getRuch()}{getRuch()}}
+{\footnotesize\ttfamily \label{class_logistics_aa77ab42277b1f0f0400ec162cef2773e} 
+int Logistics::\+get\+Ruch (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_aa1a532116b04be9be12977dde7140229}\index{Logistics@{Logistics}!getStone@{getStone}}
+\index{getStone@{getStone}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getStone()}{getStone()}}
+{\footnotesize\ttfamily \label{class_logistics_aa1a532116b04be9be12977dde7140229} 
+int Logistics::\+get\+Stone (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_a186294adb5df1a3d594284cda38eee7f}\index{Logistics@{Logistics}!getTitan@{getTitan}}
+\index{getTitan@{getTitan}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getTitan()}{getTitan()}}
+{\footnotesize\ttfamily \label{class_logistics_a186294adb5df1a3d594284cda38eee7f} 
+int Logistics::\+get\+Titan (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_a8e8f61ca781e84f960e6cdfa657606e9}\index{Logistics@{Logistics}!getToNextLvlTerr@{getToNextLvlTerr}}
+\index{getToNextLvlTerr@{getToNextLvlTerr}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getToNextLvlTerr()}{getToNextLvlTerr()}}
+{\footnotesize\ttfamily \label{class_logistics_a8e8f61ca781e84f960e6cdfa657606e9} 
+int Logistics::\+get\+To\+Next\+Lvl\+Terr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_aa5a4b50f53300a6a4ca8a57b3c4e8847}\index{Logistics@{Logistics}!getTura@{getTura}}
+\index{getTura@{getTura}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{getTura()}{getTura()}}
+{\footnotesize\ttfamily \label{class_logistics_aa5a4b50f53300a6a4ca8a57b3c4e8847} 
+int Logistics::\+get\+Tura (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_logistics_a08cda3195a441c7faab2c1a6b7fdace8}\index{Logistics@{Logistics}!load@{load}}
+\index{load@{load}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{class_logistics_a08cda3195a441c7faab2c1a6b7fdace8} 
+void Logistics::\+load (\begin{DoxyParamCaption}\item[{string}]{nazwa\+\_\+plik}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a15d3c5baebfb9afdf75b166287aeefa9}\index{Logistics@{Logistics}!save@{save}}
+\index{save@{save}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_logistics_a15d3c5baebfb9afdf75b166287aeefa9} 
+void Logistics::\+save (\begin{DoxyParamCaption}\item[{string}]{nazwa\+\_\+plik}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a66b390faa35762b2309b558d114f98df}\index{Logistics@{Logistics}!setAWorkers@{setAWorkers}}
+\index{setAWorkers@{setAWorkers}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setAWorkers()}{setAWorkers()}}
+{\footnotesize\ttfamily \label{class_logistics_a66b390faa35762b2309b558d114f98df} 
+void Logistics::\+set\+AWorkers (\begin{DoxyParamCaption}\item[{int}]{aw}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_aad1a38223becbf54409b0d0eec8dc25d}\index{Logistics@{Logistics}!setCustom@{setCustom}}
+\index{setCustom@{setCustom}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setCustom()}{setCustom()}}
+{\footnotesize\ttfamily \label{class_logistics_aad1a38223becbf54409b0d0eec8dc25d} 
+void Logistics::\+set\+Custom (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a2ed3b4256c4e6e2dbb6fdbaf6f4d995d}\index{Logistics@{Logistics}!setDWorkers@{setDWorkers}}
+\index{setDWorkers@{setDWorkers}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setDWorkers()}{setDWorkers()}}
+{\footnotesize\ttfamily \label{class_logistics_a2ed3b4256c4e6e2dbb6fdbaf6f4d995d} 
+void Logistics::\+set\+DWorkers (\begin{DoxyParamCaption}\item[{int}]{dw}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_aceadd442886867a106dd07d34741517c}\index{Logistics@{Logistics}!setNazwa@{setNazwa}}
+\index{setNazwa@{setNazwa}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setNazwa()}{setNazwa()}}
+{\footnotesize\ttfamily \label{class_logistics_aceadd442886867a106dd07d34741517c} 
+void Logistics::\+set\+Nazwa (\begin{DoxyParamCaption}\item[{string}]{nazwa}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a96d16c8ad7141361a11e62076bb09442}\index{Logistics@{Logistics}!setRuch@{setRuch}}
+\index{setRuch@{setRuch}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setRuch()}{setRuch()}}
+{\footnotesize\ttfamily \label{class_logistics_a96d16c8ad7141361a11e62076bb09442} 
+void Logistics::\+set\+Ruch (\begin{DoxyParamCaption}\item[{int}]{r}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_afe12c8da4bde241536b140e71215d763}\index{Logistics@{Logistics}!setSandbox@{setSandbox}}
+\index{setSandbox@{setSandbox}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setSandbox()}{setSandbox()}}
+{\footnotesize\ttfamily \label{class_logistics_afe12c8da4bde241536b140e71215d763} 
+void Logistics::\+set\+Sandbox (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a54fe4c376a3225663cc09ae1076f2e69}\index{Logistics@{Logistics}!setStone@{setStone}}
+\index{setStone@{setStone}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setStone()}{setStone()}}
+{\footnotesize\ttfamily \label{class_logistics_a54fe4c376a3225663cc09ae1076f2e69} 
+void Logistics::\+set\+Stone (\begin{DoxyParamCaption}\item[{int}]{s}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a14defbfa1816fd877dcb98cfe1ab9966}\index{Logistics@{Logistics}!setTitan@{setTitan}}
+\index{setTitan@{setTitan}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setTitan()}{setTitan()}}
+{\footnotesize\ttfamily \label{class_logistics_a14defbfa1816fd877dcb98cfe1ab9966} 
+void Logistics::\+set\+Titan (\begin{DoxyParamCaption}\item[{int}]{t}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_aa0858b824fde64f369240dcd5316498b}\index{Logistics@{Logistics}!setTura@{setTura}}
+\index{setTura@{setTura}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{setTura()}{setTura()}}
+{\footnotesize\ttfamily \label{class_logistics_aa0858b824fde64f369240dcd5316498b} 
+void Logistics::\+set\+Tura (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a7d35a9a54077e536fd78d74affa80a65}\index{Logistics@{Logistics}!sprawdzLvlTerr@{sprawdzLvlTerr}}
+\index{sprawdzLvlTerr@{sprawdzLvlTerr}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{sprawdzLvlTerr()}{sprawdzLvlTerr()}}
+{\footnotesize\ttfamily \label{class_logistics_a7d35a9a54077e536fd78d74affa80a65} 
+bool Logistics::\+sprawdz\+Lvl\+Terr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Sprawdzanie poziomu terraformacji. 
+
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{class_logistics_a21d13c008ba4d48b6f0ab3d32e089c9d}\index{Logistics@{Logistics}!UIczyNextRound@{UIczyNextRound}}
+\index{UIczyNextRound@{UIczyNextRound}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{UIczyNextRound()}{UIczyNextRound()}}
+{\footnotesize\ttfamily \label{class_logistics_a21d13c008ba4d48b6f0ab3d32e089c9d} 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} Logistics::\+\+UIczy\+Next\+Round (\begin{DoxyParamCaption}\item[{const vector$<$ unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ $>$ \&}]{budynki}{}\end{DoxyParamCaption})}
+
+
+
+Funkcja sprawdzajaca czy sie udalo przejsc do kolejnej rundy. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em budynki} & Wektor zbudowanych budynków \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_next_result}{Next\+Result} \doxylink{struct_next_result}{Next\+Result} pakiet wyników z Next\+Round 
+\end{DoxyReturn}
+\Hypertarget{class_logistics_a8c7aa4bc9660346c4c59d935022831ef}\index{Logistics@{Logistics}!UInextRound@{UInextRound}}
+\index{UInextRound@{UInextRound}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{UInextRound()}{UInextRound()}}
+{\footnotesize\ttfamily \label{class_logistics_a8c7aa4bc9660346c4c59d935022831ef} 
+\doxymbox{\hyperlink{struct_next_result}{Next\+Result}} Logistics::\+\+UInext\+Round (\begin{DoxyParamCaption}\item[{const vector$<$ unique\+\_\+ptr$<$ \doxymbox{\hyperlink{class_building}{Building}} $>$ $>$ \&}]{budynki}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em budynki} & wektor zbudowanych budynków \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_next_result}{Next\+Result} paczka z wynikami przejścia do kolejnej rundy 
+\end{DoxyReturn}
+\Hypertarget{class_logistics_ad2babde05a09658619df7afb8785139b}\index{Logistics@{Logistics}!UIupdateZburzBudynek@{UIupdateZburzBudynek}}
+\index{UIupdateZburzBudynek@{UIupdateZburzBudynek}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{UIupdateZburzBudynek()}{UIupdateZburzBudynek()}}
+{\footnotesize\ttfamily \label{class_logistics_ad2babde05a09658619df7afb8785139b} 
+pair$<$ int, int $>$ Logistics::\+\+UIupdate\+Zburz\+Budynek (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_building}{Building}} \texorpdfstring{$\ast$}{*}}]{budynek}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_logistics_a340939a9a5b1664849cd760e67dc8a17}\index{Logistics@{Logistics}!updateBudynek@{updateBudynek}}
+\index{updateBudynek@{updateBudynek}!Logistics@{Logistics}}
+\doxysubsubsection{\texorpdfstring{updateBudynek()}{updateBudynek()}}
+{\footnotesize\ttfamily \label{class_logistics_a340939a9a5b1664849cd760e67dc8a17} 
+void Logistics::\+update\+Budynek (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{class_building}{Building}} \texorpdfstring{$\ast$}{*}}]{budynek}{}\end{DoxyParamCaption})}
+
+
+
+Aktualizowanie parametrów po zbudowaniu budynku. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em budynek} & nowy zbudowany budynek \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+src/\+\doxymbox{\hyperlink{logistics_8h}{logistics.\+h}}\item 
+src/\+\doxymbox{\hyperlink{logistics_8cpp}{logistics.\+cpp}}\end{DoxyCompactItemize}

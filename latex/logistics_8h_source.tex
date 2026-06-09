@@ -1,0 +1,86 @@
+\doxysection{logistics.\+h}
+\hypertarget{logistics_8h_source}{}\label{logistics_8h_source}\index{src/logistics.h@{src/logistics.h}}
+\doxymbox{\hyperlink{logistics_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ logistics\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ logistics\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_8h}{building.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_logistics_a27fbf390aa292ab7fcff08df7756a21e}{Logistics}}\{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{private}:\ \ \ \ }
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ nazwa\_kolonii;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ tura;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ ruch;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ all\_workers;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ demand\_workers;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ wsp\_terr;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ lvl\_terr;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ reqEnergy;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ genEnergy;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ reqFood;}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ food;}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ stone;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ titan;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ vector<int>\ progi=\{10,20,50,100,200,500,1000,2000,5000\};\textcolor{comment}{//progi\ lvl}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//KONSTRUKTOR}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_logistics_a27fbf390aa292ab7fcff08df7756a21e}{Logistics}}();}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_logistics_acad6724f2662969db28a95f8d7490fbf}{\string~Logistics}}()\{\};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{comment}{//NEXT\ ROUND}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_next_result}{NextResult}}\ \doxymbox{\hyperlink{class_logistics_a21d13c008ba4d48b6f0ab3d32e089c9d}{UIczyNextRound}}(\textcolor{keyword}{const}\ vector<unique\_ptr<Building>>\&\ budynki);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_next_result}{NextResult}}\ \doxymbox{\hyperlink{class_logistics_a8c7aa4bc9660346c4c59d935022831ef}{UInextRound}}(\textcolor{keyword}{const}\ vector<unique\_ptr<Building>>\&\ budynki);}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_logistics_a7d35a9a54077e536fd78d74affa80a65}{sprawdzLvlTerr}}();}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{comment}{//BUDOWANIE}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a340939a9a5b1664849cd760e67dc8a17}{updateBudynek}}(\doxymbox{\hyperlink{class_building}{Building}}*\ budynek);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ pair<int,\ int>\ \ \doxymbox{\hyperlink{class_logistics_ad2babde05a09658619df7afb8785139b}{UIupdateZburzBudynek}}(\doxymbox{\hyperlink{class_building}{Building}}*\ budynek);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{comment}{//SAVE/LOAD}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a15d3c5baebfb9afdf75b166287aeefa9}{save}}(\textcolor{keywordtype}{string}\ nazwa\_plik);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a08cda3195a441c7faab2c1a6b7fdace8}{load}}(\textcolor{keywordtype}{string}\ nazwa\_plik);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{comment}{//SETTERY}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_aceadd442886867a106dd07d34741517c}{setNazwa}}(\textcolor{keywordtype}{string}\ nazwa);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_aa0858b824fde64f369240dcd5316498b}{setTura}}();}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a96d16c8ad7141361a11e62076bb09442}{setRuch}}(\textcolor{keywordtype}{int}\ r);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a66b390faa35762b2309b558d114f98df}{setAWorkers}}(\textcolor{keywordtype}{int}\ aw);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a2ed3b4256c4e6e2dbb6fdbaf6f4d995d}{setDWorkers}}(\textcolor{keywordtype}{int}\ dw);}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a54fe4c376a3225663cc09ae1076f2e69}{setStone}}(\textcolor{keywordtype}{int}\ s);}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_a14defbfa1816fd877dcb98cfe1ab9966}{setTitan}}(\textcolor{keywordtype}{int}\ t);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_afe12c8da4bde241536b140e71215d763}{setSandbox}}();}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_logistics_aad1a38223becbf54409b0d0eec8dc25d}{setCustom}}();}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//GETTERY}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{class_logistics_a2f0e414f0cb0b2f3f768e1f870f361ef}{getNazwa}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_aa5a4b50f53300a6a4ca8a57b3c4e8847}{getTura}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_aa77ab42277b1f0f0400ec162cef2773e}{getRuch}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_a77704ed228511eee8db6411b945e149e}{getAWorkers}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_af5d2460550f661961e68b348b19782eb}{getDWorkers}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_a0bc82368f8e60a1916225117f6b8e9f7}{getReqEnergy}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_a6052767f609b01825f20d8c2c43ba1a5}{getGenEnergy}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_ab2a0d7d74735ad3176204944aaad6bef}{getReqFood}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_ae933b74c6972ecc20af3c09b81385859}{getFood}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_aa1a532116b04be9be12977dde7140229}{getStone}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_a186294adb5df1a3d594284cda38eee7f}{getTitan}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_ab9115238d9074b6905f5971d3d83e06c}{getLvlTerr}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_logistics_a8e8f61ca781e84f960e6cdfa657606e9}{getToNextLvlTerr}}()\ \textcolor{keyword}{const};\ \ \ \ }
+\DoxyCodeLine{00082\ \};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,89 @@
+\doxysection{colony.\+h}
+\hypertarget{colony_8h_source}{}\label{colony_8h_source}\index{src/colony.h@{src/colony.h}}
+\doxymbox{\hyperlink{colony_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ colony\_h}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ colony\_h}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{building_8h}{building.h}}"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{logistics_8h}{logistics.h}}"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_colony_aaf760edad97dee7263b86913d3bb4f98}{Colony}}\{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Wektor\ zbudowanych\ budynkow}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ vector<unique\_ptr<Building>>\ buildings;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Obiekt\ loogityki\ -\/\ zarzadza\ wszystkimi\ parametrami}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Z\ tego\ powodu\ zeby\ prosicej\ bylo\ sie\ odwolywac\ z\ Game}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_logistics}{Logistics}}\ f\_logisyka;}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_colony_aaf760edad97dee7263b86913d3bb4f98}{Colony}}();}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_colony_a9cebe4a25260c8da7c99d10b0dab5a4e}{\string~Colony}}()\{\};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ map<string,int>\ \doxymbox{\hyperlink{class_colony_ae3cc3f0ca519474cd3e87105bed03889}{UIprntBuildingsSumm}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a7d35b0928b6a45ccc03f60baeb36a7d3}{UIprntBuilding}}(\textcolor{keywordtype}{string}\ bud)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a1fb4ab4beea4f6ccd78f03e83ba8962e}{UIprntBuildingID}}(\textcolor{keywordtype}{int}\ ID)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{//BUDOWANIE}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_build_result}{BuildResult}}\ \doxymbox{\hyperlink{class_colony_af851582579e863769c438e5ce7936aa1}{UIczyStac}}(\textcolor{keyword}{const}\ unique\_ptr<Building>\ \&b)\textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a1d1ee653fd8d89792ff72966c7ac2a78}{addBuilding}}(unique\_ptr<Building>\ b);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_build_result}{BuildResult}}\ \doxymbox{\hyperlink{class_colony_a2c1d78a0606ed1ac6867f2c935004178}{UIbuduj}}(unique\_ptr<Building>\ b);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{comment}{//do\ dywaalenia\ to\ bez\ ID}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_destroy_result}{DestroyResult}}\ \doxymbox{\hyperlink{class_colony_aa47d17e97ec896b3d27b14da447e665e}{UIzburzBudynek}}(\textcolor{keywordtype}{string}\ nazwa);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_destroy_result}{DestroyResult}}\ \doxymbox{\hyperlink{class_colony_a4ff67a364653f2e114720c4458862145}{UIzburzBudynekID}}(\textcolor{keywordtype}{int}\ ID);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//NEXT\ ROUND}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{struct_next_result}{NextResult}}\ \doxymbox{\hyperlink{class_colony_a4ff329d878f858b5e2d3b91572aabcef}{UInextRound}}();\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{class_colony_acddd514a0f30bbba148d05ab09495f16}{sprawdzLvlTerr}}();}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{comment}{//SAVE\ /\ LOAD}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a539b09d597446afb2b3f504cada20f77}{saveBuildings}}(\textcolor{keywordtype}{string}\ nazwa\_plik);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_adfb58da26816edbe09d92ca831bfe44f}{loadBuildings}}(\textcolor{keywordtype}{string}\ nazwa\_plik);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a299d755e5709402cf3df7527f9a0d443}{saveColony}}(\textcolor{keywordtype}{string}\ nazwa\_plik);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a223ec55bce5770c3aa1cee78839bc047}{loadColony}}(\textcolor{keywordtype}{string}\ nazwa\_plik);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a038edf69aab455b720f22b9d271a8e93}{save}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ nazwa\_zapisu);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a4a411469e5999cd2371d6aaea7e519f2}{load}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{string}\&\ nazwa\_zapisu);}
+\DoxyCodeLine{00058\ ;}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{comment}{//SETTERY}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_afd50ae0f0ddec0e62379eaabf4c86f02}{setSandbox}}();}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a78ad839ea911704155bf97be715c481e}{setCustom}}();}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a833a41994e92c6dfe5d23b8ffd3a7cf0}{setRuch}}(\textcolor{keywordtype}{int}\ r);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{class_colony_a75f72fcd0fec02eafa5adbf6c659853f}{setNazwa}}(\textcolor{keywordtype}{string}\ nazwa);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//GETTERY}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a035a2542ba8a353b790320dd8de629fa}{getRuch}}()\textcolor{keyword}{const};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a1b06443f8e1f427f8a29d7b8b8888c58}{getIloscBudynkow}}()\textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a576245c0f4748fa978a11da4413368d6}{getAllWorkers}}()\textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_adb550ab69701ec1cd3d7827de66938cb}{getDemandWorkers}}()\textcolor{keyword}{const};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a241bbbd9fc72de306e8e705e2c07bede}{getIlosc}}(\textcolor{keywordtype}{string}\ name)\textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_aacf24c92b8e11d87090629f59525d2a6}{getToNextLvlTerr}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a79dd595c65828a92be4e2862d2e57afb}{getLvlTerr}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \doxymbox{\hyperlink{class_colony_af368070ca3cdd252e0178e6fc74964d9}{getNazwa}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a77c1ee2e927e2d70b74f9855e75f8245}{getTura}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a12e79f9b71e5fcbb7919ee91f9207487}{getReqEnergy}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_aa41389d84c117bae78a7d8175f3d4b10}{getGenEnergy}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_afd82e54582d9dc53896fb24e9af1b8e1}{getReqFood}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a8a8f7d15af752b931e08d7b58cbe05a1}{getFood}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_a1dfc4574ce36ea5b580f83c881c4362b}{getStone}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_colony_ad6795974fdf9fee16b93db7a120a7c9f}{getTitan}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ vector<DaneKafelek>\ \doxymbox{\hyperlink{class_colony_a2f889087de2b39470605f9ec613247ba}{getBudynki}}()\textcolor{keyword}{const};}
+\DoxyCodeLine{00085\ \};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,87 @@
+\chapter{Projekt:\+ Colony++ }
+\hypertarget{index}{}\label{index}\index{Projekt: Colony++@{Projekt: Colony++}}
+\label{index_md__r_e_a_d_m_e}%
+\Hypertarget{index_md__r_e_a_d_m_e}%
+
+
+Strategiczno-\/survivalowa gra napisana w C++, polegająca na zarządzaniu kolonią na Marsie, wydobywaniu surowców i terraformacji planety.
+
+Projekt początkowo powstał jako w pełni tekstowa gra konsolowa. Obecnie został zaktualizowany do wersji z pełnoprawnym interfejsem graficznym. Cała oryginalna logika, statystyki i mechaniki pozostały nienaruszone, jednak wpisywanie komend w terminalu zostało całkowicie zastąpione przez nowoczesny system okienkowy i sterowanie myszą.\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{O Projekcie}{O Projekcie}}\label{index_autotoc_md1}
+Celem gracza jest przetrwanie w trudnych warunkach marsjańskich oraz osiągnięcie pełnej terraformacji planety. Gra działa w systemie turowym, gdzie każda decyzja wpływa na zasoby (Energia, Jedzenie, Tytan, Kamień) oraz losy kolonistów.
+
+{\bfseries{Kluczowe wyzwania:\+}}
+\begin{DoxyItemize}
+\item {\bfseries{Pożywienie:\+}} Każdy mieszkaniec kolonii potrzebuje jedzenia, a jego brak skutkuje śmiercią kolonistów i końcem gry.
+\item {\bfseries{Energia:\+}} Jest potrzebna do funkcjonowania budynków. Bez niej żaden z budynków produkcyjnych nie będzie działać (brak energii nie kończy jednak gry od razu).
+\end{DoxyItemize}\hypertarget{index_autotoc_md2}{}\doxysection{\texorpdfstring{Funkcjonalności}{Funkcjonalności}}\label{index_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\bfseries{Rozbudowane GUI:\+}} Gra wykorzystuje bibliotekę SFML oraz Im\+Gui do renderowania paneli bocznych, interaktywnych tabel i przycisków, eliminując potrzebę znajomości komend tekstowych.
+\item {\bfseries{Wizualna Siatka Budowania:\+}} Możliwość stawiania budynków bezpośrednio na dwuwymiarowej mapie za pomocą kliknięć myszką oraz prostej obsługi klawiszami.
+\item {\bfseries{Ekonomia i Zarządzanie:\+}} Złożony system zależności między surowcami (np. brak prądu zatrzymuje wydobycie w kopalniach).
+\item {\bfseries{System Budowania:\+}} Możliwość wznoszenia i burzenia budynków różnych kategorii ({\ttfamily \doxylink{class_energy}{Energy}}, {\ttfamily \doxylink{class_farm}{Farm}}, {\ttfamily \doxylink{class_housing}{Housing}}, {\ttfamily \doxylink{class_producer}{Producer}}, {\ttfamily \doxylink{class_terr}{Terr}}). Są one reprezentowane jako klasy pochodne klasy bazowej {\ttfamily \doxylink{class_building}{Building}}.
+\item {\bfseries{Progresja (Terraformacja):\+}} Dynamiczne odblokowywanie nowych technologii (lepszych i wydajniejszych budynków) wraz ze wzrostem poziomu terraformacji planety.
+\item {\bfseries{Zaawansowany Zapis i Odczyt:\+}} Pełna serializacja stanu gry do plików tekstowych ({\ttfamily .txt}). Wprowadzono system niestandardowych (customowych) nazw zapisów, co pozwala graczowi na tworzenie i zarządzanie wieloma niezależnymi stanami gry jednocześnie bez nadpisywania poprzednich postępów.
+\item {\bfseries{Niestandardowe Zasoby Graficzne:\+}} Gra korzysta z własnej czcionki oraz unikalnej ikony aplikacji. Wykorzystano również dedykowane kursory pobrane z zewnętrznego serwisu. Tekstury obiektów zostały wygenerowane przy pomocy modelu sztucznej inteligencji Gemini, a następnie zoptymalizowane do postaci jednego wspólnego pliku graficznego (spritesheet/\+atlas), z którego wczytywane są wszystkie elementy.
+\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{\texorpdfstring{Technologie i Rozwiązania (Code Perspective)}{Technologie i Rozwiązania (Code Perspective)}}\label{index_autotoc_md3}
+Projekt demonstruje praktyczne zastosowanie kluczowych paradygmatów języka C++ (Standard C++17):\+\hypertarget{index_autotoc_md4}{}\doxysubsection{\texorpdfstring{1. Programowanie Obiektowe}{1. Programowanie Obiektowe}}\label{index_autotoc_md4}
+
+\begin{DoxyItemize}
+\item {\bfseries{Dziedziczenie i Polimorfizm:\+}} Fundamentem jest klasa bazowa {\ttfamily \doxylink{class_building}{Building}}. Klasy pochodne implementują wirtualne metody takie jak {\ttfamily work()} (logika pracy budynku pod koniec tury), czy {\ttfamily save()} (zapis do pliku). Funkcja {\ttfamily prnt()}, która wcześniej wypisywała dane w konsoli, została zaadaptowana pod system renderowania w nowym interfejsie.
+\item {\bfseries{Enkapsulacja:\+}} Klasa {\ttfamily \doxylink{class_logistics}{Logistics}} przechowuje wszystkie statystyki i zasoby jako pola prywatne, udostępniając je klasie {\ttfamily \doxylink{class_colony}{Colony}} oraz budynkom jedynie poprzez gettery i settery.
+\end{DoxyItemize}\hypertarget{index_autotoc_md5}{}\doxysubsection{\texorpdfstring{2. Zarządzanie Pamięcią i Typy}{2. Zarządzanie Pamięcią i Typy}}\label{index_autotoc_md5}
+
+\begin{DoxyItemize}
+\item {\bfseries{Smart Pointers:\+}} Wykorzystanie {\ttfamily std::\+unique\+\_\+ptr} do zarządzania obiektami budynków w wektorze. Gwarantuje to bezpieczne zarządzanie pamięcią i automatyczne zwalnianie zasobów.
+\item {\bfseries{Typy Wyliczeniowe:\+}} Użycie {\ttfamily enum class} do identyfikacji kategorii budynków, co zapobiega błędom logicznym w kodzie i ułatwia czytelność.
+\end{DoxyItemize}\hypertarget{index_autotoc_md6}{}\doxysubsection{\texorpdfstring{3. Nowy Interfejs Użytkownika (SFML + Im\+Gui)}{3. Nowy Interfejs Użytkownika (SFML + Im\+Gui)}}\label{index_autotoc_md6}
+
+\begin{DoxyItemize}
+\item Dawne formatowanie oparte na kolorach ANSI i ręcznie pisanych funkcjach ({\ttfamily prnt\+Header}, {\ttfamily prnt\+Tablica}) zostało całkowicie zastąpione przez biblioteki graficzne -\/ SFML i Im\+Gui.
+\item {\bfseries{SFML (Simple and Fast Multimedia Library):\+}} Odpowiada za tworzenie głównego okna gry, renderowanie tła, siatki budynków, wczytywanie scalonych tekstur, obsługę własnych czcionek i kursorów oraz zdarzeń systemowych na platformie Windows.
+\item {\bfseries{Dear Im\+Gui:\+}} Obsługuje całą warstwę interaktywną (okna statystyk, przyciski tur, ostrzeżenia o brakach zasobów, dynamiczne tooltipy po najechaniu kursorem).
+\end{DoxyItemize}\hypertarget{index_autotoc_md7}{}\doxysubsection{\texorpdfstring{4. Struktura Projektu}{4. Struktura Projektu}}\label{index_autotoc_md7}
+Logika gry jest ściśle odseparowana od warstwy wizualnej. Główne moduły to m.\+in. {\ttfamily \doxylink{class_game}{Game}} (kontroler), {\ttfamily \doxylink{class_colony}{Colony}} (zarządzanie obiektami na mapie), {\ttfamily \doxylink{class_logistics}{Logistics}} ("{}mózg"{} ekonomiczny) oraz poszczególne klasy budynków.\hypertarget{index_autotoc_md8}{}\doxysection{\texorpdfstring{Przejście z Konsoli na Interfejs Graficzny}{Przejście z Konsoli na Interfejs Graficzny}}\label{index_autotoc_md8}
+Gra nadal opiera się na oryginalnych założeniach mechanicznych, jednak sposób interakcji uległ zmianie. Dawne komendy tekstowe mają teraz swoje bezpośrednie odpowiedniki w interfejsie graficznym:\+
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Komenda info /\+ show:\+}} Przeniesione do dynamicznych okien i tooltipów. Najechanie na budynek na mapie lub w menu budowania automatycznie wyświetla wszystkie jego parametry i koszty w panelu Im\+Gui.
+\item {\bfseries{Komenda build:\+}} Wykonywana poprzez wybranie budynku z panelu bocznego i kliknięcie Lewym Przyciskiem Myszy na wolne pole na siatce głównej.
+\item {\bfseries{Komenda destroy:\+}} Zastąpiona trybem niszczenia (lub dedykowanym przyciskiem w GUI), pozwalającym na kliknięcie istniejącego budynku w celu odzyskania zasobów i pracowników.
+\item {\bfseries{Komenda colony:\+}} Zastąpiona stałym, widocznym przez cały czas panelem górnym/\+bocznym, który na bieżąco aktualizuje stan populacji, prądu i zasobów.
+\item {\bfseries{Komenda next:\+}} Zastąpiona głównym przyciskiem "{}\+Kolejna Tura"{} na ekranie.
+\item {\bfseries{Komendy save, load, exit:\+}} Dostępne w postaci przycisków w głównym menu pauzy wywoływanym klawiszem ESC.
+\end{DoxyItemize}\hypertarget{index_autotoc_md9}{}\doxysection{\texorpdfstring{Pliki Danych i Zasoby}{Pliki Danych i Zasoby}}\label{index_autotoc_md9}
+Gra korzysta z zewnętrznych plików do przechowywania stanu i konfiguracji:\+
+
+
+\begin{DoxyItemize}
+\item {\bfseries{Zasoby Graficzne (Assets):\+}} Skonsolidowany plik tekstur, zdefiniowana ikona aplikacji oraz plik z własną czcionką wczytywaną przy starcie. Do gry dodano również niestandardowe pliki graficzne, które całkowicie modyfikują wygląd i zachowanie kursora myszy podczas rozgrywki.
+\item {\bfseries{gamedata.\+txt}}:\+ "{}\+Baza danych"{} statystyk wszystkich dostępnych budynków (koszty, produkcja, wymagania). Edycja tego pliku pozwala na łatwe balansowanie rozgrywki bez ingerencji w kod źródłowy.
+\item {\bfseries{config.\+txt}}:\+ Przechowuje różnego rodzaju ustawienia konfiguracyjne gry, w tym między innymi zapamiętuje nazwę ostatnio tworzonego lub wczytywanego zapisu.
+\item {\bfseries{Pliki zapisu (Foldery z nazwami zapisów)}}:\+ System zapisów opiera się na tworzeniu nowych folderów o niestandardowych nazwach wybranych przez gracza. Wewnątrz każdego takiego folderu generowane są pliki tekstowe o stałych nazwach (np. {\ttfamily buildings.\+txt}, {\ttfamily colony.\+txt}), które przechowują szczegółową listę postawionych budynków oraz stan globalny kolonii.
+\end{DoxyItemize}\hypertarget{index_autotoc_md10}{}\doxysection{\texorpdfstring{Instalacja i Uruchomienie}{Instalacja i Uruchomienie}}\label{index_autotoc_md10}
+Najprostszym sposobem na uruchomienie gry jest pobranie gotowej, skompilowanej wersji:\+
+\begin{DoxyEnumerate}
+\item Przejdź do zakładki {\bfseries{Releases}} na stronie głównej repozytorium Git\+Hub.
+\item Pobierz najnowszą wersję {\ttfamily .zip}.
+\item Wypakuj archiwum w dowolne miejsce na dysku.
+\item Uruchom plik {\ttfamily .exe}. Wszystkie niezbędne biblioteki oraz zasoby graficzne znajdują się już w paczce.
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md11}{}\doxysection{\texorpdfstring{Kompilacja Ręczna (System Windows)}{Kompilacja Ręczna (System Windows)}}\label{index_autotoc_md11}
+Projekt korzysta z systemu budowania CMake. Wszystkie zależności zostały dołączone bezpośrednio do repozytorium, co maksymalnie upraszcza proces kompilacji.
+
+
+\begin{DoxyEnumerate}
+\item Sklonuj lub pobierz kod źródłowy projektu.
+\item Otwórz folder w programie {\bfseries{Visual Studio Code}}.
+\item Upewnij się, że posiadasz zainstalowane rozszerzenia C/\+\+C++ oraz CMake Tools. Wymagany jest również kompilator działający na Windowsie (rekomendowany MSVC wbudowany w Visual Studio Build Tools).
+\item Biblioteki (SFML oraz Im\+Gui) znajdują się bezpośrednio w folderze {\ttfamily /\+libs}, co zwalnia z konieczności ich zewnętrznego pobierania i konfigurowania ścieżek systemowych.
+\item Zbuduj projekt, korzystając z paska dolnego w VS Code (przycisk {\itshape Build}) lub z terminala, uruchamiając komendy CMake.
+\item Uruchom wygenerowany plik {\ttfamily .exe} (skrypt CMake został skonfigurowany tak, aby automatycznie skopiować niezbędne zasoby graficzne, czcionki i pliki tekstowe do folderu wyjściowego).
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md12}{}\doxysection{\texorpdfstring{Autor}{Autor}}\label{index_autotoc_md12}
+
+\begin{DoxyItemize}
+\item Michał Pawlica /\+ Miquel/\+ @\+Miqel0
+\item Projekt wykonany początkowo na zaliczenie przedmiotu {\itshape Języki Programowania}, a następnie niezależnie zmodernizowany do pełnej aplikacji okienkowej w ramach zaliczenia przedmiotu {\itshape Zaawansowane Programowanie w C++}. 
+\end{DoxyItemize}
