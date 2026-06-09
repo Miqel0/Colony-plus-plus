@@ -88,6 +88,12 @@ Projekt korzysta z systemu budowania CMake. Wszystkie zależności zostały doł
 5. Zbuduj projekt, korzystając z paska dolnego w VS Code (przycisk *Build*) lub z terminala, uruchamiając komendy CMake.
 6. Uruchom wygenerowany plik `.exe` (skrypt CMake został skonfigurowany tak, aby automatycznie skopiować niezbędne zasoby graficzne, czcionki i pliki tekstowe do folderu wyjściowego).
 
+## Dokumentacja
+
+Pełna, interaktywna dokumentacja kodu źródłowego została wygenerowana przy użyciu systemu Doxygen. 
+
+**[Kliknij tutaj, aby otworzyć oficjalną dokumentację Colony++](https://[TwojNick].github.io/[NazwaTwojegoRepozytorium]/html/index.html)**
+
 ## Autor
 
 * Michał Pawlica / Miquel/ @Miqel0
