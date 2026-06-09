@@ -92,7 +92,7 @@ Projekt korzysta z systemu budowania CMake. Wszystkie zależności zostały doł
 
 Pełna, interaktywna dokumentacja kodu źródłowego została wygenerowana przy użyciu systemu Doxygen. 
 
-**[Kliknij tutaj, aby otworzyć oficjalną dokumentację Colony++](https://[TwojNick].github.io/[NazwaTwojegoRepozytorium]/html/index.html)**
+**[Kliknij tutaj, aby otworzyć dokumentację Colony++](https://miqel0.github.io/Colony-plus-plus/html/index.html)**
 
 ## Autor
 
