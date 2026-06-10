@@ -13,6 +13,7 @@ using namespace std;
 
 /**
  * @brief Klasa zarządzająca budynkami, zawiera w sobie: Logistics f_logisyka
+ * Trzyma też vector budynków 
  * 
  */
 class Colony{
@@ -40,7 +41,7 @@ class Colony{
         //do dywaalenia to bez ID
         DestroyResult UIzburzBudynek(string nazwa);
         DestroyResult UIzburzBudynekID(int ID);
-
+        void resetToDefault();
 
         //NEXT ROUND
         NextResult UInextRound(); 

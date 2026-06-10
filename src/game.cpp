@@ -251,6 +251,14 @@ vector<BuildingInfo> Game::UIprntNewLvlTerr(){
 }
 
 /**
+ * @brief Resetowanie reczy pod nową grę.
+ * 
+ */
+void Game::resetToDefault(){
+    kolonia.resetToDefault();
+}
+
+/**
  * @brief Zwracanie nazwy ostatniego zapisu.
  * 
  * @return string 
