@@ -395,6 +395,15 @@ void Colony::loadBuildings(string nazwa_plik) {
     }
 } 
 
+/**
+ * @brief Resetowania parametrów gry do basic
+ * 
+ */
+void Colony::resetToDefault(){
+    f_logisyka.resetToDefault();
+    buildings.clear();
+}
+
 void Colony::loadColony(string nazwa_plik){f_logisyka.load(nazwa_plik);}
 
 // ==========================================

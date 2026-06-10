@@ -61,6 +61,7 @@ class Graphics{
         bool czyPotwierdzicWyjscie;
         bool czyDoMenu;
         bool czyFistTime;
+        bool blokadaKlikniecia;
 
         bool czyBudynekInfo;
         

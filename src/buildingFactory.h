@@ -10,6 +10,10 @@
 #include "terr.h"
 #include "producer.h"
 
+/**
+ * @brief Klasa z wzorca projektowego Fabryka - jedna funckja do budowania budynków
+ * 
+ */
 class BuildingFactory {
     public:
         std::unique_ptr<Building> stworzBudynek(const BuildingInfo& info,pair<int,int> kliknietePole) {

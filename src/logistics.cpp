@@ -175,7 +175,12 @@ void Logistics::updateBudynek(Building* budynek){
     }
 }
 
-
+/**
+ * @brief Updatewanie logiki po zburzeniu budynku
+ * 
+ * @param budynek 
+ * @return pair<int, int> 
+ */
 pair<int, int> Logistics::UIupdateZburzBudynek(Building* budynek){
 
     //Odzyskiwanie pracownikow oraz polowy surowcow
@@ -223,7 +228,12 @@ pair<int, int> Logistics::UIupdateZburzBudynek(Building* budynek){
 // SAVE/LOAD
 // ==========================================
 
-//ZAPISYWANIE PARAMETROW COLONY - wszystkie zmienne (oprocz budynkow)
+
+/**
+ * @brief zapisywanie parametrów logistics
+ * 
+ * @param nazwa_plik 
+ */
 void Logistics::save(string nazwa_plik){
     ofstream plik(nazwa_plik);
     if(plik.is_open()){
@@ -234,7 +244,11 @@ void Logistics::save(string nazwa_plik){
         // cout<<"zapisano:"<<nazwa_plik<<endl;
 }
 
-//WCZYTYWANIE ZAPISANYCH DANYCH
+/**
+ * @brief WCZYTYWANIE ZAPISANYCH DANYCH
+ * 
+ * @param nazwa_plik konkretny zapis pliku
+ */
 void Logistics::load(string nazwa_plik){
     ifstream plik(nazwa_plik);
 
@@ -317,12 +331,37 @@ void Logistics::setCustom(){
     }
 }
 
-//USTAWIANIE NAZWY - wywolywane komenda `rename`
+
+/**
+ * @brief USTAWIANIE NAZWY -
+ * 
+ * @param nazwa nowa nazwa
+ */
 void Logistics::setNazwa(string nazwa){
     if(!nazwa.empty()){
         replace(nazwa.begin(), nazwa.end(), ' ', '_');
         nazwa_kolonii=nazwa;
     }
+}
+
+/**
+ * @brief Resetowanie paremetrór gry do basic
+ * 
+ */
+void Logistics::resetToDefault() {
+    stone = 100;
+    titan = 0;
+    food = 120;
+    reqFood=20;
+    genEnergy = 0; 
+    reqEnergy=0;
+    all_workers = 10; 
+    demand_workers = 0;
+    lvl_terr = 0; 
+    wsp_terr = 0;
+    tura=1;
+    ruch=0;
+    setNazwa("XX");
 }
 
 // ==========================================

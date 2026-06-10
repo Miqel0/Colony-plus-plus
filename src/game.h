@@ -35,6 +35,7 @@ class Game{
         void loadGameData();
         void loadConfig();
         void saveConfig();
+        void resetToDefault();
 
         vector<string> pobierzZapisy();
         vector<string>& getZapisy();

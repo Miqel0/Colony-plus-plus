@@ -32,7 +32,7 @@ class Logistics{
         int stone;
         int titan;
 
-        vector<int> progi={10,20,50,100,200,500,1000,2000,5000};//progi lvl
+        vector<int> progi={10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000,200000,500000,1000000,2000000,5000000};//progi lvl
 
     public:
         //KONSTRUKTOR
@@ -51,6 +51,7 @@ class Logistics{
         //SAVE/LOAD
         void save(string nazwa_plik);
         void load(string nazwa_plik);
+        void resetToDefault();
 
         //SETTERY
         void setNazwa(string nazwa);
